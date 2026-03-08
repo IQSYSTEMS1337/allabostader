@@ -3,41 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allabostäder | Premium AI-insikter</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&display=swap" rel="stylesheet">
+    <title>Allabostäder | Fastighetsintelligens</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --black: #050505; --white: #ffffff; --accent: #007AFF; }
-        body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; overflow: hidden; }
+        :root { --black: #050505; --white: #ffffff; --accent: #007AFF; --dark-grey: #111; }
+        body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
         
-        /* Miljard-dollar aura bakgrund */
-        .aura { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,122,255,0.07) 0%, rgba(0,0,0,1) 70%); z-index: -1; }
+        /* AURA BAKGRUND */
+        .aura { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,122,255,0.08) 0%, rgba(0,0,0,1) 70%); z-index: -1; }
 
-        h1 { font-size: clamp(40px, 10vw, 95px); font-weight: 900; letter-spacing: -5px; margin: 0; background: linear-gradient(180deg, #fff 0%, #444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 0.85; }
-        p.sub { color: #666; font-size: clamp(14px, 2vw, 18px); margin-top: 20px; text-transform: uppercase; letter-spacing: 5px; font-weight: 300; }
+        /* HERO SECTION */
+        .hero { height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; }
+        h1 { font-size: clamp(45px, 12vw, 110px); font-weight: 900; letter-spacing: -6px; margin: 0; line-height: 0.85; background: linear-gradient(180deg, #fff 30%, #444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        p.tagline { color: var(--accent); font-weight: 700; text-transform: uppercase; letter-spacing: 5px; font-size: 14px; margin-bottom: 20px; }
 
-        .search-box { margin-top: 50px; width: 90%; max-width: 650px; position: relative; }
-        input { 
-            width: 100%; padding: 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 100px; color: #fff; font-size: 20px; backdrop-filter: blur(20px);
-            outline: none; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); box-sizing: border-box;
-        }
-        input:focus { border-color: var(--white); background: rgba(255,255,255,0.08); box-shadow: 0 0 50px rgba(0,122,255,0.1); }
+        /* SÖKRUTA */
+        .search-container { width: 100%; max-width: 700px; position: relative; margin-top: 50px; }
+        input { width: 100%; padding: 28px 35px; border-radius: 100px; border: 1px solid #222; background: rgba(255,255,255,0.03); color: #fff; font-size: 20px; outline: none; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1); backdrop-filter: blur(20px); box-sizing: border-box; }
+        input:focus { border-color: var(--white); box-shadow: 0 0 60px rgba(0,122,255,0.15); background: rgba(255,255,255,0.07); }
+        
+        .results { position: absolute; top: 110%; left: 0; right: 0; background: #0a0a0a; border-radius: 25px; border: 1px solid #222; max-height: 400px; overflow-y: auto; text-align: left; z-index: 100; display: none; box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
+        .item { padding: 25px 35px; border-bottom: 1px solid #111; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
+        .item:hover { background: #111; color: var(--accent); padding-left: 45px; }
+        .item .ghost-tag { font-size: 10px; background: #1a1a1a; padding: 4px 8px; border-radius: 4px; color: var(--accent); font-weight: 700; }
 
-        .results { position: absolute; top: 115%; left: 0; right: 0; background: #0a0a0a; border-radius: 25px; border: 1px solid #222; max-height: 380px; overflow-y: auto; text-align: left; z-index: 100; display: none; box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
-        .item { padding: 22px 30px; border-bottom: 1px solid #111; cursor: pointer; transition: 0.3s; }
-        .item:hover { background: #111; padding-left: 40px; color: var(--accent); }
-        .item strong { font-weight: 700; font-size: 18px; }
+        /* PREDATORY COMPARISON SECTION */
+        .truth-engine { width: 100%; max-width: 1200px; padding: 100px 20px; border-top: 1px solid #111; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; }
+        .card { padding: 40px; border-radius: 24px; background: #0a0a0a; border: 1px solid #1a1a1a; transition: 0.3s; }
+        .card:hover { border-color: #333; transform: translateY(-5px); }
+        .card h3 { font-size: 14px; text-transform: uppercase; letter-spacing: 2px; color: #666; margin-bottom: 20px; }
+        .card .value { font-size: 38px; font-weight: 900; margin-bottom: 10px; }
+        .card p { color: #888; line-height: 1.6; font-size: 15px; }
     </style>
 </head>
 <body>
     <div class="aura"></div>
-    <p class="sub">AI-driven fastighetsintelligens</p>
-    <h1>Dolda Hem.<br>Före Alla Andra.</h1>
-    
-    <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Sök bland 3 000 exklusiva orter..." autocomplete="off">
-        <div id="results" class="results"></div>
-    </div>
+
+    <section class="hero">
+        <p class="tagline">The Stealth Market Engine</p>
+        <h1>Dolda Hem.<br>Innan Alla Andra.</h1>
+        
+        <div class="search-container">
+            <input type="text" id="searchInput" placeholder="Sök ort för dolda Ghost Listings..." autocomplete="off">
+            <div id="results" class="results"></div>
+        </div>
+    </section>
+
+    <section class="truth-engine">
+        <h2 style="font-size: 40px; font-weight: 900; letter-spacing: -2px; margin-bottom: 60px; text-align: center;">Varför Allabostäder?<br><span style="color: var(--accent);">När Hemnet & Booli inte räcker till.</span></h2>
+        
+        <div class="grid">
+            <div class="card">
+                <h3>Avgiftsanalys</h3>
+                <div class="value" style="color: #ff4444;">-45 000 KR</div>
+                <p>Varje affär på Hemnet kostar säljaren tiotusentals kronor i dolda avgifter. Vi raderar mellanhänderna.</p>
+            </div>
+            <div class="card">
+                <h3>Tidsförsprång</h3>
+                <div class="value" style="color: var(--accent);">+14 DAGAR</div>
+                <p>Vår AI-motor identifierar objekt två veckor innan de bränns ut i det publika bruset på Booli.</p>
+            </div>
+            <div class="card">
+                <h3>Ghost Listings</h3>
+                <div class="value">EXKLUSIVT</div>
+                <p>Vi listar bostäder som säljs utanför systemen. När Hemnet visar 0 träffar, visar vi vägen.</p>
+            </div>
+        </div>
+    </section>
 
     <script>
         const input = document.getElementById('searchInput');
@@ -48,6 +81,7 @@
             if(q.length < 2) { resBox.style.display = 'none'; return; }
             
             try {
+                // VI HÄMTAR DIN CSV-FIL
                 const response = await fetch('Aiorter.csv');
                 const text = await response.text();
                 const rows = text.split('\n').slice(1);
@@ -58,14 +92,22 @@
                     resBox.style.display = 'block';
                     resBox.innerHTML = matches.map(r => {
                         const cols = r.split(';');
-                        return `<div class="item" onclick="alert('AI analyserar marknaden i ${cols[0]}...')">
-                            <strong>${cols[0]}</strong> <span style="opacity:0.3; font-size:14px; margin-left:10px;">${cols[1] || ''}</span>
+                        const ortNamn = cols[0].trim();
+                        // SKICKAR TILL VALVET VID KLICK
+                        return `<div class="item" onclick="location.href='ort.html?name=${encodeURIComponent(ortNamn)}'">
+                            <div>
+                                <strong>${ortNamn}</strong>
+                                <span style="opacity:0.3; font-size:12px; margin-left:10px;">${cols[1] || ''}</span>
+                            </div>
+                            <span class="ghost-tag">GHOST LISTINGS</span>
                         </div>`;
                     }).join('');
                 } else {
                     resBox.style.display = 'none';
                 }
-            } catch (e) { console.error("Kunde inte läsa CSV", e); }
+            } catch (e) { 
+                console.error("Fel vid laddning av intelligens.", e); 
+            }
         });
     </script>
 </body>
