@@ -3,169 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Shadow Market - Åtkomstkontroll</title>
+    <title>Shadow Market - Vault</title>
     <style>
-        :root {
-            --gold: #d4af37;
-            --dark: #0a0a0a;
-            --grey: #1a1a1a;
-        }
-
-        body {
-            background-color: var(--dark);
-            color: white;
-            font-family: 'Courier New', Courier, monospace;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            overflow: hidden;
-        }
-
-        .vault-container {
-            background: var(--grey);
-            border: 1px solid var(--gold);
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
-            width: 350px;
-        }
-
-        h1 {
-            color: var(--gold);
-            font-size: 1.2rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            margin-bottom: 1.5rem;
-        }
-
-        .status-text {
-            font-size: 0.9rem;
-            margin-bottom: 2rem;
-            color: #888;
-        }
-
-        .location-name {
-            display: block;
-            color: white;
-            font-weight: bold;
-            font-size: 1.1rem;
-            margin-top: 0.5rem;
-        }
-
-        .btn-group {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        button {
-            background: transparent;
-            border: 1px solid var(--gold);
-            color: var(--gold);
-            padding: 10px;
-            cursor: pointer;
-            text-transform: uppercase;
-            transition: all 0.3s;
-        }
-
-        button:hover {
-            background: var(--gold);
-            color: var(--dark);
-        }
-
-        button:disabled {
-            border-color: #444;
-            color: #444;
-            cursor: not-allowed;
-        }
-
-        #loading-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: var(--dark);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 100;
-        }
+        :root { --gold: #d4af37; --dark: #0a0a0a; --grey: #1a1a1a; }
+        body { background: var(--dark); color: white; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .vault-container { background: var(--grey); border: 1px solid var(--gold); padding: 2.5rem; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.15); width: 380px; }
+        h1 { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-size: 1.1rem; margin-bottom: 2rem; }
+        .location-info { margin-bottom: 2.5rem; border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 1rem 0; }
+        .city-label { color: #666; font-size: 0.8rem; text-transform: uppercase; }
+        .city-name { display: block; font-size: 1.4rem; color: #fff; margin-top: 5px; }
+        .btn-group { display: flex; flex-direction: column; gap: 12px; }
+        button { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px; cursor: pointer; text-transform: uppercase; font-weight: bold; }
+        button:hover { background: var(--gold); color: var(--dark); }
+        button:disabled { border-color: #444; color: #444; }
+        #overlay { position: fixed; inset: 0; background: var(--dark); display: flex; justify-content: center; align-items: center; z-index: 1000; }
     </style>
 </head>
 <body>
 
-    <div id="loading-overlay">Initialiserar kryptering...</div>
+<div id="overlay">SYNKRONISERAR MED SKUGGNÄTVERKET...</div>
 
-    <div class="vault-container">
-        <h1>Åtkomst Begärd</h1>
-        <div class="status-text">
-            Verifiera identitet för:
-            <span id="current-location" class="location-name">Söker plats...</span>
-        </div>
-
-        <div class="btn-group">
-            <button id="verify-btn" onclick="handleVerify()">Verifiera</button>
-            <button onclick="location.reload()">Avbryt</button>
-        </div>
+<div class="vault-container">
+    <h1>Åtkomst Begärd</h1>
+    <div class="location-info">
+        <span class="city-label">Verifiera identitet för:</span>
+        <span id="display-city" class="city-name">Laddar...</span>
     </div>
+    <div class="btn-group">
+        <button id="v-btn" onclick="startVerification()">Verifiera</button>
+        <button onclick="location.href='/'">Avbryt</button>
+    </div>
+</div>
 
-    <script>
-        let cityData = [];
+<script>
+    let rawData = "";
+    // Hämta ort från URL (t.ex. allabostäder.se/Gävle)
+    const currentPath = window.location.pathname.split('/').filter(p => p).pop() || "Gävle";
+    const targetCity = decodeURIComponent(currentPath).trim();
+    document.getElementById('display-city').innerText = targetCity;
 
-        // 1. Extrahera orten från URL:en (t.ex. /gavle)
-        const path = window.location.pathname.split('/').filter(p => p !== "").pop();
-        const cityId = path || "Gävle"; // Default om vi är på startsidan
+    async function init() {
+        try {
+            // Anropar filen via din nya Worker med CORS-stöd
+            const resp = await fetch('Aiorter.csv');
+            if (!resp.ok) throw new Error();
+            rawData = await resp.text();
+            document.getElementById('overlay').style.display = 'none';
+        } catch (e) {
+            document.getElementById('overlay').innerText = "ANSLUTNINGSFEL: Kontrollera Aiorter.csv";
+        }
+    }
 
-        document.getElementById('current-location').innerText = decodeURIComponent(cityId);
+    function startVerification() {
+        const btn = document.getElementById('v-btn');
+        btn.innerText = "DEKRYPTERAR...";
+        btn.disabled = true;
 
-        // 2. Hämta datan från CSV-filen
-        async function loadData() {
-            try {
-                // VIKTIGT: Vi använder relativ sökväg för att Workern ska hitta den på GitHub
-                const response = await fetch('Aiorter.csv');
-                
-                if (!response.ok) {
-                    throw new Error('Kunde inte läsa databasen.');
+        setTimeout(() => {
+            const rows = rawData.split('\n');
+            let foundMatch = null;
+
+            for (let row of rows) {
+                // Prova både semikolon och kommatecken som separator
+                const columns = row.includes(';') ? row.split(';') : row.split(',');
+                const cityNameInFile = columns[0] ? columns[0].trim() : "";
+
+                if (cityNameInFile.toLowerCase() === targetCity.toLowerCase()) {
+                    foundMatch = columns.slice(1).join(' ').trim();
+                    break;
                 }
-
-                const text = await response.text();
-                // Enkel CSV-parsing (antar: Stad;Info)
-                cityData = text.split('\n').map(row => row.split(';'));
-                
-                document.getElementById('loading-overlay').style.display = 'none';
-                console.log("Databas laddad.");
-            } catch (err) {
-                console.error(err);
-                document.getElementById('loading-overlay').innerText = "FEL: Kunde inte ladda Aiorter.csv";
             }
-        }
 
-        function handleVerify() {
-            const btn = document.getElementById('verify-btn');
-            btn.innerText = "Verifierar...";
-            btn.disabled = true;
+            if (foundMatch) {
+                alert("ÅTKOMST BEVILJAD\n\nIdentitet: " + targetCity + "\nData: " + foundMatch);
+            } else {
+                alert("ÅTKOMST NEKAD\n\nKunde inte matcha '" + targetCity + "' i databasen.");
+                btn.innerText = "Verifiera";
+                btn.disabled = false;
+            }
+        }, 1200);
+    }
 
-            // Simulera dekryptering
-            setTimeout(() => {
-                const found = cityData.find(row => 
-                    row[0] && row[0].toLowerCase().trim() === decodeURIComponent(cityId).toLowerCase().trim()
-                );
-
-                if (found) {
-                    alert("Åtkomst beviljad för " + found[0] + "!\nData: " + (found[1] || "Ingen extra info tillgänglig."));
-                } else {
-                    alert("Identitet kunde inte fastställas i Aiorter.csv för: " + cityId);
-                    btn.innerText = "Verifiera";
-                    btn.disabled = false;
-                }
-            }, 1500);
-        }
-
-        // Starta inläsning
-        window.onload = loadData;
-    </script>
+    window.onload = init;
+</script>
 </body>
 </html>
