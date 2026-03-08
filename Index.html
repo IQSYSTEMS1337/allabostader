@@ -7,28 +7,35 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&display=swap" rel="stylesheet">
     <style>
         :root { --black: #050505; --white: #ffffff; --accent: #007AFF; }
-        body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
+        body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; overflow: hidden; }
         
-        /* Miljard-dollar rubrik */
-        h1 { font-size: clamp(40px, 10vw, 90px); font-weight: 900; letter-spacing: -4px; margin: 0; background: linear-gradient(180deg, #fff 0%, #444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 0.9; }
-        
-        /* Snygg sökruta */
-        .search-box { margin-top: 50px; width: 90%; max-width: 600px; position: relative; }
-        input { width: 100%; padding: 25px; border-radius: 50px; border: 1px solid #222; background: #111; color: #fff; font-size: 18px; outline: none; transition: 0.4s; box-sizing: border-box; }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 40px rgba(0,122,255,0.15); }
-        
-        /* Resultatlista */
-        .results { position: absolute; top: 110%; left: 0; right: 0; background: #0a0a0a; border-radius: 20px; border: 1px solid #222; max-height: 350px; overflow-y: auto; text-align: left; z-index: 100; display: none; }
-        .item { padding: 20px; border-bottom: 1px solid #1a1a1a; cursor: pointer; transition: 0.2s; }
-        .item:hover { background: #111; color: var(--accent); }
+        /* Miljard-dollar aura bakgrund */
+        .aura { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,122,255,0.07) 0%, rgba(0,0,0,1) 70%); z-index: -1; }
+
+        h1 { font-size: clamp(40px, 10vw, 95px); font-weight: 900; letter-spacing: -5px; margin: 0; background: linear-gradient(180deg, #fff 0%, #444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 0.85; }
+        p.sub { color: #666; font-size: clamp(14px, 2vw, 18px); margin-top: 20px; text-transform: uppercase; letter-spacing: 5px; font-weight: 300; }
+
+        .search-box { margin-top: 50px; width: 90%; max-width: 650px; position: relative; }
+        input { 
+            width: 100%; padding: 28px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); 
+            border-radius: 100px; color: #fff; font-size: 20px; backdrop-filter: blur(20px);
+            outline: none; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); box-sizing: border-box;
+        }
+        input:focus { border-color: var(--white); background: rgba(255,255,255,0.08); box-shadow: 0 0 50px rgba(0,122,255,0.1); }
+
+        .results { position: absolute; top: 115%; left: 0; right: 0; background: #0a0a0a; border-radius: 25px; border: 1px solid #222; max-height: 380px; overflow-y: auto; text-align: left; z-index: 100; display: none; box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
+        .item { padding: 22px 30px; border-bottom: 1px solid #111; cursor: pointer; transition: 0.3s; }
+        .item:hover { background: #111; padding-left: 40px; color: var(--accent); }
+        .item strong { font-weight: 700; font-size: 18px; }
     </style>
 </head>
 <body>
-
-    <h1>Hitta hemmet.<br>Innan de andra.</h1>
+    <div class="aura"></div>
+    <p class="sub">AI-driven fastighetsintelligens</p>
+    <h1>Dolda Hem.<br>Före Alla Andra.</h1>
     
     <div class="search-box">
-        <input type="text" id="searchInput" placeholder="Sök bland 3 000 orter..." autocomplete="off">
+        <input type="text" id="searchInput" placeholder="Sök bland 3 000 exklusiva orter..." autocomplete="off">
         <div id="results" class="results"></div>
     </div>
 
@@ -51,14 +58,14 @@
                     resBox.style.display = 'block';
                     resBox.innerHTML = matches.map(r => {
                         const cols = r.split(';');
-                        return `<div class="item" onclick="alert('AI analyserar ${cols[0]}...')">
-                            <strong>${cols[0]}</strong> <span style="opacity:0.4; font-size:14px;">${cols[1] || ''}</span>
+                        return `<div class="item" onclick="alert('AI analyserar marknaden i ${cols[0]}...')">
+                            <strong>${cols[0]}</strong> <span style="opacity:0.3; font-size:14px; margin-left:10px;">${cols[1] || ''}</span>
                         </div>`;
                     }).join('');
                 } else {
                     resBox.style.display = 'none';
                 }
-            } catch (e) { console.log("Laddar..."); }
+            } catch (e) { console.error("Kunde inte läsa CSV", e); }
         });
     </script>
 </body>
