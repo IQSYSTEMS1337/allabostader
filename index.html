@@ -3,113 +3,169 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="dynamic-title">Allabostäder | Dolda Hem & Fastighetsintelligens</title>
-    <meta name="description" id="dynamic-desc" content="Sök dolda bostäder och Ghost Listings innan de når Hemnet. AI-driven fastighetsdata.">
-    
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
-    
+    <title>Shadow Market - Åtkomstkontroll</title>
     <style>
-        :root { --black: #050505; --white: #ffffff; --accent: #007AFF; --gold: #c5a059; }
-        body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        .aura { position: fixed; inset: -50%; background: radial-gradient(circle, rgba(0,122,255,0.08) 0%, rgba(0,0,0,1) 70%); z-index: -1; }
-        
-        .hero { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; }
-        h1 { font-size: clamp(40px, 10vw, 90px); font-weight: 900; letter-spacing: -4px; margin: 0; line-height: 0.9; background: linear-gradient(180deg, #fff 40%, #555 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .search-container { width: 100%; max-width: 650px; position: relative; margin-top: 40px; z-index: 10; }
-        input { width: 100%; padding: 25px 30px; border-radius: 50px; border: 1px solid #333; background: rgba(255,255,255,0.05); color: #fff; font-size: 18px; outline: none; backdrop-filter: blur(15px); box-sizing: border-box; transition: 0.3s; }
-        input:focus { border-color: var(--accent); box-shadow: 0 0 30px rgba(0,122,255,0.2); }
+        :root {
+            --gold: #d4af37;
+            --dark: #0a0a0a;
+            --grey: #1a1a1a;
+        }
 
-        .results { position: absolute; top: 110%; left: 0; right: 0; background: #0c0c0c; border-radius: 20px; border: 1px solid #222; max-height: 400px; overflow-y: auto; display: none; z-index: 100; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
-        .item { padding: 20px 25px; border-bottom: 1px solid #151515; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-align: left; }
-        .item:hover { background: #151515; }
-        .ghost-badge { font-size: 10px; color: var(--accent); border: 1px solid rgba(0,122,255,0.3); padding: 4px 8px; border-radius: 4px; font-weight: 900; }
+        body {
+            background-color: var(--dark);
+            color: white;
+            font-family: 'Courier New', Courier, monospace;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+        }
 
-        #vault { position: fixed; inset: 0; background: rgba(0,0,0,0.96); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); }
-        .vault-card { background: #0a0a0a; border: 1px solid #222; padding: 40px; border-radius: 24px; text-align: center; width: 90%; max-width: 400px; }
-        .btn-gold { width: 100%; padding: 18px; border-radius: 12px; border: none; background: var(--gold); color: #000; font-weight: 900; cursor: pointer; text-transform: uppercase; margin-top: 20px; }
+        .vault-container {
+            background: var(--grey);
+            border: 1px solid var(--gold);
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.2);
+            width: 350px;
+        }
+
+        h1 {
+            color: var(--gold);
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+        }
+
+        .status-text {
+            font-size: 0.9rem;
+            margin-bottom: 2rem;
+            color: #888;
+        }
+
+        .location-name {
+            display: block;
+            color: white;
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-top: 0.5rem;
+        }
+
+        .btn-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        button {
+            background: transparent;
+            border: 1px solid var(--gold);
+            color: var(--gold);
+            padding: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+
+        button:hover {
+            background: var(--gold);
+            color: var(--dark);
+        }
+
+        button:disabled {
+            border-color: #444;
+            color: #444;
+            cursor: not-allowed;
+        }
+
+        #loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
     </style>
 </head>
 <body>
-    <div class="aura"></div>
-    <section class="hero">
-        <p style="color:var(--accent); font-weight:700; letter-spacing:4px; margin-bottom:10px;">STEALTH MARKET ENGINE</p>
-        <h1>Dolda Hem.<br>Innan Alla Andra.</h1>
-        <div class="search-container">
-            <input type="text" id="s" placeholder="Sök stad eller kommun..." autocomplete="off">
-            <div id="r" class="results"></div>
-        </div>
-    </section>
 
-    <div id="vault">
-        <div class="vault-card">
-            <h2 style="color:var(--gold)">Åtkomst Begärd</h2>
-            <p>Verifiera identitet för <br><strong id="v-city" style="color:#fff;"></strong>.</p>
-            <input type="password" placeholder="Krypteringsnyckel" style="width:100%; padding:15px; background:#111; border:1px solid #333; color:#fff; border-radius:10px; text-align:center;">
-            <button class="btn-gold" onclick="alert('Ansluter till krypterad databas...'); location.reload();">Verifiera</button>
-            <button onclick="document.getElementById('vault').style.display='none'" style="background:none; border:none; color:#444; margin-top:15px; cursor:pointer;">AVBRYT</button>
+    <div id="loading-overlay">Initialiserar kryptering...</div>
+
+    <div class="vault-container">
+        <h1>Åtkomst Begärd</h1>
+        <div class="status-text">
+            Verifiera identitet för:
+            <span id="current-location" class="location-name">Söker plats...</span>
+        </div>
+
+        <div class="btn-group">
+            <button id="verify-btn" onclick="handleVerify()">Verifiera</button>
+            <button onclick="location.reload()">Avbryt</button>
         </div>
     </div>
 
     <script>
-        let db = [];
-        const sI = document.getElementById('s'), rB = document.getElementById('r'), v = document.getElementById('vault'), vC = document.getElementById('v-city');
+        let cityData = [];
 
-        // 1. Robust CSV-laddare som hanterar UTF-8 och svenska tecken perfekt
-        async function loadDatabase() {
+        // 1. Extrahera orten från URL:en (t.ex. /gavle)
+        const path = window.location.pathname.split('/').filter(p => p !== "").pop();
+        const cityId = path || "Gävle"; // Default om vi är på startsidan
+
+        document.getElementById('current-location').innerText = decodeURIComponent(cityId);
+
+        // 2. Hämta datan från CSV-filen
+        async function loadData() {
             try {
+                // VIKTIGT: Vi använder relativ sökväg för att Workern ska hitta den på GitHub
                 const response = await fetch('Aiorter.csv');
-                const buffer = await response.arrayBuffer();
-                const decoder = new TextDecoder('utf-8'); // Tvingar UTF-8 för ÅÄÖ
-                const data = decoder.decode(buffer);
                 
-                db = data.split(/\r?\n/).slice(1).map(line => {
-                    const c = line.split(';');
-                    // Mappning: 0:Tätort, 1:Kommun, 2:SEO-Title, 3:SEO-Desc
-                    return c.length >= 2 ? { o: c[0].trim(), k: c[1].trim(), t: c[2]?.trim(), d: c[3]?.trim() } : null;
-                }).filter(x => x && x.o);
-                console.log("System redo. Katalog laddad.");
-            } catch (e) {
-                console.error("Kunde inte hämta Aiorter.csv. Kontrollera att filen ligger i samma mapp.");
+                if (!response.ok) {
+                    throw new Error('Kunde inte läsa databasen.');
+                }
+
+                const text = await response.text();
+                // Enkel CSV-parsing (antar: Stad;Info)
+                cityData = text.split('\n').map(row => row.split(';'));
+                
+                document.getElementById('loading-overlay').style.display = 'none';
+                console.log("Databas laddad.");
+            } catch (err) {
+                console.error(err);
+                document.getElementById('loading-overlay').innerText = "FEL: Kunde inte ladda Aiorter.csv";
             }
         }
 
-        sI.addEventListener('input', () => {
-            const q = sI.value.toLowerCase().trim();
-            if (q.length < 2) { rB.style.display = 'none'; return; }
-            
-            // Sök i både ort och kommun
-            const matches = db.filter(i => 
-                i.o.toLowerCase().includes(q) || 
-                i.k.toLowerCase().includes(q)
-            ).slice(0, 8);
+        function handleVerify() {
+            const btn = document.getElementById('verify-btn');
+            btn.innerText = "Verifierar...";
+            btn.disabled = true;
 
-            if (matches.length > 0) {
-                rB.style.display = 'block';
-                rB.innerHTML = matches.map(m => `
-                    <div class="item" onclick="openV('${m.o}', '${m.t}', '${m.d}')">
-                        <div>
-                            <strong>${m.o}</strong>
-                            <span style="font-size:11px; opacity:0.5;">${m.k}</span>
-                        </div>
-                        <div class="ghost-badge">GHOST LISTING</div>
-                    </div>`).join('');
-            } else { rB.style.display = 'none'; }
-        });
+            // Simulera dekryptering
+            setTimeout(() => {
+                const found = cityData.find(row => 
+                    row[0] && row[0].toLowerCase().trim() === decodeURIComponent(cityId).toLowerCase().trim()
+                );
 
-        function openV(ort, ttl, dsc) {
-            vC.innerText = ort;
-            v.style.display = 'flex';
-            rB.style.display = 'none';
-            // Dynamisk SEO-uppdatering
-            if (ttl) document.title = ttl;
-            if (dsc) {
-                const meta = document.querySelector('meta[name="description"]');
-                if (meta) meta.setAttribute("content", dsc);
-            }
+                if (found) {
+                    alert("Åtkomst beviljad för " + found[0] + "!\nData: " + (found[1] || "Ingen extra info tillgänglig."));
+                } else {
+                    alert("Identitet kunde inte fastställas i Aiorter.csv för: " + cityId);
+                    btn.innerText = "Verifiera";
+                    btn.disabled = false;
+                }
+            }, 1500);
         }
 
-        loadDatabase();
+        // Starta inläsning
+        window.onload = loadData;
     </script>
 </body>
 </html>
