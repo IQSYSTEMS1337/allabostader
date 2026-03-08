@@ -3,124 +3,135 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="dynamic-title">Allabostäder | Fastighetsintelligens</title>
-    <meta name="description" id="dynamic-desc" content="Sök dolda bostäder och Ghost Listings innan de når Hemnet.">
+    <title id="dynamic-title">Allabostäder | Fastighetsintelligens & Dolda Hem</title>
+    <meta name="description" id="dynamic-desc" content="Sök dolda bostäder och Ghost Listings innan de når Hemnet. AI-driven fastighetsdata för hela Sverige.">
+    
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        :root { --black: #050505; --white: #ffffff; --accent: #007AFF; --gold: #c5a059; --dark-grey: #111; }
+        :root { --black: #050505; --white: #ffffff; --accent: #007AFF; --gold: #c5a059; }
         body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        .aura { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,122,255,0.08) 0%, rgba(0,0,0,1) 70%); z-index: -1; }
-        .hero { height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; }
-        h1 { font-size: clamp(40px, 10vw, 90px); font-weight: 900; letter-spacing: -4px; margin: 0; line-height: 0.9; background: linear-gradient(180deg, #fff 30%, #444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .search-container { width: 100%; max-width: 600px; position: relative; margin-top: 40px; }
-        input { width: 100%; padding: 25px; border-radius: 50px; border: 1px solid #333; background: rgba(255,255,255,0.05); color: #fff; font-size: 18px; outline: none; backdrop-filter: blur(10px); box-sizing: border-box; }
-        .results { position: absolute; top: 110%; left: 0; right: 0; background: #0a0a0a; border-radius: 20px; border: 1px solid #333; max-height: 350px; overflow-y: auto; display: none; z-index: 100; }
-        .item { padding: 20px; border-bottom: 1px solid #1a1a1a; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-align: left; }
-        .item:hover { background: #111; }
-        .ghost-tag { font-size: 10px; color: var(--accent); border: 1px solid var(--accent); padding: 2px 6px; border-radius: 4px; font-weight: 700; }
-        #vault-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); }
-        .black-tier-vault { background: #0a0a0a; border: 1px solid #222; padding: 40px; border-radius: 20px; text-align: center; width: 90%; max-width: 400px; }
-        .gold-button { width: 100%; padding: 15px; border-radius: 10px; border: none; background: var(--gold); color: #000; font-weight: 900; cursor: pointer; margin-top: 20px; }
+        
+        .aura { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,122,255,0.07) 0%, rgba(0,0,0,1) 70%); z-index: -1; }
+
+        .hero { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; }
+        h1 { font-size: clamp(40px, 10vw, 90px); font-weight: 900; letter-spacing: -4px; margin: 0; line-height: 0.9; background: linear-gradient(180deg, #fff 40%, #555 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .tagline { color: var(--accent); font-weight: 700; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 15px; font-size: 13px; }
+
+        .search-container { width: 100%; max-width: 650px; position: relative; margin-top: 40px; z-index: 10; }
+        input { width: 100%; padding: 26px 35px; border-radius: 100px; border: 1px solid #222; background: rgba(255,255,255,0.05); color: #fff; font-size: 20px; outline: none; transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1); backdrop-filter: blur(20px); box-sizing: border-box; }
+        input:focus { border-color: var(--accent); box-shadow: 0 0 50px rgba(0,122,255,0.2); background: rgba(255,255,255,0.08); }
+
+        .results { position: absolute; top: 110%; left: 0; right: 0; background: #0c0c0c; border-radius: 25px; border: 1px solid #222; max-height: 400px; overflow-y: auto; display: none; box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+        .item { padding: 22px 30px; border-bottom: 1px solid #151515; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; text-align: left; }
+        .item:hover { background: #151515; padding-left: 35px; }
+        .item strong { display: block; font-size: 19px; letter-spacing: -0.5px; }
+        .item span { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+        .ghost-badge { font-size: 10px; color: var(--accent); border: 1px solid rgba(0,122,255,0.4); padding: 5px 10px; border-radius: 5px; font-weight: 900; }
+
+        #vault { position: fixed; inset: 0; background: rgba(0,0,0,0.96); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(15px); }
+        .vault-card { background: #0a0a0a; border: 1px solid #222; padding: 50px; border-radius: 30px; text-align: center; width: 90%; max-width: 450px; }
+        .vault-card h2 { font-size: 28px; font-weight: 900; margin-bottom: 10px; background: linear-gradient(180deg, var(--gold) 0%, #8c6a2c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .info-section { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; width: 100%; max-width: 1100px; padding: 80px 20px; }
+        .card { padding: 40px; background: #080808; border: 1px solid #111; border-radius: 24px; }
+        .card .val { font-size: 36px; font-weight: 900; margin: 15px 0; }
     </style>
 </head>
 <body>
     <div class="aura"></div>
+
     <section class="hero">
-        <p style="color:var(--accent); font-weight:700; letter-spacing:3px;">STEALTH MARKET ENGINE</p>
+        <p class="tagline">The Stealth Market Engine</p>
         <h1>Dolda Hem.<br>Innan Alla Andra.</h1>
         <div class="search-container">
-            <input type="text" id="searchInput" placeholder="Sök stad (t.ex. Gävle)..." autocomplete="off">
-            <div id="results" class="results"></div>
+            <input type="text" id="s" placeholder="Sök ort (t.ex. Gävle)..." autocomplete="off">
+            <div id="r" class="results"></div>
         </div>
     </section>
 
-    <div id="vault-overlay">
-        <div class="black-tier-vault">
-            <h2 id="vH" style="color:var(--gold)">Verifiering Krävs</h2>
-            <p>Låser upp exklusiva data för <span id="target-city" style="font-weight:bold"></span>.</p>
-            <input type="password" id="vP" placeholder="Krypteringsnyckel" style="width:100%; padding:15px; background:#111; border:1px solid #333; color:#fff; border-radius:10px; box-sizing:border-box;">
-            <button id="vBtn" class="gold-button">Öppna Valvet</button>
-            <button onclick="document.getElementById('vault-overlay').style.display='none'" style="background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">Stäng</button>
+    <section class="info-section">
+        <div class="card"><h3 style="color:var(--accent); font-size:12px; letter-spacing:2px;">AVGIFTSREDUKTION</h3><div class="val" style="color:#ff4444;">-45 000 KR</div><p>Raderar onödiga försäljningsarvoden.</p></div>
+        <div class="card"><h3 style="color:var(--accent); font-size:12px; letter-spacing:2px;">TIDSÖVERTAG</h3><div class="val">+14 DAGAR</div><p>Åtkomst före publika plattformar.</p></div>
+        <div class="card"><h3 style="color:var(--accent); font-size:12px; letter-spacing:2px;">MARKNADSTYP</h3><div class="val" style="color:var(--gold);">GHOST TIER</div><p>Exklusiva listningar utanför systemen.</p></div>
+    </section>
+
+    <div id="vault">
+        <div class="vault-card">
+            <h2>Åtkomst Begärd</h2>
+            <p>Du låser nu upp dolda objekt i <br><span id="v-city" style="color:#fff; font-weight:bold; font-size:1.2em;"></span>.</p>
+            <input type="password" placeholder="Ange krypteringsnyckel" style="width:100%; padding:15px; background:#111; border:1px solid #333; color:#fff; border-radius:10px; margin-bottom:20px; text-align:center;">
+            <button onclick="alert('Ansluter till krypterad server...'); location.reload();" style="width:100%; padding:18px; border-radius:12px; border:none; background:linear-gradient(45deg, #c5a059, #8c6a2c); color:#000; font-weight:900; cursor:pointer; text-transform:uppercase;">Verifiera Identitet</button>
+            <button onclick="document.getElementById('vault').style.display='none'" style="background:none; border:none; color:#444; margin-top:20px; cursor:pointer; font-size:12px;">AVBRYT</button>
         </div>
     </div>
 
     <script>
-        const input = document.getElementById('searchInput');
-        const resBox = document.getElementById('results');
-        const overlay = document.getElementById('vault-overlay');
-        const citySpan = document.getElementById('target-city');
+        const sI = document.getElementById('s');
+        const rB = document.getElementById('r');
+        const v = document.getElementById('vault');
+        const vC = document.getElementById('v-city');
+        let db = [];
 
-        let csvData = [];
-
-        // 1. Ladda ner CSV-filen direkt när sidan startar
-        async function loadCSV() {
+        // Ladda CSV-datan
+        async function load() {
             try {
-                console.log("Försöker hämta Aiorter.csv...");
-                const response = await fetch('Aiorter.csv');
-                if (!response.ok) throw new Error("Kunde inte hitta Aiorter.csv - kontrollera filnamnet!");
+                const res = await fetch('Aiorter.csv');
+                const txt = await res.text();
+                // Dela rader och rensa bort headern + tomma rader
+                const rows = txt.split(/\r?\n/).filter(line => line.trim() !== "").slice(1);
                 
-                const text = await response.text();
-                // Dela upp rader och hantera både Windows och Mac-brytningar
-                const lines = text.split(/\r?\n/).filter(line => line.trim() !== "");
-                
-                // Mappa datan (hoppa över headern)
-                csvData = lines.slice(1).map(line => {
-                    const columns = line.split(';');
+                db = rows.map(row => {
+                    const c = row.split(';');
+                    if(c.length < 2) return null;
                     return {
-                        ort: columns[0]?.trim(),
-                        kommun: columns[1]?.trim(),
-                        title: columns[2]?.trim(),
-                        desc: columns[3]?.trim()
+                        ort: c[0].trim(),
+                        kom: c[1].trim(),
+                        ttl: c[2] ? c[2].trim() : "",
+                        dsc: c[3] ? c[3].trim() : ""
                     };
-                });
-                console.log("CSV laddad! Antal orter:", csvData.length);
-            } catch (err) {
-                console.error("Fel:", err.message);
+                }).filter(item => item !== null);
+                console.log("Databas laddad.");
+            } catch (e) {
+                console.error("Fel vid laddning av CSV.");
             }
         }
 
-        loadCSV();
+        sI.addEventListener('input', () => {
+            const query = sI.value.toLowerCase().trim();
+            if (query.length < 2) { rB.style.display = 'none'; return; }
 
-        // 2. Sökfunktion
-        input.addEventListener('input', () => {
-            const val = input.value.toLowerCase();
-            if (val.length < 2) { resBox.style.display = 'none'; return; }
-
-            const matches = csvData.filter(item => 
-                item.ort && item.ort.toLowerCase().includes(val)
-            ).slice(0, 10);
+            const matches = db.filter(i => i.ort.toLowerCase().includes(query)).slice(0, 8);
 
             if (matches.length > 0) {
-                resBox.style.display = 'block';
-                resBox.innerHTML = matches.map(m => `
-                    <div class="item" onclick="openVault('${m.ort}', '${m.title}', '${m.desc}')">
+                rB.style.display = 'block';
+                rB.innerHTML = matches.map(m => `
+                    <div class="item" onclick="openV('${m.ort}', '${m.ttl}', '${m.dsc}')">
                         <div>
-                            <div style="font-weight:700;">${m.ort}</div>
-                            <div style="font-size:12px; opacity:0.5;">${m.kommun}</div>
+                            <strong>${m.ort}</strong>
+                            <span>${m.kom}</span>
                         </div>
-                        <span class="ghost-tag">GHOST LISTING</span>
+                        <div class="ghost-badge">GHOST LISTING</div>
                     </div>
                 `).join('');
             } else {
-                resBox.style.display = 'none';
+                rB.style.display = 'none';
             }
         });
 
-        function openVault(ort, title, desc) {
-            citySpan.innerText = ort;
-            overlay.style.display = 'flex';
-            resBox.style.display = 'none';
-            if (title) document.title = title;
-            if (desc) document.querySelector('meta[name="description"]').content = desc;
+        function openV(ort, ttl, dsc) {
+            vC.innerText = ort;
+            v.style.display = 'flex';
+            rB.style.display = 'none';
+            // Uppdatera SEO
+            if(ttl) document.title = ttl;
+            if(dsc) {
+                let meta = document.querySelector('meta[name="description"]');
+                if(meta) meta.setAttribute("content", dsc);
+            }
         }
 
-        document.getElementById('vBtn').onclick = () => {
-            document.getElementById('vH').innerText = "Åtkomst Beviljad";
-            setTimeout(() => { 
-                alert("Ansluter till dolda servern för " + citySpan.innerText);
-                overlay.style.display = 'none';
-            }, 800);
-        };
+        load();
     </script>
 </body>
 </html>
