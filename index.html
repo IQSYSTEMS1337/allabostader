@@ -3,20 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title id="dynamic-title">Allabostäder | Fastighetsintelligens & Dolda Hem</title>
-    <meta name="description" id="dynamic-desc" content="Sök dolda bostäder och Ghost Listings innan de når Hemnet. AI-driven fastighetsdata.">
-    
+    <title id="dynamic-title">Allabostäder | Dolda Hem & Fastighetsintelligens</title>
+    <meta name="description" id="dynamic-desc" content="Sök dolda bostäder och Ghost Listings innan de når Hemnet.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
-    
     <style>
         :root { --black: #050505; --white: #ffffff; --accent: #007AFF; --gold: #c5a059; }
         body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; min-height: 100vh; overflow-x: hidden; }
-        .aura { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,122,255,0.08) 0%, rgba(0,0,0,1) 70%); z-index: -1; }
+        .aura { position: fixed; inset: -50%; background: radial-gradient(circle, rgba(0,122,255,0.08) 0%, rgba(0,0,0,1) 70%); z-index: -1; }
         .hero { height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 0 20px; }
         h1 { font-size: clamp(40px, 10vw, 90px); font-weight: 900; letter-spacing: -4px; margin: 0; line-height: 0.9; background: linear-gradient(180deg, #fff 40%, #555 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .search-container { width: 100%; max-width: 650px; position: relative; margin-top: 40px; z-index: 10; }
+        .search-container { width: 100%; max-width: 650px; position: relative; margin-top: 40px; }
         input { width: 100%; padding: 25px 30px; border-radius: 50px; border: 1px solid #333; background: rgba(255,255,255,0.05); color: #fff; font-size: 18px; outline: none; backdrop-filter: blur(15px); box-sizing: border-box; }
-        .results { position: absolute; top: 110%; left: 0; right: 0; background: #0c0c0c; border-radius: 20px; border: 1px solid #222; max-height: 400px; overflow-y: auto; display: none; z-index: 100; box-shadow: 0 20px 50px rgba(0,0,0,0.8); }
+        .results { position: absolute; top: 110%; left: 0; right: 0; background: #0c0c0c; border-radius: 20px; border: 1px solid #222; max-height: 400px; overflow-y: auto; display: none; z-index: 100; }
         .item { padding: 20px 25px; border-bottom: 1px solid #151515; cursor: pointer; display: flex; justify-content: space-between; align-items: center; text-align: left; }
         .item:hover { background: #151515; }
         .ghost-badge { font-size: 10px; color: var(--accent); border: 1px solid rgba(0,122,255,0.3); padding: 4px 8px; border-radius: 4px; font-weight: 900; }
@@ -39,7 +37,7 @@
     <div id="vault">
         <div class="vault-card">
             <h2 style="color:var(--gold)">Åtkomst Begärd</h2>
-            <p>Verifiera för att låsa upp <br><strong id="v-city"></strong>.</p>
+            <p>Verifiera identitet för <br><strong id="v-city"></strong>.</p>
             <input type="password" placeholder="Krypteringsnyckel" style="width:100%; padding:15px; background:#111; border:1px solid #333; color:#fff; border-radius:10px; text-align:center;">
             <button class="btn-gold" onclick="alert('Ansluter...'); location.reload();">Verifiera</button>
             <button onclick="document.getElementById('vault').style.display='none'" style="background:none; border:none; color:#444; margin-top:15px; cursor:pointer;">AVBRYT</button>
@@ -50,15 +48,16 @@
         let db = [];
         const sI = document.getElementById('s'), rB = document.getElementById('r'), v = document.getElementById('vault'), vC = document.getElementById('v-city');
 
-        // Ladda CSV med robust hantering för å, ä, ö och radbrytningar
+        // CSV-laddare med Punycode-vänlig fetch
         fetch('Aiorter.csv')
             .then(res => res.text())
             .then(data => {
                 db = data.split(/\r?\n/).slice(1).map(line => {
                     const c = line.split(';');
+                    // Kolumner: 0:Tätort, 1:Kommun, 2:SEO-Title, 3:SEO-Desc
                     return c.length >= 2 ? { o: c[0].trim(), k: c[1].trim(), t: c[2]?.trim(), d: c[3]?.trim() } : null;
                 }).filter(x => x);
-            });
+            }).catch(e => console.log("Laddningsfel:", e));
 
         sI.addEventListener('input', () => {
             const q = sI.value.toLowerCase().trim();
