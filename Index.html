@@ -3,94 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allabostäder | Exklusiva Insikter & Dolda Bostäder</title>
+    <title>Allabostäder | Premium AI-insikter</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;900&display=swap" rel="stylesheet">
     <style>
-        :root { --black: #000000; --white: #ffffff; --gold: #D4AF37; --glass: rgba(255, 255, 255, 0.05); }
-        body { background-color: var(--black); color: var(--white); font-family: 'Inter', sans-serif; margin: 0; -webkit-font-smoothing: antialiased; }
+        :root { --black: #050505; --white: #ffffff; --accent: #007AFF; }
+        body { background: var(--black); color: var(--white); font-family: 'Inter', sans-serif; margin: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; text-align: center; }
         
-        /* BAKGRUNDS-AURA (MILJARD-LOOKEN) */
-        .aura { position: fixed; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(0,122,255,0.05) 0%, rgba(0,0,0,1) 70%); z-index: -1; }
-
-        nav { padding: 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,255,255,0.1); }
-        .logo { font-weight: 900; font-size: 22px; letter-spacing: -1px; text-transform: uppercase; border: 2px solid #fff; padding: 5px 15px; }
-
-        .main { height: 85vh; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 0 20px; }
-        h1 { font-size: clamp(40px, 8vw, 120px); font-weight: 900; text-align: center; margin: 0; letter-spacing: -5px; line-height: 0.9; }
-        p.sub { color: #666; font-size: 18px; margin-top: 20px; text-transform: uppercase; letter-spacing: 4px; }
-
-        .search-box { margin-top: 60px; width: 100%; max-width: 800px; position: relative; }
-        input { 
-            width: 100%; padding: 30px; background: var(--glass); border: 1px solid rgba(255,255,255,0.1); 
-            border-radius: 100px; color: #fff; font-size: 20px; backdrop-filter: blur(20px);
-            outline: none; transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        input:focus { border-color: #fff; background: rgba(255,255,255,0.1); box-shadow: 0 0 50px rgba(255,255,255,0.1); }
-
-        .results { 
-            position: absolute; top: 110%; left: 5%; right: 5%; background: #0a0a0a; 
-            border-radius: 20px; border: 1px solid #222; overflow: hidden; z-index: 100;
-            display: none; box-shadow: 0 40px 100px rgba(0,0,0,0.8);
-        }
-        .item { padding: 25px; border-bottom: 1px solid #111; cursor: pointer; transition: 0.3s; }
-        .item:hover { background: #111; padding-left: 35px; color: var(--gold); }
+        /* Miljard-dollar rubrik */
+        h1 { font-size: clamp(40px, 10vw, 90px); font-weight: 900; letter-spacing: -4px; margin: 0; background: linear-gradient(180deg, #fff 0%, #444 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; line-height: 0.9; }
+        
+        /* Snygg sökruta */
+        .search-box { margin-top: 50px; width: 90%; max-width: 600px; position: relative; }
+        input { width: 100%; padding: 25px; border-radius: 50px; border: 1px solid #222; background: #111; color: #fff; font-size: 18px; outline: none; transition: 0.4s; box-sizing: border-box; }
+        input:focus { border-color: var(--accent); box-shadow: 0 0 40px rgba(0,122,255,0.15); }
+        
+        /* Resultatlista */
+        .results { position: absolute; top: 110%; left: 0; right: 0; background: #0a0a0a; border-radius: 20px; border: 1px solid #222; max-height: 350px; overflow-y: auto; text-align: left; z-index: 100; display: none; }
+        .item { padding: 20px; border-bottom: 1px solid #1a1a1a; cursor: pointer; transition: 0.2s; }
+        .item:hover { background: #111; color: var(--accent); }
     </style>
 </head>
 <body>
-    <div class="aura"></div>
-    <nav>
-        <div class="logo">Allabostäder</div>
-        <div style="font-size: 12px; opacity: 0.5;">PREMIUM INSIGHTS v3.0</div>
-    </nav>
 
-    <div class="main">
-        <p class="sub">Sluta leta. Börja hitta.</p>
-        <h1>Dolda Bostäder. <br> Innan Alla Andra.</h1>
-
-        <div class="search-box">
-            <input type="text" id="searchInput" placeholder="Sök bland 3 000 exklusiva områden..." autocomplete="off">
-            <div id="results" class="results"></div>
-        </div>
+    <h1>Hitta hemmet.<br>Innan de andra.</h1>
+    
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="Sök bland 3 000 orter..." autocomplete="off">
+        <div id="results" class="results"></div>
     </div>
 
-    <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "RealEstateListing",
-      "name": "Allabostäder.se - Sveriges dolda bostadsmarknad",
-      "description": "AI-driven plattform för att hitta bostäder innan de når Hemnet."
-    }
-    </script>
-
     <script>
-        // HÄR ÄR MOTORN SOM LÄSER DIN CSV
-        const searchInput = document.getElementById('searchInput');
-        const resultsBox = document.getElementById('results');
+        const input = document.getElementById('searchInput');
+        const resBox = document.getElementById('results');
 
-        searchInput.addEventListener('input', async () => {
-            const query = searchInput.value.toLowerCase();
-            if(query.length < 2) { resultsBox.style.display = 'none'; return; }
-
-            // Vi hämtar din CSV som du laddat upp i samma mapp
+        input.addEventListener('input', async () => {
+            const q = input.value.toLowerCase();
+            if(q.length < 2) { resBox.style.display = 'none'; return; }
+            
             try {
                 const response = await fetch('Aiorter.csv');
                 const text = await response.text();
-                const rows = text.split('\n').slice(1); // Skippa rubriken
-
-                const filtered = rows.filter(row => row.toLowerCase().includes(query)).slice(0, 6);
-
-                if(filtered.length > 0) {
-                    resultsBox.style.display = 'block';
-                    resultsBox.innerHTML = filtered.map(row => {
-                        const cols = row.split(';');
-                        return `<div class="item" onclick="location.href='/ort/${cols[0].toLowerCase()}'">
-                                    <strong>${cols[0]}</strong> <span style="opacity:0.4; font-size:14px; margin-left:10px;">${cols[1]}</span>
-                                </div>`;
+                const rows = text.split('\n').slice(1);
+                
+                const matches = rows.filter(r => r.toLowerCase().includes(q)).slice(0, 6);
+                
+                if(matches.length > 0) {
+                    resBox.style.display = 'block';
+                    resBox.innerHTML = matches.map(r => {
+                        const cols = r.split(';');
+                        return `<div class="item" onclick="alert('AI analyserar ${cols[0]}...')">
+                            <strong>${cols[0]}</strong> <span style="opacity:0.4; font-size:14px;">${cols[1] || ''}</span>
+                        </div>`;
                     }).join('');
                 } else {
-                    resultsBox.style.display = 'none';
+                    resBox.style.display = 'none';
                 }
-            } catch (err) { console.error("CSV saknas!", err); }
+            } catch (e) { console.log("Laddar..."); }
         });
     </script>
 </body>
