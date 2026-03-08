@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VALVET | Allabostäder</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --black: #000; --gold: #D4AF37; --blue: #007AFF; --dark-grey: #0a0a0a; }
+        body { background: var(--black); color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 40px; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #111; padding-bottom: 20px; }
+        .vault-id { font-family: monospace; color: var(--blue); font-size: 12px; letter-spacing: 2px; }
+        
+        h1 { font-size: 60px; font-weight: 900; margin: 40px 0 10px 0; letter-spacing: -3px; }
+        .location-tag { display: inline-block; padding: 5px 15px; background: var(--blue); border-radius: 5px; font-weight: 700; font-size: 12px; text-transform: uppercase; }
+
+        .grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; margin-top: 60px; }
+        
+        /* DATA-MODULER */
+        .card { background: var(--dark-grey); border: 1px solid #111; padding: 30px; border-radius: 20px; }
+        .stat { font-size: 40px; font-weight: 900; margin-bottom: 5px; }
+        .label { font-size: 12px; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+
+        /* JÄMFÖRELSEN SOM DÖDAR HEMNET */
+        .comparison-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        .comparison-table td { padding: 15px 0; border-bottom: 1px solid #1a1a1a; }
+        .better { color: var(--blue); font-weight: 700; }
+        .worse { color: #ff4444; opacity: 0.5; }
+
+        /* LOCK-SCREEN */
+        .lock-screen { 
+            position: relative; overflow: hidden; height: 300px; 
+            background: linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%); 
+            margin-top: -150px; display: flex; align-items: center; justify-content: center;
+        }
+        .cta-button { 
+            background: #fff; color: #000; padding: 20px 40px; border-radius: 50px; 
+            font-weight: 900; text-decoration: none; text-transform: uppercase; letter-spacing: 1px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="vault-id">ACCESS GRANTED // SESSION_ID: AB-772-X</div>
+        <div style="font-weight: 900; font-size: 18px;">ALLABOSTÄDER</div>
+    </div>
+
+    <div class="location-tag">Market Intelligence</div>
+    <h1 id="ortNamn">Analys: Ortnamn</h1>
+
+    <div class="grid">
+        <div class="card">
+            <h2 class="label">Dold Marknadsinsikt</h2>
+            <div style="display: flex; gap: 40px; margin-top: 20px;">
+                <div><div class="stat">12</div><div class="label">Ghost Listings</div></div>
+                <div><div class="stat">14 dgr</div><div class="label">Tidsförsprång</div></div>
+                <div><div class="stat">4.2%</div><div class="label">Värdepotential</div></div>
+            </div>
+            
+            <table class="comparison-table">
+                <tr><td>Publik exponering</td><td class="worse">100% (Bränt objekt)</td><td class="better">0% (Exklusivt)</td></tr>
+                <tr><td>Plattformsavgift</td><td class="worse">~25 000 kr (Hemnet)</td><td class="better">0 kr</td></tr>
+                <tr><td>Budgivningsstress</td><td class="worse">Hög</td><td class="better">Minimal</td></tr>
+            </table>
+        </div>
+
+        <div class="card" style="border-color: var(--blue);">
+            <h2 class="label">AI Riskbedömning</h2>
+            <div class="stat" style="color: var(--blue);">LÅG</div>
+            <p style="color: #888; font-size: 14px; line-height: 1.6;">Vår algoritm indikerar att detta område är undervärderat i förhållande till kommande infrastrukturprojekt.</p>
+        </div>
+    </div>
+
+    <div style="margin-top: 60px;">
+        <h2 class="label">Tillgängliga Ghost Listings i området</h2>
+        <div style="height: 400px; background: #050505; border: 1px solid #111; border-radius: 20px; padding: 20px;">
+            <div style="opacity: 0.1;">
+                <p>Villa - 145m² - 5 400 000 kr</p>
+                <p>Radhus - 110m² - 3 200 000 kr</p>
+                <p>Penthouse - 88m² - 6 700 000 kr</p>
+            </div>
+            <div class="lock-screen">
+                <a href="#" class="cta-button">Lås upp dolda listningar</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Hämta orten från URL:en så att sidan anpassas automatiskt
+        const params = new URLSearchParams(window.location.search);
+        const ort = params.get('name') || 'Vald Ort';
+        document.getElementById('ortNamn').innerText = "Analys: " + ort;
+        document.title = "VALVET | " + ort;
+    </script>
+</body>
+</html>
