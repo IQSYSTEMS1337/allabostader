@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allabostäder | Fastighetsintelligens</title>
+    <title id="dynamic-title">Allabostäder | Fastighetsintelligens</title>
+    <meta name="description" id="dynamic-desc" content="Sök dolda bostäder och Ghost Listings innan de når Hemnet.">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;700;900&display=swap" rel="stylesheet">
     <style>
         :root { --black: #050505; --white: #ffffff; --accent: #007AFF; --gold: #c5a059; --dark-grey: #111; }
@@ -22,9 +23,8 @@
         .results { position: absolute; top: 110%; left: 0; right: 0; background: #0a0a0a; border-radius: 25px; border: 1px solid #222; max-height: 400px; overflow-y: auto; text-align: left; z-index: 100; display: none; box-shadow: 0 40px 100px rgba(0,0,0,0.9); }
         .item { padding: 25px 35px; border-bottom: 1px solid #111; cursor: pointer; transition: 0.3s; display: flex; justify-content: space-between; align-items: center; }
         .item:hover { background: #111; color: var(--accent); padding-left: 45px; }
-        .item .ghost-tag { font-size: 10px; background: #1a1a1a; padding: 4px 8px; border-radius: 4px; color: var(--accent); font-weight: 700; }
+        .item .ghost-tag { font-size: 10px; background: rgba(0,122,255,0.1); border: 1px solid rgba(0,122,255,0.2); padding: 4px 10px; border-radius: 4px; color: var(--accent); font-weight: 700; }
 
-        /* BLACK TIER VAULT MODAL */
         #vault-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; justify-content: center; align-items: center; z-index: 1000; backdrop-filter: blur(10px); }
         .black-tier-vault { background: #0a0a0a; border: 1px solid #1a1a1a; padding: 60px; border-radius: 24px; box-shadow: 0 0 50px rgba(0,0,0,1); text-align: center; max-width: 500px; width: 90%; }
         .black-tier-vault h2 { font-size: 32px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; background: linear-gradient(180deg, var(--gold) 0%, #8c6a2c 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
@@ -55,10 +55,10 @@
 
     <div id="vault-overlay">
         <div class="black-tier-vault">
-            <h2>Auktoriserad Åtkomst</h2>
-            <p>Du beträder nu den dolda marknaden för <span id="target-city" style="color:var(--gold)"></span>. Endast verifierade objekt visas här.</p>
+            <h2 id="vault-header">Auktoriserad Åtkomst</h2>
+            <p id="vault-p">Verifiera identitet för att låsa upp marknaden i <span id="target-city" style="color:var(--gold)"></span>. Endast verifierade objekt visas här.</p>
             <form id="vault-login">
-                <input type="password" placeholder="Ange din unika krypteringsnyckel" class="dark-input">
+                <input type="password" id="vault-pass" placeholder="Ange din unika krypteringsnyckel" class="dark-input">
                 <button type="submit" class="gold-button">Verifiera Identitet</button>
             </form>
             <button onclick="document.getElementById('vault-overlay').style.display='none'" style="background:none; border:none; color:#444; margin-top:20px; cursor:pointer;">Avbryt</button>
@@ -92,32 +92,80 @@
         const overlay = document.getElementById('vault-overlay');
         const citySpan = document.getElementById('target-city');
 
-        function openVault(city) {
-            citySpan.innerText = city;
+        // Funktion för att öppna valvet och injicera SEO-data
+        function openVault(ort, kommun, title, desc) {
+            citySpan.innerText = ort;
             overlay.style.display = 'flex';
+            
+            // Dynamisk SEO-uppdatering
+            if(title) document.title = title;
+            if(desc) document.querySelector('meta[name="description"]')?.setAttribute("content", desc);
         }
 
         input.addEventListener('input', async () => {
             const q = input.value.toLowerCase();
             if(q.length < 2) { resBox.style.display = 'none'; return; }
+            
             try {
                 const response = await fetch('Aiorter.csv');
                 const text = await response.text();
-                const rows = text.split('\n').slice(1);
-                const matches = rows.filter(r => r.toLowerCase().includes(q)).slice(0, 6);
+                const rows = text.split('\n').filter(row => row.trim() !== '').slice(1);
+                
+                // Matchning mot Tätort (kolumn 0)
+                const matches = rows.filter(r => r.split(';')[0].toLowerCase().includes(q)).slice(0, 8);
                 
                 if(matches.length > 0) {
                     resBox.style.display = 'block';
                     resBox.innerHTML = matches.map(r => {
-                        const cols = r.split(';');
-                        const ortNamn = cols[0].trim();
-                        return `<div class="item" onclick="openVault('${ortNamn}')">
-                            <div><strong>${ortNamn}</strong><span style="opacity:0.3; font-size:12px; margin-left:10px;">${cols[1] || ''}</span></div>
-                            <span class="ghost-tag">GHOST LISTINGS</span>
+                        const c = r.split(';');
+                        const ort = c[0] ? c[0].trim() : '';
+                        const kommun = c[1] ? c[1].trim() : '';
+                        const status = c[2] ? c[2].trim() : 'AKTIV';
+                        const listings = c[3] ? c[3].trim() : 'Dolda data...';
+                        const trend = c[4] ? c[4].trim() : '';
+                        const seoTitle = c[5] ? c[5].trim() : '';
+                        const seoDesc = c[6] ? c[6].trim() : '';
+
+                        return `
+                        <div class="item" onclick="openVault('${ort}', '${kommun}', '${seoTitle}', '${seoDesc}')">
+                            <div style="flex: 1;">
+                                <div style="font-weight: 900; font-size: 18px; letter-spacing: -0.5px;">${ort}</div>
+                                <div style="font-size: 12px; opacity: 0.4; text-transform: uppercase; letter-spacing: 1px;">${kommun}</div>
+                                <div style="font-size: 11px; color: var(--gold); margin-top: 6px; font-weight: 700; display: flex; gap: 10px; align-items: center;">
+                                    <span>● ${status}</span>
+                                    <span style="color: #333;">|</span>
+                                    <span>${listings}</span>
+                                    ${trend ? `<span style="color: #00ff00; opacity: 0.8;">${trend}</span>` : ''}
+                                </div>
+                            </div>
+                            <span class="ghost-tag">GHOST LISTING</span>
                         </div>`;
                     }).join('');
-                } else { resBox.style.display = 'none'; }
-            } catch (e) { console.error("Fel vid laddning.", e); }
+                } else { 
+                    resBox.style.display = 'none'; 
+                }
+            } catch (e) { 
+                console.error("Systemfel vid dataladdning.", e); 
+            }
+        });
+
+        // Enkel validering för lösenordsfältet
+        document.getElementById('vault-login').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const pass = document.getElementById('vault-pass').value;
+            if(pass.length > 0) {
+                document.getElementById('vault-header').innerText = "Åtkomst Beviljad";
+                document.getElementById('vault-p').innerText = "Krypterad anslutning upprättad. Hämtar dolda objekt...";
+                setTimeout(() => {
+                    alert("Verifiering lyckades. Du kommer nu att omdirigeras till de exklusiva listorna.");
+                    overlay.style.display = 'none';
+                }, 1500);
+            }
+        });
+
+        // Stäng vid klick utanför
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) overlay.style.display = 'none';
         });
     </script>
 </body>
