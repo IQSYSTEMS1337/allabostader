@@ -21,7 +21,7 @@
 <body>
 
 <div class="vault-container">
-    <div id="overlay">SYNKRONISERAR...</div>
+    <div id="overlay">SYNKRONISERAR MED SKUGGNÄTVERKET...</div>
     <h1>Åtkomst Begärd</h1>
     <div class="location-info">
         <span id="display-city" class="city-name">Laddar...</span>
@@ -34,12 +34,14 @@
 
 <script>
     let csvData = "";
-    const redirectUrl = "https://www.google.com"; // ÄNDRA DENNA TILL DIN MÅLSIDA
-
+    
+    // Hämta stad från URL
     const pathParts = window.location.pathname.split('/').filter(p => p);
     const rawPath = pathParts.pop() || "Gävle";
-    const targetCity = decodeURIComponent(rawPath).trim().toLowerCase();
-    document.getElementById('display-city').innerText = decodeURIComponent(rawPath);
+    const targetCityDisplay = decodeURIComponent(rawPath);
+    const targetCityLower = targetCityDisplay.trim().toLowerCase();
+    
+    document.getElementById('display-city').innerText = targetCityDisplay;
 
     async function init() {
         try {
@@ -63,22 +65,22 @@
 
             for (let i = 1; i < rows.length; i++) {
                 const cols = rows[i].split(';');
-                if (cols[0] && cols[0].trim().toLowerCase() === targetCity) {
+                if (cols[0] && cols[0].trim().toLowerCase() === targetCityLower) {
                     found = true;
                     break;
                 }
             }
 
             if (found) {
-                alert("ÅTKOMST BEVILJAD. Skickar dig vidare...");
-                // HÄR SKER VIDAREBEFORDRINGEN:
-                window.location.href = redirectUrl; 
+                // VIDAREBEFORDRING: Skickar till t.ex. /Gävle-info
+                const targetUrl = "/" + encodeURIComponent(targetCityDisplay) + "-info";
+                window.location.href = targetUrl;
             } else {
-                alert("ÅTKOMST NEKAD: Orten hittades inte.");
+                alert("ÅTKOMST NEKAD: Orten hittades inte i databasen.");
                 btn.innerText = "Verifiera";
                 btn.disabled = false;
             }
-        }, 1000);
+        }, 1200);
     }
     window.onload = init;
 </script>
