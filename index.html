@@ -10,7 +10,6 @@
         .vault-container { background: var(--grey); border: 1px solid var(--gold); padding: 2.5rem; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.15); width: 400px; }
         h1 { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-size: 1.1rem; margin-bottom: 2rem; }
         .location-info { margin-bottom: 2.5rem; border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 1rem 0; }
-        .city-label { color: #666; font-size: 0.8rem; text-transform: uppercase; }
         .city-name { display: block; font-size: 1.4rem; color: #fff; margin-top: 5px; }
         .btn-group { display: flex; flex-direction: column; gap: 12px; }
         button { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px; cursor: pointer; text-transform: uppercase; font-weight: bold; }
@@ -21,12 +20,11 @@
 </head>
 <body>
 
-<div id="overlay">SYNKRONISERAR MED SKUGGNÄTVERKET...</div>
+<div id="overlay">SYNKRONISERAR...</div>
 
 <div class="vault-container">
     <h1>Åtkomst Begärd</h1>
     <div class="location-info">
-        <span class="city-label">Verifiera identitet för:</span>
         <span id="display-city" class="city-name">Laddar...</span>
     </div>
     <div class="btn-group">
@@ -36,8 +34,7 @@
 </div>
 
 <script>
-    let csvContent = "";
-    // Hämta orten från URL:en
+    let csvData = "";
     const pathParts = window.location.pathname.split('/').filter(p => p);
     const currentPath = pathParts.pop() || "Gävle";
     const targetCity = decodeURIComponent(currentPath).trim().toLowerCase();
@@ -46,46 +43,56 @@
 
     async function init() {
         try {
-            // Hämtar filen via din Worker (CORS-stöd krävs)
-            const resp = await fetch('Aiorter.csv');
-            if (!resp.ok) throw new Error();
-            csvContent = await resp.text();
+            // Vi lägger till en timestamp för att tvinga färsk data
+            const resp = await fetch('Aiorter.csv?v=' + Date.now(), { mode: 'cors' });
+            if (!resp.ok) throw new Error("Kunde inte hämta filen");
+            
+            let text = await resp.text();
+            // VIKTIGT: Ta bort osynliga tecken (BOM) i början av filen
+            csvData = text.replace(/^\uFEFF/, ""); 
+            
             document.getElementById('overlay').style.display = 'none';
         } catch (e) {
-            document.getElementById('overlay').innerText = "SYSTEMFEL: Kunde inte läsa Aiorter.csv";
+            document.getElementById('overlay').innerText = "SYSTEMFEL: Blockeras av webbläsaren eller saknas.";
+            console.error(e);
         }
     }
 
     function startVerification() {
+        if (!csvData) {
+            alert("Databasen har inte laddats än. Vänta 2 sekunder.");
+            return;
+        }
+
         const btn = document.getElementById('v-btn');
         btn.innerText = "DEKRYPTERAR...";
         btn.disabled = true;
 
         setTimeout(() => {
-            const rows = csvContent.split('\n');
+            const rows = csvData.split(/\r?\n/);
             let match = null;
 
-            // Vi loopar igenom rader och delar upp vid semikolon
-            for (let i = 1; i < rows.length; i++) { // i=1 för att hoppa över headern
+            for (let i = 1; i < rows.length; i++) {
                 const cols = rows[i].split(';');
                 if (cols[0] && cols[0].trim().toLowerCase() === targetCity) {
                     match = {
                         city: cols[0].trim(),
                         kommun: cols[1] ? cols[1].trim() : "Okänd",
-                        desc: cols[3] ? cols[3].trim() : "Ingen beskrivning."
+                        desc: cols[3] ? cols[3].trim() : "Beskrivning saknas."
                     };
                     break;
                 }
             }
 
             if (match) {
-                alert(`ÅTKOMST BEVILJAD\n\nIdentitet: ${match.city}\nRegion: ${match.kommun}\n\nStatus: ${match.desc}`);
+                alert(`BEVILJAD\n\nIdentitet: ${match.city}\nKommun: ${match.kommun}\n\nInfo: ${match.desc}`);
+                btn.innerText = "Verifierad";
             } else {
-                alert(`ÅTKOMST NEKAD\n\nKunde inte matcha '${targetCity}' i databasen.`);
+                alert(`NEKAD\n\nKunde inte hitta '${targetCity}' i databasen.`);
                 btn.innerText = "Verifiera";
                 btn.disabled = false;
             }
-        }, 1200);
+        }, 800);
     }
 
     window.onload = init;
