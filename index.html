@@ -7,7 +7,7 @@
     <style>
         :root { --gold: #d4af37; --dark: #0a0a0a; --grey: #1a1a1a; }
         body { background: var(--dark); color: white; font-family: 'Courier New', monospace; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
-        .vault-container { background: var(--grey); border: 1px solid var(--gold); padding: 2.5rem; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.15); width: 380px; }
+        .vault-container { background: var(--grey); border: 1px solid var(--gold); padding: 2.5rem; text-align: center; box-shadow: 0 0 30px rgba(212, 175, 55, 0.15); width: 400px; }
         h1 { color: var(--gold); text-transform: uppercase; letter-spacing: 4px; font-size: 1.1rem; margin-bottom: 2rem; }
         .location-info { margin-bottom: 2.5rem; border-top: 1px solid #333; border-bottom: 1px solid #333; padding: 1rem 0; }
         .city-label { color: #666; font-size: 0.8rem; text-transform: uppercase; }
@@ -36,21 +36,23 @@
 </div>
 
 <script>
-    let rawData = "";
-    // Hämta ort från URL (t.ex. allabostäder.se/Gävle)
-    const currentPath = window.location.pathname.split('/').filter(p => p).pop() || "Gävle";
-    const targetCity = decodeURIComponent(currentPath).trim();
-    document.getElementById('display-city').innerText = targetCity;
+    let csvContent = "";
+    // Hämta orten från URL:en
+    const pathParts = window.location.pathname.split('/').filter(p => p);
+    const currentPath = pathParts.pop() || "Gävle";
+    const targetCity = decodeURIComponent(currentPath).trim().toLowerCase();
+    
+    document.getElementById('display-city').innerText = decodeURIComponent(currentPath);
 
     async function init() {
         try {
-            // Anropar filen via din nya Worker med CORS-stöd
+            // Hämtar filen via din Worker (CORS-stöd krävs)
             const resp = await fetch('Aiorter.csv');
             if (!resp.ok) throw new Error();
-            rawData = await resp.text();
+            csvContent = await resp.text();
             document.getElementById('overlay').style.display = 'none';
         } catch (e) {
-            document.getElementById('overlay').innerText = "ANSLUTNINGSFEL: Kontrollera Aiorter.csv";
+            document.getElementById('overlay').innerText = "SYSTEMFEL: Kunde inte läsa Aiorter.csv";
         }
     }
 
@@ -60,24 +62,26 @@
         btn.disabled = true;
 
         setTimeout(() => {
-            const rows = rawData.split('\n');
-            let foundMatch = null;
+            const rows = csvContent.split('\n');
+            let match = null;
 
-            for (let row of rows) {
-                // Prova både semikolon och kommatecken som separator
-                const columns = row.includes(';') ? row.split(';') : row.split(',');
-                const cityNameInFile = columns[0] ? columns[0].trim() : "";
-
-                if (cityNameInFile.toLowerCase() === targetCity.toLowerCase()) {
-                    foundMatch = columns.slice(1).join(' ').trim();
+            // Vi loopar igenom rader och delar upp vid semikolon
+            for (let i = 1; i < rows.length; i++) { // i=1 för att hoppa över headern
+                const cols = rows[i].split(';');
+                if (cols[0] && cols[0].trim().toLowerCase() === targetCity) {
+                    match = {
+                        city: cols[0].trim(),
+                        kommun: cols[1] ? cols[1].trim() : "Okänd",
+                        desc: cols[3] ? cols[3].trim() : "Ingen beskrivning."
+                    };
                     break;
                 }
             }
 
-            if (foundMatch) {
-                alert("ÅTKOMST BEVILJAD\n\nIdentitet: " + targetCity + "\nData: " + foundMatch);
+            if (match) {
+                alert(`ÅTKOMST BEVILJAD\n\nIdentitet: ${match.city}\nRegion: ${match.kommun}\n\nStatus: ${match.desc}`);
             } else {
-                alert("ÅTKOMST NEKAD\n\nKunde inte matcha '" + targetCity + "' i databasen.");
+                alert(`ÅTKOMST NEKAD\n\nKunde inte matcha '${targetCity}' i databasen.`);
                 btn.innerText = "Verifiera";
                 btn.disabled = false;
             }
