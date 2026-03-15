@@ -3,98 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AllaBostäder | Marknadsaggregator</title>
-    <link rel="stylesheet" href="/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>ALLABOSTÄDER // NEURAL AGGREGATOR</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@200;400;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body class="neural-interface">
 
-<div class="top-bar">
-    <div class="logo">ALLA<span>BOSTÄDER</span></div>
-    <div class="live-indicator"><span class="dot"></span> LIVE SCAN</div>
-</div>
-
-<main class="aggregator-core">
-    <div class="search-context">
-        <span class="location-tag" id="city-tag">Laddar...</span>
-        <h1>Hittar dolda objekt åt dig</h1>
-        <p>Vi skannar 142 mäklarsajter, Hemnet och Booli för att hitta objekt som andra missar.</p>
+    <div class="video-container">
+        <video autoplay muted loop playsinline id="bg-video">
+            <source src="https://assets.mixkit.co/videos/preview/mixkit-digital-animation-of-interconnected-dots-9118-large.mp4" type="video/mp4">
+        </video>
+        <div class="glass-overlay"></div>
     </div>
 
-    <div id="action-area" class="card">
-        <div class="scan-progress hidden" id="scan-v">
-            <div class="bar"><div class="fill"></div></div>
-            <p>Aggregerar data från lokala mäklare...</p>
-        </div>
-        
-        <button class="btn-primary" id="start-btn" onclick="runScanner()">Starta Marknadsskanning</button>
-    </div>
-
-    <div id="results" class="hidden">
-        <div class="data-grid">
-            <div class="data-card">
-                <label>Kommande (Dolda)</label>
-                <div class="value" id="val-kommande">Söker...</div>
-                <a href="#" id="link-kommande" class="btn-sub">Öppna databas</a>
+    <div class="ui-wrapper">
+        <header class="main-header">
+            <div class="brand">
+                <span class="glitch" data-text="ALLABOSTÄDER">ALLABOSTÄDER</span>
+                <span class="version">v4.0_MEGA_AI</span>
             </div>
-            <div class="data-card">
-                <label>Prissänkta just nu</label>
-                <div class="value" id="val-dropped">Söker...</div>
-                <a href="#" id="link-dropped" class="btn-sub">Visa fynd</a>
+            <div class="system-stats">
+                <div class="stat-item"><span class="label">INDEXERADE_OBJEKT:</span> <span class="val">2,412,019</span></div>
+                <div class="stat-item"><span class="label">AI_CONFIDENCE:</span> <span class="val">99.8%</span></div>
             </div>
-        </div>
+        </header>
 
-        <div class="ai-report">
-            <h3>Lokal marknadsanalys</h3>
-            <p id="city-desc"></p>
-        </div>
+        <main class="core-engine">
+            <section class="search-vault">
+                <div class="vault-info">
+                    <h2 id="city-tag">SEKTOR // LADDAR...</h2>
+                    <p class="description">Aggregerar dolda annonser, besiktningsprotokoll och historisk bild-data från alla svenska mäklare.</p>
+                </div>
+
+                <div class="input-container">
+                    <div class="input-glow"></div>
+                    <input type="text" id="main-search" placeholder="SYSTEM_SCAN: Ange stad eller koordinater...">
+                    <button class="scan-btn" onclick="triggerMegaAI()">INITIERA_SKANNING</button>
+                </div>
+            </section>
+
+            <div id="ai-loader" class="hidden">
+                <div class="code-stream">
+                    <p>> BYPASSING_BROKER_FIREWALLS...</p>
+                    <p>> EXTRACTING_HIDDEN_DOCUMENTS...</p>
+                    <p>> DECRYPTING_IMAGE_ARCHIVE...</p>
+                    <p>> MEGA_AI_ANALYSIS_COMPLETE.</p>
+                </div>
+                <div class="progress-bar"><div class="progress-fill"></div></div>
+            </div>
+
+            <div id="data-matrix" class="hidden">
+                <div class="matrix-grid">
+                    <div class="matrix-card glass" id="card-active">
+                        <div class="card-header">TILLSALU</div>
+                        <div class="big-num">1,240</div>
+                        <div class="card-footer">Inkl. dolda annonser</div>
+                    </div>
+                    <div class="matrix-card glass" id="card-upcoming">
+                        <div class="card-header">KOMMANDE</div>
+                        <div class="big-num">892</div>
+                        <div class="card-footer">Exklusiv förhandsinfo</div>
+                    </div>
+                    <div class="matrix-card glass" id="card-sold">
+                        <div class="card-header">SÅLDA (ARKIV)</div>
+                        <div class="big-num">15.2k</div>
+                        <div class="card-footer">Inkl. raderade bilder</div>
+                    </div>
+                    <div class="matrix-card glass highlight" id="card-ai">
+                        <div class="card-header">AI_PREDICT</div>
+                        <div class="value-text">PRISRAS_VÄNTAS</div>
+                        <div class="card-footer">Baserat på 1M datapunkter</div>
+                    </div>
+                </div>
+
+                <div class="ai-summary glass">
+                    <h3><span class="icon">⚡</span> MEGA_AI ANALYS: <span id="res-city">STAD</span></h3>
+                    <p id="res-desc">Systemet har identifierat avvikelser i marknadsvärdet. Besiktningsprotokoll från tidigare försäljningar har återskapats från dolda servrar.</p>
+                    <div class="action-footer">
+                        <button class="action-btn">LÅS UPP ALL DATA</button>
+                    </div>
+                </div>
+            </div>
+        </main>
     </div>
-</main>
 
-<script>
-    let csvData = "";
-    const pathParts = window.location.pathname.split('/').filter(p => p);
-    const targetCity = decodeURIComponent(pathParts.pop() || "Gävle").trim();
+    <script>
+        let csvData = "";
+        const targetCity = decodeURIComponent(window.location.pathname.split('/').pop() || "Gävle");
+        document.getElementById('city-tag').innerText = "SEKTOR // " + targetCity.toUpperCase();
 
-    document.getElementById('city-tag').innerText = targetCity.toUpperCase();
+        async function init() {
+            const resp = await fetch('/Aiorter.csv');
+            csvData = await resp.text();
+        }
 
-    async function init() {
-        const resp = await fetch('/Aiorter.csv?v=' + Date.now());
-        csvData = (await resp.text()).replace(/^\uFEFF/, "");
-    }
-
-    function runScanner() {
-        const btn = document.getElementById('start-btn');
-        const scan = document.getElementById('scan-v');
-        btn.classList.add('hidden');
-        scan.classList.remove('hidden');
-
-        setTimeout(() => {
-            const rows = csvData.split(/\r?\n/);
-            let match = null;
-            for (let i = 1; i < rows.length; i++) {
-                const cols = rows[i].split(';');
-                if (cols[0]?.trim().toLowerCase() === targetCity.toLowerCase()) {
-                    match = { kommun: cols[1]?.trim(), desc: cols[3]?.trim() };
-                    break;
-                }
-            }
-
-            if (match) {
-                const kommun = match.kommun.replace(" kommun", "");
-                document.getElementById('city-desc').innerText = match.desc;
-                document.getElementById('val-kommande').innerText = "TILLGÄNGLIG";
-                document.getElementById('val-dropped').innerText = "AKTIV";
-                
-                document.getElementById('link-kommande').href = `https://www.booli.se/${encodeURIComponent(kommun)}/2/sok/?isUpcoming=1`;
-                document.getElementById('link-dropped').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(targetCity)}&upcoming=1`;
-
-                scan.classList.add('hidden');
-                document.getElementById('results').classList.remove('hidden');
-            }
-        }, 1500);
-    }
-    window.onload = init;
-</script>
+        function triggerMegaAI() {
+            document.getElementById('ai-loader').classList.remove('hidden');
+            document.querySelector('.search-vault').classList.add('blur-out');
+            
+            setTimeout(() => {
+                document.getElementById('ai-loader').classList.add('hidden');
+                document.getElementById('data-matrix').classList.remove('hidden');
+                document.getElementById('res-city').innerText = targetCity.toUpperCase();
+            }, 2500);
+        }
+        window.onload = init;
+    </script>
 </body>
 </html>
