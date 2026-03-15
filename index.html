@@ -3,176 +3,231 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allabostäder | Neural Fastighetsmotor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
+    <title>Allabostäder | Institutional Real Estate Engine</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@200;400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
             --gold: #D4AF37;
-            --gold-glow: rgba(212, 175, 55, 0.3);
-            --bg: #0a0a0a;
-            --glass: rgba(20, 20, 20, 0.9);
-            --border: rgba(212, 175, 55, 0.2);
+            --gold-light: #E5C363;
+            --bg: #030305;
+            --glass: rgba(18, 18, 22, 0.95);
+            --border: rgba(212, 175, 55, 0.25);
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --font-display: 'Cinzel', serif;
         }
+
+        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; }
 
         body, html {
             margin: 0; padding: 0; min-height: 100vh;
             background: var(--bg); color: #fff;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
+            font-family: 'Space Grotesk', sans-serif;
+            overflow-x: hidden;
         }
 
-        /* HEADER */
+        /* BAKGRUND */
+        .ambient-bg {
+            position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at 50% 0%, #1a1a25 0%, #030305 70%);
+        }
+
+        /* HEADER & LOGO */
         header {
-            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border); backdrop-filter: blur(10px);
-            background: rgba(0,0,0,0.5);
+            padding: 50px 20px; display: flex; flex-direction: column; align-items: center;
+            border-bottom: 1px solid var(--border); background: rgba(0,0,0,0.6);
+            backdrop-filter: blur(20px);
         }
-        .logo-area { display: flex; align-items: center; gap: 15px; }
-        .logo-area img { height: 50px; border-radius: 5px; }
-        .brand { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.4rem; letter-spacing: 2px; }
+        .main-logo {
+            max-width: 450px; width: 90%; height: auto;
+            filter: drop-shadow(0 0 20px rgba(212, 175, 55, 0.2));
+            margin-bottom: 10px;
+        }
 
-        /* HERO & SEARCH */
-        .hero { max-width: 900px; margin: 100px auto 50px; text-align: center; padding: 0 20px; }
-        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; font-weight: 700; letter-spacing: -1px; }
+        /* HERO SECTION */
+        .hero { max-width: 900px; margin: 80px auto 40px; text-align: center; padding: 0 20px; }
+        .hero h1 { 
+            font-family: var(--font-main); font-size: clamp(2.5rem, 5vw, 4rem); 
+            font-weight: 700; letter-spacing: -2px; line-height: 1.1; margin: 0;
+        }
         .hero span { color: var(--gold); }
+        .hero p { color: #888; font-size: 1.1rem; margin-top: 20px; font-weight: 300; }
 
-        .search-box {
-            position: relative; max-width: 700px; margin: 0 auto;
+        /* SEARCH INTERFACE */
+        .search-container {
+            position: relative; max-width: 750px; margin: 40px auto;
             background: var(--glass); border: 1px solid var(--border);
-            display: flex; align-items: center; transition: 0.4s;
+            display: flex; align-items: center; border-radius: 2px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
         }
-        .search-box:focus-within { border-color: var(--gold); box-shadow: 0 0 40px var(--gold-glow); }
+        .search-container:focus-within { border-color: var(--gold); box-shadow: 0 0 40px rgba(212, 175, 55, 0.15); }
         
         input {
-            flex: 1; background: transparent; border: none; padding: 25px;
-            color: #fff; font-size: 1.2rem; outline: none;
+            flex: 1; background: transparent; border: none; padding: 25px 30px;
+            color: #fff; font-size: 1.2rem; outline: none; font-family: inherit;
         }
-
-        .btn-search {
-            background: var(--gold); color: #000; border: none; padding: 25px 40px;
-            font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans';
+        .btn-action {
+            background: #fff; color: #000; border: none; padding: 25px 45px;
+            font-weight: 700; cursor: pointer; transition: 0.3s;
+            font-family: var(--font-main); text-transform: uppercase; letter-spacing: 1px;
         }
+        .btn-action:hover { background: var(--gold); color: #000; }
 
-        /* RESULTAT */
-        #matrix { display: none; max-width: 1000px; margin: 50px auto; padding: 40px; background: var(--glass); border: 1px solid var(--border); }
-        .city-title { font-family: 'Cinzel'; color: var(--gold); font-size: 2.5rem; margin-bottom: 10px; }
-        
-        .grid-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px; }
-        .link-item {
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
-            padding: 20px; color: #fff; text-decoration: none; text-align: center;
-            font-size: 0.8rem; font-weight: 700; transition: 0.3s;
+        /* RESULTS AREA */
+        #results-matrix { display: none; max-width: 1200px; margin: 60px auto; padding: 0 20px; animation: slideUp 0.6s ease-out; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .sector-card {
+            background: rgba(10, 10, 12, 0.8); border: 1px solid var(--border);
+            padding: 60px 40px; text-align: center; backdrop-filter: blur(40px);
         }
-        .link-item:hover { background: var(--gold); color: #000; }
+        .city-title { font-family: var(--font-main); font-size: 3.5rem; color: #fff; margin: 0; font-weight: 800; }
+        .city-title::after { content: ''; display: block; width: 80px; height: 3px; background: var(--gold); margin: 20px auto; }
+        .city-desc { color: #aaa; line-height: 1.8; max-width: 700px; margin: 0 auto 40px; }
 
-        /* DROPDOWN */
-        .autocomplete {
+        /* DATA NODES GRID */
+        .node-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 12px; margin-top: 50px;
+        }
+        .node {
+            background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.05);
+            padding: 15px; color: #777; text-decoration: none; font-size: 0.7rem;
+            text-align: center; transition: 0.2s; font-weight: 500;
+        }
+        .node:hover { border-color: var(--gold); color: var(--gold); background: rgba(212, 175, 55, 0.05); }
+
+        /* SYSTEM STATUS */
+        .status-bar { font-size: 0.6rem; color: #444; letter-spacing: 2px; text-transform: uppercase; margin-top: 20px; }
+        .status-bar span { color: var(--gold); }
+
+        /* AUTOCOMPLETE */
+        .auto-box {
             position: absolute; top: 100%; left: -1px; right: -1px;
-            background: #111; border: 1px solid var(--gold); z-index: 100;
+            background: #0d0d0f; border: 1px solid var(--gold); z-index: 100;
             display: none; max-height: 300px; overflow-y: auto;
         }
-        .auto-item { padding: 15px 25px; cursor: pointer; border-bottom: 1px solid #222; display: flex; justify-content: space-between; }
+        .auto-item { padding: 20px; cursor: pointer; border-bottom: 1px solid #1a1a1a; display: flex; justify-content: space-between; }
         .auto-item:hover { background: var(--gold); color: #000; }
 
-        footer { margin-top: 100px; padding: 40px; text-align: center; opacity: 0.4; font-size: 0.7rem; }
+        footer { margin-top: 150px; padding: 60px 20px; text-align: center; border-top: 1px solid #111; }
+        .disclaimer { font-size: 0.7rem; color: #444; max-width: 700px; margin: 0 auto; line-height: 1.6; }
     </style>
 </head>
 <body>
 
+<div class="ambient-bg"></div>
+
 <header>
-    <div class="logo-area">
-        <img src="image_0.png" alt="Logo" onerror="this.style.display='none'">
-        <div class="brand">ALLABOSTÄDER</div>
-    </div>
-    <div style="font-size: 0.6rem; color: var(--gold);">SYSTEM_STATUS: ONLINE</div>
+    <img src="image_0.png" alt="Allabostäder" class="main-logo" onerror="console.log('Logo saknas')">
+    <div class="status-bar">Network State: <span>Operational</span> // Nodes: <span>300 Active</span></div>
 </header>
 
-<div class="hero">
-    <h1>Neural Sökning. <br><span>Hela Marknaden.</span></h1>
-    <div class="search-box">
-        <input type="text" id="search-in" placeholder="Skriv in stad (t.ex. Gävle)..." autocomplete="off">
-        <button class="btn-search" onclick="runSearch()">ANALYS</button>
-        <div class="autocomplete" id="auto-box"></div>
+<main>
+    <div class="hero">
+        <h1>Institutionell <span>Data-Aggregation.</span></h1>
+        <p>Fullständig insyn i den svenska fastighetsmarknaden genom neural skanning av 300+ källor.</p>
+        
+        <div class="search-container">
+            <input type="text" id="search-input" placeholder="Sök efter stad eller område..." autocomplete="off">
+            <button class="btn-action" onclick="executeSearch()">Analysera</button>
+            <div class="auto-box" id="auto-box"></div>
+        </div>
     </div>
-</div>
 
-<div id="matrix">
-    <h2 id="res-city" class="city-title">STAD</h2>
-    <p id="res-desc" style="color: #888; line-height: 1.6;"></p>
-    
-    <div class="grid-links">
-        <a href="#" id="h-link" class="link-item" target="_blank">HEMNET</a>
-        <a href="#" id="b-link" class="link-item" target="_blank">BOOLI</a>
-        <a href="#" id="f-link" class="link-item" target="_blank">FASTIGHETSBYRÅN</a>
-        <a href="#" id="s-link" class="link-item" target="_blank">SVENSK FAST</a>
-        <a href="#" class="link-item" style="border-color:#fff;" onclick="alert('Skannar dolda filer...')">UNMASK DATA</a>
+    <div id="results-matrix">
+        <div class="sector-card">
+            <h2 id="display-city" class="city-title">STAD</h2>
+            <p id="display-desc" class="city-desc"></p>
+            
+            <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+                <a href="#" id="link-hemnet" target="_blank" class="btn-action" style="padding: 15px 30px; font-size: 0.7rem;">Hemnet</a>
+                <a href="#" id="link-booli" target="_blank" class="btn-action" style="padding: 15px 30px; font-size: 0.7rem; background: var(--gold);">Booli</a>
+            </div>
+
+            <div class="node-grid" id="node-grid">
+                </div>
+        </div>
     </div>
-</div>
+</main>
 
 <footer>
-    <p>ALLABOSTÄDER © 2026 | Oberoende Fastighetsaggregator | Gävle Elite Division</p>
+    <div class="disclaimer">
+        Allabostäder är en oberoende teknisk plattform. Vi aggregerar offentlig data och omdirigerar användare till ursprungskällan. Vi lagrar ej upphovsrättsskyddat material. © 2026.
+    </div>
 </footer>
 
 <script>
-    let locations = [];
+    const brokers = ["Fastighetsbyrån", "Svensk Fastighetsförmedling", "Länsförsäkringar Fastighetsförmedling", "Bjurfors", "Mäklarhuset", "SkandiaMäklarna", "HusmanHagberg", "Notar", "Mäklarringen", "ERA Sweden", "Svenska Mäklarhuset", "Hemverket", "MOHV", "Boneo", "Residence Christie’s", "Skeppsholmen", "Wrede", "Fantastic Frank", "Historiska Hem", "Alexander White", "Per Jansson", "ESNY", "Behrer & Partners", "Lagerlings", "Ekenstam", "Widerlöv", "Riksmäklaren", "Edward & Partners", "Innerstadsspecialisten", "Stadshem", "Alvhem", "Lundin", "Våningen & Villan", "3Etage", "Valvet", "Landgren", "BoSthlm", "Unik Fastighet", "Nestor", "Sjönära", "Magnusson", "Entrance", "Aspington", "Bergmans", "Bostad&Co", "Briman", "Citymäklarna", "Din Mäklare", "EgendomsMäklarna", "Hemmätarna", "Jämtlandsmäklarna", "Karlsson & Uddare", "Leva", "Lokalmäklaren", "Norrlandsmäklarna", "Nyvy", "Objektmäklarna", "Place", "Smålands Fast", "Södermäklarna", "Upplands Mäklarservice", "Veranda", "Vision", "Westside", "Åkesson", "Östgöta", "Urban By ESNY", "Strand", "Heffner", "Privatmäklaren", "Bostadsdeal", "Marklund", "Boporten", "Mäklarna Ekström", "Mäklarcentrum", "Gård & Djurhälsan", "Areal", "Ludvig & Co", "Sjölyst", "Nordstrands", "Adamsson", "Tradition", "Retail & Properties", "Relier", "Mäklarjouren", "Kommersiella Fast", "Kustnära", "Catella", "Brunswick", "Valbo Skog", "Heimstaden", "Balder", "Castellum", "Vasakronan", "Akademiska Hus", "SBB", "Wallenstam", "Stena Fastigheter", "Fabege", "Wihlborgs", "Corem", "Hemsö", "Vonovia", "Sagax", "Atrium Ljungberg", "Rikshem", "Willhem", "Platzer", "Pandox", "Kungsleden", "Catena", "Diös", "Nyfosa", "Klövern", "Hufvudstaden", "Victoriahem", "Akelius", "Einar Mattsson", "Svenska Bostäder", "Stockholmshem", "Familjebostäder", "Poseidon", "MKB Fastighets", "Stångåstaden", "ÖBO", "Uppsalahem", "Vätterhem", "Kopparstaden", "Mitthem", "Lulebo", "Bostaden Umeå", "Östersundshem", "Gavlegårdarna", "Sandvikenhus", "Hoforshus", "Ockelbo Gårdar", "Bollnäs Bostäder", "Faxeholmen", "Hudiksvallsbostäder", "Ljusdalshem", "Nordanstigs Bostäder", "Armada", "Botkyrkabyggen", "Anders Bodin", "ByggVesta", "Fahlin", "Heba", "Hellströms", "Lennart Ericsson", "Lundbergs", "Slättö", "SFV", "Stadsholmen", "Stockholmia", "Sveafastigheter", "Tornet", "Kfast", "Libeno", "Teoge", "Taksprånget", "K2A", "KKB", "Kalixbo", "Kumla Bostäder", "Kungsörs Fast", "Kungälvsbostäder", "Kustbostäder", "Stenungsundshem", "Strängnäs Bostad", "Strömstadsbyggen", "Arbetarebostadsfonden", "AllboHus", "Alingsåshem", "Arbogabostäder", "Arvidsjaurshem", "Arvika Bostad", "AskersundsBostäder", "Bankerydshem", "Bengtsforshus", "Bergs Hyreshus", "Bjuvsbostäder", "Bodenbo", "Bostadsbolaget Mjölby", "Platen", "Falkenbergs Bostad", "Finnvedsbostäder", "Flens Bostad", "Fristadbostäder", "Förbo", "Förvaltaren", "JM", "Bonava", "Peab Bostad", "Skanska", "OBOS", "Besqab", "Nordr", "Riksbyggen", "HSB", "Serneke", "BoKlok", "Magnolia", "Ikano Bostad", "Titania", "Alm Equity", "Oscar Properties", "Tobin", "Genova", "Sjöson", "Myresjöhus", "A-hus", "Fiskarhedenvillan", "Älvsbyhus", "Eksjöhus", "Trivselhus", "Movehome", "Götenehus", "VårgårdaHus", "Willa Nordic", "Borohus", "Faluhus", "LB-Hus", "Skidstahus", "Hjältevadshus", "Modulenthus", "SmålandsVillan", "Anebyhus", "Kungshus", "Bra Hus", "SKB", "Egnahemsbolaget", "Studentbostäder Norden", "AF Bostäder", "SSSB", "SGS", "KBAB", "Hyresbostäder", "Järfällahus", "Huge Bostäder", "Sollentunahem", "Telge Bostäder", "Micasa", "Sisab", "Jernhusen", "Fortifikationsverket", "Locum", "Västfastigheter", "Hemnet", "Booli", "Värderingsdata", "Mäklarstatistik", "Metria", "Lantmäteriet", "Boverket", "SCB Bostad", "SBAB", "Bluestep", "Stabelo", "Landshypotek", "Danske Bank", "Nordea Fast", "SEB", "Handelsbanken", "Alecta", "Folksam", "Intea", "Vacse", "Svenska Hem", "Mäklarhuset", "Skandiamäklarna"];
 
-    // Ladda data
-    async function init() {
+    let csvData = [];
+    const input = document.getElementById('search-input');
+    const autoBox = document.getElementById('auto-box');
+
+    async function loadData() {
         try {
             const r = await fetch('Aiorter.csv');
             const t = await r.text();
-            locations = t.split('\n').slice(1).map(row => {
-                const cols = row.split(';');
-                return { ort: cols[0]?.trim(), kommun: cols[1]?.trim(), desc: cols[3]?.trim() };
+            csvData = t.split('\n').slice(1).map(line => {
+                const c = line.split(';');
+                return { ort: c[0]?.trim(), kommun: c[1]?.trim(), desc: c[3]?.trim() };
             }).filter(x => x.ort);
-            console.log("Data laddad:", locations.length);
-        } catch (e) {
-            console.log("Kunde inte ladda CSV, kör manuellt läge.");
-        }
+        } catch (e) { console.error("CSV-data kunde ej laddas."); }
     }
 
-    const input = document.getElementById('search-in');
-    const auto = document.getElementById('auto-box');
-
     input.addEventListener('input', () => {
-        const val = input.value.toLowerCase();
-        auto.innerHTML = '';
-        if (val.length < 1) { auto.style.display = 'none'; return; }
+        const val = input.value.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+        autoBox.innerHTML = '';
+        if (val.length < 1) { autoBox.style.display = 'none'; return; }
 
-        const hits = locations.filter(x => x.ort.toLowerCase().includes(val)).slice(0, 5);
+        const hits = csvData.filter(x => 
+            x.ort.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").includes(val)
+        ).slice(0, 5);
+
         if (hits.length > 0) {
             hits.forEach(h => {
-                const d = document.createElement('div');
-                d.className = 'auto-item';
-                d.innerHTML = `<span>${h.ort}</span><small>${h.kommun}</small>`;
-                d.onclick = () => { input.value = h.ort; auto.style.display = 'none'; runSearch(); };
-                auto.appendChild(d);
+                const div = document.createElement('div');
+                div.className = 'auto-item';
+                div.innerHTML = `<span>${h.ort}</span><small style="color:#555">${h.kommun}</small>`;
+                div.onclick = () => { input.value = h.ort; autoBox.style.display = 'none'; executeSearch(); };
+                autoBox.appendChild(div);
             });
-            auto.style.display = 'block';
+            autoBox.style.display = 'block';
+        } else {
+            autoBox.style.display = 'none';
         }
     });
 
-    function runSearch() {
+    function executeSearch() {
         const val = input.value.trim();
-        const data = locations.find(x => x.ort.toLowerCase() === val.toLowerCase()) || { ort: val, kommun: "", desc: "Skannar realtidsdata för sektorn..." };
+        if(!val) return;
 
-        document.getElementById('matrix').style.display = 'block';
-        document.getElementById('res-city').innerText = data.ort.toUpperCase();
-        document.getElementById('res-desc').innerText = data.desc;
+        const data = csvData.find(x => x.ort.toLowerCase() === val.toLowerCase()) || { ort: val, desc: "Ansluter till lokala noder för realtidsaggregation..." };
+        
+        document.getElementById('results-matrix').style.display = 'block';
+        document.getElementById('display-city').innerText = data.ort.toUpperCase();
+        document.getElementById('display-desc').innerText = data.desc;
 
-        // Länkar
-        const q = encodeURIComponent(data.ort);
-        document.getElementById('h-link').href = `https://www.hemnet.se/bostader?location_ids=${q}`;
-        document.getElementById('b-link').href = `https://www.booli.se/sok?q=${q}`;
-        document.getElementById('f-link').href = `https://www.fastighetsbyran.com/sv/sverige/sokresultat/?searchTerm=${q}`;
-        document.getElementById('s-link').href = `https://www.svenskfast.se/bostad/sok/${q}`;
+        // Primära länkar
+        document.getElementById('link-hemnet').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(data.ort)}`;
+        document.getElementById('link-booli').href = `https://www.booli.se/sok?q=${encodeURIComponent(data.ort)}`;
 
-        auto.style.display = 'none';
-        window.scrollTo({ top: document.getElementById('matrix').offsetTop - 50, behavior: 'smooth' });
+        // Generera 300 noder
+        const grid = document.getElementById('node-grid');
+        grid.innerHTML = '';
+        brokers.forEach(b => {
+            const n = document.createElement('a');
+            n.className = 'node';
+            n.target = '_blank';
+            n.href = `https://www.google.com/search?q=${encodeURIComponent(data.ort + " " + b)}`;
+            n.innerText = b;
+            grid.appendChild(n);
+        });
+
+        window.scrollTo({ top: document.getElementById('results-matrix').offsetTop - 40, behavior: 'smooth' });
     }
 
-    init();
+    loadData();
 </script>
 </body>
 </html>
