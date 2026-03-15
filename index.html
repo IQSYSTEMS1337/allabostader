@@ -1,174 +1,79 @@
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALLABOSTÄDER // V13_QUANTUM_CORE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Outfit:wght@100;400;900&family=Space+Mono&display=swap" rel="stylesheet">
-    
-    <style>
-        :root {
-            --accent: #00f2ff;
-            --accent-glow: rgba(0, 242, 255, 0.4);
-            --gold: #ffcc00;
-            --bg: #000;
-            --card: rgba(10, 11, 16, 0.95);
-            --border: rgba(255, 255, 255, 0.1);
-        }
+<style>
+    /* NYA STILAR FÖR V14 */
+    .object-card {
+        background: var(--card);
+        border: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
 
-        body, html {
-            margin: 0; padding: 0; min-height: 100vh; background: var(--bg);
-            color: #fff; font-family: 'Outfit', sans-serif; overflow-x: hidden;
-        }
+    .media-vault {
+        height: 250px;
+        background: #050505;
+        position: relative;
+        overflow: hidden;
+        border-bottom: 1px solid var(--border);
+    }
 
-        /* --- QUANTUM ENGINE ANIMATION --- */
-        .quantum-field {
-            position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #0d1221 0%, #000 100%);
-        }
-        .grid-pulse {
-            position: absolute; inset: 0;
-            background-image: linear-gradient(var(--border) 1px, transparent 1px), linear-gradient(90deg, var(--border) 1px, transparent 1px);
-            background-size: 50px 50px; opacity: 0.2;
-        }
+    .media-vault img {
+        width: 100%; height: 100%; object-fit: cover;
+        opacity: 0.6; transition: 0.5s;
+    }
 
-        /* --- INTERFACE --- */
-        header {
-            padding: 30px 60px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border); backdrop-filter: blur(30px); position: sticky; top: 0; z-index: 1000;
-        }
-        .logo { font-family: 'Syncopate'; font-weight: 700; letter-spacing: 8px; font-size: 1rem; color: var(--accent); }
+    .object-card:hover .media-vault img { opacity: 1; transform: scale(1.05); }
 
-        .search-container {
-            max-width: 1000px; margin: 80px auto; padding: 0 40px; text-align: center;
-        }
-        .hero-title { font-family: 'Syncopate'; font-size: 5rem; line-height: 0.8; margin-bottom: 20px; letter-spacing: -5px; }
-        
-        /* THE OMNI-INPUT */
-        .omni-box {
-            background: var(--card); border: 2px solid var(--border); padding: 10px;
-            display: flex; align-items: center; position: relative; transition: 0.5s;
-        }
-        .omni-box:focus-within { border-color: var(--accent); box-shadow: 0 0 60px var(--accent-glow); }
-        input {
-            flex: 1; background: transparent; border: none; padding: 30px;
-            color: #fff; font-size: 1.5rem; outline: none; font-family: 'Outfit';
-        }
+    .protocol-badge {
+        position: absolute; bottom: 10px; left: 10px;
+        background: rgba(0, 255, 136, 0.2);
+        color: #00ff88; border: 1px solid #00ff88;
+        padding: 4px 8px; font-family: 'Space Mono'; font-size: 0.5rem;
+    }
 
-        /* LIVE RESULTS */
-        .results-matrix { display: none; margin-top: 60px; animation: fadeInUp 0.8s forwards; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+    .data-tabs {
+        display: grid; grid-template-columns: 1fr 1fr;
+        border-top: 1px solid var(--border);
+    }
 
-        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 40px; }
-        .stat-card { background: var(--card); border: 1px solid var(--border); padding: 25px; text-align: left; }
-        .stat-card label { display: block; font-family: 'Space Mono'; font-size: 0.6rem; color: #555; margin-bottom: 10px; }
-        .stat-card span { font-size: 1.8rem; font-weight: 900; color: var(--accent); }
+    .tab-btn {
+        padding: 12px; background: transparent; border: none;
+        color: #555; font-family: 'Space Mono'; font-size: 0.6rem;
+        cursor: pointer; border-right: 1px solid var(--border);
+    }
 
-        /* OBJECTS AGGREGATOR */
-        .objects-stream {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;
-        }
-        .object-card {
-            background: var(--card); border: 1px solid var(--border); overflow: hidden;
-            transition: 0.3s; position: relative;
-        }
-        .object-card:hover { transform: translateY(-10px); border-color: var(--accent); }
-        .source-tag {
-            position: absolute; top: 15px; right: 15px; background: var(--accent);
-            color: #000; padding: 5px 10px; font-family: 'Space Mono'; font-size: 0.6rem; font-weight: 800;
-        }
-        .object-info { padding: 20px; }
-        .object-price { font-size: 1.5rem; font-weight: 900; color: var(--gold); }
+    .tab-btn:hover { color: var(--accent); background: var(--accent-soft); }
 
-        /* LOADING TERMINAL */
-        #loading-overlay {
-            position: fixed; inset: 0; background: #000; z-index: 2000;
-            display: none; flex-direction: column; justify-content: center; align-items: center;
-        }
-        .loader-text { font-family: 'Space Mono'; color: var(--accent); width: 600px; }
+    .decryption-modal {
+        position: fixed; inset: 0; background: rgba(0,0,0,0.98);
+        z-index: 3000; display: none; padding: 60px;
+        overflow-y: auto;
+    }
 
-    </style>
-</head>
-<body>
+    .doc-page {
+        max-width: 800px; margin: 0 auto; background: #fff; color: #000;
+        padding: 60px; font-family: 'Courier New', Courier, monospace;
+        box-shadow: 0 0 100px rgba(255,255,255,0.1);
+    }
+</style>
 
-<div class="quantum-field"><div class="grid-pulse"></div></div>
-
-<header>
-    <div class="logo">OMNI<span>_V13</span></div>
-    <div style="font-family: 'Space Mono'; font-size: 0.7rem;">STATUS: <span style="color:var(--accent)">QUANTUM_LINK_ACTIVE</span></div>
-</header>
-
-<main class="search-container">
-    <h1 class="hero-title">SCAN<br>SYSTEM</h1>
-    <div class="omni-box">
-        <input type="text" id="main-input" placeholder="ANGE STAD ELLER ORT (GÄVLE, BERGBY...)" autocomplete="off">
-        <button onclick="executeQuantumSearch()" style="background:var(--accent); border:none; padding: 20px 40px; font-family:'Syncopate'; font-weight:700; cursor:pointer;">SEARCH</button>
+<div id="doc-modal" class="decryption-modal" onclick="this.style.display='none'">
+    <div class="doc-page" id="doc-content">
+        <h1 style="border-bottom: 2px solid #000; padding-bottom: 10px;">BESIKTNINGSPROTOKOLL: NIVÅ A</h1>
+        <p><strong>DATUM:</strong> 2026-03-16</p>
+        <p><strong>OBJEKT:</strong> <span id="doc-id">...</span></p>
+        <hr>
+        <h3>PROTOKOLL_SAMMANFATTNING:</h3>
+        <p>TAK: Inga anmärkningar. Takpannor i gott skick.</p>
+        <p>GRUND: Fuktkvot under gränsvärde (12%). Dränering utförd 2019.</p>
+        <p>EL: Moderniserat 2022. Jordfelsbrytare installerad.</p>
+        <p>VVS: Stambyte ej nödvändigt de närmsta 10 åren.</p>
+        <br><br>
+        <p style="color: red; font-weight: bold;">NOTERING: DOLDA FEL FÖRSÄKRING AKTIV.</p>
     </div>
-
-    <section id="results" class="results-matrix">
-        <div class="stats-grid">
-            <div class="stat-card"><label>TOTALA OBJEKT</label><span id="total-obj">0</span></div>
-            <div class="stat-card"><label>SKANNADE KÄLLOR</label><span>300/300</span></div>
-            <div class="stat-card"><label>AI_ACCURACY</label><span>99.8%</span></div>
-            <div class="stat-card"><label>MARKET_STATE</label><span style="color:var(--gold)">BULLISH</span></div>
-        </div>
-
-        <div class="objects-stream" id="stream">
-            </div>
-    </section>
-</main>
-
-<div id="loading-overlay">
-    <div class="loader-text" id="loader-content"></div>
 </div>
 
 <script>
-    const megaSources = ["Fastighetsbyrån", "Hemnet", "Booli", "Svensk Fast", "SkandiaMäklarna", "Länsförsäkringar", "Mäklarhuset", "Bjurfors", "HusmanHagberg", "Notar", "Skeppsholmen", "Wrede", "Fantastic Frank", "Historiska Hem", "Boneo", "Blocket", "Privatmäklaren", "Värderingsdata", "Heimstaden", "Balder", "Castellum", "Vasakronan", "Wallenstam", "Stena Fastigheter", "Fabege"];
-    let csvData = [];
-
-    async function loadData() {
-        const r = await fetch('/Aiorter.csv?v=' + Date.now());
-        const t = await r.text();
-        csvData = t.replace(/^\uFEFF/, "").split(/\r?\n/).slice(1).map(line => {
-            const c = line.split(';');
-            return { ort: c[0]?.trim(), kommun: c[1]?.trim(), desc: c[3]?.trim() };
-        }).filter(i => i.ort);
-    }
-
-    function executeQuantumSearch() {
-        const val = document.getElementById('main-input').value;
-        const match = csvData.find(x => x.ort.toLowerCase() === val.toLowerCase());
-        
-        if(!match) { alert("Ort hittades ej i databasen."); return; }
-
-        const overlay = document.getElementById('loading-overlay');
-        const content = document.getElementById('loader-content');
-        overlay.style.display = 'flex';
-        content.innerHTML = '';
-
-        const logs = [
-            `> INITIALIZING OMNI-LINK FOR ${val.toUpperCase()}...`,
-            `> CONNECTING TO 300 INDEPENDENT NODES...`,
-            `> BYPASSING PAYWALLS: FASTIGHETSBYRÅN, HEMNET, BOOLI...`,
-            `> AGGREGATING RAW DATA FROM ${match.kommun}...`,
-            `> AI-ANALYSIS OF 432 HIDDEN FILES...`,
-            `> SYSTEM READY. DISPLAYING UNMASKED OBJECTS.`
-        ];
-
-        let i = 0;
-        const interval = setInterval(() => {
-            content.innerHTML += `<p>> ${logs[i]}</p>`;
-            i++;
-            if(i === logs.length) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    renderResults(match);
-                }, 1000);
-            }
-        }, 500);
-    }
-
+    // Uppdaterad render-funktion för V14
     function renderResults(data) {
         document.getElementById('results').style.display = 'block';
         const stream = document.getElementById('stream');
@@ -177,30 +82,39 @@
         const count = Math.floor(Math.random() * 200) + 50;
         document.getElementById('total-obj').innerText = count;
 
-        for(let i = 0; i < 24; i++) {
+        for(let i = 0; i < 12; i++) {
             const source = megaSources[Math.floor(Math.random() * megaSources.length)];
-            const price = (Math.random() * (8.5 - 1.2) + 1.2).toFixed(1);
+            const price = (Math.random() * (7.5 - 1.5) + 1.5).toFixed(1);
+            const objId = Math.random().toString(36).substr(2, 7).toUpperCase();
+            
+            // Vi använder Unsplash för att simulera riktiga husbilder baserat på orten
+            const imgUrl = `https://loremflickr.com/600/400/house,modern?lock=${i}`;
+
             const card = `
                 <div class="object-card">
-                    <div class="source-tag">${source.toUpperCase()}</div>
-                    <div style="height:200px; background:#111; display:flex; align-items:center; justify-content:center; font-family:'Space Mono'; color:#333; font-size:0.7rem;">
-                        ENCRYPTED_IMAGE_INSTANCE_${i}
+                    <div class="media-vault">
+                        <div class="source-tag">${source.toUpperCase()}</div>
+                        <img src="${imgUrl}" alt="Bostad">
+                        <div class="protocol-badge">● BESIKTIGAD</div>
                     </div>
                     <div class="object-info">
-                        <div style="font-size:0.6rem; color:var(--accent); font-family:'Space Mono'; mb:5px;">OBJECT_ID: ${Math.random().toString(36).substr(2, 9).toUpperCase()}</div>
-                        <div style="font-weight:800; font-size:1.1rem; margin-bottom:10px;">Villa i ${data.ort}</div>
+                        <div style="font-size:0.6rem; color:var(--accent); font-family:'Space Mono';">REF_ID: ${objId}</div>
+                        <div style="font-weight:900; font-size:1.3rem; margin: 10px 0;">Villa i ${data.ort}</div>
                         <div class="object-price">${price} 000 000 kr</div>
-                        <div style="font-size:0.8rem; color:#666; margin-top:10px;">${data.kommun} // 5 Rum // 142 m²</div>
-                        <a href="https://www.google.com/search?q=${data.ort}+bostad+${source}" target="_blank" style="display:block; margin-top:20px; text-decoration:none; color:#fff; border:1px solid #333; padding:10px; text-align:center; font-family:'Syncopate'; font-size:0.5rem;">VIEW_DATA_STREAM</a>
+                        <div style="font-size:0.8rem; opacity:0.6; margin-top:5px;">${data.kommun} // ${Math.floor(Math.random()*4)+3} Rum // ${Math.floor(Math.random()*80)+90} m²</div>
+                    </div>
+                    <div class="data-tabs">
+                        <button class="tab-btn" onclick="openProtocol('${objId}')">PROTOKOLL</button>
+                        <a href="https://www.google.com/search?q=${data.ort}+${source}" target="_blank" class="tab-btn" style="text-decoration:none; text-align:center;">GÅ TILL SIDA</a>
                     </div>
                 </div>
             `;
             stream.innerHTML += card;
         }
-        window.scrollTo({ top: document.getElementById('results').offsetTop - 100, behavior: 'smooth' });
     }
 
-    window.onload = loadData;
+    function openProtocol(id) {
+        document.getElementById('doc-id').innerText = id;
+        document.getElementById('doc-modal').style.display = 'block';
+    }
 </script>
-</body>
-</html>
