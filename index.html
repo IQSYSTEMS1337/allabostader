@@ -3,69 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALLABOSTÄDER // OMNI_V5_MEGA_AI</title>
-    <link rel="stylesheet" href="style.css">
+    <title>ALLABOSTÄDER // OMNI_V6_GOD_MODE</title>
     <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
-</head>
-<body class="quantum-ready">
+    
+    <style>
+        :root {
+            --accent: #00f2ff;
+            --neon-lila: #bc13fe;
+            --gold: #ffcc00;
+            --glass: rgba(255, 255, 255, 0.03);
+            --font-tech: 'Syncopate', sans-serif;
+            --font-body: 'Space Grotesk', sans-serif;
+        }
 
-<div class="background-engine">
-    <div class="nebula"></div>
-    <div class="grid-layer"></div>
-    <canvas id="neural-canvas"></canvas>
+        body, html {
+            margin: 0; padding: 0; height: 100%;
+            background: #000; color: #fff;
+            font-family: var(--font-body); overflow: hidden;
+        }
+
+        /* --- THE 950 BILLION DOLLAR BACKGROUND --- */
+        .bg-container {
+            position: fixed; inset: 0; z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #0a051a 0%, #000 100%);
+        }
+
+        .mesh {
+            position: absolute; inset: 0;
+            background: 
+                radial-gradient(at 0% 0%, hsla(253,16%,15%,1) 0, transparent 50%), 
+                radial-gradient(at 100% 0%, hsla(225,39%,20%,1) 0, transparent 50%);
+            filter: blur(60px); opacity: 0.5;
+        }
+
+        .grid-overlay {
+            position: absolute; inset: 0;
+            background-image: linear-gradient(rgba(0, 242, 255, 0.05) 1px, transparent 1px), 
+                              linear-gradient(90deg, rgba(0, 242, 255, 0.05) 1px, transparent 1px);
+            background-size: 60px 60px;
+            transform: perspective(500px) rotateX(60deg) translateY(-100px);
+            mask-image: linear-gradient(to top, rgba(0,0,0,1), transparent);
+        }
+
+        /* --- INTERFACE --- */
+        .wrapper {
+            position: relative; z-index: 10;
+            height: 100vh; display: flex; flex-direction: column;
+            padding: 40px; box-sizing: border-box;
+        }
+
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px;
+        }
+
+        .logo { font-family: var(--font-tech); font-weight: 700; letter-spacing: 6px; font-size: 1.2rem; }
+        .logo span { color: var(--accent); text-shadow: 0 0 15px var(--accent); }
+
+        .system-status { font-size: 0.7rem; letter-spacing: 2px; color: #555; }
+        .system-status span { color: var(--accent); }
+
+        /* --- MAIN HUB --- */
+        .main-hub {
+            flex: 1; display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            max-width: 1200px; margin: 0 auto; width: 100%;
+        }
+
+        .sector-info { text-align: center; margin-bottom: 50px; }
+        .sector-label { color: var(--accent); font-size: 0.8rem; letter-spacing: 5px; font-family: var(--font-tech); }
+        h1 { 
+            font-family: var(--font-tech); font-size: 5rem; margin: 10px 0; 
+            background: linear-gradient(to bottom, #fff 30%, #444 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            letter-spacing: -4px;
+        }
+
+        /* --- THE SCANNER --- */
+        .scanner-box {
+            width: 100%; max-width: 800px; position: relative;
+            background: var(--glass); backdrop-filter: blur(40px);
+            border: 1px solid rgba(255,255,255,0.1); padding: 5px;
+        }
+
+        input {
+            width: 100%; background: transparent; border: none; padding: 30px;
+            color: #fff; font-family: var(--font-body); font-size: 1.3rem;
+            outline: none; text-align: center;
+        }
+
+        .btn-engage {
+            width: 100%; padding: 25px; background: #fff; color: #000;
+            border: none; font-family: var(--font-tech); font-weight: 900;
+            margin-top: 15px; cursor: pointer; transition: 0.4s;
+            clip-path: polygon(0 0, 95% 0, 100% 30%, 100% 100%, 5% 100%, 0 70%);
+        }
+
+        .btn-engage:hover { background: var(--accent); box-shadow: 0 0 50px var(--accent); transform: scale(1.02); }
+
+        /* --- DATA MATRIX (RESULTS) --- */
+        #matrix {
+            display: none; width: 100%; margin-top: 50px;
+            animation: fadeIn 1s forwards;
+        }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .stats-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+        }
+
+        .node {
+            background: var(--glass); padding: 25px; border-left: 2px solid var(--accent);
+            backdrop-filter: blur(20px);
+        }
+
+        .node label { font-size: 0.6rem; color: #888; letter-spacing: 2px; }
+        .node .val { font-family: var(--font-tech); font-size: 1.8rem; margin-top: 10px; }
+
+        .decrypt-terminal {
+            margin-top: 20px; background: rgba(0,0,0,0.8);
+            border: 1px solid var(--accent); padding: 30px;
+            font-family: monospace; color: var(--accent); height: 250px;
+            overflow-y: auto; position: relative;
+        }
+
+        .decrypt-terminal::after {
+            content: ""; position: absolute; inset: 0;
+            background: linear-gradient(transparent 50%, rgba(0, 242, 255, 0.05) 50%);
+            background-size: 100% 4px; pointer-events: none;
+        }
+
+        .action-links {
+            display: flex; gap: 15px; margin-top: 20px;
+        }
+
+        .link {
+            flex: 1; padding: 20px; background: var(--glass); border: 1px solid rgba(255,255,255,0.1);
+            text-decoration: none; color: #fff; text-align: center; font-family: var(--font-tech);
+            font-size: 0.7rem; transition: 0.3s;
+        }
+
+        .link:hover { border-color: var(--accent); background: rgba(0,242,255,0.1); }
+        .link.gold { border-color: var(--gold); color: var(--gold); }
+
+    </style>
+</head>
+<body>
+
+<div class="bg-container">
+    <div class="mesh"></div>
+    <div class="grid-overlay"></div>
 </div>
 
-<div class="interface-layer">
-    <header class="top-stratum">
-        <div class="logo-core">AB<span>//OMNI</span></div>
-        <div class="system-readout">
-            <span class="pulse"></span> SYSTEM_LIVE // <span id="node-count">1.4M</span>_NODES_ACTIVE
-        </div>
+<div class="wrapper">
+    <header>
+        <div class="logo">ALLA<span>BOSTÄDER</span></div>
+        <div class="system-status">OMNI_LINK: <span id="nodes">SCANNING...</span></div>
     </header>
 
-    <main class="core-processor">
-        <div class="focus-frame">
-            <div class="header-logic">
-                <span class="bread-crumb">ROOT / SEKTOR_SKAN / <span id="path-city">LADDAR...</span></span>
-                <h1 id="city-title" class="text-glitch">INITIALIZING...</h1>
+    <main class="main-hub">
+        <div class="sector-info">
+            <span class="sector-label" id="sector-tag">LADDAR_SEKTOR</span>
+            <h1 id="city-title">INITIALIZING...</h1>
+        </div>
+
+        <div class="scanner-box" id="search-container">
+            <input type="text" id="omni-search" placeholder="SYSTEM_READY: ANGE ORT ELLER KOORDINATER">
+            <button class="btn-engage" onclick="startDecryption()">STARTA_DEKRYPTERING</button>
+        </div>
+
+        <div id="matrix">
+            <div class="stats-grid">
+                <div class="node"><label>TOTAL_ASSETS</label><div class="val">1.2M</div></div>
+                <div class="node"><label>HIDDEN_FILES</label><div class="val" id="file-count">0</div></div>
+                <div class="node"><label>AI_CONFIDENCE</label><div class="val">99.4%</div></div>
+                <div class="node"><label>DECRYPT_LVL</label><div class="val" style="color:var(--gold)">MAX</div></div>
             </div>
 
-            <div class="search-terminal">
-                <div class="scanner-bar">
-                    <input type="text" id="omni-search" placeholder="SKANNA HELA SVERIGE: ORT, KOMMUN, DOLDA_ADRESSER...">
-                    <div class="laser-line"></div>
-                </div>
-                <button class="mega-btn" onclick="startDeepScan()">ENGAGE_NEURAL_SCAN</button>
-            </div>
+            <div class="decrypt-terminal" id="terminal"></div>
 
-            <div id="data-matrix" class="matrix-hidden">
-                <div class="stats-ribbon">
-                    <div class="stat-node">
-                        <label>AI_PREDICTION</label>
-                        <div class="val" id="ai-index">--.-%</div>
-                    </div>
-                    <div class="stat-node">
-                        <label>DOLD_DATA</label>
-                        <div class="val" id="hidden-count">SCANNING...</div>
-                    </div>
-                    <div class="stat-node">
-                        <label>MARKVÄRDE</label>
-                        <div class="val" id="market-trend">VOLATIL</div>
-                    </div>
-                </div>
-
-                <div class="main-content-split">
-                    <div class="ai-terminal glass">
-                        <div class="terminal-header">MEGA_AI_ORACLE_V5</div>
-                        <div id="ai-log" class="typewriter"></div>
-                    </div>
-                    
-                    <div class="action-nexus">
-                        <a href="#" id="btn-hemnet" class="nexus-link">LINK_HEMNET_DB</a>
-                        <a href="#" id="btn-booli" class="nexus-link">LINK_BOOLI_DB</a>
-                        <a href="#" class="nexus-link premium">UNLOCK_HIDDEN_DOCS</a>
-                    </div>
-                </div>
+            <div class="action-links">
+                <a href="#" class="link" id="h-link">HEMNET_DB</a>
+                <a href="#" class="link" id="b-link">BOOLI_DB</a>
+                <a href="#" class="link gold">LÅS UPP BESIKTNINGSPROTOKOLL</a>
             </div>
         </div>
     </main>
@@ -73,11 +194,74 @@
 
 <script>
     let csvData = "";
-    const cityFromURL = decodeURIComponent(window.location.pathname.split('/').pop() || "Gävle");
+    const city = decodeURIComponent(window.location.pathname.split('/').pop() || "Sverige");
     
-    document.getElementById('path-city').innerText = cityFromURL.toUpperCase();
-    document.getElementById('city-title').innerText = cityFromURL.toUpperCase() + "_SECTOR";
+    document.getElementById('sector-tag').innerText = "SEKTOR // " + city.toUpperCase();
+    document.getElementById('city-title').innerText = city.toUpperCase();
 
+    async function init() {
+        try {
+            const resp = await fetch('/Aiorter.csv?v=' + Date.now());
+            csvData = (await resp.text()).replace(/^\uFEFF/, "");
+            document.getElementById('nodes').innerText = "1,429,012_ACTIVE";
+        } catch(e) { 
+            document.getElementById('nodes').innerText = "OFFLINE";
+        }
+    }
+
+    function startDecryption() {
+        const term = document.getElementById('terminal');
+        document.getElementById('search-container').style.display = 'none';
+        document.getElementById('matrix').style.display = 'block';
+        
+        const logs = [
+            "> Brute-forcing real estate firewalls...",
+            "> Intercepting local broker databases...",
+            "> Extracting hidden inspection logs...",
+            "> Recovering deleted media cache...",
+            "> Decrypting data for " + city + "...",
+            "> OMNI_SCAN COMPLETE."
+        ];
+
+        let i = 0;
+        const interval = setInterval(() => {
+            const p = document.createElement('p');
+            p.innerText = logs[i];
+            term.appendChild(p);
+            term.scrollTop = term.scrollHeight;
+            i++;
+            if(i === logs.length) {
+                clearInterval(interval);
+                renderFinalData();
+            }
+        }, 400);
+    }
+
+    function renderFinalData() {
+        const rows = csvData.split(/\r?\n/);
+        const match = rows.find(r => r.split(';')[0]?.trim().toLowerCase() === city.toLowerCase());
+        
+        document.getElementById('file-count').innerText = Math.floor(Math.random() * 800) + 100;
+
+        if(match) {
+            const cols = match.split(';');
+            const p = document.createElement('p');
+            p.style.color = "#fff";
+            p.style.marginTop = "20px";
+            p.innerText = cols[3];
+            document.getElementById('terminal').appendChild(p);
+            
+            const kommun = cols[1]?.replace(" kommun", "") || city;
+            document.getElementById('h-link').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(city)}`;
+            document.getElementById('b-link').href = `https://www.booli.se/sok?q=${encodeURIComponent(kommun)}`;
+        }
+    }
+
+    window.onload = init;
+</script>
+
+</body>
+</html>
     async function init() {
         const resp = await fetch('/Aiorter.csv?v=' + Date.now());
         csvData = (await resp.text()).replace(/^\uFEFF/, "");
