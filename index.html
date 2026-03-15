@@ -1,120 +1,324 @@
-<style>
-    /* NYA STILAR FÖR V14 */
-    .object-card {
-        background: var(--card);
-        border: 1px solid var(--border);
-        display: flex;
-        flex-direction: column;
-        transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allabostäder Gävle | Neural Fastighetsmotor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Plus+Jakarta+Sans:wght@200;400;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            /* Din Guld-färg (#D4AF37) */
+            --gold: #D4AF37;
+            --gold-glow: rgba(212, 175, 55, 0.4);
+            /* Vit för text-kontrast */
+            --text-main: #FFFFFF;
+            --text-gold: #E5C363;
+            /* Transparent Glas-färg (#1a1a1a) */
+            --glass: rgba(26, 26, 26, 0.85);
+            --glass-card: rgba(10, 10, 10, 0.95);
+            --border: rgba(255, 255, 255, 0.08);
+            --font-gold: 'Cinzel', serif; /* För din guld-logo känsla */
+            --font-main: 'Plus Jakarta Sans', sans-serif;
+        }
 
-    .media-vault {
-        height: 250px;
-        background: #050505;
-        position: relative;
-        overflow: hidden;
-        border-bottom: 1px solid var(--border);
-    }
+        body, html {
+            margin: 0; padding: 0; min-height: 100vh;
+            color: var(--text-main); font-family: var(--font-main);
+            overflow-x: hidden; scroll-behavior: smooth;
+        }
 
-    .media-vault img {
-        width: 100%; height: 100%; object-fit: cover;
-        opacity: 0.6; transition: 0.5s;
-    }
-
-    .object-card:hover .media-vault img { opacity: 1; transform: scale(1.05); }
-
-    .protocol-badge {
-        position: absolute; bottom: 10px; left: 10px;
-        background: rgba(0, 255, 136, 0.2);
-        color: #00ff88; border: 1px solid #00ff88;
-        padding: 4px 8px; font-family: 'Space Mono'; font-size: 0.5rem;
-    }
-
-    .data-tabs {
-        display: grid; grid-template-columns: 1fr 1fr;
-        border-top: 1px solid var(--border);
-    }
-
-    .tab-btn {
-        padding: 12px; background: transparent; border: none;
-        color: #555; font-family: 'Space Mono'; font-size: 0.6rem;
-        cursor: pointer; border-right: 1px solid var(--border);
-    }
-
-    .tab-btn:hover { color: var(--accent); background: var(--accent-soft); }
-
-    .decryption-modal {
-        position: fixed; inset: 0; background: rgba(0,0,0,0.98);
-        z-index: 3000; display: none; padding: 60px;
-        overflow-y: auto;
-    }
-
-    .doc-page {
-        max-width: 800px; margin: 0 auto; background: #fff; color: #000;
-        padding: 60px; font-family: 'Courier New', Courier, monospace;
-        box-shadow: 0 0 100px rgba(255,255,255,0.1);
-    }
-</style>
-
-<div id="doc-modal" class="decryption-modal" onclick="this.style.display='none'">
-    <div class="doc-page" id="doc-content">
-        <h1 style="border-bottom: 2px solid #000; padding-bottom: 10px;">BESIKTNINGSPROTOKOLL: NIVÅ A</h1>
-        <p><strong>DATUM:</strong> 2026-03-16</p>
-        <p><strong>OBJEKT:</strong> <span id="doc-id">...</span></p>
-        <hr>
-        <h3>PROTOKOLL_SAMMANFATTNING:</h3>
-        <p>TAK: Inga anmärkningar. Takpannor i gott skick.</p>
-        <p>GRUND: Fuktkvot under gränsvärde (12%). Dränering utförd 2019.</p>
-        <p>EL: Moderniserat 2022. Jordfelsbrytare installerad.</p>
-        <p>VVS: Stambyte ej nödvändigt de närmsta 10 åren.</p>
-        <br><br>
-        <p style="color: red; font-weight: bold;">NOTERING: DOLDA FEL FÖRSÄKRING AKTIV.</p>
-    </div>
-</div>
-
-<script>
-    // Uppdaterad render-funktion för V14
-    function renderResults(data) {
-        document.getElementById('results').style.display = 'block';
-        const stream = document.getElementById('stream');
-        stream.innerHTML = '';
+        /* --- THE GLASS-MORPHISM ATMOSPHERE --- */
+        .atm-engine {
+            position: fixed; inset: 0; z-index: -2;
+            background: linear-gradient(135deg, #050505 0%, #151515 100%);
+        }
+        .vignette { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle, transparent 30%, black 150%); }
         
-        const count = Math.floor(Math.random() * 200) + 50;
-        document.getElementById('total-obj').innerText = count;
+        /* Bakgrundsvideo (Futuristisk & Subtil) */
+        #bg-video {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
+            z-index: -1; opacity: 0.1; filter: grayscale(100%) blur(1px);
+        }
 
-        for(let i = 0; i < 12; i++) {
-            const source = megaSources[Math.floor(Math.random() * megaSources.length)];
-            const price = (Math.random() * (7.5 - 1.5) + 1.5).toFixed(1);
-            const objId = Math.random().toString(36).substr(2, 7).toUpperCase();
-            
-            // Vi använder Unsplash för att simulera riktiga husbilder baserat på orten
-            const imgUrl = `https://loremflickr.com/600/400/house,modern?lock=${i}`;
+        /* --- UI HEADER (DIN LOGO SKALL IN HÄR) --- */
+        header {
+            padding: 20px 60px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 1000;
+        }
+        .logo-block { display: flex; align-items: center; gap: 15px; }
+        .logo-block img { height: 60px; } /* Justera logotypens storlek */
+        .brand-text { font-family: var(--font-gold); font-weight: 700; color: var(--gold); font-size: 1.5rem; letter-spacing: 3px; }
 
-            const card = `
-                <div class="object-card">
-                    <div class="media-vault">
-                        <div class="source-tag">${source.toUpperCase()}</div>
-                        <img src="${imgUrl}" alt="Bostad">
-                        <div class="protocol-badge">● BESIKTIGAD</div>
-                    </div>
-                    <div class="object-info">
-                        <div style="font-size:0.6rem; color:var(--accent); font-family:'Space Mono';">REF_ID: ${objId}</div>
-                        <div style="font-weight:900; font-size:1.3rem; margin: 10px 0;">Villa i ${data.ort}</div>
-                        <div class="object-price">${price} 000 000 kr</div>
-                        <div style="font-size:0.8rem; opacity:0.6; margin-top:5px;">${data.kommun} // ${Math.floor(Math.random()*4)+3} Rum // ${Math.floor(Math.random()*80)+90} m²</div>
-                    </div>
-                    <div class="data-tabs">
-                        <button class="tab-btn" onclick="openProtocol('${objId}')">PROTOKOLL</button>
-                        <a href="https://www.google.com/search?q=${data.ort}+${source}" target="_blank" class="tab-btn" style="text-decoration:none; text-align:center;">GÅ TILL SIDA</a>
+        /* --- MAIN SEARCH HUB --- */
+        .main-hub {
+            max-width: 1200px; margin: 80px auto; padding: 0 40px; text-align: center;
+        }
+        
+        /* Hero-text med Guld-touch */
+        .hero-title { font-size: 4rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -2px; font-weight: 700;}
+        .hero-title span { color: var(--gold); }
+
+        /* THE NEURAL SEARCH UNIT */
+        .search-unit {
+            width: 100%; max-width: 850px; position: relative; margin: 0 auto;
+            background: var(--glass); border: 1px solid var(--border);
+            border-radius: 4px; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        .search-unit:focus-within { border-color: var(--gold); box-shadow: 0 0 50px var(--gold-glow); }
+
+        .input-row { display: flex; align-items: center; padding: 10px; }
+        input {
+            flex: 1; background: transparent; border: none; padding: 25px;
+            color: #fff; font-size: 1.3rem; outline: none; font-family: var(--font-main);
+            letter-spacing: 1px;
+        }
+
+        .scan-trigger {
+            padding: 20px 40px; background: #fff; color: #000; border: none;
+            font-family: var(--font-main); font-weight: 700; font-size: 0.8rem;
+            cursor: pointer; transition: 0.3s;
+        }
+        .scan-trigger:hover { background: var(--gold); box-shadow: 0 0 30px var(--gold); }
+
+        /* AUTOCOMPLETE DROPDOWN */
+        .drop-zone {
+            position: absolute; top: 100%; left: -1px; right: -1px;
+            background: #080a10; border: 1px solid var(--gold);
+            z-index: 999; display: none; max-height: 400px; overflow-y: auto;
+        }
+        .drop-item {
+            padding: 20px 30px; cursor: pointer; border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; transition: 0.2s;
+        }
+        .drop-item:hover { background: var(--gold); color: #000; }
+        .drop-item .type { font-size: 0.7rem; opacity: 0.6; font-family: 'Space Mono'; }
+
+        /* --- ANALYSIS MATRIX (THE BIG STUFF) --- */
+        #matrix { display: none; margin-top: 80px; animation: emerge 0.8s ease-out; }
+        @keyframes emerge { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
+
+        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        
+        .analyser-box {
+            background: var(--glass-card); border: 1px solid var(--border); padding: 50px;
+            backdrop-filter: blur(40px);
+        }
+        .city-header { font-family: var(--font-gold); font-size: 3rem; margin: 0 0 20px 0; color: #fff; border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
+        
+        .desc-text { line-height: 1.8; color: #b0b8c4; font-size: 1.1rem; margin-bottom: 40px; }
+
+        /* --- 300+ SOURCE AGGREGATOR --- */
+        .aggregator-panel { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px; }
+        .aggregator-title { font-family: 'Space Mono'; font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; text-align: center; }
+        
+        .aggregator-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
+        .link-card {
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border);
+            padding: 15px; color: #fff; text-decoration: none; font-size: 0.7rem;
+            font-family: var(--font-main); transition: 0.3s; text-align: center; font-weight: bold;
+        }
+        .link-card:hover { background: #fff; color: #000; border-color: #fff; }
+        .link-card.gold-spec { border-color: var(--gold); color: var(--gold); }
+
+        /* DECRYPTION MODAL (V14) */
+        #decrypt-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 10000; display: none; flex-direction: column;
+            justify-content: center; align-items: center; font-family: 'Space Mono', monospace;
+        }
+        .terminal-loader { width: 500px; color: var(--gold); }
+
+        /* --- OMEGA FOOTER (DISCLAIMER) --- */
+        footer {
+            margin-top: 100px; padding: 40px; text-align: center;
+            border-top: 1px solid var(--border); background: var(--glass);
+        }
+        .disclaimer { font-size: 0.7rem; color: #555; line-height: 1.6; max-width: 800px; margin: 0 auto; }
+        .disclaimer a { color: var(--gold); text-decoration: none; }
+
+    </style>
+</head>
+<body>
+
+<div class="atm-engine"></div>
+<div class="vignette"></div>
+
+<video autoplay muted loop id="bg-video">
+    <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-abstract-loop-21703-large.mp4" type="video/mp4">
+</video>
+
+<header>
+    <div class="logo-block">
+        <img src="image_0.png" alt="Allabostäder Logo">
+        <div class="brand-text">ALLABOSTÄDER</div>
+    </div>
+    <div class="sys-log">Motor: <span>V15_ELITE</span> // Uplink: <span>Aktiv</span> // Noder: <span>300/300</span></div>
+</header>
+
+<main class="main-hub">
+    <div class="hero-section">
+        <h1 class="hero-title">Neural Fastighetsmotor. <br>Hela <span>Sverige</span> Aggregerat.</h1>
+        <p>Hitta dolda värden, arkiverad data och besiktningsprotokoll med vår Neurala sökare.</p>
+    </div>
+
+    <div class="search-unit">
+        <div class="input-row">
+            <input type="text" id="omni-input" placeholder="ANGE STAD FÖR FULLSTÄNDIG SKANNING..." autocomplete="off">
+            <button class="scan-trigger" onclick="triggerScan()">ANALYS</button>
+        </div>
+        <div class="drop-zone" id="drop-zone"></div>
+    </div>
+
+    <section id="matrix">
+        <div class="dashboard-grid">
+            <div class="analyser-box">
+                <h2 id="res-city" class="city-header">SEKTOR GÄVLE</h2>
+                <div id="res-desc" class="desc-text">Skannar igenom alla svenska mäklarsajter och dolda arkiv...</div>
+                
+                <div class="aggregator-panel">
+                    <div class="aggregator-title">Total Aggregation för Sektorn</div>
+                    <div class="aggregator-links">
+                        <a href="#" id="link-h" class="link-card" target="_blank">HEMNET (Total)</a>
+                        <a href="#" id="link-b" class="link-card" target="_blank">BOOLI (Analys)</a>
+                        <a href="#" class="link-card" id="link-fast" target="_blank">FASTIGHETSBYRÅN</a>
+                        <a href="#" class="link-card" id="link-svfast" target="_blank">SVENSK FAST</a>
+                        <a href="#" class="link-card" id="link-skan" target="_blank">SKANDIAMÄKLARNA</a>
+                        <button class="link-card gold-spec" onclick="openDecrypt()">UNMASK HIDDEN FILES</button>
                     </div>
                 </div>
-            `;
-            stream.innerHTML += card;
-        }
+            </div>
+
+            <div class="analyser-box" style="padding: 20px;">
+                <label style="font-family:'Space Mono'; font-size:0.5rem; color:#555;">SYSTEM_LOG</label>
+                <div id="sys-log" style="font-family: 'Space Mono'; font-size: 0.65rem; color: var(--gold);">
+                    > Initializing Allabostäder Core...<br>
+                    > Scraper 1-300: OK<br>
+                    > Database link: Active<br>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="decrypt-overlay">
+    <div class="terminal-loader" id="terminal-text"></div>
+</div>
+
+<footer>
+    <div class="disclaimer">
+        ALLABOSTÄDER (Motor: Allabostäder Gävle Elite) är en oberoende oberoende aggregator. Vi äger ej och lagrar ej upphovsrättsskyddade bilder eller dokument. <br>
+        Vi omdirigerar alltid användaren till originalkällan. Genom att använda denna tjänst accepterar du våra <a href="#">användarvillkor</a>.
+    </div>
+</footer>
+
+<script>
+    let csvData = [];
+    const input = document.getElementById('omni-input');
+    const dropZone = document.getElementById('drop-zone');
+    const matrix = document.getElementById('matrix');
+
+    // 1. LADDA DATAN (FIXAD OCH ANPASSAD)
+    async function loadVault() {
+        try {
+            const resp = await fetch('/Aiorter.csv?v=' + Date.now());
+            const text = await resp.text();
+            const rows = text.replace(/^\uFEFF/, "").split(/\r?\n/);
+            
+            csvData = rows.slice(1).map(r => {
+                const c = r.split(';');
+                return { ort: c[0]?.trim(), kommun: c[1]?.trim(), desc: c[3]?.trim() };
+            }).filter(item => item.ort);
+            
+            logToSystem("Vault Synchronized. 300+ nodes active.");
+        } catch(e) { logToSystem("CRITICAL: Aiorter.csv not found."); }
     }
 
-    function openProtocol(id) {
-        document.getElementById('doc-id').innerText = id;
-        document.getElementById('doc-modal').style.display = 'block';
+    function logToSystem(msg) {
+        document.getElementById('sys-log').innerHTML += `> ${msg}<br>`;
     }
+
+    // 2. SEARCH-AHEAD (FUTURISTISK DROPDOWN)
+    input.addEventListener('input', function() {
+        const val = this.value.toLowerCase();
+        dropZone.innerHTML = '';
+        if (val.length < 1) { dropZone.style.display = 'none'; return; }
+
+        const matches = csvData.filter(x => x.ort.toLowerCase().startsWith(val)).slice(0, 10);
+        if (matches.length > 0) {
+            matches.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'drop-item';
+                div.innerHTML = `<span>${m.ort}</span><span class="type">${m.kommun}</span>`;
+                div.onclick = () => selectCity(m);
+                dropZone.appendChild(div);
+            });
+            dropZone.style.display = 'block';
+        } else { dropZone.style.display = 'none'; }
+    });
+
+    // 3. TRIGGER SKANNING (MED "LADDAR..." LOGIK)
+    function triggerScan() {
+        const val = input.value.trim();
+        const match = csvData.find(x => x.ort.toLowerCase() === val.toLowerCase());
+        if(match) selectCity(match);
+        else alert("Sektorn hittades inte i databasen.");
+    }
+
+    function selectCity(data) {
+        input.value = data.ort;
+        dropZone.style.display = 'none';
+        matrix.style.display = 'block';
+        
+        document.getElementById('res-city').innerText = data.ort.toUpperCase() + " SEKTOR";
+        document.getElementById('res-desc').innerText = data.desc || "Skannar igenom alla svenska mäklarsajter och dolda arkiv för denna sektor...";
+
+        // Aggregera länkarna (Dynamisk Gävle / Ort länkning)
+        const q = encodeURIComponent(data.ort);
+        const k = encodeURIComponent(data.kommun);
+        
+        document.getElementById('link-h').href = `https://www.hemnet.se/bostader?location_ids=${q}`;
+        document.getElementById('link-b').href = `https://www.booli.se/sok?q=${k}`;
+        document.getElementById('link-fast').href = `https://www.fastighetsbyran.com/sv/sverige/till-salu/gavleborg/gavle/`;
+        document.getElementById('link-svfast').href = `https://www.svenskfast.se/bostad/gavleborg/gavle/`;
+        document.getElementById('link-skan').href = `https://www.skandiamaklarna.se/hitta-maklare/gavle`;
+        
+        logToSystem(`Sector ${data.ort} analyzed via 300 nodes.`);
+        window.scrollTo({ top: matrix.offsetTop - 100, behavior: 'smooth' });
+    }
+
+    // 4. UNMASK HIDDEN FILES TERMINAL (V14)
+    function openDecrypt() {
+        const overlay = document.getElementById('decrypt-overlay');
+        const term = document.getElementById('terminal-text');
+        overlay.style.display = 'flex';
+        term.innerHTML = '';
+        
+        const lines = [
+            "> Initializing neural downlink...",
+            "> Bypassing broker firewalls...",
+            "> Scraping unpublished inspection reports...",
+            "> Decrypting deleted property media...",
+            "> Mapping market data patterns...",
+            "> ACCESS GRANTED: 100+ HIDDEN FILES FOUND."
+        ];
+
+        let i = 0;
+        const interval = setInterval(() => {
+            term.innerHTML += `<p style="color:var(--gold)">${lines[i]}</p>`;
+            i++;
+            if(i === lines.length) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    alert("Systemmeddelande: De dolda filerna har laddats upp till system-cachen.");
+                }, 1000);
+            }
+        }, 600);
+    }
+
+    window.onload = loadVault;
 </script>
+</body>
+</html>
