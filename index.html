@@ -3,105 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AllaBostäder | Nebula Aggregator</title>
-    <link rel="stylesheet" href="/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>ALLABOSTÄDER // NEURAL_INTERFACE</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<video autoplay muted loop id="bg-video">
-    <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-futuristic-technology-background-loop-21820-large.mp4" type="video/mp4">
-</video>
-<div class="video-overlay"></div>
+<div class="space-warp"></div>
+<div class="mesh-gradient"></div>
 
-<div class="main-interface">
-    <nav class="glass-nav">
-        <div class="logo">ALLA<span>BOSTÄDER</span> // DATA_HUB</div>
-        <div class="system-status"><span class="pulse-dot"></span> ORACLE ACTIVE</div>
+<main class="omni-container">
+    <nav class="top-nav">
+        <div class="brand">AB<span> // OS</span></div>
+        <div class="system-clock" id="clock">00:00:00</div>
     </nav>
 
-    <main class="data-stream">
-        <div class="hero-context glass-panel">
-            <span class="location-beacon" id="city-tag">SEKTOR // LADDAR...</span>
-            <h1 class="glitch-text">Bostadsvalvet: Totalt Utbud</h1>
-            <p>Vi aggregerar ALLT. Skannar mäklarsajter, dolda annonser och borttagna bilder i realtid.</p>
-            <div class="search-wrap">
-                <input type="text" placeholder="Sök efter ort eller mäklare..." class="futuristic-input">
-                <button class="btn-activate" id="start-btn" onclick="activateSystem()">SÖK DATA</button>
+    <section class="core-interface">
+        <div class="data-halo">
+            <h1 class="target-city" id="city-display">LADDAR_SYSTEM...</h1>
+            <p class="status-msg">AGGREGERAR: MÄKLARE_DB, DOLDA_ARKIV, BESIKTNING_RAW</p>
+        </div>
+
+        <div class="search-module">
+            <div class="input-scanner">
+                <input type="text" id="target-input" placeholder="SCANNA OMRÅDE / KOORDINATER">
+                <div class="scan-line"></div>
             </div>
+            <button class="launch-btn" onclick="engageAI()">ENGAGE_MEGA_AI</button>
         </div>
 
-        <div id="scan-v" class="hidden glass-panel scan-loader">
-            <div class="nebula-spinner"></div>
-            <p>Aggregerar dolda källor och såld data...</p>
-        </div>
-
-        <div id="results" class="hidden">
-            <div class="data-matrix">
-                <div class="data-node glass-panel glow-blue">
-                    <label>TILLSALU // AKTIVA</label>
-                    <div class="value" id="val-kommande">TILLGÄNGLIG</div>
-                    <p class="source-tag">Hämtat från 142 mäklare</p>
+        <div id="neural-grid" class="hidden">
+            <div class="grid-row">
+                <div class="data-cell">
+                    <span class="label">LIVE_OBJECTS</span>
+                    <div class="value">2,841</div>
                 </div>
-                <div class="data-node glass-panel glow-purple">
-                    <label>KOMMANDE // DOLDA</label>
-                    <div class="value" id="val-dropped">AKTIV</div>
-                    <p class="source-tag">Inkl. förhandsvisningar</p>
+                <div class="data-cell highlight">
+                    <span class="label">HIDDEN_FILES</span>
+                    <div class="value">142</div>
                 </div>
             </div>
+            
+            <div class="ai-orbital">
+                <div class="orbital-ring"></div>
+                <div class="oracle-text">
+                    <label>MEGA_AI_ANALYSIS</label>
+                    <p id="ai-output">Initierar djupskanning av dolda besiktningsprotokoll och raderade annonsbilder...</p>
+                </div>
+            </div>
 
-            <div class="ai-oracle glass-panel">
-                <h3>Megas AI: Marknads-bedömning</h3>
-                <p id="city-desc">Analys pågår...</p>
-                <button class="btn-sub secondary" onclick="alert('Genererar full rapport...')">FULLSTÄNDIG RAPPORT</button>
+            <div class="action-orbit">
+                <button class="neuro-link" onclick="location.reload()">REBOOT_SYSTEM</button>
+                <button class="neuro-link gold" onclick="window.open('https://www.booli.se')">ACCESS_ALL_DATA</button>
             </div>
         </div>
-    </main>
-</div>
+    </section>
+</main>
 
 <script>
-    let csvData = "";
-    const pathParts = window.location.pathname.split('/').filter(p => p);
-    const rawPath = pathParts.pop() || "Gävle";
-    const targetCity = decodeURIComponent(rawPath).trim();
+    const city = decodeURIComponent(window.location.pathname.split('/').pop() || "Sverige");
+    document.getElementById('city-display').innerText = city.toUpperCase() + "_SEKTOR";
 
-    document.getElementById('city-tag').innerText = "SEKTOR // " + targetCity.toUpperCase();
-
-    async function init() {
-        try {
-            const resp = await fetch('/Aiorter.csv?v=' + Date.now());
-            csvData = (await resp.text()).replace(/^\uFEFF/, "");
-        } catch(e) { console.error("Data error"); }
+    function engageAI() {
+        document.querySelector('.search-module').style.opacity = '0.2';
+        document.getElementById('neural-grid').classList.remove('hidden');
+        const output = document.getElementById('ai-output');
+        const lines = [
+            "> Brute-forcing broker firewalls...",
+            "> Scraping deleted image cache...",
+            "> Recovering inspection protocols...",
+            "> DATA_AGGREGATION_COMPLETE."
+        ];
+        let i = 0;
+        const interval = setInterval(() => {
+            output.innerText = lines[i];
+            i++;
+            if(i === lines.length) clearInterval(interval);
+        }, 600);
     }
 
-    function activateSystem() {
-        const btn = document.getElementById('start-btn');
-        const scan = document.getElementById('scan-v');
-        btn.innerText = "AKTIVERAR ORACLE...";
-        btn.disabled = true;
-        scan.classList.remove('hidden');
-
-        setTimeout(() => {
-            const rows = csvData.split(/\r?\n/);
-            let match = null;
-            for (let i = 1; i < rows.length; i++) {
-                const cols = rows[i].split(';');
-                if (cols[0]?.trim().toLowerCase() === targetCity.toLowerCase()) {
-                    match = { kommun: cols[1]?.trim(), desc: cols[3]?.trim() };
-                    break;
-                }
-            }
-
-            if (match) {
-                document.getElementById('city-desc').innerText = match.desc;
-                scan.classList.add('hidden');
-                document.getElementById('results').classList.remove('hidden');
-                btn.innerText = "SÖK DATA";
-                btn.disabled = false;
-            }
-        }, 1800);
-    }
-    window.onload = init;
+    setInterval(() => {
+        document.getElementById('clock').innerText = new Date().toLocaleTimeString();
+    }, 1000);
 </script>
 </body>
 </html>
