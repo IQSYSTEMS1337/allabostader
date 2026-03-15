@@ -3,106 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AllaBostäder | Marknadsinsikt</title>
+    <title>AllaBostäder | Marknadsaggregator</title>
     <link rel="stylesheet" href="/style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<div id="loader" class="loader-screen">
-    <div class="spinner"></div>
+<div class="top-bar">
+    <div class="logo">ALLA<span>BOSTÄDER</span></div>
+    <div class="live-indicator"><span class="dot"></span> LIVE SCAN</div>
 </div>
 
-<main class="container">
-    <header>
-        <div class="logo">ALLA<span>BOSTÄDER</span></div>
-        <div id="status-badge" class="badge">Live Data: <span id="current-city">---</span></div>
-    </header>
+<main class="aggregator-core">
+    <div class="search-context">
+        <span class="location-tag" id="city-tag">Laddar...</span>
+        <h1>Hittar dolda objekt åt dig</h1>
+        <p>Vi skannar 142 mäklarsajter, Hemnet och Booli för att hitta objekt som andra missar.</p>
+    </div>
 
-    <section id="verify-section" class="card">
-        <h1>Marknadsanalys för <span id="city-title">...</span></h1>
-        <p>Vi aggregerar data från Hemnet, Booli och privata aktörer för att ge dig ett övertag.</p>
-        <button class="btn-main" id="v-btn" onclick="startVerification()">Analysera marknaden</button>
-    </section>
-
-    <section id="result-section" class="card hidden">
-        <div class="result-header">
-            <span class="label">Status: Verifierad</span>
-            <h2 id="res-city-display">Gävle</h2>
+    <div id="action-area" class="card">
+        <div class="scan-progress hidden" id="scan-v">
+            <div class="bar"><div class="fill"></div></div>
+            <p>Aggregerar data från lokala mäklare...</p>
         </div>
+        
+        <button class="btn-primary" id="start-btn" onclick="runScanner()">Starta Marknadsskanning</button>
+    </div>
 
-        <div class="grid-stats">
-            <div class="stat-box">
-                <span class="stat-label">Prisutveckling</span>
-                <span class="stat-value pulse-green">Stabil</span>
+    <div id="results" class="hidden">
+        <div class="data-grid">
+            <div class="data-card">
+                <label>Kommande (Dolda)</label>
+                <div class="value" id="val-kommande">Söker...</div>
+                <a href="#" id="link-kommande" class="btn-sub">Öppna databas</a>
             </div>
-            <div class="stat-box">
-                <span class="stat-label">Utbud (24h)</span>
-                <span id="market-index" class="stat-value">Hög</span>
+            <div class="data-card">
+                <label>Prissänkta just nu</label>
+                <div class="value" id="val-dropped">Söker...</div>
+                <a href="#" id="link-dropped" class="btn-sub">Visa fynd</a>
             </div>
         </div>
 
-        <div class="ai-summary">
-            <label>AI-Bedömning</label>
-            <p id="res-desc">Laddar marknadsbeskrivning...</p>
+        <div class="ai-report">
+            <h3>Lokal marknadsanalys</h3>
+            <p id="city-desc"></p>
         </div>
-
-        <div class="action-grid">
-            <a href="#" id="link-kommande" class="action-btn">Kommande försäljningar</a>
-            <a href="#" id="link-prissankt" class="action-btn highlight">Prissänkta objekt</a>
-            <a href="#" id="link-hemnet" class="action-btn secondary">Visa på Hemnet</a>
-            <a href="#" id="link-booli" class="action-btn secondary">Visa på Booli</a>
-        </div>
-    </section>
+    </div>
 </main>
 
 <script>
     let csvData = "";
     const pathParts = window.location.pathname.split('/').filter(p => p);
     const targetCity = decodeURIComponent(pathParts.pop() || "Gävle").trim();
-    let currentKommun = "";
 
-    document.getElementById('city-title').innerText = targetCity;
-    document.getElementById('current-city').innerText = targetCity;
+    document.getElementById('city-tag').innerText = targetCity.toUpperCase();
 
     async function init() {
-        try {
-            const resp = await fetch('/Aiorter.csv?v=' + Date.now());
-            csvData = (await resp.text()).replace(/^\uFEFF/, "");
-            document.getElementById('loader').classList.add('fade-out');
-        } catch (e) { console.error("Data error"); }
+        const resp = await fetch('/Aiorter.csv?v=' + Date.now());
+        csvData = (await resp.text()).replace(/^\uFEFF/, "");
     }
 
-    function startVerification() {
-        const btn = document.getElementById('v-btn');
-        btn.innerText = "Kompilerar data...";
-        
+    function runScanner() {
+        const btn = document.getElementById('start-btn');
+        const scan = document.getElementById('scan-v');
+        btn.classList.add('hidden');
+        scan.classList.remove('hidden');
+
         setTimeout(() => {
             const rows = csvData.split(/\r?\n/);
             let match = null;
             for (let i = 1; i < rows.length; i++) {
                 const cols = rows[i].split(';');
-                if (cols[0] && cols[0].trim().toLowerCase() === targetCity.toLowerCase()) {
-                    match = { kommun: cols[1]?.trim() || "Okänd", desc: cols[3]?.trim() || "Beskrivning saknas." };
+                if (cols[0]?.trim().toLowerCase() === targetCity.toLowerCase()) {
+                    match = { kommun: cols[1]?.trim(), desc: cols[3]?.trim() };
                     break;
                 }
             }
 
             if (match) {
-                currentKommun = match.kommun.replace(" kommun", "");
-                document.getElementById('res-city-display').innerText = targetCity + ", " + match.kommun;
-                document.getElementById('res-desc').innerText = match.desc;
+                const kommun = match.kommun.replace(" kommun", "");
+                document.getElementById('city-desc').innerText = match.desc;
+                document.getElementById('val-kommande').innerText = "TILLGÄNGLIG";
+                document.getElementById('val-dropped').innerText = "AKTIV";
                 
-                // Uppdatera länkar
-                document.getElementById('link-kommande').href = `https://www.booli.se/${encodeURIComponent(currentKommun)}/2/sok/?isUpcoming=1`;
-                document.getElementById('link-prissankt').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(targetCity)}&upcoming=1`;
-                document.getElementById('link-hemnet').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(targetCity)}`;
-                document.getElementById('link-booli').href = `https://www.booli.se/sok?q=${encodeURIComponent(targetCity)}`;
+                document.getElementById('link-kommande').href = `https://www.booli.se/${encodeURIComponent(kommun)}/2/sok/?isUpcoming=1`;
+                document.getElementById('link-dropped').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(targetCity)}&upcoming=1`;
 
-                document.getElementById('verify-section').classList.add('hidden');
-                document.getElementById('result-section').classList.remove('hidden');
+                scan.classList.add('hidden');
+                document.getElementById('results').classList.remove('hidden');
             }
-        }, 800);
+        }, 1500);
     }
     window.onload = init;
 </script>
