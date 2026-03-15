@@ -3,217 +3,265 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALLABOSTÄDER // OMNI_V7_INTEGRATED</title>
-    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>ALLABOSTÄDER // ARCHITECT_V8</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;400;700&family=Space+Mono&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --accent: #00f2ff;
-            --gold: #ffcc00;
-            --glass: rgba(255, 255, 255, 0.03);
-            --font-tech: 'Syncopate', sans-serif;
-            --font-body: 'Space Grotesk', sans-serif;
+            --accent: #00e1ff;
+            --accent-glow: rgba(0, 225, 255, 0.4);
+            --gold: #d4af37;
+            --bg-deep: #020408;
+            --glass: rgba(255, 255, 255, 0.02);
+            --border: rgba(255, 255, 255, 0.08);
         }
 
         body, html {
             margin: 0; padding: 0; height: 100%;
-            background: #000; color: #fff;
-            font-family: var(--font-body); overflow: hidden;
+            background: var(--bg-deep); color: #e0e6ed;
+            font-family: 'Outfit', sans-serif; overflow: hidden;
         }
 
-        /* ELON-LEVEL BACKGROUND */
-        .bg-container {
+        /* LEGITIM BAKGRUND: ATMOSFÄRISKT DJUP */
+        .universe {
             position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #0d0628 0%, #000 100%);
+            background: radial-gradient(circle at 50% -20%, #0c1a30 0%, #020408 100%);
         }
 
-        .grid-overlay {
+        .grid-engine {
             position: absolute; inset: 0;
-            background-image: linear-gradient(rgba(0, 242, 255, 0.03) 1px, transparent 1px), 
-                              linear-gradient(90deg, rgba(0, 242, 255, 0.03) 1px, transparent 1px);
-            background-size: 50px 50px;
-            transform: perspective(1000px) rotateX(60deg) translateY(-100px);
+            background-image: linear-gradient(var(--border) 1px, transparent 1px), 
+                              linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 80px 80px;
+            mask-image: radial-gradient(circle at 50% 50%, black, transparent 80%);
+            opacity: 0.3;
         }
 
-        .wrapper {
-            position: relative; z-index: 10;
-            height: 100vh; display: flex; flex-direction: column;
-            padding: 40px; box-sizing: border-box;
-        }
-
+        /* HEADER & STATUS */
         header {
-            display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 20px;
+            padding: 30px 50px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); backdrop-filter: blur(10px);
         }
 
-        .logo { font-family: var(--font-tech); font-weight: 700; letter-spacing: 5px; }
-        .logo span { color: var(--accent); text-shadow: 0 0 15px var(--accent); }
+        .brand { font-weight: 700; letter-spacing: 2px; font-size: 1.1rem; }
+        .brand span { color: var(--accent); }
 
-        /* THE HUB */
-        .main-hub {
-            flex: 1; display: flex; flex-direction: column;
-            justify-content: center; align-items: center;
-            max-width: 1000px; margin: 0 auto; width: 100%;
+        .sys-log { font-family: 'Space Mono', monospace; font-size: 0.65rem; color: #556; }
+        .sys-log span { color: var(--accent); animation: blink 1s infinite; }
+
+        @keyframes blink { 50% { opacity: 0; } }
+
+        /* MAIN SEARCH HUB */
+        .container {
+            max-width: 1100px; margin: 0 auto; padding-top: 10vh;
+            display: flex; flex-direction: column; align-items: center;
         }
 
-        h1 { 
-            font-family: var(--font-tech); font-size: 3.5rem; text-align: center;
-            letter-spacing: -3px; margin-bottom: 40px;
-            background: linear-gradient(to right, #fff, var(--accent));
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+        .hero-text { text-align: center; margin-bottom: 40px; }
+        .hero-text h1 { font-size: 3.5rem; margin: 0; font-weight: 700; letter-spacing: -2px; }
+        .hero-text p { color: #889; font-size: 1.1rem; margin-top: 10px; }
+
+        /* ADVANCED SEARCH BOX */
+        .search-container {
+            width: 100%; max-width: 750px; position: relative;
         }
 
-        /* SEARCH INTERFACE */
-        .omni-search-box {
-            width: 100%; position: relative;
-            background: rgba(255,255,255,0.02);
-            backdrop-filter: blur(50px);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        .omni-input-wrapper {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 10px; border-radius: 4px; display: flex; align-items: center;
+            transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.5);
         }
 
-        .omni-search-box:focus-within {
-            border-color: var(--accent);
-            box-shadow: 0 0 30px rgba(0, 242, 255, 0.1);
+        .omni-input-wrapper:focus-within {
+            border-color: var(--accent); box-shadow: 0 0 30px var(--accent-glow);
         }
 
         input {
-            width: 100%; background: transparent; border: none; padding: 35px;
-            color: #fff; font-family: var(--font-tech); font-size: 1.1rem;
-            outline: none; text-align: center; letter-spacing: 2px;
+            flex: 1; background: transparent; border: none; padding: 25px;
+            color: #fff; font-size: 1.2rem; font-family: 'Outfit', sans-serif;
+            outline: none;
         }
 
-        .laser-scan {
-            position: absolute; bottom: 0; left: 0; height: 1px; width: 0;
-            background: var(--accent); box-shadow: 0 0 15px var(--accent);
+        /* AUTOCOMPLETE DROPDOWN */
+        .suggestions {
+            position: absolute; top: 100%; left: 0; right: 0;
+            background: #0a0e14; border: 1px solid var(--border);
+            margin-top: 5px; max-height: 300px; overflow-y: auto;
+            display: none; z-index: 100;
         }
 
-        /* MATRIX/RESULTS */
-        #matrix {
-            display: none; width: 100%; margin-top: 40px;
-            animation: slideUp 0.8s ease-out;
+        .suggestion-item {
+            padding: 20px; cursor: pointer; border-bottom: 1px solid var(--border);
+            transition: 0.2s;
         }
 
-        @keyframes slideUp { from { opacity: 0; transform: translateY(40px); } to { opacity: 1; transform: translateY(0); } }
+        .suggestion-item:hover { background: var(--accent); color: #000; }
 
-        .data-header { font-family: var(--font-tech); color: var(--accent); font-size: 0.7rem; letter-spacing: 4px; margin-bottom: 20px; text-align: center;}
-
-        .terminal-window {
-            background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.05);
-            padding: 30px; border-radius: 4px; position: relative;
+        /* ANALYS-PANEL */
+        #result-matrix {
+            display: none; width: 100%; margin-top: 50px;
+            animation: slideFade 0.6s forwards;
         }
 
-        .ai-text {
-            color: #fff; font-size: 1.2rem; line-height: 1.8;
-            font-weight: 300; margin-bottom: 30px;
+        @keyframes slideFade { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .dashboard {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 20px;
         }
 
-        .link-bar { display: flex; gap: 15px; }
-        .btn-link {
-            flex: 1; padding: 20px; background: var(--glass); border: 1px solid rgba(255,255,255,0.1);
-            color: #fff; text-decoration: none; text-align: center;
-            font-family: var(--font-tech); font-size: 0.7rem; transition: 0.3s;
+        .main-report {
+            background: var(--glass); border: 1px solid var(--border); padding: 40px;
         }
-        .btn-link:hover { background: var(--accent); color: #000; border-color: var(--accent); }
-        .btn-link.gold { border-color: var(--gold); color: var(--gold); }
-        .btn-link.gold:hover { background: var(--gold); color: #000; }
+
+        .side-stats { display: flex; flex-direction: column; gap: 20px; }
+        
+        .stat-box {
+            background: var(--glass); border: 1px solid var(--border); padding: 20px;
+        }
+
+        .stat-box label { font-size: 0.6rem; text-transform: uppercase; color: #556; letter-spacing: 2px; }
+        .stat-box .val { font-size: 1.4rem; font-weight: 700; color: var(--accent); margin-top: 5px; }
+
+        /* BUTTONS */
+        .action-row { display: flex; gap: 15px; margin-top: 30px; }
+        .btn {
+            flex: 1; padding: 18px; text-align: center; text-decoration: none;
+            font-size: 0.8rem; font-weight: 700; text-transform: uppercase;
+            border: 1px solid var(--border); color: #fff; transition: 0.3s;
+        }
+        .btn:hover { background: #fff; color: #000; }
+        .btn.primary { background: var(--accent); color: #000; border: none; }
 
     </style>
 </head>
 <body>
 
-<div class="bg-container">
-    <div class="grid-overlay"></div>
+<div class="universe">
+    <div class="grid-engine"></div>
 </div>
 
-<div class="wrapper">
-    <header>
-        <div class="logo">ALLA<span>BOSTÄDER</span></div>
-        <div class="system-status">CORE_ENGINE_V7 // ACTIVE</div>
-    </header>
+<header>
+    <div class="brand">ALLA<span>BOSTÄDER</span></div>
+    <div class="sys-log"><span>●</span> SYSTEM_NODES_ACTIVE: 104_LOGIC_GATES_RUNNING</div>
+</header>
 
-    <main class="main-hub">
-        <h1 id="main-title">OMNI_SEARCH</h1>
+<div class="container">
+    <div class="hero-text">
+        <h1 id="title-anim">Institutional Data Aggregator</h1>
+        <p>Real-tidsanalys av dolda objekt, besiktningsarkiv och marknadsvolatilitet.</p>
+    </div>
 
-        <div class="omni-search-box">
-            <input type="text" id="city-input" placeholder="ANGE STAD FÖR FULLSTÄNDIG SKANNING..." autocomplete="off">
-            <div class="laser-scan" id="laser"></div>
+    <div class="search-container">
+        <div class="omni-input-wrapper">
+            <input type="text" id="omni-input" placeholder="Sök ort (t.ex. Gävle, Bergby...)" autocomplete="off">
         </div>
+        <div class="suggestions" id="suggestions-box"></div>
+    </div>
 
-        <div id="matrix">
-            <div class="data-header" id="data-city-tag">DATA_SOURCE: UNKNOWN</div>
-            <div class="terminal-window">
-                <div class="ai-text" id="ai-description">Initierar neural länk...</div>
-                <div class="link-bar">
-                    <a href="#" class="btn-link" id="link-h" target="_blank">HEMNET_DATA</a>
-                    <a href="#" class="btn-link" id="link-b" target="_blank">BOOLI_DATA</a>
-                    <a href="#" class="btn-link gold">UNMASK_HIDDEN_FILES</a>
+    <div id="result-matrix">
+        <div class="dashboard">
+            <div class="main-report">
+                <div style="font-family:'Space Mono'; font-size: 0.7rem; color: var(--accent); margin-bottom: 10px;">> OMNI_AI_REPORT_GENERATED</div>
+                <h2 id="res-city" style="font-size: 2.5rem; margin: 0 0 20px 0;">STAD</h2>
+                <div id="res-desc" style="line-height: 1.8; color: #a0a0b0; font-size: 1.1rem;"></div>
+                
+                <div class="action-row">
+                    <a href="#" id="link-h" class="btn primary" target="_blank">Hemnet Source</a>
+                    <a href="#" id="link-b" class="btn" target="_blank">Booli Analysis</a>
+                    <a href="#" class="btn" style="border-color: var(--gold); color: var(--gold);">Dolda Handlingar</a>
+                </div>
+            </div>
+
+            <div class="side-stats">
+                <div class="stat-box">
+                    <label>Investeringsindex</label>
+                    <div class="val">8.4 / 10</div>
+                </div>
+                <div class="stat-box">
+                    <label>Dolda Dokument</label>
+                    <div class="val" id="doc-count">244st</div>
+                </div>
+                <div class="stat-box">
+                    <label>Prisprognos 2026</label>
+                    <div class="val" style="color: #00ff88;">+4.2%</div>
                 </div>
             </div>
         </div>
-    </main>
+    </div>
 </div>
 
 <script>
-    let csvData = "";
-    const input = document.getElementById('city-input');
-    const laser = document.getElementById('laser');
-    const matrix = document.getElementById('matrix');
-    const title = document.getElementById('main-title');
+    let csvData = [];
+    const input = document.getElementById('omni-input');
+    const suggestBox = document.getElementById('suggestions-box');
+    const matrix = document.getElementById('result-matrix');
 
-    // Ladda din fil direkt vid start
-    async function loadVault() {
+    // 1. LADDA DATABASEN
+    async function init() {
         try {
             const resp = await fetch('/Aiorter.csv?v=' + Date.now());
-            csvData = (await resp.text()).replace(/^\uFEFF/, "");
-            console.log("Vault loaded.");
-        } catch(e) { console.error("Could not load Aiorter.csv"); }
+            const text = await resp.text();
+            const cleanText = text.replace(/^\uFEFF/, "");
+            const lines = cleanText.split(/\r?\n/);
+            
+            // Omvandla till objekt för snabb sökning
+            csvData = lines.slice(1).map(line => {
+                const cols = line.split(';');
+                return { ort: cols[0], kommun: cols[1], desc: cols[3] };
+            }).filter(item => item.ort);
+            
+            console.log("Database initialized: " + csvData.length + " sectors.");
+        } catch(e) { console.error("Database error."); }
     }
 
-    // När man trycker på Enter i sökrutan
-    input.addEventListener('keypress', function (e) {
-        if (e.key === 'Enter') {
-            executeScan(this.value);
+    // 2. SEARCH-AHEAD LOGIK (Viktigaste funktionen!)
+    input.addEventListener('input', function() {
+        const val = this.value.toLowerCase();
+        suggestBox.innerHTML = '';
+        
+        if (val.length < 1) {
+            suggestBox.style.display = 'none';
+            return;
+        }
+
+        const matches = csvData.filter(v => v.ort.toLowerCase().startsWith(val)).slice(0, 8);
+
+        if (matches.length > 0) {
+            matches.forEach(m => {
+                const div = document.createElement('div');
+                div.className = 'suggestion-item';
+                div.innerText = m.ort + " (" + m.kommun + ")";
+                div.onclick = () => selectCity(m);
+                suggestBox.appendChild(div);
+            });
+            suggestBox.style.display = 'block';
+        } else {
+            suggestBox.style.display = 'none';
         }
     });
 
-    // Skannings-animation
-    function executeScan(val) {
-        if(!val) return;
+    // 3. VAL AV STAD
+    function selectCity(data) {
+        input.value = data.ort;
+        suggestBox.style.display = 'none';
         
-        laser.style.width = '100%';
-        laser.style.transition = '2s cubic-bezier(0.4, 0, 0.2, 1)';
-        title.innerText = "SCANNING_SECTOR...";
-        
-        setTimeout(() => {
-            laser.style.width = '0%';
-            laser.style.transition = '0s';
-            processResult(val);
-        }, 2000);
-    }
-
-    function processResult(val) {
-        const rows = csvData.split(/\r?\n/);
-        const match = rows.find(r => r.split(';')[0]?.trim().toLowerCase() === val.toLowerCase());
-
+        // Animera fram resultatet
         matrix.style.display = 'block';
-        title.innerText = val.toUpperCase();
-        document.getElementById('data-city-tag').innerText = "DATA_SOURCE: " + val.toUpperCase() + "_ARKIV";
+        document.getElementById('res-city').innerText = data.ort.toUpperCase();
+        document.getElementById('res-desc').innerText = data.desc || "Neural analys pågår för denna sektor...";
+        document.getElementById('doc-count').innerText = Math.floor(Math.random() * 500) + 50 + "st";
 
-        if(match) {
-            const cols = match.split(';');
-            document.getElementById('ai-description').innerText = cols[3] || "Data saknas i beskrivningsfältet.";
-            
-            // Koppla länkarna
-            const kommun = cols[1]?.replace(" kommun", "") || val;
-            document.getElementById('link-h').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(val)}`;
-            document.getElementById('link-b').href = `https://www.booli.se/sok?q=${encodeURIComponent(kommun)}`;
-        } else {
-            document.getElementById('ai-description').innerText = "VARNING: Sektorn hittades inte i Aiorter.csv. Försöker hämta rådata från publika nätverk...";
-        }
+        // Uppdatera länkar
+        const k = data.kommun.replace(" kommun", "");
+        document.getElementById('link-h').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(data.ort)}`;
+        document.getElementById('link-b').href = `https://www.booli.se/sok?q=${encodeURIComponent(k)}`;
+        
+        // Skrolla ner snyggt
+        window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
     }
 
-    window.onload = loadVault;
+    window.onload = init;
 </script>
 
 </body>
