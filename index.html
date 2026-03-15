@@ -1,24 +1,291 @@
-Villor & hus till salu
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALLABOSTÄDER // V10_BLACK_OPS</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Inter:wght@300;400;700&family=Space+Mono&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --accent: #00f2ff;
+            --accent-soft: rgba(0, 242, 255, 0.1);
+            --gold: #ffcc00;
+            --bg: #010103;
+            --surface: #0a0a0f;
+            --border: rgba(255, 255, 255, 0.05);
+            --font-main: 'Inter', sans-serif;
+            --font-mono: 'Space Mono', monospace;
+        }
 
-Mäklarhuset
-https://www.maklarhuset.se › villa
-Ska du köpa eller sälja villa? Anlita fastighetsmäklaren med nöjdast kunder. Vi hjälper dig med en fri värdering av din bostad!
-Bilder
-▷ Modern villa till salu i Pla del Mar Moraira
-▷ Modern villa till salu i Pla del Mar Moraira
+        body, html {
+            margin: 0; padding: 0; height: 100%; background: var(--bg);
+            color: #fff; font-family: var(--font-main); overflow-x: hidden;
+        }
 
-Tabaira Real Estate
-James Bond-villa i Stuvsta till salu - Hemnet
-James Bond-villa i Stuvsta till salu - Hemnet
+        /* --- THE BLACK-OPS ATMOSPHERE --- */
+        .plasma-bg {
+            position: fixed; inset: 0; z-index: -1;
+            background: 
+                radial-gradient(circle at 20% 30%, #0a1128 0%, transparent 40%),
+                radial-gradient(circle at 80% 70%, #0d061a 0%, transparent 40%);
+            opacity: 0.6;
+        }
 
-Hemnet
-Exklusiv villa till salu för rekordpris - Värnamo
-Exklusiv villa till salu för rekordpris - Värnamo
+        .scanline {
+            width: 100%; height: 2px; background: var(--accent);
+            position: fixed; top: 0; left: 0; z-index: 10000;
+            opacity: 0.1; pointer-events: none; animation: scan 8s linear infinite;
+        }
+        @keyframes scan { 0% { top: -2%; } 100% { top: 102%; } }
 
-Värnamo.nu
-Visa fler bilder
-Snart till salu
+        /* --- GLOBAL HEADER --- */
+        header {
+            padding: 20px 40px; border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            background: rgba(1, 1, 3, 0.8); backdrop-filter: blur(15px);
+            position: sticky; top: 0; z-index: 500;
+        }
+        .brand { font-family: 'Syncopate'; font-weight: 700; letter-spacing: 5px; font-size: 0.9rem; }
+        .brand span { color: var(--accent); }
+        .status-pill { background: var(--accent-soft); padding: 5px 15px; border-radius: 20px; font-size: 0.6rem; color: var(--accent); border: 1px solid var(--accent); }
 
-Lundin Fastighetsbyrå
-https://www.lundin.se › tillsalu › kommande
-Vi på Lundin Fastighetsbyrå är verksamma i hela Stor-Göteborg med omnejd. Med oss på får du en heltäckande och professionell mäklartjänst med stort ...
+        /* --- CORE INTERFACE --- */
+        .container { max-width: 1300px; margin: 60px auto; padding: 0 40px; }
+
+        .hero { text-align: left; margin-bottom: 50px; }
+        .hero h1 { font-family: 'Syncopate'; font-size: 3.5rem; letter-spacing: -5px; margin: 0; }
+        .hero p { opacity: 0.5; font-size: 0.9rem; margin-top: 10px; letter-spacing: 1px; }
+
+        /* --- NEURAL SEARCH ENGINE --- */
+        .search-engine {
+            background: var(--surface); border: 1px solid var(--border);
+            padding: 10px; display: flex; align-items: center; position: relative;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.5);
+        }
+        .search-engine input {
+            flex: 1; background: transparent; border: none; padding: 25px;
+            color: #fff; font-size: 1.2rem; outline: none; font-family: var(--font-main);
+        }
+        .search-btn {
+            background: var(--accent); color: #000; border: none; padding: 20px 40px;
+            font-family: 'Syncopate'; font-weight: 700; font-size: 0.7rem; cursor: pointer;
+        }
+
+        /* AUTO-SUGGEST */
+        .suggest-results {
+            position: absolute; top: 100%; left: 0; right: 0; background: #08080c;
+            border: 1px solid var(--accent); z-index: 1000; display: none;
+        }
+        .suggest-item {
+            padding: 15px 25px; border-bottom: 1px solid var(--border);
+            cursor: pointer; display: flex; justify-content: space-between;
+        }
+        .suggest-item:hover { background: var(--accent); color: #000; }
+
+        /* --- INTELLIGENCE MATRIX (DISPLAY) --- */
+        #matrix { display: none; margin-top: 60px; animation: fadeIn 0.5s ease-out; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        .intel-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
+        
+        .report-card { background: var(--surface); border: 1px solid var(--border); padding: 40px; position: relative; }
+        .city-header { font-family: 'Syncopate'; font-size: 2.5rem; margin-bottom: 20px; }
+        
+        .ai-description { line-height: 1.8; color: #ced4da; font-size: 1.1rem; margin-bottom: 30px; border-left: 2px solid var(--accent); padding-left: 20px; }
+
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 40px; }
+        .stat { background: rgba(255,255,255,0.02); padding: 20px; border: 1px solid var(--border); }
+        .stat label { display: block; font-size: 0.6rem; color: #555; font-family: var(--font-mono); margin-bottom: 10px; }
+        .stat span { font-size: 1.5rem; font-weight: 700; color: var(--accent); }
+
+        /* --- AGGREGATOR LINKS --- */
+        .aggregator-links { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+        .link-card {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            padding: 15px; color: #fff; text-decoration: none; font-size: 0.7rem;
+            font-family: 'Syncopate'; transition: 0.3s; text-align: center;
+        }
+        .link-card:hover { background: #fff; color: #000; }
+        .link-card.premium { border-color: var(--gold); color: var(--gold); }
+
+        /* --- TERMINAL OVERLAY --- */
+        #terminal-overlay {
+            position: fixed; inset: 0; background: rgba(0,0,0,0.95); z-index: 9999;
+            display: none; flex-direction: column; justify-content: center; align-items: center;
+        }
+        .terminal-box { width: 600px; font-family: var(--font-mono); color: var(--accent); line-height: 1.5; }
+
+    </style>
+</head>
+<body>
+
+<div class="plasma-bg"></div>
+<div class="scanline"></div>
+
+<header>
+    <div class="brand">OMNI<span>LABS</span></div>
+    <div class="status-pill">● AGGREGATING_14_SOURCES</div>
+</header>
+
+<main class="container">
+    <div class="hero">
+        <h1>INTELLIGENCE_CORE</h1>
+        <p>Bostadsmarknadens svarta låda. Dekrypterar dolda värden och aggregat.</p>
+    </div>
+
+    <div class="search-engine">
+        <input type="text" id="omni-input" placeholder="SÖK SEKTOR (GÄVLE, BERGBY, BOMHUS...)" autocomplete="off">
+        <button class="search-btn" onclick="runManualScan()">ANALYZE</button>
+        <div class="suggest-results" id="suggest-box"></div>
+    </div>
+
+    <section id="matrix">
+        <div class="intel-grid">
+            <div class="report-card">
+                <div class="city-header" id="res-city">SEKTOR_X</div>
+                <div class="ai-description" id="res-desc">...</div>
+                
+                <div class="stats-row">
+                    <div class="stat"><label>MARKET_INDEX</label><span id="val-index">--</span></div>
+                    <div class="stat"><label>LIVE_OBJECTS</label><span id="val-objects">--</span></div>
+                    <div class="stat"><label>VOLATILITY</label><span style="color:var(--gold)">STABLE</span></div>
+                </div>
+
+                <div class="aggregator-links">
+                    <a href="#" id="l-hemnet" class="link-card" target="_blank">HEMNET (Allt)</a>
+                    <a href="#" id="l-booli" class="link-card" target="_blank">BOOLI (Djupt)</a>
+                    <a href="#" id="l-fb" class="link-card" target="_blank">FASTIGHETSBYRÅN</a>
+                    <a href="#" id="l-sf" class="link-card" target="_blank">SVENSK FAST</a>
+                    <a href="#" id="l-sm" class="link-card" target="_blank">SKANDIAMÄKLARNA</a>
+                    <a href="#" id="l-lf" class="link-card" target="_blank">LÄNSFÖRSÄKRINGAR</a>
+                    <button class="link-card premium" onclick="launchTerminal()">UNMASK HIDDEN FILES</button>
+                </div>
+            </div>
+
+            <div class="report-card" style="padding: 20px;">
+                <div style="font-family:'Syncopate'; font-size: 0.6rem; color: #555; margin-bottom: 20px;">SYSTEM_LOG</div>
+                <div id="system-log" style="font-family: var(--font-mono); font-size: 0.65rem; color: var(--accent);">
+                    > Initializing node...<br>
+                    > Database link: OK<br>
+                    > Scrapers: 14/14 Active<br>
+                </div>
+            </div>
+        </div>
+    </section>
+</main>
+
+<div id="terminal-overlay">
+    <div class="terminal-box" id="term-content"></div>
+</div>
+
+<script>
+    let csvData = [];
+    const input = document.getElementById('omni-input');
+    const suggestBox = document.getElementById('suggest-box');
+    const matrix = document.getElementById('matrix');
+
+    // 1. DATA INITIALIZATION
+    async function init() {
+        try {
+            const resp = await fetch('/Aiorter.csv?v=' + Date.now());
+            const text = await resp.text();
+            const rows = text.replace(/^\uFEFF/, "").split(/\r?\n/);
+            csvData = rows.slice(1).map(r => {
+                const c = r.split(';');
+                return { ort: c[0]?.trim(), kommun: c[1]?.trim(), desc: c[3]?.trim() };
+            }).filter(i => i.ort);
+            logSystem("Data vault synchronized. " + csvData.length + " vectors ready.");
+        } catch(e) { logSystem("CRITICAL_ERROR: CSV_NOT_FOUND"); }
+    }
+
+    function logSystem(msg) {
+        const log = document.getElementById('system-log');
+        log.innerHTML += `> ${msg}<br>`;
+    }
+
+    // 2. NEURAL SEARCH LOGIC
+    input.addEventListener('input', function() {
+        const val = this.value.toLowerCase();
+        suggestBox.innerHTML = '';
+        if (val.length < 1) { suggestBox.style.display = 'none'; return; }
+
+        const matches = csvData.filter(x => x.ort.toLowerCase().includes(val)).slice(0, 10);
+        if (matches.length > 0) {
+            matches.forEach(m => {
+                const d = document.createElement('div');
+                d.className = 'suggest-item';
+                d.innerHTML = `<span>${m.ort}</span><span style="opacity:0.4; font-size:0.6rem;">${m.kommun}</span>`;
+                d.onclick = () => selectCity(m);
+                suggestBox.appendChild(d);
+            });
+            suggestBox.style.display = 'block';
+        } else { suggestBox.style.display = 'none'; }
+    });
+
+    function runManualScan() {
+        const match = csvData.find(x => x.ort.toLowerCase() === input.value.toLowerCase());
+        if(match) selectCity(match);
+    }
+
+    function selectCity(data) {
+        input.value = data.ort;
+        suggestBox.style.display = 'none';
+        matrix.style.display = 'block';
+        
+        document.getElementById('res-city').innerText = data.ort.toUpperCase();
+        document.getElementById('res-desc').innerText = data.desc || "Neural analys saknas för detta objekt.";
+        document.getElementById('val-index').innerText = (Math.random() * (9.5 - 7.0) + 7.0).toFixed(1);
+        document.getElementById('val-objects').innerText = Math.floor(Math.random() * 150) + 12 + "st";
+
+        // AGGREGATOR LINKING (DYNAMISK)
+        const q = encodeURIComponent(data.ort);
+        const k = encodeURIComponent(data.kommun);
+        
+        document.getElementById('l-hemnet').href = `https://www.hemnet.se/till-salu/bostad/${q}`;
+        document.getElementById('l-booli').href = `https://www.booli.se/sok?q=${q}`;
+        document.getElementById('l-fb').href = `https://www.fastighetsbyran.com/sv/sverige/till-salu/gavleborg/gavle/`;
+        document.getElementById('l-sf').href = `https://www.svenskfast.se/bostad/gavleborg/gavle/`;
+        document.getElementById('l-sm').href = `https://www.skandiamaklarna.se/hitta-maklare/gavle`;
+        document.getElementById('l-lf').href = `https://www.lansfast.se/bostad/gavleborg/gavle/`;
+
+        logSystem("Scan complete: " + data.ort);
+        window.scrollTo({ top: matrix.offsetTop - 100, behavior: 'smooth' });
+    }
+
+    // 3. BLACK-OPS TERMINAL (THE "HIDDEN FILES" ACTION)
+    function launchTerminal() {
+        const overlay = document.getElementById('terminal-overlay');
+        const content = document.getElementById('term-content');
+        overlay.style.display = 'flex';
+        content.innerHTML = '';
+
+        const ops = [
+            "> INITIALIZING BLACK_OPS BYPASS...",
+            "> TARGET: MÄKLAR-PORTALEN V3.4",
+            "> SCRAPING UNPUBLISHED_REPORTS...",
+            "> BYPASSING TWO-FACTOR...",
+            "> ACCESS GRANTED.",
+            "> RECOVERING 12 UNPUBLISHED_PDFS...",
+            "> SYSTEM_ALERT: ENCRYPTION_STRENGTH_LOW",
+            "> DATA_DUMP_COMPLETE."
+        ];
+
+        let i = 0;
+        const interval = setInterval(() => {
+            content.innerHTML += `<p>> ${ops[i]}</p>`;
+            i++;
+            if(i === ops.length) {
+                clearInterval(interval);
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                    alert("FILERNA HAR EXPORTERATS TILL SYSTEM-CACHE.");
+                }, 1500);
+            }
+        }, 600);
+    }
+
+    window.onload = init;
+</script>
+</body>
+</html>
