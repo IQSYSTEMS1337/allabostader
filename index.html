@@ -1,90 +1,83 @@
-<!DOCTYPE html>
-<html lang="sv">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALLABOSTÄDER // NEURAL_INTERFACE</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;800&family=Syncopate:wght@400;700&display=swap" rel="stylesheet">
-</head>
-<body>
-
-<div class="space-warp"></div>
-<div class="mesh-gradient"></div>
-
-<main class="omni-container">
-    <nav class="top-nav">
-        <div class="brand">AB<span> // OS</span></div>
-        <div class="system-clock" id="clock">00:00:00</div>
-    </nav>
-
-    <section class="core-interface">
-        <div class="data-halo">
-            <h1 class="target-city" id="city-display">LADDAR_SYSTEM...</h1>
-            <p class="status-msg">AGGREGERAR: MÄKLARE_DB, DOLDA_ARKIV, BESIKTNING_RAW</p>
-        </div>
-
-        <div class="search-module">
-            <div class="input-scanner">
-                <input type="text" id="target-input" placeholder="SCANNA OMRÅDE / KOORDINATER">
-                <div class="scan-line"></div>
-            </div>
-            <button class="launch-btn" onclick="engageAI()">ENGAGE_MEGA_AI</button>
-        </div>
-
-        <div id="neural-grid" class="hidden">
-            <div class="grid-row">
-                <div class="data-cell">
-                    <span class="label">LIVE_OBJECTS</span>
-                    <div class="value">2,841</div>
-                </div>
-                <div class="data-cell highlight">
-                    <span class="label">HIDDEN_FILES</span>
-                    <div class="value">142</div>
-                </div>
-            </div>
-            
-            <div class="ai-orbital">
-                <div class="orbital-ring"></div>
-                <div class="oracle-text">
-                    <label>MEGA_AI_ANALYSIS</label>
-                    <p id="ai-output">Initierar djupskanning av dolda besiktningsprotokoll och raderade annonsbilder...</p>
-                </div>
-            </div>
-
-            <div class="action-orbit">
-                <button class="neuro-link" onclick="location.reload()">REBOOT_SYSTEM</button>
-                <button class="neuro-link gold" onclick="window.open('https://www.booli.se')">ACCESS_ALL_DATA</button>
-            </div>
-        </div>
-    </section>
-</main>
-
 <script>
-    const city = decodeURIComponent(window.location.pathname.split('/').pop() || "Sverige");
-    document.getElementById('city-display').innerText = city.toUpperCase() + "_SEKTOR";
+    let csvData = "";
+    // Hämta orten från URL:en (t.ex. /Gavle)
+    const pathParts = window.location.pathname.split('/').filter(p => p);
+    const rawPath = pathParts.pop() || "Sverige";
+    const targetCity = decodeURIComponent(rawPath).trim();
+
+    // Sätt rubriken direkt
+    document.getElementById('city-display').innerText = targetCity.toUpperCase() + "_SEKTOR";
+
+    async function init() {
+        try {
+            // Laddar din CSV-fil
+            const resp = await fetch('/Aiorter.csv?v=' + Date.now());
+            const text = await resp.text();
+            // Tar bort eventuella "BOM" tecken och sparar
+            csvData = text.replace(/^\uFEFF/, "");
+            console.log("System_Ready: Data-vault synkad.");
+        } catch (e) {
+            console.error("Critical_Error: Kunde inte nå Aiorter.csv");
+        }
+    }
 
     function engageAI() {
-        document.querySelector('.search-module').style.opacity = '0.2';
-        document.getElementById('neural-grid').classList.remove('hidden');
         const output = document.getElementById('ai-output');
+        const grid = document.getElementById('neural-grid');
+        
+        // Starta laddnings-sekvensen
+        document.querySelector('.search-module').style.opacity = '0.2';
+        grid.classList.remove('hidden');
+        
         const lines = [
-            "> Brute-forcing broker firewalls...",
-            "> Scraping deleted image cache...",
-            "> Recovering inspection protocols...",
-            "> DATA_AGGREGATION_COMPLETE."
+            "> Initializing Mega_AI Uplink...",
+            "> Bypassing Broker Firewalls...",
+            "> Scraping hidden data for " + targetCity + "...",
+            "> Mapping 1,000,000+ data points...",
+            "> ACCESS_GRANTED."
         ];
+
         let i = 0;
         const interval = setInterval(() => {
             output.innerText = lines[i];
             i++;
-            if(i === lines.length) clearInterval(interval);
-        }, 600);
+            if (i === lines.length) {
+                clearInterval(interval);
+                displayMatch(); // När laddningen är klar, visa datan
+            }
+        }, 500);
     }
 
+    function displayMatch() {
+        const rows = csvData.split(/\r?\n/);
+        let matchFound = false;
+
+        for (let i = 1; i < rows.length; i++) {
+            const cols = rows[i].split(';');
+            // Vi kollar om första kolumnen (Orten) matchar vår URL
+            if (cols[0] && cols[0].trim().toLowerCase() === targetCity.toLowerCase()) {
+                const beskrivning = cols[3] ? cols[3].trim() : "Ingen utökad analys tillgänglig för denna sektor ännu.";
+                
+                // Uppdatera AI-rutan med den riktiga beskrivningen från din CSV
+                document.getElementById('ai-output').innerHTML = `
+                    <span style="color: #fff; font-weight: bold;">ANALYSRAPPORT:</span><br>
+                    ${beskrivning}
+                `;
+                matchFound = true;
+                break;
+            }
+        }
+
+        if (!matchFound) {
+            document.getElementById('ai-output').innerText = "> VARNING: Orten hittades inte i databasen. Genererar generisk marknadsanalys...";
+        }
+    }
+
+    // Kör init när sidan laddas
+    window.onload = init;
+
+    // Klockan i hörnet
     setInterval(() => {
         document.getElementById('clock').innerText = new Date().toLocaleTimeString();
     }, 1000);
 </script>
-</body>
-</html>
