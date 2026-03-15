@@ -1,83 +1,136 @@
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALLABOSTÄDER // OMNI_V5_MEGA_AI</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@400;700&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+<body class="quantum-ready">
+
+<div class="background-engine">
+    <div class="nebula"></div>
+    <div class="grid-layer"></div>
+    <canvas id="neural-canvas"></canvas>
+</div>
+
+<div class="interface-layer">
+    <header class="top-stratum">
+        <div class="logo-core">AB<span>//OMNI</span></div>
+        <div class="system-readout">
+            <span class="pulse"></span> SYSTEM_LIVE // <span id="node-count">1.4M</span>_NODES_ACTIVE
+        </div>
+    </header>
+
+    <main class="core-processor">
+        <div class="focus-frame">
+            <div class="header-logic">
+                <span class="bread-crumb">ROOT / SEKTOR_SKAN / <span id="path-city">LADDAR...</span></span>
+                <h1 id="city-title" class="text-glitch">INITIALIZING...</h1>
+            </div>
+
+            <div class="search-terminal">
+                <div class="scanner-bar">
+                    <input type="text" id="omni-search" placeholder="SKANNA HELA SVERIGE: ORT, KOMMUN, DOLDA_ADRESSER...">
+                    <div class="laser-line"></div>
+                </div>
+                <button class="mega-btn" onclick="startDeepScan()">ENGAGE_NEURAL_SCAN</button>
+            </div>
+
+            <div id="data-matrix" class="matrix-hidden">
+                <div class="stats-ribbon">
+                    <div class="stat-node">
+                        <label>AI_PREDICTION</label>
+                        <div class="val" id="ai-index">--.-%</div>
+                    </div>
+                    <div class="stat-node">
+                        <label>DOLD_DATA</label>
+                        <div class="val" id="hidden-count">SCANNING...</div>
+                    </div>
+                    <div class="stat-node">
+                        <label>MARKVÄRDE</label>
+                        <div class="val" id="market-trend">VOLATIL</div>
+                    </div>
+                </div>
+
+                <div class="main-content-split">
+                    <div class="ai-terminal glass">
+                        <div class="terminal-header">MEGA_AI_ORACLE_V5</div>
+                        <div id="ai-log" class="typewriter"></div>
+                    </div>
+                    
+                    <div class="action-nexus">
+                        <a href="#" id="btn-hemnet" class="nexus-link">LINK_HEMNET_DB</a>
+                        <a href="#" id="btn-booli" class="nexus-link">LINK_BOOLI_DB</a>
+                        <a href="#" class="nexus-link premium">UNLOCK_HIDDEN_DOCS</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
 <script>
     let csvData = "";
-    // Hämta orten från URL:en (t.ex. /Gavle)
-    const pathParts = window.location.pathname.split('/').filter(p => p);
-    const rawPath = pathParts.pop() || "Sverige";
-    const targetCity = decodeURIComponent(rawPath).trim();
-
-    // Sätt rubriken direkt
-    document.getElementById('city-display').innerText = targetCity.toUpperCase() + "_SEKTOR";
+    const cityFromURL = decodeURIComponent(window.location.pathname.split('/').pop() || "Gävle");
+    
+    document.getElementById('path-city').innerText = cityFromURL.toUpperCase();
+    document.getElementById('city-title').innerText = cityFromURL.toUpperCase() + "_SECTOR";
 
     async function init() {
-        try {
-            // Laddar din CSV-fil
-            const resp = await fetch('/Aiorter.csv?v=' + Date.now());
-            const text = await resp.text();
-            // Tar bort eventuella "BOM" tecken och sparar
-            csvData = text.replace(/^\uFEFF/, "");
-            console.log("System_Ready: Data-vault synkad.");
-        } catch (e) {
-            console.error("Critical_Error: Kunde inte nå Aiorter.csv");
-        }
+        const resp = await fetch('/Aiorter.csv?v=' + Date.now());
+        csvData = (await resp.text()).replace(/^\uFEFF/, "");
+        // Simulerar laddning av noder
+        let nodes = 1400000;
+        setInterval(() => {
+            nodes += Math.floor(Math.random() * 10);
+            document.getElementById('node-count').innerText = (nodes / 1000000).toFixed(3) + "M";
+        }, 1000);
     }
 
-    function engageAI() {
-        const output = document.getElementById('ai-output');
-        const grid = document.getElementById('neural-grid');
+    function startDeepScan() {
+        const matrix = document.getElementById('data-matrix');
+        const log = document.getElementById('ai-log');
+        matrix.classList.remove('matrix-hidden');
+        matrix.classList.add('matrix-visible');
         
-        // Starta laddnings-sekvensen
-        document.querySelector('.search-module').style.opacity = '0.2';
-        grid.classList.remove('hidden');
-        
-        const lines = [
-            "> Initializing Mega_AI Uplink...",
-            "> Bypassing Broker Firewalls...",
-            "> Scraping hidden data for " + targetCity + "...",
-            "> Mapping 1,000,000+ data points...",
-            "> ACCESS_GRANTED."
+        let i = 0;
+        const scanSteps = [
+            "> Initializing Quantum Uplink...",
+            "> Bypassing Broker API limits...",
+            "> Scraping hidden_inspection_protocols...",
+            "> Recovering deleted_listing_media...",
+            "> Analysis complete for " + cityFromURL
         ];
 
-        let i = 0;
-        const interval = setInterval(() => {
-            output.innerText = lines[i];
+        const timer = setInterval(() => {
+            log.innerHTML += `<p>${scanSteps[i]}</p>`;
             i++;
-            if (i === lines.length) {
-                clearInterval(interval);
-                displayMatch(); // När laddningen är klar, visa datan
+            if(i === scanSteps.length) {
+                clearInterval(timer);
+                renderData();
             }
-        }, 500);
+        }, 400);
     }
 
-    function displayMatch() {
+    function renderData() {
         const rows = csvData.split(/\r?\n/);
-        let matchFound = false;
-
-        for (let i = 1; i < rows.length; i++) {
-            const cols = rows[i].split(';');
-            // Vi kollar om första kolumnen (Orten) matchar vår URL
-            if (cols[0] && cols[0].trim().toLowerCase() === targetCity.toLowerCase()) {
-                const beskrivning = cols[3] ? cols[3].trim() : "Ingen utökad analys tillgänglig för denna sektor ännu.";
-                
-                // Uppdatera AI-rutan med den riktiga beskrivningen från din CSV
-                document.getElementById('ai-output').innerHTML = `
-                    <span style="color: #fff; font-weight: bold;">ANALYSRAPPORT:</span><br>
-                    ${beskrivning}
-                `;
-                matchFound = true;
-                break;
-            }
-        }
-
-        if (!matchFound) {
-            document.getElementById('ai-output').innerText = "> VARNING: Orten hittades inte i databasen. Genererar generisk marknadsanalys...";
+        const match = rows.find(r => r.split(';')[0]?.trim().toLowerCase() === cityFromURL.toLowerCase());
+        
+        if(match) {
+            const cols = match.split(';');
+            document.getElementById('ai-log').innerHTML += `<div class='final-desc'>${cols[3]}</div>`;
+            document.getElementById('ai-index').innerText = (Math.random() * (98 - 85) + 85).toFixed(1) + "%";
+            document.getElementById('hidden-count').innerText = Math.floor(Math.random() * 500) + " FILER";
+            
+            const kommun = cols[1]?.replace(" kommun", "") || cityFromURL;
+            document.getElementById('btn-hemnet').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(cityFromURL)}`;
+            document.getElementById('btn-booli').href = `https://www.booli.se/${encodeURIComponent(kommun)}`;
         }
     }
 
-    // Kör init när sidan laddas
     window.onload = init;
-
-    // Klockan i hörnet
-    setInterval(() => {
-        document.getElementById('clock').innerText = new Date().toLocaleTimeString();
-    }, 1000);
 </script>
+</body>
+</html>
