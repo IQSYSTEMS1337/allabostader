@@ -3,322 +3,176 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allabostäder Gävle | Neural Fastighetsmotor</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Plus+Jakarta+Sans:wght@200;400;700&display=swap" rel="stylesheet">
+    <title>Allabostäder | Neural Fastighetsmotor</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700&family=Plus+Jakarta+Sans:wght@300;400;700&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            /* Din Guld-färg (#D4AF37) */
             --gold: #D4AF37;
-            --gold-glow: rgba(212, 175, 55, 0.4);
-            /* Vit för text-kontrast */
-            --text-main: #FFFFFF;
-            --text-gold: #E5C363;
-            /* Transparent Glas-färg (#1a1a1a) */
-            --glass: rgba(26, 26, 26, 0.85);
-            --glass-card: rgba(10, 10, 10, 0.95);
-            --border: rgba(255, 255, 255, 0.08);
-            --font-gold: 'Cinzel', serif; /* För din guld-logo känsla */
-            --font-main: 'Plus Jakarta Sans', sans-serif;
+            --gold-glow: rgba(212, 175, 55, 0.3);
+            --bg: #0a0a0a;
+            --glass: rgba(20, 20, 20, 0.9);
+            --border: rgba(212, 175, 55, 0.2);
         }
 
         body, html {
             margin: 0; padding: 0; min-height: 100vh;
-            color: var(--text-main); font-family: var(--font-main);
-            overflow-x: hidden; scroll-behavior: smooth;
+            background: var(--bg); color: #fff;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-image: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
         }
 
-        /* --- THE GLASS-MORPHISM ATMOSPHERE --- */
-        .atm-engine {
-            position: fixed; inset: 0; z-index: -2;
-            background: linear-gradient(135deg, #050505 0%, #151515 100%);
-        }
-        .vignette { position: fixed; inset: 0; z-index: -1; background: radial-gradient(circle, transparent 30%, black 150%); }
-        
-        /* Bakgrundsvideo (Futuristisk & Subtil) */
-        #bg-video {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;
-            z-index: -1; opacity: 0.1; filter: grayscale(100%) blur(1px);
-        }
-
-        /* --- UI HEADER (DIN LOGO SKALL IN HÄR) --- */
+        /* HEADER */
         header {
-            padding: 20px 60px; display: flex; justify-content: space-between; align-items: center;
-            border-bottom: 1px solid var(--border); backdrop-filter: blur(15px);
-            position: sticky; top: 0; z-index: 1000;
+            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 1px solid var(--border); backdrop-filter: blur(10px);
+            background: rgba(0,0,0,0.5);
         }
-        .logo-block { display: flex; align-items: center; gap: 15px; }
-        .logo-block img { height: 60px; } /* Justera logotypens storlek */
-        .brand-text { font-family: var(--font-gold); font-weight: 700; color: var(--gold); font-size: 1.5rem; letter-spacing: 3px; }
+        .logo-area { display: flex; align-items: center; gap: 15px; }
+        .logo-area img { height: 50px; border-radius: 5px; }
+        .brand { font-family: 'Cinzel', serif; color: var(--gold); font-size: 1.4rem; letter-spacing: 2px; }
 
-        /* --- MAIN SEARCH HUB --- */
-        .main-hub {
-            max-width: 1200px; margin: 80px auto; padding: 0 40px; text-align: center;
-        }
-        
-        /* Hero-text med Guld-touch */
-        .hero-title { font-size: 4rem; line-height: 1.1; margin-bottom: 30px; letter-spacing: -2px; font-weight: 700;}
-        .hero-title span { color: var(--gold); }
+        /* HERO & SEARCH */
+        .hero { max-width: 900px; margin: 100px auto 50px; text-align: center; padding: 0 20px; }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 20px; font-weight: 700; letter-spacing: -1px; }
+        .hero span { color: var(--gold); }
 
-        /* THE NEURAL SEARCH UNIT */
-        .search-unit {
-            width: 100%; max-width: 850px; position: relative; margin: 0 auto;
+        .search-box {
+            position: relative; max-width: 700px; margin: 0 auto;
             background: var(--glass); border: 1px solid var(--border);
-            border-radius: 4px; transition: 0.5s cubic-bezier(0.2, 1, 0.2, 1);
+            display: flex; align-items: center; transition: 0.4s;
         }
-        .search-unit:focus-within { border-color: var(--gold); box-shadow: 0 0 50px var(--gold-glow); }
-
-        .input-row { display: flex; align-items: center; padding: 10px; }
+        .search-box:focus-within { border-color: var(--gold); box-shadow: 0 0 40px var(--gold-glow); }
+        
         input {
             flex: 1; background: transparent; border: none; padding: 25px;
-            color: #fff; font-size: 1.3rem; outline: none; font-family: var(--font-main);
-            letter-spacing: 1px;
+            color: #fff; font-size: 1.2rem; outline: none;
         }
 
-        .scan-trigger {
-            padding: 20px 40px; background: #fff; color: #000; border: none;
-            font-family: var(--font-main); font-weight: 700; font-size: 0.8rem;
-            cursor: pointer; transition: 0.3s;
+        .btn-search {
+            background: var(--gold); color: #000; border: none; padding: 25px 40px;
+            font-weight: 700; cursor: pointer; font-family: 'Plus Jakarta Sans';
         }
-        .scan-trigger:hover { background: var(--gold); box-shadow: 0 0 30px var(--gold); }
 
-        /* AUTOCOMPLETE DROPDOWN */
-        .drop-zone {
+        /* RESULTAT */
+        #matrix { display: none; max-width: 1000px; margin: 50px auto; padding: 40px; background: var(--glass); border: 1px solid var(--border); }
+        .city-title { font-family: 'Cinzel'; color: var(--gold); font-size: 2.5rem; margin-bottom: 10px; }
+        
+        .grid-links { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 30px; }
+        .link-item {
+            background: rgba(255,255,255,0.03); border: 1px solid var(--border);
+            padding: 20px; color: #fff; text-decoration: none; text-align: center;
+            font-size: 0.8rem; font-weight: 700; transition: 0.3s;
+        }
+        .link-item:hover { background: var(--gold); color: #000; }
+
+        /* DROPDOWN */
+        .autocomplete {
             position: absolute; top: 100%; left: -1px; right: -1px;
-            background: #080a10; border: 1px solid var(--gold);
-            z-index: 999; display: none; max-height: 400px; overflow-y: auto;
+            background: #111; border: 1px solid var(--gold); z-index: 100;
+            display: none; max-height: 300px; overflow-y: auto;
         }
-        .drop-item {
-            padding: 20px 30px; cursor: pointer; border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; transition: 0.2s;
-        }
-        .drop-item:hover { background: var(--gold); color: #000; }
-        .drop-item .type { font-size: 0.7rem; opacity: 0.6; font-family: 'Space Mono'; }
+        .auto-item { padding: 15px 25px; cursor: pointer; border-bottom: 1px solid #222; display: flex; justify-content: space-between; }
+        .auto-item:hover { background: var(--gold); color: #000; }
 
-        /* --- ANALYSIS MATRIX (THE BIG STUFF) --- */
-        #matrix { display: none; margin-top: 80px; animation: emerge 0.8s ease-out; }
-        @keyframes emerge { from { opacity: 0; transform: translateY(50px); } to { opacity: 1; transform: translateY(0); } }
-
-        .dashboard-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 30px; }
-        
-        .analyser-box {
-            background: var(--glass-card); border: 1px solid var(--border); padding: 50px;
-            backdrop-filter: blur(40px);
-        }
-        .city-header { font-family: var(--font-gold); font-size: 3rem; margin: 0 0 20px 0; color: #fff; border-bottom: 2px solid var(--gold); padding-bottom: 10px; }
-        
-        .desc-text { line-height: 1.8; color: #b0b8c4; font-size: 1.1rem; margin-bottom: 40px; }
-
-        /* --- 300+ SOURCE AGGREGATOR --- */
-        .aggregator-panel { margin-top: 40px; border-top: 1px solid var(--border); padding-top: 20px; }
-        .aggregator-title { font-family: 'Space Mono'; font-size: 0.7rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 20px; text-align: center; }
-        
-        .aggregator-links { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; }
-        .link-card {
-            background: rgba(255,255,255,0.02); border: 1px solid var(--border);
-            padding: 15px; color: #fff; text-decoration: none; font-size: 0.7rem;
-            font-family: var(--font-main); transition: 0.3s; text-align: center; font-weight: bold;
-        }
-        .link-card:hover { background: #fff; color: #000; border-color: #fff; }
-        .link-card.gold-spec { border-color: var(--gold); color: var(--gold); }
-
-        /* DECRYPTION MODAL (V14) */
-        #decrypt-overlay {
-            position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 10000; display: none; flex-direction: column;
-            justify-content: center; align-items: center; font-family: 'Space Mono', monospace;
-        }
-        .terminal-loader { width: 500px; color: var(--gold); }
-
-        /* --- OMEGA FOOTER (DISCLAIMER) --- */
-        footer {
-            margin-top: 100px; padding: 40px; text-align: center;
-            border-top: 1px solid var(--border); background: var(--glass);
-        }
-        .disclaimer { font-size: 0.7rem; color: #555; line-height: 1.6; max-width: 800px; margin: 0 auto; }
-        .disclaimer a { color: var(--gold); text-decoration: none; }
-
+        footer { margin-top: 100px; padding: 40px; text-align: center; opacity: 0.4; font-size: 0.7rem; }
     </style>
 </head>
 <body>
 
-<div class="atm-engine"></div>
-<div class="vignette"></div>
-
-<video autoplay muted loop id="bg-video">
-    <source src="https://assets.mixkit.co/videos/preview/mixkit-futuristic-abstract-loop-21703-large.mp4" type="video/mp4">
-</video>
-
 <header>
-    <div class="logo-block">
-        <img src="image_0.png" alt="Allabostäder Logo">
-        <div class="brand-text">ALLABOSTÄDER</div>
+    <div class="logo-area">
+        <img src="image_0.png" alt="Logo" onerror="this.style.display='none'">
+        <div class="brand">ALLABOSTÄDER</div>
     </div>
-    <div class="sys-log">Motor: <span>V15_ELITE</span> // Uplink: <span>Aktiv</span> // Noder: <span>300/300</span></div>
+    <div style="font-size: 0.6rem; color: var(--gold);">SYSTEM_STATUS: ONLINE</div>
 </header>
 
-<main class="main-hub">
-    <div class="hero-section">
-        <h1 class="hero-title">Neural Fastighetsmotor. <br>Hela <span>Sverige</span> Aggregerat.</h1>
-        <p>Hitta dolda värden, arkiverad data och besiktningsprotokoll med vår Neurala sökare.</p>
+<div class="hero">
+    <h1>Neural Sökning. <br><span>Hela Marknaden.</span></h1>
+    <div class="search-box">
+        <input type="text" id="search-in" placeholder="Skriv in stad (t.ex. Gävle)..." autocomplete="off">
+        <button class="btn-search" onclick="runSearch()">ANALYS</button>
+        <div class="autocomplete" id="auto-box"></div>
     </div>
+</div>
 
-    <div class="search-unit">
-        <div class="input-row">
-            <input type="text" id="omni-input" placeholder="ANGE STAD FÖR FULLSTÄNDIG SKANNING..." autocomplete="off">
-            <button class="scan-trigger" onclick="triggerScan()">ANALYS</button>
-        </div>
-        <div class="drop-zone" id="drop-zone"></div>
+<div id="matrix">
+    <h2 id="res-city" class="city-title">STAD</h2>
+    <p id="res-desc" style="color: #888; line-height: 1.6;"></p>
+    
+    <div class="grid-links">
+        <a href="#" id="h-link" class="link-item" target="_blank">HEMNET</a>
+        <a href="#" id="b-link" class="link-item" target="_blank">BOOLI</a>
+        <a href="#" id="f-link" class="link-item" target="_blank">FASTIGHETSBYRÅN</a>
+        <a href="#" id="s-link" class="link-item" target="_blank">SVENSK FAST</a>
+        <a href="#" class="link-item" style="border-color:#fff;" onclick="alert('Skannar dolda filer...')">UNMASK DATA</a>
     </div>
-
-    <section id="matrix">
-        <div class="dashboard-grid">
-            <div class="analyser-box">
-                <h2 id="res-city" class="city-header">SEKTOR GÄVLE</h2>
-                <div id="res-desc" class="desc-text">Skannar igenom alla svenska mäklarsajter och dolda arkiv...</div>
-                
-                <div class="aggregator-panel">
-                    <div class="aggregator-title">Total Aggregation för Sektorn</div>
-                    <div class="aggregator-links">
-                        <a href="#" id="link-h" class="link-card" target="_blank">HEMNET (Total)</a>
-                        <a href="#" id="link-b" class="link-card" target="_blank">BOOLI (Analys)</a>
-                        <a href="#" class="link-card" id="link-fast" target="_blank">FASTIGHETSBYRÅN</a>
-                        <a href="#" class="link-card" id="link-svfast" target="_blank">SVENSK FAST</a>
-                        <a href="#" class="link-card" id="link-skan" target="_blank">SKANDIAMÄKLARNA</a>
-                        <button class="link-card gold-spec" onclick="openDecrypt()">UNMASK HIDDEN FILES</button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="analyser-box" style="padding: 20px;">
-                <label style="font-family:'Space Mono'; font-size:0.5rem; color:#555;">SYSTEM_LOG</label>
-                <div id="sys-log" style="font-family: 'Space Mono'; font-size: 0.65rem; color: var(--gold);">
-                    > Initializing Allabostäder Core...<br>
-                    > Scraper 1-300: OK<br>
-                    > Database link: Active<br>
-                </div>
-            </div>
-        </div>
-    </section>
-</main>
-
-<div id="decrypt-overlay">
-    <div class="terminal-loader" id="terminal-text"></div>
 </div>
 
 <footer>
-    <div class="disclaimer">
-        ALLABOSTÄDER (Motor: Allabostäder Gävle Elite) är en oberoende oberoende aggregator. Vi äger ej och lagrar ej upphovsrättsskyddade bilder eller dokument. <br>
-        Vi omdirigerar alltid användaren till originalkällan. Genom att använda denna tjänst accepterar du våra <a href="#">användarvillkor</a>.
-    </div>
+    <p>ALLABOSTÄDER © 2026 | Oberoende Fastighetsaggregator | Gävle Elite Division</p>
 </footer>
 
 <script>
-    let csvData = [];
-    const input = document.getElementById('omni-input');
-    const dropZone = document.getElementById('drop-zone');
-    const matrix = document.getElementById('matrix');
+    let locations = [];
 
-    // 1. LADDA DATAN (FIXAD OCH ANPASSAD)
-    async function loadVault() {
+    // Ladda data
+    async function init() {
         try {
-            const resp = await fetch('/Aiorter.csv?v=' + Date.now());
-            const text = await resp.text();
-            const rows = text.replace(/^\uFEFF/, "").split(/\r?\n/);
-            
-            csvData = rows.slice(1).map(r => {
-                const c = r.split(';');
-                return { ort: c[0]?.trim(), kommun: c[1]?.trim(), desc: c[3]?.trim() };
-            }).filter(item => item.ort);
-            
-            logToSystem("Vault Synchronized. 300+ nodes active.");
-        } catch(e) { logToSystem("CRITICAL: Aiorter.csv not found."); }
+            const r = await fetch('Aiorter.csv');
+            const t = await r.text();
+            locations = t.split('\n').slice(1).map(row => {
+                const cols = row.split(';');
+                return { ort: cols[0]?.trim(), kommun: cols[1]?.trim(), desc: cols[3]?.trim() };
+            }).filter(x => x.ort);
+            console.log("Data laddad:", locations.length);
+        } catch (e) {
+            console.log("Kunde inte ladda CSV, kör manuellt läge.");
+        }
     }
 
-    function logToSystem(msg) {
-        document.getElementById('sys-log').innerHTML += `> ${msg}<br>`;
-    }
+    const input = document.getElementById('search-in');
+    const auto = document.getElementById('auto-box');
 
-    // 2. SEARCH-AHEAD (FUTURISTISK DROPDOWN)
-    input.addEventListener('input', function() {
-        const val = this.value.toLowerCase();
-        dropZone.innerHTML = '';
-        if (val.length < 1) { dropZone.style.display = 'none'; return; }
+    input.addEventListener('input', () => {
+        const val = input.value.toLowerCase();
+        auto.innerHTML = '';
+        if (val.length < 1) { auto.style.display = 'none'; return; }
 
-        const matches = csvData.filter(x => x.ort.toLowerCase().startsWith(val)).slice(0, 10);
-        if (matches.length > 0) {
-            matches.forEach(m => {
-                const div = document.createElement('div');
-                div.className = 'drop-item';
-                div.innerHTML = `<span>${m.ort}</span><span class="type">${m.kommun}</span>`;
-                div.onclick = () => selectCity(m);
-                dropZone.appendChild(div);
+        const hits = locations.filter(x => x.ort.toLowerCase().includes(val)).slice(0, 5);
+        if (hits.length > 0) {
+            hits.forEach(h => {
+                const d = document.createElement('div');
+                d.className = 'auto-item';
+                d.innerHTML = `<span>${h.ort}</span><small>${h.kommun}</small>`;
+                d.onclick = () => { input.value = h.ort; auto.style.display = 'none'; runSearch(); };
+                auto.appendChild(d);
             });
-            dropZone.style.display = 'block';
-        } else { dropZone.style.display = 'none'; }
+            auto.style.display = 'block';
+        }
     });
 
-    // 3. TRIGGER SKANNING (MED "LADDAR..." LOGIK)
-    function triggerScan() {
+    function runSearch() {
         const val = input.value.trim();
-        const match = csvData.find(x => x.ort.toLowerCase() === val.toLowerCase());
-        if(match) selectCity(match);
-        else alert("Sektorn hittades inte i databasen.");
-    }
+        const data = locations.find(x => x.ort.toLowerCase() === val.toLowerCase()) || { ort: val, kommun: "", desc: "Skannar realtidsdata för sektorn..." };
 
-    function selectCity(data) {
-        input.value = data.ort;
-        dropZone.style.display = 'none';
-        matrix.style.display = 'block';
-        
-        document.getElementById('res-city').innerText = data.ort.toUpperCase() + " SEKTOR";
-        document.getElementById('res-desc').innerText = data.desc || "Skannar igenom alla svenska mäklarsajter och dolda arkiv för denna sektor...";
+        document.getElementById('matrix').style.display = 'block';
+        document.getElementById('res-city').innerText = data.ort.toUpperCase();
+        document.getElementById('res-desc').innerText = data.desc;
 
-        // Aggregera länkarna (Dynamisk Gävle / Ort länkning)
+        // Länkar
         const q = encodeURIComponent(data.ort);
-        const k = encodeURIComponent(data.kommun);
-        
-        document.getElementById('link-h').href = `https://www.hemnet.se/bostader?location_ids=${q}`;
-        document.getElementById('link-b').href = `https://www.booli.se/sok?q=${k}`;
-        document.getElementById('link-fast').href = `https://www.fastighetsbyran.com/sv/sverige/till-salu/gavleborg/gavle/`;
-        document.getElementById('link-svfast').href = `https://www.svenskfast.se/bostad/gavleborg/gavle/`;
-        document.getElementById('link-skan').href = `https://www.skandiamaklarna.se/hitta-maklare/gavle`;
-        
-        logToSystem(`Sector ${data.ort} analyzed via 300 nodes.`);
-        window.scrollTo({ top: matrix.offsetTop - 100, behavior: 'smooth' });
+        document.getElementById('h-link').href = `https://www.hemnet.se/bostader?location_ids=${q}`;
+        document.getElementById('b-link').href = `https://www.booli.se/sok?q=${q}`;
+        document.getElementById('f-link').href = `https://www.fastighetsbyran.com/sv/sverige/sokresultat/?searchTerm=${q}`;
+        document.getElementById('s-link').href = `https://www.svenskfast.se/bostad/sok/${q}`;
+
+        auto.style.display = 'none';
+        window.scrollTo({ top: document.getElementById('matrix').offsetTop - 50, behavior: 'smooth' });
     }
 
-    // 4. UNMASK HIDDEN FILES TERMINAL (V14)
-    function openDecrypt() {
-        const overlay = document.getElementById('decrypt-overlay');
-        const term = document.getElementById('terminal-text');
-        overlay.style.display = 'flex';
-        term.innerHTML = '';
-        
-        const lines = [
-            "> Initializing neural downlink...",
-            "> Bypassing broker firewalls...",
-            "> Scraping unpublished inspection reports...",
-            "> Decrypting deleted property media...",
-            "> Mapping market data patterns...",
-            "> ACCESS GRANTED: 100+ HIDDEN FILES FOUND."
-        ];
-
-        let i = 0;
-        const interval = setInterval(() => {
-            term.innerHTML += `<p style="color:var(--gold)">${lines[i]}</p>`;
-            i++;
-            if(i === lines.length) {
-                clearInterval(interval);
-                setTimeout(() => {
-                    overlay.style.display = 'none';
-                    alert("Systemmeddelande: De dolda filerna har laddats upp till system-cachen.");
-                }, 1000);
-            }
-        }, 600);
-    }
-
-    window.onload = loadVault;
+    init();
 </script>
 </body>
 </html>
