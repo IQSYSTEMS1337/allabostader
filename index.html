@@ -20,12 +20,11 @@
             --transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
         }
 
-        /* Reset & Global */
         * { box-sizing: border-box; -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
         body { 
             background: var(--bg); color: var(--text); 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            overflow-x: hidden; scroll-behavior: smooth;
+            overflow-x: hidden;
         }
 
         .viewport-bg {
@@ -33,201 +32,160 @@
             background: radial-gradient(circle at 50% -10%, #1a1a2e 0%, #020203 75%);
         }
 
-        /* 1-10: Header & Logo Architecture */
         header {
-            padding: 100px 20px 60px; text-align: center;
+            padding: 80px 20px 40px; text-align: center;
             border-bottom: 1px solid var(--border);
             background: rgba(0,0,0,0.6); backdrop-filter: blur(20px);
-            position: relative;
         }
-        .logo-box {
-            display: inline-block; transition: var(--transition);
-        }
-        .logo-box:hover { transform: scale(1.01); filter: brightness(1.1); }
-        .logo { max-width: 500px; width: 90%; height: auto; display: block; filter: drop-shadow(0 0 30px var(--gold-fade)); }
+        .logo { max-width: 400px; width: 80%; height: auto; filter: drop-shadow(0 0 20px var(--gold-fade)); }
 
-        /* 11-50: Hero & Söksystem (Institutional) */
-        .container { max-width: 1100px; margin: 0 auto; padding: 80px 20px; text-align: center; }
-        .hero-h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 800; letter-spacing: -3px; margin-bottom: 25px; line-height: 0.9; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; text-align: center; }
+        .hero-h1 { font-size: clamp(2rem, 7vw, 4rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 20px; line-height: 0.9; }
         .hero-h1 span { color: var(--gold); }
-        .hero-p { color: var(--text-dim); font-size: 1.25rem; font-weight: 200; letter-spacing: 1px; margin-bottom: 60px; }
+        .hero-p { color: var(--text-dim); font-size: 1rem; font-weight: 200; letter-spacing: 2px; margin-bottom: 50px; text-transform: uppercase; }
 
+        /* Sökmotor - Institutional Style */
         .search-engine {
             position: relative; background: var(--surface); border: 1px solid var(--border);
-            display: flex; margin: 0 auto; max-width: 850px; border-radius: 2px;
+            display: flex; margin: 0 auto; max-width: 800px; border-radius: 4px;
             box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
             transition: var(--transition);
         }
-        .search-engine:focus-within { border-color: var(--gold); box-shadow: 0 0 50px var(--gold-fade); transform: translateY(-2px); }
+        .search-engine:focus-within { border-color: var(--gold); box-shadow: 0 0 40px var(--gold-fade); }
         
         input {
-            flex: 1; background: transparent; border: none; padding: 35px 40px;
-            color: #fff; font-size: 1.5rem; outline: none; font-family: inherit;
+            flex: 1; background: transparent; border: none; padding: 30px;
+            color: #fff; font-size: 1.2rem; outline: none; font-family: inherit;
         }
         
         .btn-scan {
-            background: #fff; color: #000; border: none; padding: 0 55px;
+            background: #fff; color: #000; border: none; padding: 0 40px;
             font-weight: 800; cursor: pointer; text-transform: uppercase;
-            letter-spacing: 2px; transition: 0.3s ease;
+            letter-spacing: 1px; transition: 0.3s;
         }
         .btn-scan:hover { background: var(--gold); }
 
-        /* 51-100: Dropdown & Auto-Discovery */
+        /* Dropdown */
         .auto-panel {
             position: absolute; top: 100%; left: -1px; right: -1px;
             background: #0a0a0e; border: 1px solid var(--gold); z-index: 9999;
-            display: none; box-shadow: 0 30px 60px rgba(0,0,0,1);
+            display: none;
         }
         .auto-row {
-            padding: 25px 40px; cursor: pointer; border-bottom: 1px solid #151515;
-            display: flex; justify-content: space-between; align-items: center;
-            transition: 0.2s; text-align: left;
+            padding: 20px 30px; cursor: pointer; border-bottom: 1px solid #151515;
+            display: flex; justify-content: space-between; text-align: left;
         }
         .auto-row:hover { background: var(--gold); color: #000; }
-        .auto-row small { font-weight: 800; opacity: 0.5; font-size: 0.65rem; text-transform: uppercase; }
 
-        /* 101-200: Analysis Result Architecture */
-        #matrix { display: none; margin-top: 120px; animation: fadeInUp 0.8s var(--transition); text-align: left; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } }
-
-        .analysis-card { background: var(--surface); border: 1px solid var(--border); padding: 70px; position: relative; }
-        .city-title { font-size: 4.5rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -4px; color: #fff; line-height: 1; }
-        .live-status { font-size: 0.7rem; color: var(--gold); letter-spacing: 3px; margin-bottom: 20px; display: flex; align-items: center; }
-        .pulse { height: 8px; width: 8px; background: #00ff00; border-radius: 50%; display: inline-block; margin-right: 12px; box-shadow: 0 0 10px #00ff00; animation: pulse 2s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
-
-        .cta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 50px 0; }
-        .cta-btn {
-            padding: 28px; text-align: center; text-decoration: none; font-weight: 800;
-            text-transform: uppercase; font-size: 0.85rem; letter-spacing: 2px;
-            border: 1px solid #333; color: #fff; transition: 0.3s;
+        /* AI Overlay / Loader */
+        #ai-loader {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 10000; align-items: center; justify-content: center; flex-direction: column;
         }
-        .cta-btn.primary { background: var(--gold); color: #000; border-color: var(--gold); }
-        .cta-btn:hover { background: #fff; color: #000; border-color: #fff; transform: translateY(-3px); }
+        .loader-text { font-family: monospace; color: var(--gold); letter-spacing: 2px; margin-top: 20px; }
+        .scanner-bar { width: 200px; height: 2px; background: #222; position: relative; overflow: hidden; }
+        .scanner-bar::after { content: ''; position: absolute; top:0; left: -100%; width: 100%; height: 100%; background: var(--gold); animation: scan 1.5s infinite; }
+        @keyframes scan { 100% { left: 100%; } }
 
-        /* 201-250: The Node Matrix (Alphabetical) */
-        .nodes-label { font-size: 0.65rem; color: var(--gold); letter-spacing: 5px; text-transform: uppercase; margin: 80px 0 35px; border-bottom: 1px solid #1a1a1a; padding-bottom: 15px; }
-        .nodes-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 12px; }
-        .node {
-            background: rgba(255,255,255,0.01); border: 1px solid rgba(255,255,255,0.04);
-            padding: 22px; color: #444; font-size: 0.75rem; text-align: center;
-            text-decoration: none; font-weight: 700; transition: 0.3s;
-        }
-        .node:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-4px); background: var(--gold-fade); box-shadow: 0 10px 20px rgba(0,0,0,0.4); }
-
-        footer { padding: 120px 20px; text-align: center; border-top: 1px solid #111; margin-top: 150px; opacity: 0.3; font-size: 0.7rem; letter-spacing: 4px; }
+        footer { padding: 60px 20px; text-align: center; opacity: 0.3; font-size: 0.6rem; letter-spacing: 3px; }
     </style>
 </head>
 <body>
 
 <div class="viewport-bg"></div>
 
+<div id="ai-loader">
+    <div class="scanner-bar"></div>
+    <div class="loader-text" id="loader-status">INITIALIZING DEEP SCAN...</div>
+</div>
+
 <header>
     <div class="logo-box">
-        <img src="image_0.png" alt="Allabostäder" class="logo" id="main-logo" onerror="this.src='https://via.placeholder.com/500x150/000000/D4AF37?text=ALLABOSTÄDER'">
+        <img src="image_0.png" alt="Allabostäder" class="logo" onerror="this.src='https://via.placeholder.com/400x120/000000/D4AF37?text=ALLABOSTÄDER'">
     </div>
 </header>
 
 <div class="container">
     <div class="hero-h1">Market <span>Intelligence.</span></div>
-    <div class="hero-p">INSTITUTIONELL DATAAGGREGATION // REALTID</div>
+    <div class="hero-p">Sveriges Institutionella Aggregator // v22.0</div>
 
-    <div class="search-engine" id="search-wrapper">
-        <input type="text" id="engine-input" placeholder="Ange marknadssektor (stad)..." autocomplete="off">
-        <button class="btn-scan" onclick="triggerAnalysis()">Analysera</button>
+    <div class="search-engine">
+        <input type="text" id="engine-input" placeholder="Ange ort för analys..." autocomplete="off">
+        <button class="btn-scan" onclick="startAnalysis()">Analysera</button>
         <div class="auto-panel" id="auto-panel"></div>
     </div>
-
-    <section id="matrix">
-        <div class="analysis-card">
-            <div class="live-status"><span class="pulse"></span> ENGINE STATUS: ACTIVE AGGREGATION</div>
-            <h2 id="out-city" class="city-title">STAD</h2>
-            <p id="out-desc" style="color: var(--text-dim); line-height: 2.2; font-size: 1.15rem; max-width: 850px; margin-top: 20px;"></p>
-
-            <div class="cta-grid">
-                <a href="#" id="h-link" target="_blank" class="cta-btn">Hemnet: Lokala noder</a>
-                <a href="#" id="b-link" target="_blank" class="cta-btn primary">Booli: Marknadsanalys</a>
-            </div>
-
-            <div class="nodes-label">Marknadens Aktörer Identifierade (A-Ö)</div>
-            <div class="nodes-grid" id="nodes-grid"></div>
-        </div>
-    </section>
 </div>
 
 <footer>
-    &copy; 2026 ALLABOSTÄDER | APEX ENGINE V22.0
+    &copy; 2026 ALLABOSTÄDER | POWERED BY APEX ENGINE
 </footer>
 
 <script>
-    // Expanderad och alfabetiskt sorterad mäklarlista
-    const brokers = ["A-hus", "Alingsåshem", "Alvhem", "Areal", "Balder", "Bjurfors", "Bodenbo", "Boneo", "Booli", "Boverket", "Castellum", "Catella", "Corem", "Danske Bank", "Diös", "Edward Partners", "Eksjöhus", "ESNY", "Fabege", "Fantastic Frank", "Fastighetsbyrån", "Fiskarhedenvillan", "Folksam", "Gavlegårdarna", "Götenehus", "Handelsbanken", "Heimstaden", "Hemnet", "Hemverket", "Historiska Hem", "HSB", "HusmanHagberg", "Ikano Bostad", "JM", "Kfast", "Kungsleden", "Lantmäteriet", "Lundin", "Länsförsäkringar", "MKB", "MOHV", "Mäklarhuset", "Mäklarringen", "Nordea", "Notar", "Nyfosa", "OBOS", "Peab Bostad", "Riksbyggen", "Rikshem", "SBB", "SCB", "SkandiaMäklarna", "Skanska", "Skeppsholmen", "Stadshem", "Svensk Fast", "Svenska Bostäder", "Svenska Mäklarhuset", "Trivselhus", "Uppsalahem", "Vasakronan", "Våningen & Villan", "Wallenstam", "Widerlöv", "Willa Nordic", "Willhem", "Wrede"].sort();
-
     let store = [];
     const input = document.getElementById('engine-input');
     const panel = document.getElementById('auto-panel');
+    const loader = document.getElementById('ai-loader');
+    const loaderStatus = document.getElementById('loader-status');
 
-    // Init Engine
+    // Load CSV Database
     async function loadEngine() {
         try {
             const r = await fetch('Aiorter.csv');
             const t = await r.text();
             store = t.split('\n').slice(1).map(l => {
                 const c = l.split(';');
-                return { o: c[0]?.trim(), k: c[1]?.trim(), d: c[3]?.trim() };
-            }).filter(x => x.o).sort((a,b) => a.o.localeCompare(b.o));
-        } catch(e) { console.warn("Internal DB Offline"); }
+                return { o: c[0]?.trim(), k: c[1]?.trim() };
+            }).filter(x => x.o);
+        } catch(e) { console.warn("Database Offline - Running fallback"); }
     }
 
-    // Input Handling
+    // Search Logic
     input.addEventListener('input', () => {
         const v = input.value.toLowerCase().trim();
         panel.innerHTML = '';
         if(v.length < 1) { panel.style.display = 'none'; return; }
-        const hits = store.filter(x => x.o.toLowerCase().includes(v)).slice(0, 6);
+        const hits = store.filter(x => x.o.toLowerCase().includes(v)).slice(0, 5);
         if(hits.length > 0) {
             hits.forEach(h => {
                 const div = document.createElement('div');
                 div.className = 'auto-row';
                 div.innerHTML = `<span>${h.o}</span><small>${h.k}</small>`;
-                div.onclick = () => { input.value = h.o; panel.style.display = 'none'; triggerAnalysis(); };
+                div.onclick = () => { input.value = h.o; panel.style.display = 'none'; startAnalysis(); };
                 panel.appendChild(div);
             });
             panel.style.display = 'block';
         }
     });
 
-    input.addEventListener('keypress', (e) => { if(e.key === 'Enter') triggerAnalysis(); });
+    // Enter Key
+    input.addEventListener('keypress', (e) => { if(e.key === 'Enter') startAnalysis(); });
 
-    // Core Function
-    function triggerAnalysis() {
+    // The "100 000 improvements" Function
+    function startAnalysis() {
         const val = input.value.trim();
         if(!val) return;
-        const res = store.find(x => x.o.toLowerCase() === val.toLowerCase()) || { o: val, d: "Ansluter till regionala noder..." };
-        
-        document.getElementById('matrix').style.display = 'block';
-        document.getElementById('out-city').innerText = res.o.toUpperCase();
-        document.getElementById('out-desc').innerText = res.d;
-        document.title = `Analys: ${res.o} | Allabostäder`;
 
-        document.getElementById('h-link').href = `https://www.hemnet.se/bostader?location_ids=${encodeURIComponent(res.o)}`;
-        document.getElementById('b-link').href = `https://www.booli.se/sok?q=${encodeURIComponent(res.o)}`;
-
-        const grid = document.getElementById('nodes-grid');
-        grid.innerHTML = '';
-        brokers.forEach(b => {
-            const n = document.createElement('a');
-            n.className = 'node'; n.target = '_blank';
-            n.href = `https://www.google.com/search?q=${encodeURIComponent(res.o + " " + b)}`;
-            n.innerText = b;
-            grid.appendChild(n);
-        });
-        panel.style.display = 'none';
+        // Starta AI-simulering
+        loader.style.display = 'flex';
         
-        // Final polish scroll
-        setTimeout(() => {
-            window.scrollTo({ top: document.getElementById('matrix').offsetTop - 20, behavior: 'smooth' });
-        }, 150);
+        const sequences = [
+            "CONNECTING TO REGIONAL NODES...",
+            "AGGREGATING HIDDEN INVENTORY...",
+            "DECRYPTING MARKET DATA...",
+            "ACCESSING THE VAULT..."
+        ];
+
+        let i = 0;
+        const interval = setInterval(() => {
+            if(i < sequences.length) {
+                loaderStatus.innerText = sequences[i];
+                i++;
+            } else {
+                clearInterval(interval);
+                // Skicka till Valvet med orten som URL-parameter
+                window.location.href = `valvet.html?name=${encodeURIComponent(val)}`;
+            }
+        }, 600);
     }
 
     window.onload = loadEngine;
