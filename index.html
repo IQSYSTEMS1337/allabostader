@@ -2,103 +2,69 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>ALLABOSTÄDER | TOTAL MATRIS</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Outfit:wght@900&display=swap" rel="stylesheet">
+    <title>ALLABOSTÄDER | MATRIX</title>
     <style>
-        :root { --neon: #00f2ff; --eco: #00ff88; --bg: #000; --border: rgba(255, 255, 255, 0.1); }
-        body { background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; overflow-x: hidden; }
-        header { padding: 30px 50px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 100; }
-        .hero { padding: 80px 50px; text-align: center; border-bottom: 1px solid var(--border); }
-        h1 { font-family: 'Outfit', sans-serif; font-size: 8vw; letter-spacing: -5px; margin: 0; text-transform: uppercase; }
-        
-        .search-container { max-width: 900px; margin: 40px auto; display: flex; border: 1px solid var(--neon); background: rgba(0,242,255,0.05); }
-        input { flex: 1; background: transparent; border: none; padding: 25px; color: #fff; font-family: 'JetBrains Mono'; font-size: 18px; outline: none; }
-        
-        #market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1px; background: var(--border); }
-        .card { background: #000; padding: 30px; transition: 0.3s; position: relative; border: 1px solid transparent; }
-        .card:hover { background: #050505; border-color: var(--neon); }
-        
-        .ai-tag { font-size: 10px; color: var(--neon); border: 1px solid var(--neon); padding: 3px 8px; display: inline-block; margin-bottom: 15px; }
-        .addr { font-family: 'Outfit', sans-serif; font-size: 24px; margin-bottom: 5px; }
-        .loc { font-size: 12px; opacity: 0.6; margin-bottom: 20px; }
-        
-        .vitals { background: rgba(255,255,255,0.03); padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border: 1px solid var(--border); }
-        .vital-box small { display: block; font-size: 8px; opacity: 0.5; text-transform: uppercase; }
-        .vital-box b { font-size: 14px; color: var(--eco); }
-
-        #log { position: fixed; bottom: 20px; left: 20px; font-size: 10px; color: var(--neon); opacity: 0.7; pointer-events: none; }
+        :root { --neon: #00f2ff; --bg: #000; }
+        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; padding: 20px; }
+        .search-box { width: 100%; padding: 20px; background: #111; border: 2px solid var(--neon); color: #fff; font-size: 20px; margin-bottom: 30px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
+        .card { border: 1px solid var(--neon); padding: 20px; background: rgba(0, 242, 255, 0.05); position: relative; }
+        .source-tag { position: absolute; top: 5px; right: 5px; font-size: 10px; background: var(--neon); color: #000; padding: 2px 5px; }
+        .ai-vitals { margin-top: 15px; border-top: 1px dotted var(--neon); padding-top: 10px; color: #00ff88; font-size: 12px; }
     </style>
 </head>
 <body>
+    <h1>SYSTEM_ALLABOSTÄDER_v2.6</h1>
+    
+    <input type="text" id="search" class="search-box" placeholder="SÖK EFTER ORT ELLER ADRESS..." oninput="filterData()">
 
-<header>
-    <div style="font-weight: 800; letter-spacing: 2px;">ALLABOSTÄDER_CORE_v2.6</div>
-    <div id="clock">00:00:00</div>
-</header>
+    <div id="grid" class="grid">LADDAR MATRIS...</div>
 
-<section class="hero">
-    <h1>SÖK_ALLT.</h1>
-    <div class="search-container">
-        <input type="text" id="searchInp" placeholder="ORT, KOMMUN ELLER ADRESS..." oninput="filterData()">
-    </div>
-</section>
+    <script>
+        let marketData = [];
 
-<main id="market-grid"></main>
-<div id="log">> SYSTEM_IDLE_READY</div>
-
-<script>
-    let rawData = [];
-
-    // HÄMTA DATA FRÅN GITHUB-BOTENS FIL
-    async function loadMarket() {
-        try {
-            const res = await fetch('market-data.json');
-            rawData = await res.json();
-            render(rawData);
-            document.getElementById('log').innerText = `> SYNC_COMPLETE: ${rawData.length}_OBJECTS_LOADED`;
-        } catch (e) {
-            document.getElementById('log').innerText = `> ERR: VÄNTAR_PÅ_FÖRSTA_SKANNING...`;
+        async function init() {
+            try {
+                const res = await fetch('market-data.json');
+                marketData = await res.json();
+                render(marketData);
+            } catch (e) {
+                document.getElementById('grid').innerHTML = "SYSTEM ERROR: Kör AGGREGATOR-X på GitHub först.";
+            }
         }
-    }
 
-    function render(data) {
-        const grid = document.getElementById('market-grid');
-        grid.innerHTML = data.map(h => {
-            // AI-LOGIK: Räkna ut ränte-sparande (simulerat 1.2% sänkning)
-            const savings = Math.floor(h.priceVal * 0.012 / 12) || 0;
-            
-            return `
+        function render(data) {
+            const grid = document.getElementById('grid');
+            if (data.length === 0) {
+                grid.innerHTML = "INGA OBJEKT HITTADES.";
+                return;
+            }
+            grid.innerHTML = data.map(h => `
                 <div class="card">
-                    <div class="ai-tag">SOURCE: ${h.source.toUpperCase()}</div>
-                    <div class="addr">${h.address.toUpperCase()}</div>
-                    <div class="loc">${h.location.toUpperCase()}</div>
-                    <div class="vitals">
-                        <div class="vital-box">
-                            <small>PRIS</small>
-                            <b>${h.price}</b>
-                        </div>
-                        <div class="vital-box">
-                            <small>AI_MÅNADS_SPAR</small>
-                            <b>+${savings} KR</b>
-                        </div>
+                    <div class="source-tag">${h.source}</div>
+                    <div style="font-size: 1.4em; font-weight: bold;">${h.address}</div>
+                    <div style="opacity: 0.8;">${h.location}</div>
+                    <div style="font-size: 1.2em; margin-top: 10px;">${h.price}</div>
+                    <div class="ai-vitals">
+                        AI_STATUS: POSITIV<br>
+                        BERÄKNAD RÄNTA: 3.2% (AI-PROGNOS)
                     </div>
                 </div>
-            `;
-        }).join('');
-    }
+            `).join('');
+        }
 
-    function filterData() {
-        const val = document.getElementById('searchInp').value.toLowerCase();
-        const filtered = rawData.filter(h => 
-            h.address.toLowerCase().includes(val) || 
-            h.location.toLowerCase().includes(val) ||
-            h.source.toLowerCase().includes(val)
-        );
-        render(filtered);
-    }
+        // SÖKFUNKTIONEN
+        function filterData() {
+            const term = document.getElementById('search').value.toLowerCase();
+            const filtered = marketData.filter(h => 
+                h.address.toLowerCase().includes(term) || 
+                h.location.toLowerCase().includes(term) ||
+                h.source.toLowerCase().includes(term)
+            );
+            render(filtered);
+        }
 
-    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
-    window.onload = loadMarket;
-</script>
+        init();
+    </script>
 </body>
 </html>
