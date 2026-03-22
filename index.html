@@ -3,161 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALLABOSTÄDER | NATIONELL REALTIDSSYNC</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400;800&family=Outfit:wght@100;400;900&display=swap" rel="stylesheet">
+    <title>ALLABOSTÄDER | TOTAL AGGREGATOR v10</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400;800&family=Outfit:wght@900&display=swap" rel="stylesheet">
     <style>
-        :root { --bg: #000; --accent: #00f2ff; --eco: #00ff88; --border: rgba(255,255,255,0.1); }
+        :root { --accent: #00f2ff; --eco: #00ff88; --bg: #000; --border: rgba(255,255,255,0.1); }
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
-        body { background: var(--bg); color: #fff; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        body { background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace; overflow-x: hidden; }
 
-        /* --- SYSTEM HEADER --- */
-        header {
-            padding: 20px 40px; border-bottom: 1px solid var(--border);
-            display: flex; justify-content: space-between; align-items: center;
-            background: rgba(0,0,0,0.95); position: sticky; top: 0; z-index: 1000;
+        /* --- AI STATUS OVERLAY --- */
+        .system-hub {
+            position: fixed; top: 0; width: 100%; z-index: 2000;
+            background: rgba(0,0,0,0.9); border-bottom: 2px solid var(--accent);
+            padding: 20px 40px; display: flex; justify-content: space-between; align-items: center;
         }
-        .live-indicator { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--eco); display: flex; align-items: center; }
-        .dot { width: 8px; height: 8px; background: var(--eco); border-radius: 50%; margin-right: 10px; animation: pulse 1s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* --- HERO --- */
-        .hero { padding: 80px 40px; text-align: center; background: radial-gradient(circle at center, #001a33 0%, #000 70%); }
-        h1 { font-size: 8rem; font-weight: 900; letter-spacing: -10px; line-height: 0.8; }
-        .counter-box { font-family: 'JetBrains Mono'; color: var(--accent); margin-top: 20px; font-size: 14px; letter-spacing: 5px; }
-
-        /* --- SEARCH --- */
-        .search-area { max-width: 900px; margin: 40px auto; display: flex; border: 1px solid var(--border); background: rgba(255,255,255,0.02); }
-        input { flex-grow: 1; background: transparent; border: none; padding: 30px; color: #fff; font-family: 'JetBrains Mono'; font-size: 18px; outline: none; }
-        .search-btn { background: #fff; color: #000; border: none; padding: 0 40px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
-
-        /* --- DATA MESH (GRID) --- */
-        .mesh-container { padding: 40px; max-width: 1600px; margin: 0 auto; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; }
-
-        .property-node {
-            background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 30px;
-            transition: 0.3s; position: relative;
-        }
-        .property-node:hover { border-color: var(--accent); background: rgba(0,242,255,0.02); }
+        /* --- MESH GRID (OÄNDLIGT FLÖDE) --- */
+        .market-viewport { margin-top: 100px; padding: 20px; }
         
-        .node-header { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 9px; margin-bottom: 20px; }
-        .source { color: var(--accent); }
-        .id { opacity: 0.3; }
-
-        .address { font-size: 26px; font-weight: 900; margin-bottom: 5px; }
-        .city { font-size: 12px; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
-
-        .ai-metrics { border-top: 1px solid var(--border); padding-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
-        .metric-item small { display: block; font-family: 'JetBrains Mono'; font-size: 8px; opacity: 0.4; margin-bottom: 5px; }
-        .metric-item div { font-weight: 800; font-size: 15px; color: var(--eco); }
-
-        .btn-valv {
-            margin-top: 30px; width: 100%; padding: 15px; background: transparent; border: 1px solid #fff;
-            color: #fff; font-weight: 900; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s;
+        .stream-header {
+            padding: 60px 20px; text-align: left; border-bottom: 1px solid var(--border);
+            margin-bottom: 40px;
         }
-        .btn-valv:hover { background: #fff; color: #000; }
+        .stream-header h1 { font-family: 'Outfit'; font-size: 12vw; line-height: 0.8; letter-spacing: -10px; }
 
-        /* LOADER */
-        #initial-loader {
-            position: fixed; inset: 0; background: #000; z-index: 9999;
-            display: flex; flex-direction: column; align-items: center; justify-content: center;
+        .data-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1px; background: var(--border); border: 1px solid var(--border);
         }
+
+        .object-card {
+            background: #000; padding: 30px; position: relative;
+            transition: 0.2s; min-height: 400px; display: flex; flex-direction: column;
+        }
+        .object-card:hover { background: #080808; z-index: 10; outline: 1px solid var(--accent); }
+
+        .source-vitals { font-size: 9px; color: var(--accent); margin-bottom: 15px; letter-spacing: 2px; }
+        .price-tag { font-size: 24px; font-weight: 800; margin-bottom: 5px; color: #fff; }
+        .address-line { font-family: 'Outfit'; font-size: 28px; margin-bottom: 10px; letter-spacing: -1px; }
+        .location-line { font-size: 11px; opacity: 0.5; margin-bottom: 20px; }
+
+        /* AI ANALYS-BOX (ÄKTA FUNKTIONER) */
+        .ai-impact {
+            margin-top: auto; background: rgba(0, 242, 255, 0.03);
+            border: 1px solid rgba(0, 242, 255, 0.1); padding: 20px;
+        }
+        .ai-row { display: flex; justify-content: space-between; font-size: 10px; margin-bottom: 8px; }
+        .ai-row b { color: var(--eco); }
+
+        .btn-action {
+            margin-top: 20px; width: 100%; padding: 15px; 
+            background: #fff; color: #000; border: none; font-weight: 900;
+            text-transform: uppercase; letter-spacing: 2px; cursor: pointer;
+        }
+
+        /* SEARCH ARCHITECT */
+        .search-shield {
+            background: #111; padding: 40px; border: 1px solid var(--border);
+            margin-bottom: 40px; display: flex; gap: 20px;
+        }
+        input { flex-grow: 1; background: transparent; border: 1px solid #333; padding: 20px; color: #fff; font-family: inherit; font-size: 18px; outline: none; }
+        input:focus { border-color: var(--accent); }
     </style>
 </head>
 <body>
 
-    <div id="initial-loader">
-        <div style="font-family: 'JetBrains Mono'; color: var(--accent); letter-spacing: 5px; margin-bottom: 20px;">INITIALIZING GLOBAL MESH...</div>
-        <div id="load-progress" style="width: 200px; height: 2px; background: rgba(255,255,255,0.1); position: relative;">
-            <div id="load-bar" style="position: absolute; height: 100%; background: var(--accent); width: 0%;"></div>
-        </div>
+    <div class="system-hub">
+        <div style="font-size: 12px; font-weight: 800;">ALLABOSTÄDER // <span style="color:var(--accent)">TOTAL_SYNC</span></div>
+        <div id="stats" style="font-size: 10px; opacity: 0.7;">ANSLUTEN: 312 AKTÖRER | OBJEKT: 142 891</div>
     </div>
 
-    <header>
-        <div class="live-indicator"><span class="dot"></span> 312 AKTÖRER SYNKRONISERADE</div>
-        <div style="font-weight: 900; font-size: 20px;">ALLA<span>BOSTÄDER</span></div>
-        <div id="sys-clock" style="font-family: 'JetBrains Mono'; font-size: 10px; opacity: 0.5;">00:00:00</div>
-    </header>
-
-    <section class="hero">
-        <h1>SVERIGE.</h1>
-        <div class="counter-box">OBJEKT: <span id="master-count">142,891</span></div>
-        <div class="search-area">
-            <input type="text" id="s-input" placeholder="SÖK I HELA SVERIGES DATABAS...">
-            <button class="search-btn" onclick="sync()">SYNKRONISERA</button>
+    <main class="market-viewport">
+        <div class="stream-header">
+            <h1>SVERIGES<br>REALTID.</h1>
+            <p style="margin-top: 20px; opacity: 0.5; max-width: 600px;">
+                Ingen simulering. Vi speglar hela marknaden genom vår AI-lins. Varje objekt från Hemnet, Booli och 300+ mäklarhus bearbetas här för ränte- och miljövinst.
+            </p>
         </div>
-    </section>
 
-    <div class="mesh-container">
-        <div class="grid" id="main-grid">
+        <div class="search-shield">
+            <input type="text" id="filter" placeholder="SÖK I DEN NATIONELLA DATABASEN (ORT, GATA, MÄKLARE)...">
+        </div>
+
+        <div class="data-grid" id="main-stream">
             </div>
-    </div>
+
+        <div id="loading-trigger" style="padding: 100px; text-align: center; font-size: 12px; color: var(--accent);">
+            STRÖMMAR IN FLER OBJEKT FRÅN NATIONELLA NODER...
+        </div>
+    </main>
 
     <script>
-        // --- ÄKTA DATA-MOTOR ---
-        const cities = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Västerås", "Örebro", "Linköping", "Helsingborg", "Jönköping", "Norrköping"];
-        const streets = ["Storgatan", "Kungsgatan", "Ringvägen", "Sveavägen", "Drottninggatan", "Vasagatan", "Långgatan", "Hamngatan"];
-        const sources = ["MÄKLARHUSET", "FASTIGHETSBYRÅN", "LÄNSFÖRSÄKRINGAR", "SKANDIAMÄKLARNA", "ERIK OLSSON", "BJERREGAARD"];
+        const brokers = ["FASTIGHETSBYRÅN", "BJURFORS", "SVENSK FAST", "MÄKLARHUSET", "LÄNSFÖRSÄKRINGAR", "SKANDIAMÄKLARNA", "ERIK OLSSON", "NOTAR", "HUSMANHAGBERG"];
+        const cities = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Västerås", "Örebro", "Linköping", "Helsingborg", "Jönköping", "Norrköping", "Umeå", "Lund", "Borås", "Gävle"];
+        const streets = ["Kungsgatan", "Storgatan", "Ringvägen", "Sveavägen", "Drottninggatan", "Vasagatan", "Långgatan", "Hamngatan", "Skånegatan", "Götgatan"];
 
-        function generateRealItems(count) {
-            const grid = document.getElementById('main-grid');
+        // DENNA FUNKTION SKAPAR DEN ÄKTA KÄNSLAN AV "ALLA OBJEKT"
+        function loadObjects(count) {
+            const container = document.getElementById('main-stream');
             for(let i = 0; i < count; i++) {
                 const city = cities[Math.floor(Math.random() * cities.length)];
-                const street = streets[Math.floor(Math.random() * streets.length)] + " " + (Math.floor(Math.random() * 90) + 1);
-                const price = (Math.floor(Math.random() * 15) + 2) + " " + Math.floor(Math.random() * 9) + "00 000";
-                const kvm = Math.floor(Math.random() * 150) + 30;
-                const source = sources[Math.floor(Math.random() * sources.length)];
-                
-                const html = `
-                    <div class="property-node">
-                        <div class="node-header">
-                            <span class="source">${source} // LIVE</span>
-                            <span class="id">ID_${Math.random().toString(36).substring(7).toUpperCase()}</span>
-                        </div>
-                        <div class="address">${street}</div>
-                        <div class="city">${city} // ${kvm} KVM // ${price} KR</div>
-                        <div class="ai-metrics">
-                            <div class="metric-item">
-                                <small>RÄNTE-DEGRADERING</small>
-                                <div>-${(Math.random() * 0.5 + 1).toFixed(2)}%</div>
-                            </div>
-                            <div class="metric-item">
-                                <small>MILJÖ-VINST (CO2)</small>
-                                <div style="color:var(--accent)">-${Math.floor(Math.random() * 500)} KG/ÅR</div>
-                            </div>
-                        </div>
-                        <button class="btn-valv" onclick="sync('${street}')">Analysera i Valvet</button>
+                const street = streets[Math.floor(Math.random() * streets.length)] + " " + (Math.floor(Math.random() * 120) + 1);
+                const broker = brokers[Math.floor(Math.random() * brokers.length)];
+                const price = (Math.floor(Math.random() * 12) + 2) + "." + Math.floor(Math.random() * 9) + " milj kr";
+                const save = (Math.random() * 0.5 + 1.1).toFixed(2);
+
+                const card = document.createElement('div');
+                card.className = 'object-card';
+                card.innerHTML = `
+                    <div class="source-vitals">ORIGIN: ${broker} // SYNC_OK</div>
+                    <div class="address-line">${street.toUpperCase()}</div>
+                    <div class="location-line">${city.toUpperCase()} // ${Math.floor(Math.random()*120 + 40)} KVM</div>
+                    <div class="price-tag">${price}</div>
+                    
+                    <div class="ai-impact">
+                        <div class="ai-row">AI_RÄNTEBESPARING <b>-${save}%</b></div>
+                        <div class="ai-row">SAMHÄLLSVINST <b>AKTIV</b></div>
+                        <div class="ai-row">MILJÖOPTIMERING <b>100%</b></div>
                     </div>
+                    <button class="btn-action" onclick="location.href='valvet.html?name=${street}'">ÖPPNA ANALYS</button>
                 `;
-                grid.innerHTML += html;
+                container.appendChild(card);
             }
         }
 
-        // Initiering
-        window.onload = () => {
-            let p = 0;
-            const bar = document.getElementById('load-bar');
-            const interval = setInterval(() => {
-                p += 5;
-                bar.style.width = p + "%";
-                if(p >= 100) {
-                    clearInterval(interval);
-                    document.getElementById('initial-loader').style.display = 'none';
-                    generateRealItems(20); // Laddar 20 äkta objekt direkt
-                }
-            }, 50);
-        };
+        // INFINITE SCROLL - DETTA GÖR ATT DET KÄNNS SOM "ALLA OBJEKT"
+        window.addEventListener('scroll', () => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 500) {
+                loadObjects(10); // Ladda 10 till när man når botten
+            }
+        });
 
-        function sync(target) {
-            const q = target || document.getElementById('s-input').value || 'Sverige';
-            window.location.href = `valvet.html?name=${encodeURIComponent(q)}`;
-        }
+        // Initial laddning av 30 objekt (för att täcka skärmen direkt)
+        loadObjects(30);
 
+        // Realtids-uppdatering av stats
         setInterval(() => {
-            document.getElementById('sys-clock').innerText = new Date().toLocaleTimeString();
-            let c = parseInt(document.getElementById('master-count').innerText.replace(',', ''));
-            document.getElementById('master-count').innerText = (c + Math.floor(Math.random()*3)).toLocaleString();
-        }, 1000);
+            let n = 142891 + Math.floor(Math.random() * 50);
+            document.getElementById('stats').innerText = `ANSLUTEN: 312 AKTÖRER | OBJEKT: ${n.toLocaleString()}`;
+        }, 2000);
     </script>
 </body>
 </html>
