@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>VALVET | Allabostäder Market Intelligence</title>
+    <title>AUKTORISERING | Allabostäder Intelligence</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;400;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -21,6 +21,19 @@
             padding: 20px;
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* Loading Overlay */
+        #loader {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: var(--black);
+            z-index: 9999;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
         }
 
         .header { 
@@ -103,7 +116,6 @@
             outline: none;
             border-radius: 2px;
             font-size: 14px;
-            transition: 0.3s;
         }
         input[type="email"]:focus { border-color: var(--gold); background: rgba(255,255,255,0.07); }
 
@@ -116,29 +128,36 @@
             text-decoration: none;
             font-size: 12px;
             letter-spacing: 2px;
-            transition: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
-            border: none;
             cursor: pointer;
-            border-radius: 2px;
+            border: none;
         }
-        .unlock-btn:hover { background: var(--gold); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
+        .unlock-btn:hover { background: var(--gold); }
 
         footer { padding: 80px 0 40px; text-align: center; color: #333; font-size: 10px; letter-spacing: 2px; }
 
-        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .row { font-size: 11px; } }
+        .spin {
+            width: 30px; height: 30px; border: 2px solid var(--gold); border-top-color: transparent; border-radius: 50%;
+            animation: rotate 1s linear infinite; margin-bottom: 20px;
+        }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
     </style>
 </head>
 <body>
 
+<div id="loader">
+    <div class="spin"></div>
+    <div style="font-size: 10px; letter-spacing: 3px; color: var(--gold);">VERIFIERAR TILLGÅNG...</div>
+</div>
+
 <div class="container">
     <div class="header">
-        <div class="session-id" id="session-id">LOADING_SESSION...</div>
+        <div class="session-id" id="session-id">LOADING...</div>
         <div style="font-weight: 800; letter-spacing: -1px; font-size: 14px;">ALLABOSTÄDER</div>
     </div>
 
     <div class="location-badge">Intelligence Report</div>
     <h1 id="ort-namn">Laddar...</h1>
-    <div class="market-status">Systemstatus: Deep Scan Complete // Verifierad Data</div>
+    <div class="market-status">Status: Scan Complete // Unverified Data Locked</div>
 
     <div class="grid">
         <div class="card">
@@ -146,78 +165,51 @@
             <span class="stat-val" id="ghost-count">--</span>
         </div>
         <div class="card" style="border-color: var(--blue);">
-            <span class="stat-label">AI Marknadsrisk</span>
-            <span class="stat-val" style="color: var(--blue);">LÅG</span>
+            <span class="stat-label">AI Säkerhetsprotokoll</span>
+            <span class="stat-val" style="color: var(--blue);">AKTIVT</span>
         </div>
     </div>
 
     <div class="intel-box">
-        <div class="intel-title">Analys: Allabostäder vs Publika Marknaden</div>
-        <div class="row">
-            <span>Plattformsavgifter</span>
-            <span class="val-bad">~25 000 kr (Publik)</span>
-            <span class="val-good">0 kr</span>
-        </div>
-        <div class="row">
-            <span>Budgivningsprocess</span>
-            <span class="val-bad">Öppen/Stressad</span>
-            <span class="val-good">Privat/Säkrad</span>
-        </div>
-        <div class="row">
-            <span>Informationstillgång</span>
-            <span class="val-bad">Sekundär</span>
-            <span class="val-good">Primär (Source)</span>
-        </div>
+        <div class="intel-title">Datakällor: Privat nätverk vs Hemnet</div>
+        <div class="row"><span>Off-market index</span><span class="val-good">HÖG</span></div>
+        <div class="row"><span>Tidsförsprång</span><span class="val-good">14-21 Dagar</span></div>
     </div>
 
     <div class="ghost-listings">
         <div class="blur-content">
             <p>Villa - 182m² - 7 450 000 kr</p>
             <p>Etagelägenhet - 94m² - 4 200 000 kr</p>
-            <p>Sjötomt - 2400m² - 12 800 000 kr</p>
-            <p>Radhus - 110m² - 3 900 000 kr</p>
         </div>
         <div class="lock-overlay">
-            <p style="margin-bottom: 20px; font-size: 10px; letter-spacing: 3px; font-weight: 400; color: var(--gold);">ÅTKOMST KRÄVER AUKTORISERING</p>
-            
+            <p style="margin-bottom: 20px; font-size: 10px; letter-spacing: 3px; color: var(--gold);">AUKTORISERING KRÄVS</p>
             <div class="input-group">
-                <input type="email" id="user-email" placeholder="Ange din e-postadress..." autocomplete="email">
-                <button onclick="submitLead()" class="unlock-btn">Lås upp dolda objekt</button>
+                <input type="email" id="user-email" placeholder="Din e-post för tillgång...">
+                <button onclick="submitLead()" class="unlock-btn">LÅS UPP OBJEKT</button>
             </div>
-            
-            <p style="margin-top: 15px; font-size: 9px; color: #444; letter-spacing: 1px;">SÄKER ANSLUTNING VIA APEX ENGINE</p>
         </div>
     </div>
 
-    <footer>
-        &copy; 2026 ALLABOSTÄDER | INSTITUTIONAL DATA DIVISION
-    </footer>
+    <footer>&copy; 2026 ALLABOSTÄDER | DATA DIVISION</footer>
 </div>
 
 <script>
-    // 1. Hantera Ort-namn från URL
     const params = new URLSearchParams(window.location.search);
     const ort = params.get('name') || 'Sverige';
-    document.getElementById('ort-namn').innerText = "MARKNADSANALYS: " + ort.toUpperCase();
-    document.title = "VALVET | " + ort;
+    document.getElementById('ort-namn').innerText = "ANALYSERAR: " + ort.toUpperCase();
+    document.getElementById('session-id').innerText = "SECURE_ID: " + Math.random().toString(36).substring(7).toUpperCase();
+    document.getElementById('ghost-count').innerText = Math.floor(Math.random() * 12) + 5;
 
-    // 2. Session ID Generator
-    document.getElementById('session-id').innerText = "SECURE_SESSION: " + Math.random().toString(36).substring(2, 10).toUpperCase();
-
-    // 3. Smart Ghost Count
-    document.getElementById('ghost-count').innerText = Math.floor(Math.random() * 14) + 4;
-
-    // 4. Lead Submission
     function submitLead() {
         const email = document.getElementById('user-email').value;
-        if (!email || !email.includes('@')) {
-            alert("Vänligen ange en giltig e-postadress för att låsa upp data.");
-            return;
-        }
+        if (!email.includes('@')) { alert("Ange e-post."); return; }
         
-        // Skickar användaren till Tally med e-posten förifylld. 
-        // Inget Tally syns på DIN sida.
-        window.location.href = `https://tally.so/r/BzBOE4?email=${encodeURIComponent(email)}`;
+        document.getElementById('loader').style.display = 'flex';
+        
+        setTimeout(() => {
+            // Skickar e-posten till Tally som en "Hidden Field"
+            window.location.href = `https://tally.so/r/BzBOE4?email=${encodeURIComponent(email)}&ort=${encodeURIComponent(ort)}`;
+        }, 1500);
     }
 </script>
 
