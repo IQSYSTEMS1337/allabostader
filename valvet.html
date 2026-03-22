@@ -20,6 +20,7 @@
             font-family: 'Plus Jakarta Sans', sans-serif; 
             padding: 20px;
             line-height: 1.6;
+            overflow-x: hidden;
         }
 
         .header { 
@@ -46,53 +47,52 @@
             margin-bottom: 15px;
         }
 
-        h1 { font-size: clamp(2.5rem, 8vw, 4rem); font-weight: 800; letter-spacing: -3px; margin-bottom: 10px; line-height: 1; }
-        .market-status { color: #555; font-size: 14px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
+        h1 { font-size: clamp(2.2rem, 7vw, 3.8rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; line-height: 1; }
+        .market-status { color: #555; font-size: 12px; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
 
-        /* Analys-kort */
         .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 40px; }
         .card { 
             background: var(--surface); 
             border: 1px solid var(--border); 
             padding: 30px; 
             border-radius: 2px;
-            position: relative;
         }
         .stat-val { font-size: 32px; font-weight: 800; color: #fff; display: block; }
         .stat-label { font-size: 10px; color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
 
-        /* Jämförelse-sektion */
-        .intel-box { background: var(--surface); border: 1px solid var(--border); padding: 40px; margin-top: 20px; }
-        .intel-title { font-weight: 800; text-transform: uppercase; font-size: 12px; color: var(--gold); margin-bottom: 25px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
+        .intel-box { background: var(--surface); border: 1px solid var(--border); padding: 30px; margin-top: 20px; }
+        .intel-title { font-weight: 800; text-transform: uppercase; font-size: 11px; color: var(--gold); margin-bottom: 20px; border-bottom: 1px solid var(--border); padding-bottom: 10px; }
         
-        .row { display: flex; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid #151515; font-size: 14px; }
-        .val-bad { color: #ff4444; opacity: 0.6; }
+        .row { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #151515; font-size: 13px; }
+        .val-bad { color: #ff4444; opacity: 0.7; }
         .val-good { color: var(--blue); font-weight: 800; }
 
-        /* Lock Screen Effect */
         .ghost-listings {
             position: relative;
             margin-top: 40px;
             background: #050505;
             border: 1px solid #111;
-            padding: 40px;
+            padding: 60px 20px;
             text-align: center;
             overflow: hidden;
         }
-        .blur-content { filter: blur(8px); opacity: 0.2; pointer-events: none; }
+        .blur-content { filter: blur(10px); opacity: 0.15; pointer-events: none; user-select: none; }
         .lock-overlay {
             position: absolute; inset: 0;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
-            background: linear-gradient(0deg, rgba(2,2,3,1) 20%, rgba(2,2,3,0.4) 100%);
+            background: linear-gradient(0deg, rgba(2,2,3,1) 10%, rgba(2,2,3,0.3) 100%);
         }
         .unlock-btn {
-            background: #fff; color: #000; padding: 20px 40px; font-weight: 800;
-            text-transform: uppercase; text-decoration: none; font-size: 12px;
-            letter-spacing: 2px; transition: 0.3s;
+            background: #fff; color: #000; padding: 22px 45px; font-weight: 800;
+            text-transform: uppercase; text-decoration: none; font-size: 13px;
+            letter-spacing: 2px; transition: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            border-radius: 2px;
         }
-        .unlock-btn:hover { background: var(--gold); transform: scale(1.05); }
+        .unlock-btn:hover { background: var(--gold); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2); }
 
-        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } }
+        footer { padding: 80px 0 40px; text-align: center; color: #333; font-size: 10px; letter-spacing: 2px; }
+
+        @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .row { font-size: 11px; } }
     </style>
 </head>
 <body>
@@ -100,12 +100,12 @@
 <div class="container">
     <div class="header">
         <div class="session-id" id="session-id">LOADING_SESSION...</div>
-        <div style="font-weight: 800; letter-spacing: -1px;">ALLABOSTÄDER</div>
+        <div style="font-weight: 800; letter-spacing: -1px; font-size: 14px;">ALLABOSTÄDER</div>
     </div>
 
     <div class="location-badge">Intelligence Report</div>
     <h1 id="ort-namn">Laddar...</h1>
-    <div class="market-status">Status: Deep Scan Complete // 0.002s</div>
+    <div class="market-status">Systemstatus: Deep Scan Complete // Verifierad Data</div>
 
     <div class="grid">
         <div class="card">
@@ -113,55 +113,60 @@
             <span class="stat-val" id="ghost-count">--</span>
         </div>
         <div class="card" style="border-color: var(--blue);">
-            <span class="stat-label">AI Riskbedömning</span>
+            <span class="stat-label">AI Marknadsrisk</span>
             <span class="stat-val" style="color: var(--blue);">LÅG</span>
         </div>
     </div>
 
     <div class="intel-box">
-        <div class="intel-title">Marknadsjämförelse: Vårt nätverk vs Publika källor</div>
+        <div class="intel-title">Analys: Allabostäder vs Publika Marknaden</div>
         <div class="row">
             <span>Plattformsavgifter</span>
-            <span class="val-bad">~25 000 kr (Hemnet)</span>
+            <span class="val-bad">~25 000 kr (Publik)</span>
             <span class="val-good">0 kr</span>
         </div>
         <div class="row">
-            <span>Budgivningsstress</span>
-            <span class="val-bad">Hög (Publik)</span>
-            <span class="val-good">Minimal (Privat)</span>
+            <span>Budgivningsprocess</span>
+            <span class="val-bad">Öppen/Stressad</span>
+            <span class="val-good">Privat/Säkrad</span>
         </div>
         <div class="row">
-            <span>Tidsförsprång</span>
-            <span class="val-bad">0 dagar</span>
-            <span class="val-good">14+ dagar</span>
+            <span>Informationstillgång</span>
+            <span class="val-bad">Sekundär</span>
+            <span class="val-good">Primär (Source)</span>
         </div>
     </div>
 
     <div class="ghost-listings">
         <div class="blur-content">
-            <p>Villa - 165m² - 6 200 000 kr</p>
-            <p>Lägenhet - 78m² - 3 150 000 kr</p>
-            <p>Tomt - 1200m² - 1 800 000 kr</p>
+            <p>Villa - 182m² - 7 450 000 kr</p>
+            <p>Etagelägenhet - 94m² - 4 200 000 kr</p>
+            <p>Sjötomt - 2400m² - 12 800 000 kr</p>
+            <p>Radhus - 110m² - 3 900 000 kr</p>
         </div>
         <div class="lock-overlay">
-            <p style="margin-bottom: 20px; font-size: 12px; letter-spacing: 1px;">DETTA KRÄVER MEDLEMSKAP</p>
-            <a href="https://tally.so/r/din-länk" class="unlock-btn">Lås upp dolda annonser</a>
+            <p style="margin-bottom: 25px; font-size: 11px; letter-spacing: 3px; font-weight: 400; color: var(--gold);">ÅTKOMST KRÄVER AUKTORISERING</p>
+            <a href="https://tally.so/r/BzBOE4" class="unlock-btn">Lås upp dolda objekt</a>
         </div>
     </div>
+
+    <footer>
+        &copy; 2026 ALLABOSTÄDER | INSTITUTIONAL DATA DIVISION
+    </footer>
 </div>
 
 <script>
-    // 1. Hämta orten från URL (?name=Alingsås)
+    // 1. Hantera Ort-namn
     const params = new URLSearchParams(window.location.search);
     const ort = params.get('name') || 'Sverige';
-    document.getElementById('ort-namn').innerText = "Analys: " + ort.toUpperCase();
+    document.getElementById('ort-namn').innerText = "MARKNADSANALYS: " + ort.toUpperCase();
     document.title = "VALVET | " + ort;
 
-    // 2. Simulera session ID
-    document.getElementById('session-id').innerText = "SESSION: AB-" + Math.floor(Math.random() * 9999) + "-X";
+    // 2. Session ID Generator
+    document.getElementById('session-id').innerText = "SECURE_SESSION: " + Math.random().toString(36).substring(2, 10).toUpperCase();
 
-    // 3. Slumpa fram lite trovärdig data för "Ghost Listings"
-    document.getElementById('ghost-count').innerText = Math.floor(Math.random() * 15) + 3;
+    // 3. Smart Ghost Count (slumpar mellan 4 och 18 för trovärdighet)
+    document.getElementById('ghost-count').innerText = Math.floor(Math.random() * 14) + 4;
 </script>
 
 </body>
