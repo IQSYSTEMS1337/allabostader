@@ -78,7 +78,7 @@
             letter-spacing: 2px;
             cursor: pointer;
             border: none;
-            font-size: 12px;
+            font-size: 11px;
             transition: 0.2s;
         }
         .unlock-btn:hover { background: var(--gold); transform: translateY(-2px); }
@@ -96,26 +96,25 @@
 
 <div id="loader">
     <div class="spin"></div>
-    <div id="loader-text" style="font-size: 10px; letter-spacing: 3px; color: var(--gold);">ANSLUTER TILL ALLABOSTÄDER...</div>
+    <div id="loader-text" style="font-size: 10px; letter-spacing: 3px; color: var(--gold);">ANSLUTER TILL VALVET...</div>
 </div>
 
 <div class="container">
     <div class="card">
-        <div class="session-info" id="session-id">SYSTEM_STATUS: ENCRYPTED</div>
+        <div class="session-info" id="session-id">STATUS: KRYPTERAD_ANSLUTNING</div>
         <h1>ÖPPNA VALVET</h1>
         <span class="location-text" id="ort-namn">REGION: SVERIGE</span>
 
         <div class="input-group">
-            <input type="email" id="user-email" placeholder="Din e-postadress" required>
+            <input type="email" id="user-email" placeholder="Ange din e-postadress" required>
             <button onclick="accessVault()" class="unlock-btn">HÄMTA TILLGÅNG</button>
         </div>
         
-        <footer>&copy; Allabostäder Institutional Division</footer>
+        <footer>&copy; ALLABOSTÄDER INTEL DIVISION</footer>
     </div>
 </div>
 
 <script>
-    // Hämta orten snyggt
     const params = new URLSearchParams(window.location.search);
     const ort = params.get('name') || 'Sverige';
     document.getElementById('ort-namn').innerText = "REGION: " + ort.toUpperCase();
@@ -123,17 +122,19 @@
 
     function accessVault() {
         const email = document.getElementById('user-email').value;
-        if (!email.includes('@')) { alert("Verifiering misslyckades. Ange giltig e-post."); return; }
+        if (!email.includes('@')) { 
+            alert("Verifiering misslyckades. Ange en giltig e-postadress."); 
+            return; 
+        }
         
         document.getElementById('loader').style.display = 'flex';
         
-        // Simulera en säkerhetskontroll innan redirect
         setTimeout(() => {
-            document.getElementById('loader-text').innerText = "IDENTITET VERIFIERAD. SKAPAR TILLGÅNG...";
+            document.getElementById('loader-text').innerText = "IDENTITET VERIFIERAD...";
             setTimeout(() => {
-                // Din personliga Tally-länk med dold data
+                // Din personliga Tally-länk
                 window.location.href = `https://tally.so/r/BzBOE4?email=${encodeURIComponent(email)}&ort=${encodeURIComponent(ort)}`;
-            }, 1000);
+            }, 800);
         }, 1500);
     }
 </script>
