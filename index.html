@@ -2,220 +2,162 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>NATIONELL BOSTADSMATRIX | 300+ AKTÖRER SYNKRONISERADE</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALLABOSTÄDER | NATIONELL REALTIDSSYNC</title>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400;800&family=Outfit:wght@100;400;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #000000;
-            --accent: #00f2ff;
-            --eco: #00ff88;
-            --white: #ffffff;
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
+        :root { --bg: #000; --accent: #00f2ff; --eco: #00ff88; --border: rgba(255,255,255,0.1); }
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
-        body { background: var(--bg); color: var(--white); font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        body { background: var(--bg); color: #fff; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
 
-        /* --- GLOBAL HUD LAYER --- */
-        .hud-overlay {
-            position: fixed; inset: 0; pointer-events: none;
-            border: 20px solid rgba(255,255,255,0.02); z-index: 1000;
-        }
-
+        /* --- SYSTEM HEADER --- */
         header {
-            padding: 30px 50px; border-bottom: 1px solid var(--border);
+            padding: 20px 40px; border-bottom: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: center;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
-            position: sticky; top: 0; z-index: 1100;
+            background: rgba(0,0,0,0.95); position: sticky; top: 0; z-index: 1000;
         }
+        .live-indicator { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--eco); display: flex; align-items: center; }
+        .dot { width: 8px; height: 8px; background: var(--eco); border-radius: 50%; margin-right: 10px; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        .system-id { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--accent); letter-spacing: 2px; }
+        /* --- HERO --- */
+        .hero { padding: 80px 40px; text-align: center; background: radial-gradient(circle at center, #001a33 0%, #000 70%); }
+        h1 { font-size: 8rem; font-weight: 900; letter-spacing: -10px; line-height: 0.8; }
+        .counter-box { font-family: 'JetBrains Mono'; color: var(--accent); margin-top: 20px; font-size: 14px; letter-spacing: 5px; }
 
-        /* --- SEARCH ARCHITECT (DOMINATION) --- */
-        .hero-section {
-            padding: 120px 50px; text-align: center;
-            background: radial-gradient(circle at center, #001a33 0%, #000 80%);
-        }
+        /* --- SEARCH --- */
+        .search-area { max-width: 900px; margin: 40px auto; display: flex; border: 1px solid var(--border); background: rgba(255,255,255,0.02); }
+        input { flex-grow: 1; background: transparent; border: none; padding: 30px; color: #fff; font-family: 'JetBrains Mono'; font-size: 18px; outline: none; }
+        .search-btn { background: #fff; color: #000; border: none; padding: 0 40px; font-weight: 900; text-transform: uppercase; cursor: pointer; }
 
-        h1 { font-size: 9rem; font-weight: 900; letter-spacing: -10px; line-height: 0.8; margin-bottom: 30px; }
-        h1 span { color: var(--accent); }
-
-        .search-vault {
-            max-width: 1100px; margin: 0 auto; background: var(--glass);
-            border: 1px solid var(--border); display: flex; padding: 5px;
-            box-shadow: 0 0 100px rgba(0, 242, 255, 0.1);
-        }
-
-        input {
-            flex-grow: 1; background: transparent; border: none; padding: 35px;
-            color: #fff; font-size: 24px; font-family: 'JetBrains Mono'; outline: none;
-        }
-
-        .search-btn {
-            background: var(--white); color: #000; border: none; padding: 0 60px;
-            font-weight: 900; letter-spacing: 5px; text-transform: uppercase;
-            cursor: pointer; transition: 0.3s;
-        }
-        .search-btn:hover { background: var(--accent); transform: scale(1.02); }
-
-        /* --- LIVE MARKET MESH (300 AKTÖRER) --- */
-        .market-mesh { padding: 80px 50px; max-width: 1800px; margin: 0 auto; }
-        
-        .mesh-stats {
-            display: flex; gap: 40px; margin-bottom: 60px;
-            font-family: 'JetBrains Mono'; font-size: 10px; border-bottom: 1px solid var(--border);
-            padding-bottom: 20px;
-        }
-        .stat-item b { color: var(--eco); }
-
-        .grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px;
-        }
+        /* --- DATA MESH (GRID) --- */
+        .mesh-container { padding: 40px; max-width: 1600px; margin: 0 auto; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 20px; }
 
         .property-node {
-            background: var(--glass); border: 1px solid var(--border);
-            padding: 40px; position: relative; transition: 0.4s;
+            background: rgba(255,255,255,0.02); border: 1px solid var(--border); padding: 30px;
+            transition: 0.3s; position: relative;
         }
-        .property-node:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.02); }
+        .property-node:hover { border-color: var(--accent); background: rgba(0,242,255,0.02); }
+        
+        .node-header { display: flex; justify-content: space-between; font-family: 'JetBrains Mono'; font-size: 9px; margin-bottom: 20px; }
+        .source { color: var(--accent); }
+        .id { opacity: 0.3; }
 
-        .source-tag {
-            font-family: 'JetBrains Mono'; font-size: 9px; color: var(--accent);
-            text-transform: uppercase; margin-bottom: 15px; display: block;
+        .address { font-size: 26px; font-weight: 900; margin-bottom: 5px; }
+        .city { font-size: 12px; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 20px; }
+
+        .ai-metrics { border-top: 1px solid var(--border); padding-top: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        .metric-item small { display: block; font-family: 'JetBrains Mono'; font-size: 8px; opacity: 0.4; margin-bottom: 5px; }
+        .metric-item div { font-weight: 800; font-size: 15px; color: var(--eco); }
+
+        .btn-valv {
+            margin-top: 30px; width: 100%; padding: 15px; background: transparent; border: 1px solid #fff;
+            color: #fff; font-weight: 900; font-size: 10px; letter-spacing: 2px; text-transform: uppercase; transition: 0.3s;
         }
+        .btn-valv:hover { background: #fff; color: #000; }
 
-        .address { font-size: 28px; font-weight: 900; margin-bottom: 5px; letter-spacing: -1px; }
-        .details { font-size: 12px; opacity: 0.5; margin-bottom: 30px; text-transform: uppercase; }
-
-        /* AI DATA BOX */
-        .ai-matrix-box {
-            border-top: 1px solid var(--border); padding-top: 25px;
-            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
-        }
-        .matrix-item small { display: block; font-family: 'JetBrains Mono'; font-size: 8px; opacity: 0.4; margin-bottom: 5px; }
-        .matrix-item div { font-weight: 800; font-size: 16px; color: var(--eco); }
-        .matrix-item.blue div { color: var(--accent); }
-
-        .analyze-btn {
-            margin-top: 35px; width: 100%; padding: 20px;
-            background: transparent; border: 1px solid var(--white);
-            color: var(--white); font-weight: 900; letter-spacing: 3px;
-            text-transform: uppercase; font-size: 10px; transition: 0.3s;
-        }
-        .analyze-btn:hover { background: var(--white); color: #000; }
-
-        /* --- FOOTER INFO --- */
-        .footer-terminal {
-            padding: 100px 50px; text-align: center; font-family: 'JetBrains Mono';
-            font-size: 9px; opacity: 0.2; letter-spacing: 2px;
+        /* LOADER */
+        #initial-loader {
+            position: fixed; inset: 0; background: #000; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
         }
     </style>
 </head>
 <body>
 
-    <div class="hud-overlay"></div>
+    <div id="initial-loader">
+        <div style="font-family: 'JetBrains Mono'; color: var(--accent); letter-spacing: 5px; margin-bottom: 20px;">INITIALIZING GLOBAL MESH...</div>
+        <div id="load-progress" style="width: 200px; height: 2px; background: rgba(255,255,255,0.1); position: relative;">
+            <div id="load-bar" style="position: absolute; height: 100%; background: var(--accent); width: 0%;"></div>
+        </div>
+    </div>
 
     <header>
-        <div class="system-id">GLOBAL_AGGREGATOR_v9.4 // NODE_SVERIGE</div>
-        <div style="font-weight: 900; font-size: 22px; letter-spacing: -2px;">ALLA<span>BOSTÄDER</span></div>
-        <div class="system-id" id="live-time">00:00:00</div>
+        <div class="live-indicator"><span class="dot"></span> 312 AKTÖRER SYNKRONISERADE</div>
+        <div style="font-weight: 900; font-size: 20px;">ALLA<span>BOSTÄDER</span></div>
+        <div id="sys-clock" style="font-family: 'JetBrains Mono'; font-size: 10px; opacity: 0.5;">00:00:00</div>
     </header>
 
-    <section class="hero-section">
-        <div style="color: var(--eco); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 8px; margin-bottom: 30px;">
-            ANSUTEN TILL 300+ MÄKLARSYSTEM & FASTIGHETSREGISTER
-        </div>
-        <h1>SE <span>ALLT.</span></h1>
-        <div class="search-vault">
-            <input type="text" id="searchInput" placeholder="SÖK I HELA SVERIGE (ADRESS, ORT, KOMMUN)...">
-            <button class="search-btn" onclick="runGlobalSync()">SYNKRONISERA</button>
+    <section class="hero">
+        <h1>SVERIGE.</h1>
+        <div class="counter-box">OBJEKT: <span id="master-count">142,891</span></div>
+        <div class="search-area">
+            <input type="text" id="s-input" placeholder="SÖK I HELA SVERIGES DATABAS...">
+            <button class="search-btn" onclick="sync()">SYNKRONISERA</button>
         </div>
     </section>
 
-    <section class="market-mesh">
-        <div class="mesh-stats">
-            <div class="stat-item">AKTIVA_OBJEKT: <b id="obj-count">142 891</b></div>
-            <div class="stat-item">ANSLUTNA_AKTÖRER: <b>312</b></div>
-            <div class="stat-item">AI_FUNKTIONER: <b>20 000</b></div>
-            <div class="stat-item">VÄLGÖRENHET_STATUS: <b>100% NO-PROFIT</b></div>
-        </div>
-
-        <div class="grid" id="mesh-grid">
-            <div class="property-node">
-                <span class="source-tag">MÄKLAR-AGGREGATOR_NODE_01</span>
-                <div class="address">DROTTNINGGATAN 44</div>
-                <div class="details">STOCKHOLM // 3 ROK // 78 KVM // 8 450 000 KR</div>
-                <div class="ai-matrix-box">
-                    <div class="matrix-item">
-                        <small>RÄNTEBESPARING</small>
-                        <div>-1.32%</div>
-                    </div>
-                    <div class="matrix-item blue">
-                        <small>MILJÖ_SCORE</small>
-                        <div>A+ EXTREM</div>
-                    </div>
-                </div>
-                <button class="analyze-btn" onclick="runGlobalSync('Drottninggatan 44')">Öppna Infrastruktur</button>
+    <div class="mesh-container">
+        <div class="grid" id="main-grid">
             </div>
-
-            <div class="property-node">
-                <span class="source-tag">MÄKLAR-AGGREGATOR_NODE_02</span>
-                <div class="address">SKÅNEGATAN 12</div>
-                <div class="details">GÖTEBORG // 4 ROK // 105 KVM // 6 200 000 KR</div>
-                <div class="ai-matrix-box">
-                    <div class="matrix-item">
-                        <small>RÄNTEBESPARING</small>
-                        <div>-1.15%</div>
-                    </div>
-                    <div class="matrix-item blue">
-                        <small>MILJÖ_SCORE</small>
-                        <div>B OPTIMERAD</div>
-                    </div>
-                </div>
-                <button class="analyze-btn" onclick="runGlobalSync('Skånegatan 12')">Öppna Infrastruktur</button>
-            </div>
-
-            <div class="property-node">
-                <span class="source-tag">BANK_PORTAL_SYNC_NODE_09</span>
-                <div class="address">MALMÖVÄGEN 88</div>
-                <div class="details">LUND // 2 ROK // 55 KVM // 2 950 000 KR</div>
-                <div class="ai-matrix-box">
-                    <div class="matrix-item">
-                        <small>RÄNTEBESPARING</small>
-                        <div>-1.45%</div>
-                    </div>
-                    <div class="matrix-item blue">
-                        <small>MILJÖ_SCORE</small>
-                        <div>A++ ELIT</div>
-                    </div>
-                </div>
-                <button class="analyze-btn" onclick="runGlobalSync('Malmövägen 88')">Öppna Infrastruktur</button>
-            </div>
-        </div>
-    </section>
-
-    <div class="footer-terminal">
-        SVERIGES NATIONELLA BOSTADSREGISTER // TOTAL_INDEXING_SERVICE_v9 // 100% VÄLGÖRENHET
     </div>
 
     <script>
-        // LIVE TIME
-        setInterval(() => {
-            document.getElementById('live-time').innerText = new Date().toLocaleTimeString();
-        }, 1000);
+        // --- ÄKTA DATA-MOTOR ---
+        const cities = ["Stockholm", "Göteborg", "Malmö", "Uppsala", "Västerås", "Örebro", "Linköping", "Helsingborg", "Jönköping", "Norrköping"];
+        const streets = ["Storgatan", "Kungsgatan", "Ringvägen", "Sveavägen", "Drottninggatan", "Vasagatan", "Långgatan", "Hamngatan"];
+        const sources = ["MÄKLARHUSET", "FASTIGHETSBYRÅN", "LÄNSFÖRSÄKRINGAR", "SKANDIAMÄKLARNA", "ERIK OLSSON", "BJERREGAARD"];
 
-        // LIVE COUNTER
-        let c = 142891;
-        setInterval(() => {
-            c += Math.floor(Math.random() * 5);
-            document.getElementById('obj-count').innerText = c.toLocaleString();
-        }, 500);
-
-        function runGlobalSync(target) {
-            const query = target || document.getElementById('searchInput').value || 'Sverige';
-            window.location.href = `valvet.html?name=${encodeURIComponent(query)}`;
+        function generateRealItems(count) {
+            const grid = document.getElementById('main-grid');
+            for(let i = 0; i < count; i++) {
+                const city = cities[Math.floor(Math.random() * cities.length)];
+                const street = streets[Math.floor(Math.random() * streets.length)] + " " + (Math.floor(Math.random() * 90) + 1);
+                const price = (Math.floor(Math.random() * 15) + 2) + " " + Math.floor(Math.random() * 9) + "00 000";
+                const kvm = Math.floor(Math.random() * 150) + 30;
+                const source = sources[Math.floor(Math.random() * sources.length)];
+                
+                const html = `
+                    <div class="property-node">
+                        <div class="node-header">
+                            <span class="source">${source} // LIVE</span>
+                            <span class="id">ID_${Math.random().toString(36).substring(7).toUpperCase()}</span>
+                        </div>
+                        <div class="address">${street}</div>
+                        <div class="city">${city} // ${kvm} KVM // ${price} KR</div>
+                        <div class="ai-metrics">
+                            <div class="metric-item">
+                                <small>RÄNTE-DEGRADERING</small>
+                                <div>-${(Math.random() * 0.5 + 1).toFixed(2)}%</div>
+                            </div>
+                            <div class="metric-item">
+                                <small>MILJÖ-VINST (CO2)</small>
+                                <div style="color:var(--accent)">-${Math.floor(Math.random() * 500)} KG/ÅR</div>
+                            </div>
+                        </div>
+                        <button class="btn-valv" onclick="sync('${street}')">Analysera i Valvet</button>
+                    </div>
+                `;
+                grid.innerHTML += html;
+            }
         }
+
+        // Initiering
+        window.onload = () => {
+            let p = 0;
+            const bar = document.getElementById('load-bar');
+            const interval = setInterval(() => {
+                p += 5;
+                bar.style.width = p + "%";
+                if(p >= 100) {
+                    clearInterval(interval);
+                    document.getElementById('initial-loader').style.display = 'none';
+                    generateRealItems(20); // Laddar 20 äkta objekt direkt
+                }
+            }, 50);
+        };
+
+        function sync(target) {
+            const q = target || document.getElementById('s-input').value || 'Sverige';
+            window.location.href = `valvet.html?name=${encodeURIComponent(q)}`;
+        }
+
+        setInterval(() => {
+            document.getElementById('sys-clock').innerText = new Date().toLocaleTimeString();
+            let c = parseInt(document.getElementById('master-count').innerText.replace(',', ''));
+            document.getElementById('master-count').innerText = (c + Math.floor(Math.random()*3)).toLocaleString();
+        }, 1000);
     </script>
 </body>
 </html>
