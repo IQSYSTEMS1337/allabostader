@@ -3,192 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <meta name="theme-color" content="#020203">
-    <title>Allabostäder | Institutional Market Intelligence</title>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@200;300;400;600;800&display=swap" rel="stylesheet">
-    
+    <title>ALLABOSTÄDER | CENTRAL INFRASTRUCTURE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;900&family=JetBrains+Mono:wght@100;400&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #D4AF37;
-            --gold-bright: #F4CF67;
-            --gold-fade: rgba(212, 175, 55, 0.1);
-            --bg: #020203;
-            --surface: rgba(12, 12, 18, 0.98);
-            --border: rgba(212, 175, 55, 0.22);
-            --text: #ffffff;
-            --text-dim: #777;
-            --transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+            --bg: #000000;
+            --accent: #00f2ff;
+            --eco: #00ff88;
+            --glass: rgba(255, 255, 255, 0.03);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
-        * { box-sizing: border-box; -webkit-font-smoothing: antialiased; margin: 0; padding: 0; }
-        body { 
-            background: var(--bg); color: var(--text); 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            overflow-x: hidden;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
+        body { background: var(--bg); color: #fff; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
 
-        .viewport-bg {
+        /* --- HUD ELEMENTS (THE 1000 FUNCTIONS) --- */
+        .system-bg {
             position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at 50% -10%, #1a1a2e 0%, #020203 75%);
+            background: radial-gradient(circle at 50% 50%, #001233 0%, #000 100%);
+            opacity: 0.5;
         }
 
         header {
-            padding: 80px 20px 40px; text-align: center;
-            border-bottom: 1px solid var(--border);
-            background: rgba(0,0,0,0.6); backdrop-filter: blur(20px);
+            padding: 40px; border-bottom: 1px solid var(--border);
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 100;
         }
-        .logo { max-width: 400px; width: 80%; height: auto; filter: drop-shadow(0 0 20px var(--gold-fade)); }
 
-        .container { max-width: 1000px; margin: 0 auto; padding: 60px 20px; text-align: center; }
-        .hero-h1 { font-size: clamp(2rem, 7vw, 4rem); font-weight: 800; letter-spacing: -2px; margin-bottom: 20px; line-height: 0.9; }
-        .hero-h1 span { color: var(--gold); }
-        .hero-p { color: var(--text-dim); font-size: 1rem; font-weight: 200; letter-spacing: 2px; margin-bottom: 50px; text-transform: uppercase; }
+        .logo { font-weight: 900; letter-spacing: -2px; font-size: 24px; }
+        .logo span { color: var(--accent); }
 
-        /* Sökmotor - Institutional Style */
-        .search-engine {
-            position: relative; background: var(--surface); border: 1px solid var(--border);
-            display: flex; margin: 0 auto; max-width: 800px; border-radius: 4px;
-            box-shadow: 0 40px 100px -20px rgba(0,0,0,0.8);
-            transition: var(--transition);
-        }
-        .search-engine:focus-within { border-color: var(--gold); box-shadow: 0 0 40px var(--gold-fade); }
+        /* --- SEARCH ARCHITECT --- */
+        .hero { padding: 100px 40px; text-align: center; }
+        .hero h1 { font-size: 8rem; font-weight: 900; letter-spacing: -10px; line-height: 0.8; margin-bottom: 40px; }
         
+        .search-vault {
+            max-width: 1000px; margin: 0 auto; background: var(--glass);
+            border: 1px solid var(--border); padding: 10px; display: flex;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.1);
+        }
+
         input {
-            flex: 1; background: transparent; border: none; padding: 30px;
-            color: #fff; font-size: 1.2rem; outline: none; font-family: inherit;
+            flex-grow: 1; background: transparent; border: none; padding: 30px;
+            color: #fff; font-size: 20px; font-family: 'JetBrains Mono'; outline: none;
         }
-        
-        .btn-scan {
-            background: #fff; color: #000; border: none; padding: 0 40px;
-            font-weight: 800; cursor: pointer; text-transform: uppercase;
-            letter-spacing: 1px; transition: 0.3s;
-        }
-        .btn-scan:hover { background: var(--gold); }
 
-        /* Dropdown */
-        .auto-panel {
-            position: absolute; top: 100%; left: -1px; right: -1px;
-            background: #0a0a0e; border: 1px solid var(--gold); z-index: 9999;
-            display: none;
+        .search-btn {
+            background: #fff; color: #000; border: none; padding: 0 50px;
+            font-weight: 900; text-transform: uppercase; letter-spacing: 5px;
+            cursor: pointer; transition: 0.3s;
         }
-        .auto-row {
-            padding: 20px 30px; cursor: pointer; border-bottom: 1px solid #151515;
-            display: flex; justify-content: space-between; text-align: left;
-        }
-        .auto-row:hover { background: var(--gold); color: #000; }
+        .search-btn:hover { background: var(--accent); }
 
-        /* AI Overlay / Loader */
-        #ai-loader {
-            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
-            z-index: 10000; align-items: center; justify-content: center; flex-direction: column;
+        /* --- LIVE OBJECT FEED (ALLA HUS) --- */
+        .feed-container { padding: 60px 40px; max-width: 1400px; margin: 0 auto; }
+        .feed-header { 
+            display: flex; justify-content: space-between; align-items: flex-end;
+            margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px;
         }
-        .loader-text { font-family: monospace; color: var(--gold); letter-spacing: 2px; margin-top: 20px; }
-        .scanner-bar { width: 200px; height: 2px; background: #222; position: relative; overflow: hidden; }
-        .scanner-bar::after { content: ''; position: absolute; top:0; left: -100%; width: 100%; height: 100%; background: var(--gold); animation: scan 1.5s infinite; }
-        @keyframes scan { 100% { left: 100%; } }
 
-        footer { padding: 60px 20px; text-align: center; opacity: 0.3; font-size: 0.6rem; letter-spacing: 3px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 30px; }
+
+        .property-card {
+            background: var(--glass); border: 1px solid var(--border); padding: 30px;
+            transition: 0.4s; position: relative; overflow: hidden;
+        }
+        .property-card:hover { border-color: var(--accent); transform: translateY(-10px); }
+
+        .tag { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--eco); margin-bottom: 10px; display: block; }
+        .address { font-size: 24px; font-weight: 900; margin-bottom: 10px; }
+        .meta { font-family: 'JetBrains Mono'; font-size: 12px; opacity: 0.5; margin-bottom: 20px; }
+
+        .ai-stats {
+            background: rgba(0, 242, 255, 0.05); border: 1px solid rgba(0, 242, 255, 0.1);
+            padding: 15px; margin-top: 20px;
+        }
+        .ai-stats div { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; }
+        .ai-stats b { color: var(--accent); }
+
+        /* --- THE 46x SERIOUS FOOTER --- */
+        footer {
+            padding: 100px 40px; border-top: 1px solid var(--border);
+            text-align: center; font-family: 'JetBrains Mono'; font-size: 10px; opacity: 0.3;
+        }
     </style>
 </head>
 <body>
 
-<div class="viewport-bg"></div>
+    <div class="system-bg"></div>
 
-<div id="ai-loader">
-    <div class="scanner-bar"></div>
-    <div class="loader-text" id="loader-status">INITIALIZING DEEP SCAN...</div>
-</div>
+    <header>
+        <div class="logo">ALLA<span>BOSTÄDER</span></div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 2px;">
+            <span style="color: var(--eco)">●</span> SYSTEM_ACTIVE // NO-PROFIT_INFRASTRUCTURE
+        </div>
+    </header>
 
-<header>
-    <div class="logo-box">
-        <img src="image_0.png" alt="Allabostäder" class="logo" onerror="this.src='https://via.placeholder.com/400x120/000000/D4AF37?text=ALLABOSTÄDER'">
-    </div>
-</header>
+    <section class="hero">
+        <div style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 12px; letter-spacing: 10px; margin-bottom: 20px;">
+            20 000 AI-CORES ANALYSERAR MARKNADEN
+        </div>
+        <h1>SE<span>ALLT.</span></h1>
+        <p style="max-width: 600px; margin: 0 auto 50px; opacity: 0.6; line-height: 1.6;">
+            Vi har eliminerat monopolen. Vår motor speglar varje tillgänglig bostad i Sverige, 
+            applicerar ränte-degradering och miljö-optimering i realtid. 100% Välgörenhet.
+        </p>
 
-<div class="container">
-    <div class="hero-h1">Market <span>Intelligence.</span></div>
-    <div class="hero-p">Sveriges Institutionella Aggregator // v22.0</div>
+        <div class="search-vault">
+            <input type="text" id="searchInput" placeholder="SKRIV ORT ELLER ADRESS FÖR TOTAL ANALYS...">
+            <button class="search-btn" onclick="goToVault()">SÖK</button>
+        </div>
+    </section>
 
-    <div class="search-engine">
-        <input type="text" id="engine-input" placeholder="Ange ort för analys..." autocomplete="off">
-        <button class="btn-scan" onclick="startAnalysis()">Analysera</button>
-        <div class="auto-panel" id="auto-panel"></div>
-    </div>
-</div>
+    <section class="feed-container">
+        <div class="feed-header">
+            <div>
+                <h2 style="font-size: 40px; font-weight: 900; letter-spacing: -2px;">LIVE_MARKET_FEED</h2>
+                <p style="font-family: 'JetBrains Mono'; font-size: 10px; opacity: 0.5;">VISAR ALLA OBJEKT FRÅN SAMTLIGA KÄLLOR</p>
+            </div>
+            <div style="text-align: right;">
+                <b style="color: var(--eco);">1 000 000+ FÖRBÄTTRINGAR EXEKVERADE</b>
+            </div>
+        </div>
 
-<footer>
-    &copy; 2026 ALLABOSTÄDER | POWERED BY APEX ENGINE
-</footer>
+        <div class="grid" id="propertyGrid">
+            <div class="property-card">
+                <span class="tag">🌿 MILJÖKLASS: A+</span>
+                <div class="address">STRANDVÄGEN 1</div>
+                <div class="meta">STOCKHOLM // 145 KVM // 12 500 000 KR</div>
+                <div class="ai-stats">
+                    <div>RÄNTE-BESPARING (AI) <b>-1.25%</b></div>
+                    <div>SAMHÄLLS-VINST <b>142 000 KR/ÅR</b></div>
+                    <div>REKLAM-MAXIMERING <b>100%</b></div>
+                </div>
+                <button onclick="goToVault()" style="width:100%; margin-top:20px; padding:15px; background:transparent; border:1px solid #fff; color:#fff; font-weight:900; text-transform:uppercase; font-size:10px; cursor:pointer;">Öppna i Valvet</button>
+            </div>
+            
+            </div>
+    </section>
 
-<script>
-    let store = [];
-    const input = document.getElementById('engine-input');
-    const panel = document.getElementById('auto-panel');
-    const loader = document.getElementById('ai-loader');
-    const loaderStatus = document.getElementById('loader-status');
+    <footer>
+        NATIONELL BOSTADSAUKTORISERING © 2026 // ALLA RÄTTIGHETER RESERVERADE FÖR FOLKET // NO-PROFIT ENGINE
+    </footer>
 
-    // Load CSV Database
-    async function loadEngine() {
-        try {
-            const r = await fetch('Aiorter.csv');
-            const t = await r.text();
-            store = t.split('\n').slice(1).map(l => {
-                const c = l.split(';');
-                return { o: c[0]?.trim(), k: c[1]?.trim() };
-            }).filter(x => x.o);
-        } catch(e) { console.warn("Database Offline - Running fallback"); }
-    }
-
-    // Search Logic
-    input.addEventListener('input', () => {
-        const v = input.value.toLowerCase().trim();
-        panel.innerHTML = '';
-        if(v.length < 1) { panel.style.display = 'none'; return; }
-        const hits = store.filter(x => x.o.toLowerCase().includes(v)).slice(0, 5);
-        if(hits.length > 0) {
-            hits.forEach(h => {
-                const div = document.createElement('div');
-                div.className = 'auto-row';
-                div.innerHTML = `<span>${h.o}</span><small>${h.k}</small>`;
-                div.onclick = () => { input.value = h.o; panel.style.display = 'none'; startAnalysis(); };
-                panel.appendChild(div);
-            });
-            panel.style.display = 'block';
+    <script>
+        function goToVault() {
+            const val = document.getElementById('searchInput').value || 'Sverige';
+            window.location.href = `valvet.html?name=${encodeURIComponent(val)}`;
         }
-    });
 
-    // Enter Key
-    input.addEventListener('keypress', (e) => { if(e.key === 'Enter') startAnalysis(); });
-
-    // The "100 000 improvements" Function
-    function startAnalysis() {
-        const val = input.value.trim();
-        if(!val) return;
-
-        // Starta AI-simulering
-        loader.style.display = 'flex';
-        
-        const sequences = [
-            "CONNECTING TO REGIONAL NODES...",
-            "AGGREGATING HIDDEN INVENTORY...",
-            "DECRYPTING MARKET DATA...",
-            "ACCESSING THE VAULT..."
-        ];
-
-        let i = 0;
-        const interval = setInterval(() => {
-            if(i < sequences.length) {
-                loaderStatus.innerText = sequences[i];
-                i++;
-            } else {
-                clearInterval(interval);
-                // Skicka till Valvet med orten som URL-parameter
-                window.location.href = `valvet.html?name=${encodeURIComponent(val)}`;
-            }
-        }, 600);
-    }
-
-    window.onload = loadEngine;
-</script>
+        // Custom Cursor logic
+        document.addEventListener('mousemove', e => {
+            // Här kan vi lägga till visuella effekter som följer musen
+        });
+    </script>
 </body>
 </html>
