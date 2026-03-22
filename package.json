@@ -1,0 +1,11 @@
+{
+  "name": "allabostader-aggregator",
+  "version": "1.0.0",
+  "description": "Real-time real estate aggregator",
+  "main": "AGGREGATOR_CORE.js",
+  "dependencies": {
+    "puppeteer": "^21.0.0",
+    "puppeteer-extra": "^3.3.6",
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
+  }
+}
