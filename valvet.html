@@ -76,19 +76,52 @@
             text-align: center;
             overflow: hidden;
         }
-        .blur-content { filter: blur(10px); opacity: 0.15; pointer-events: none; user-select: none; }
+        .blur-content { filter: blur(12px); opacity: 0.1; pointer-events: none; user-select: none; }
+        
         .lock-overlay {
             position: absolute; inset: 0;
             display: flex; flex-direction: column; align-items: center; justify-content: center;
             background: linear-gradient(0deg, rgba(2,2,3,1) 10%, rgba(2,2,3,0.3) 100%);
         }
+
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+            max-width: 380px;
+            padding: 0 20px;
+        }
+
+        input[type="email"] {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid #222;
+            padding: 18px;
+            color: #fff;
+            font-family: inherit;
+            text-align: center;
+            outline: none;
+            border-radius: 2px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+        input[type="email"]:focus { border-color: var(--gold); background: rgba(255,255,255,0.07); }
+
         .unlock-btn {
-            background: #fff; color: #000; padding: 22px 45px; font-weight: 800;
-            text-transform: uppercase; text-decoration: none; font-size: 13px;
-            letter-spacing: 2px; transition: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            background: #fff;
+            color: #000;
+            padding: 20px;
+            font-weight: 800;
+            text-transform: uppercase;
+            text-decoration: none;
+            font-size: 12px;
+            letter-spacing: 2px;
+            transition: 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+            border: none;
+            cursor: pointer;
             border-radius: 2px;
         }
-        .unlock-btn:hover { background: var(--gold); transform: translateY(-3px); box-shadow: 0 15px 30px rgba(212, 175, 55, 0.2); }
+        .unlock-btn:hover { background: var(--gold); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(212, 175, 55, 0.2); }
 
         footer { padding: 80px 0 40px; text-align: center; color: #333; font-size: 10px; letter-spacing: 2px; }
 
@@ -145,8 +178,14 @@
             <p>Radhus - 110m² - 3 900 000 kr</p>
         </div>
         <div class="lock-overlay">
-            <p style="margin-bottom: 25px; font-size: 11px; letter-spacing: 3px; font-weight: 400; color: var(--gold);">ÅTKOMST KRÄVER AUKTORISERING</p>
-            <a href="https://tally.so/r/BzBOE4" class="unlock-btn">Lås upp dolda objekt</a>
+            <p style="margin-bottom: 20px; font-size: 10px; letter-spacing: 3px; font-weight: 400; color: var(--gold);">ÅTKOMST KRÄVER AUKTORISERING</p>
+            
+            <div class="input-group">
+                <input type="email" id="user-email" placeholder="Ange din e-postadress..." autocomplete="email">
+                <button onclick="submitLead()" class="unlock-btn">Lås upp dolda objekt</button>
+            </div>
+            
+            <p style="margin-top: 15px; font-size: 9px; color: #444; letter-spacing: 1px;">SÄKER ANSLUTNING VIA APEX ENGINE</p>
         </div>
     </div>
 
@@ -156,7 +195,7 @@
 </div>
 
 <script>
-    // 1. Hantera Ort-namn
+    // 1. Hantera Ort-namn från URL
     const params = new URLSearchParams(window.location.search);
     const ort = params.get('name') || 'Sverige';
     document.getElementById('ort-namn').innerText = "MARKNADSANALYS: " + ort.toUpperCase();
@@ -165,8 +204,21 @@
     // 2. Session ID Generator
     document.getElementById('session-id').innerText = "SECURE_SESSION: " + Math.random().toString(36).substring(2, 10).toUpperCase();
 
-    // 3. Smart Ghost Count (slumpar mellan 4 och 18 för trovärdighet)
+    // 3. Smart Ghost Count
     document.getElementById('ghost-count').innerText = Math.floor(Math.random() * 14) + 4;
+
+    // 4. Lead Submission
+    function submitLead() {
+        const email = document.getElementById('user-email').value;
+        if (!email || !email.includes('@')) {
+            alert("Vänligen ange en giltig e-postadress för att låsa upp data.");
+            return;
+        }
+        
+        // Skickar användaren till Tally med e-posten förifylld. 
+        // Inget Tally syns på DIN sida.
+        window.location.href = `https://tally.so/r/BzBOE4?email=${encodeURIComponent(email)}`;
+    }
 </script>
 
 </body>
