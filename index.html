@@ -3,81 +3,217 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ALLABOSTÄDER | CENTRAL INFRASTRUCTURE</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;900&family=JetBrains+Mono:wght@100;400&display=swap" rel="stylesheet">
+    <title>ALLABOSTÄDER | NATIONELLT KONTROLLCENTER</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;900&family=JetBrains+Mono:wght@100;400;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #000000;
             --accent: #00f2ff;
             --eco: #00ff88;
-            --glass: rgba(255, 255, 255, 0.03);
+            --warning: #ff003c;
+            --glass: rgba(255, 255, 255, 0.02);
             --border: rgba(255, 255, 255, 0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
         body { background: var(--bg); color: #fff; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
 
-        /* --- HUD ELEMENTS (THE 1000 FUNCTIONS) --- */
-        .system-bg {
-            position: fixed; inset: 0; z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #001233 0%, #000 100%);
-            opacity: 0.5;
+        /* --- SYSTEM SCANNER (BAKGRUND) --- */
+        .scanner-line {
+            position: fixed; top: 0; left: 0; width: 100%; height: 2px;
+            background: rgba(0, 242, 255, 0.1); animation: scan 8s linear infinite; z-index: 1000; pointer-events: none;
         }
+        @keyframes scan { from { top: -10%; } to { top: 110%; } }
 
+        /* --- NAVIGATION --- */
         header {
-            padding: 40px; border-bottom: 1px solid var(--border);
+            padding: 20px 40px; border-bottom: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 100;
+            backdrop-filter: blur(30px); position: sticky; top: 0; z-index: 1100;
+            background: rgba(0,0,0,0.8);
         }
 
-        .logo { font-weight: 900; letter-spacing: -2px; font-size: 24px; }
-        .logo span { color: var(--accent); }
+        .system-status { font-family: 'JetBrains Mono'; font-size: 9px; letter-spacing: 2px; color: var(--eco); }
+        .logo { font-weight: 900; font-size: 20px; letter-spacing: -1px; text-transform: uppercase; }
 
         /* --- SEARCH ARCHITECT --- */
-        .hero { padding: 100px 40px; text-align: center; }
-        .hero h1 { font-size: 8rem; font-weight: 900; letter-spacing: -10px; line-height: 0.8; margin-bottom: 40px; }
+        .search-sector {
+            padding: 100px 40px 60px; text-align: center;
+            background: radial-gradient(circle at center, #001233 0%, #000 70%);
+        }
+
+        .search-sector h1 { font-size: 10rem; font-weight: 900; letter-spacing: -12px; line-height: 0.8; margin-bottom: 20px; }
         
-        .search-vault {
-            max-width: 1000px; margin: 0 auto; background: var(--glass);
-            border: 1px solid var(--border); padding: 10px; display: flex;
-            box-shadow: 0 0 50px rgba(0, 242, 255, 0.1);
+        .search-container {
+            max-width: 1200px; margin: 40px auto; background: var(--glass);
+            border: 1px solid var(--border); display: flex; align-items: center;
+            backdrop-filter: blur(10px); box-shadow: 0 0 100px rgba(0, 242, 255, 0.05);
         }
 
         input {
-            flex-grow: 1; background: transparent; border: none; padding: 30px;
-            color: #fff; font-size: 20px; font-family: 'JetBrains Mono'; outline: none;
+            flex-grow: 1; background: transparent; border: none; padding: 35px;
+            color: #fff; font-size: 24px; font-family: 'JetBrains Mono'; outline: none;
         }
 
         .search-btn {
-            background: #fff; color: #000; border: none; padding: 0 50px;
-            font-weight: 900; text-transform: uppercase; letter-spacing: 5px;
-            cursor: pointer; transition: 0.3s;
+            background: var(--authority-white, #fff); color: #000; border: none;
+            padding: 0 60px; height: 100%; font-weight: 900; letter-spacing: 5px;
+            cursor: pointer; align-self: stretch; transition: 0.3s;
         }
         .search-btn:hover { background: var(--accent); }
 
-        /* --- LIVE OBJECT FEED (ALLA HUS) --- */
-        .feed-container { padding: 60px 40px; max-width: 1400px; margin: 0 auto; }
-        .feed-header { 
-            display: flex; justify-content: space-between; align-items: flex-end;
-            margin-bottom: 40px; border-bottom: 1px solid var(--border); padding-bottom: 20px;
+        /* --- LIVE MESH GRID (ALLA HUS) --- */
+        .mesh-container { padding: 40px; max-width: 1800px; margin: 0 auto; }
+        
+        .mesh-header {
+            border-left: 4px solid var(--accent); padding-left: 20px; margin-bottom: 40px;
+        }
+        .mesh-header h2 { font-size: 12px; font-family: 'JetBrains Mono'; letter-spacing: 5px; opacity: 0.5; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 20px;
         }
 
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 30px; }
-
-        .property-card {
-            background: var(--glass); border: 1px solid var(--border); padding: 30px;
-            transition: 0.4s; position: relative; overflow: hidden;
+        .house-node {
+            background: var(--glass); border: 1px solid var(--border);
+            padding: 40px; position: relative; transition: 0.3s;
+            overflow: hidden;
         }
-        .property-card:hover { border-color: var(--accent); transform: translateY(-10px); }
+        .house-node:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); }
 
-        .tag { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--eco); margin-bottom: 10px; display: block; }
-        .address { font-size: 24px; font-weight: 900; margin-bottom: 10px; }
-        .meta { font-family: 'JetBrains Mono'; font-size: 12px; opacity: 0.5; margin-bottom: 20px; }
+        .node-id { font-family: 'JetBrains Mono'; font-size: 8px; opacity: 0.3; margin-bottom: 20px; }
+        .house-title { font-size: 32px; font-weight: 900; letter-spacing: -1px; line-height: 1; margin-bottom: 5px; }
+        .house-loc { font-size: 12px; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
 
-        .ai-stats {
-            background: rgba(0, 242, 255, 0.05); border: 1px solid rgba(0, 242, 255, 0.1);
-            padding: 15px; margin-top: 20px;
+        .ai-analysis-box {
+            border: 1px solid rgba(0, 242, 255, 0.2);
+            background: rgba(0, 242, 255, 0.03);
+            padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
         }
+
+        .stat-label { font-family: 'JetBrains Mono'; font-size: 8px; opacity: 0.5; margin-bottom: 5px; }
+        .stat-value { font-size: 18px; font-weight: 800; color: var(--accent); }
+        .stat-value.eco { color: var(--eco); }
+
+        .action-link {
+            margin-top: 30px; display: block; text-align: center;
+            padding: 20px; border: 1px solid #fff; color: #fff;
+            text-decoration: none; font-weight: 900; font-size: 11px;
+            letter-spacing: 3px; transition: 0.3s;
+        }
+        .action-link:hover { background: #fff; color: #000; }
+
+        /* --- LIVE COUNTER --- */
+        .live-counter {
+            position: fixed; bottom: 40px; right: 40px; background: #000;
+            border: 1px solid var(--eco); padding: 15px 25px; font-family: 'JetBrains Mono';
+            font-size: 10px; z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="scanner-line"></div>
+
+    <header>
+        <div class="logo">ALLA<span>BOSTÄDER</span></div>
+        <div class="system-status">● SYSTEM_DOMINANS_AKTIVERAD // ALLA_OBJEKT_SYNCADE</div>
+    </header>
+
+    <section class="search-sector">
+        <div style="font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 10px; margin-bottom: 20px; color: var(--accent);">
+            DEKONSTRUERAR HEMNET & BOOLI... 100% SUCCESS
+        </div>
+        <h1>SVERIGE.</h1>
+        <div class="search-container">
+            <input type="text" id="mainSearch" placeholder="ANGE STAD, ADRESS ELLER KOMMUN FÖR TOTAL ANALYS...">
+            <button class="search-btn" onclick="executeSync()">ANALYSERA</button>
+        </div>
+    </section>
+
+    <section class="mesh-container">
+        <div class="mesh-header">
+            <h2>NATIONELL DATASTRÖM // REALTID</h2>
+            <div style="font-size: 40px; font-weight: 900; letter-spacing: -2px;">AKTIVA OBJEKT</div>
+        </div>
+
+        <div class="grid" id="houseMesh">
+            <div class="house-node">
+                <div class="node-id">REF_ID: SE_STHLM_88291</div>
+                <div class="house-title">VASAGATAN 12</div>
+                <div class="house-loc">STOCKHOLM // 4 ROK // 112 KVM</div>
+                
+                <div class="ai-analysis-box">
+                    <div>
+                        <div class="stat-label">AI_RÄNTE_SÄNKNING</div>
+                        <div class="stat-value">-1.45%</div>
+                    </div>
+                    <div>
+                        <div class="stat-label">MILJÖ_AVTRYCK</div>
+                        <div class="stat-value eco">A+ KLIMATPOSITIV</div>
+                    </div>
+                    <div>
+                        <div class="stat-label">VÄLGÖRENHETS_VINST</div>
+                        <div class="stat-value">182 000 KR</div>
+                    </div>
+                    <div>
+                        <div class="stat-label">REKLAM_EXPONERING</div>
+                        <div class="stat-value">MAXIMERAD</div>
+                    </div>
+                </div>
+                <a href="#" onclick="executeSync('Vasagatan 12')" class="action-link">EXEKVERA TOTAL ANALYS</a>
+            </div>
+
+            <div class="house-node">
+                <div class="node-id">REF_ID: SE_GBG_11029</div>
+                <div class="house-title">AVENYN 4</div>
+                <div class="house-loc">GÖTEBORG // 3 ROK // 88 KVM</div>
+                
+                <div class="ai-analysis-box">
+                    <div>
+                        <div class="stat-label">AI_RÄNTE_SÄNKNING</div>
+                        <div class="stat-value">-1.10%</div>
+                    </div>
+                    <div>
+                        <div class="stat-label">MILJÖ_AVTRYCK</div>
+                        <div class="stat-value eco">B- OPTIMERAD</div>
+                    </div>
+                    <div>
+                        <div class="stat-label">VÄLGÖRENHETS_VINST</div>
+                        <div class="stat-value">94 000 KR</div>
+                    </div>
+                    <div>
+                        <div class="stat-label">REKLAM_EXPONERING</div>
+                        <div class="stat-value">MAXIMERAD</div>
+                    </div>
+                </div>
+                <a href="#" onclick="executeSync('Avenyn 4')" class="action-link">EXEKVERA TOTAL ANALYS</a>
+            </div>
+
+            </div>
+    </section>
+
+    <div class="live-counter">
+        DATA_POINTS: <span id="counter">142,891</span> // STATUS: SYNCING...
+    </div>
+
+    <script>
+        // LIVE COUNTER ANIMATION
+        let count = 142891;
+        setInterval(() => {
+            count += Math.floor(Math.random() * 10);
+            document.getElementById('counter').innerText = count.toLocaleString();
+        }, 100);
+
+        function executeSync(target) {
+            const query = target || document.getElementById('mainSearch').value || 'Sverige';
+            window.location.href = `valvet.html?name=${encodeURIComponent(query)}`;
+        }
+    </script>
+</body>
+</html>        }
         .ai-stats div { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; }
         .ai-stats b { color: var(--accent); }
 
