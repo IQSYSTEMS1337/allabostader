@@ -37,26 +37,12 @@
         }
 
         .container { max-width: 500px; width: 100%; padding: 20px; }
-        
-        .card { 
-            background: var(--surface); 
-            border: 1px solid var(--border); 
-            padding: 50px 30px; 
-            text-align: center;
-            position: relative;
-        }
-
+        .card { background: var(--surface); border: 1px solid var(--border); padding: 50px 30px; text-align: center; }
         .session-info { font-family: monospace; color: var(--gold); font-size: 10px; letter-spacing: 2px; margin-bottom: 30px; opacity: 0.5; }
-
         h1 { font-size: 2rem; font-weight: 800; letter-spacing: -1px; margin-bottom: 10px; color: #fff; }
         .location-text { color: var(--blue); font-weight: 800; text-transform: uppercase; font-size: 12px; letter-spacing: 2px; margin-bottom: 30px; display: block; }
-
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
+        
+        .input-group { display: flex; flex-direction: column; gap: 15px; }
         input[type="email"] {
             background: rgba(255,255,255,0.03);
             border: 1px solid #222;
@@ -66,7 +52,6 @@
             text-align: center;
             outline: none;
             font-size: 16px;
-            border-radius: 2px;
         }
 
         .unlock-btn {
@@ -79,9 +64,7 @@
             cursor: pointer;
             border: none;
             font-size: 11px;
-            transition: 0.2s;
         }
-        .unlock-btn:hover { background: var(--gold); transform: translateY(-2px); }
 
         .spin {
             width: 40px; height: 40px; border: 3px solid var(--gold); border-top-color: transparent; border-radius: 50%;
@@ -89,30 +72,42 @@
         }
         @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
         
-        footer { margin-top: 30px; font-size: 9px; color: #333; letter-spacing: 1px; text-transform: uppercase; }
+        /* Denna gömmer Tally-formuläret helt för användaren */
+        #tally-frame {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0,0,0,0);
+            border: 0;
+        }
     </style>
 </head>
 <body>
 
 <div id="loader">
     <div class="spin"></div>
-    <div id="loader-text" style="font-size: 10px; letter-spacing: 3px; color: var(--gold);">ANSLUTER TILL VALVET...</div>
+    <div id="loader-text" style="font-size: 10px; letter-spacing: 3px; color: var(--gold);">SYNKRONISERAR MED TERMINALEN...</div>
 </div>
 
 <div class="container">
     <div class="card">
-        <div class="session-info" id="session-id">STATUS: KRYPTERAD_ANSLUTNING</div>
+        <div class="session-info" id="session-id">SYSTEM_STATUS: AKTIV</div>
         <h1>ÖPPNA VALVET</h1>
         <span class="location-text" id="ort-namn">REGION: SVERIGE</span>
 
         <div class="input-group">
-            <input type="email" id="user-email" placeholder="Ange din e-postadress" required>
-            <button onclick="accessVault()" class="unlock-btn">HÄMTA TILLGÅNG</button>
+            <input type="email" id="user-email" placeholder="Din e-postadress" required>
+            <button onclick="accessVault()" class="unlock-btn">BEKRÄFTA OCH ÖPPNA</button>
         </div>
         
-        <footer>&copy; ALLABOSTÄDER INTEL DIVISION</footer>
+        <p style="margin-top: 30px; font-size: 9px; color: #333; letter-spacing: 1px;">&copy; ALLABOSTÄDER INTEL DIVISION</p>
     </div>
 </div>
+
+<iframe id="tally-frame"></iframe>
 
 <script>
     const params = new URLSearchParams(window.location.search);
@@ -123,19 +118,24 @@
     function accessVault() {
         const email = document.getElementById('user-email').value;
         if (!email.includes('@')) { 
-            alert("Verifiering misslyckades. Ange en giltig e-postadress."); 
+            alert("Ange en giltig e-postadress."); 
             return; 
         }
         
         document.getElementById('loader').style.display = 'flex';
         
+        // Vi laddar Tally-sidan i vår dolda iframe istället för att skicka användaren dit
+        const tallyUrl = `https://tally.so/r/BzBOE4?email=${encodeURIComponent(email)}&ort=${encodeURIComponent(ort)}`;
+        document.getElementById('tally-frame').src = tallyUrl;
+        
         setTimeout(() => {
-            document.getElementById('loader-text').innerText = "IDENTITET VERIFIERAD...";
+            document.getElementById('loader-text').innerText = "ÅTKOMST BEVILJAD. SKICKAR DATA...";
+            
             setTimeout(() => {
-                // Din personliga Tally-länk
-                window.location.href = `https://tally.so/r/BzBOE4?email=${encodeURIComponent(email)}&ort=${encodeURIComponent(ort)}`;
-            }, 800);
-        }, 1500);
+                // När vi väntat tillräckligt länge för att iframen ska ha laddat, skickar vi dem till din hemsida
+                window.location.href = `https://iqsystems1337.github.io/allabostader/index.html`;
+            }, 1500);
+        }, 2000);
     }
 </script>
 
