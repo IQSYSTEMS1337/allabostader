@@ -2,296 +2,103 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ALLABOSTÄDER | NATIONELL REALTIDSMATRIX</title>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400;800&family=Outfit:wght@900&display=swap" rel="stylesheet">
+    <title>ALLABOSTÄDER | TOTAL MATRIS</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Outfit:wght@900&display=swap" rel="stylesheet">
     <style>
-        :root { 
-            --neon: #00f2ff; 
-            --eco: #00ff88; 
-            --bg: #000; 
-            --glass: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
+        :root { --neon: #00f2ff; --eco: #00ff88; --bg: #000; --border: rgba(255, 255, 255, 0.1); }
+        body { background: var(--bg); color: #fff; font-family: 'JetBrains Mono', monospace; margin: 0; overflow-x: hidden; }
+        header { padding: 30px 50px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.9); position: sticky; top: 0; z-index: 100; }
+        .hero { padding: 80px 50px; text-align: center; border-bottom: 1px solid var(--border); }
+        h1 { font-family: 'Outfit', sans-serif; font-size: 8vw; letter-spacing: -5px; margin: 0; text-transform: uppercase; }
         
-        body { 
-            background: var(--bg); 
-            color: #fff; 
-            font-family: 'JetBrains Mono', monospace; 
-            margin: 0; 
-            overflow-x: hidden;
-            background-image: radial-gradient(circle at 2px 2px, rgba(255,255,255,0.05) 1px, transparent 0);
-            background-size: 40px 40px;
-        }
+        .search-container { max-width: 900px; margin: 40px auto; display: flex; border: 1px solid var(--neon); background: rgba(0,242,255,0.05); }
+        input { flex: 1; background: transparent; border: none; padding: 25px; color: #fff; font-family: 'JetBrains Mono'; font-size: 18px; outline: none; }
+        
+        #market-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 1px; background: var(--border); }
+        .card { background: #000; padding: 30px; transition: 0.3s; position: relative; border: 1px solid transparent; }
+        .card:hover { background: #050505; border-color: var(--neon); }
+        
+        .ai-tag { font-size: 10px; color: var(--neon); border: 1px solid var(--neon); padding: 3px 8px; display: inline-block; margin-bottom: 15px; }
+        .addr { font-family: 'Outfit', sans-serif; font-size: 24px; margin-bottom: 5px; }
+        .loc { font-size: 12px; opacity: 0.6; margin-bottom: 20px; }
+        
+        .vitals { background: rgba(255,255,255,0.03); padding: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; border: 1px solid var(--border); }
+        .vital-box small { display: block; font-size: 8px; opacity: 0.5; text-transform: uppercase; }
+        .vital-box b { font-size: 14px; color: var(--eco); }
 
-        /* --- SYSTEM HEADER --- */
-        header {
-            padding: 30px 50px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            backdrop-filter: blur(20px);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            background: rgba(0,0,0,0.8);
-        }
-
-        .status-light {
-            display: inline-block;
-            width: 8px;
-            height: 8px;
-            background: var(--eco);
-            border-radius: 50%;
-            margin-right: 10px;
-            box-shadow: 0 0 10px var(--eco);
-            animation: pulse 1.5s infinite;
-        }
-
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
-
-        /* --- HERO & SEARCH --- */
-        .hero-unit {
-            padding: 100px 50px;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-        }
-
-        h1 {
-            font-family: 'Outfit', sans-serif;
-            font-size: 8vw;
-            line-height: 0.8;
-            letter-spacing: -10px;
-            margin-bottom: 40px;
-            text-transform: uppercase;
-        }
-
-        .search-vault {
-            max-width: 1000px;
-            margin: 0 auto;
-            background: var(--glass);
-            border: 1px solid var(--border);
-            display: flex;
-            padding: 5px;
-        }
-
-        input {
-            flex-grow: 1;
-            background: transparent;
-            border: none;
-            padding: 30px;
-            color: #fff;
-            font-family: 'JetBrains Mono';
-            font-size: 20px;
-            outline: none;
-        }
-
-        .btn-search {
-            background: #fff;
-            color: #000;
-            border: none;
-            padding: 0 50px;
-            font-weight: 800;
-            letter-spacing: 5px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
-        .btn-search:hover { background: var(--neon); }
-
-        /* --- THE NEURAL GRID --- */
-        #market-stream {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-            gap: 1px;
-            background: var(--border);
-        }
-
-        .property-node {
-            background: #000;
-            padding: 40px;
-            position: relative;
-            transition: 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .property-node:hover {
-            background: #050505;
-            border-color: var(--neon);
-            z-index: 10;
-        }
-
-        .live-tag {
-            font-size: 9px;
-            color: var(--neon);
-            border: 1px solid var(--neon);
-            padding: 2px 8px;
-            display: inline-block;
-            margin-bottom: 20px;
-            letter-spacing: 2px;
-        }
-
-        .address {
-            font-family: 'Outfit', sans-serif;
-            font-size: 32px;
-            font-weight: 900;
-            letter-spacing: -1.5px;
-            margin-bottom: 10px;
-            line-height: 1;
-        }
-
-        .data-vitals {
-            font-size: 11px;
-            opacity: 0.5;
-            line-height: 1.8;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        .ai-calc-box {
-            background: rgba(0, 242, 255, 0.03);
-            border: 1px solid rgba(0, 242, 255, 0.1);
-            padding: 20px;
-            display: flex;
-            justify-content: space-between;
-        }
-
-        .calc-item small { display: block; font-size: 8px; opacity: 0.5; margin-bottom: 5px; }
-        .calc-item b { font-size: 18px; color: var(--eco); }
-
-        .btn-sync {
-            margin-top: 30px;
-            width: 100%;
-            padding: 20px;
-            border: 1px solid #fff;
-            background: transparent;
-            color: #fff;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn-sync:hover { background: #fff; color: #000; }
-
-        /* --- SYSTEM LOG --- */
-        #sync-log {
-            position: fixed;
-            bottom: 30px;
-            left: 30px;
-            font-size: 9px;
-            color: var(--neon);
-            background: rgba(0,0,0,0.8);
-            padding: 15px;
-            border-left: 2px solid var(--neon);
-            max-height: 150px;
-            width: 300px;
-            overflow: hidden;
-            pointer-events: none;
-            z-index: 2000;
-        }
-
-        .log-entry { margin-bottom: 5px; font-family: 'JetBrains Mono'; }
-
+        #log { position: fixed; bottom: 20px; left: 20px; font-size: 10px; color: var(--neon); opacity: 0.7; pointer-events: none; }
     </style>
 </head>
 <body>
 
-    <header>
-        <div>
-            <span class="status-light"></span>
-            <span style="font-size: 10px; letter-spacing: 3px; opacity: 0.8;">NATIONELL_SYNC_AKTIV</span>
-        </div>
-        <div style="font-weight: 900; font-size: 24px; letter-spacing: -2px;">ALLA<span>BOSTÄDER</span></div>
-        <div id="sys-clock" style="font-size: 10px; opacity: 0.5;">00:00:00</div>
-    </header>
+<header>
+    <div style="font-weight: 800; letter-spacing: 2px;">ALLABOSTÄDER_CORE_v2.6</div>
+    <div id="clock">00:00:00</div>
+</header>
 
-    <section class="hero-unit">
-        <div style="font-size: 10px; color: var(--neon); letter-spacing: 10px; margin-bottom: 20px;">300+ AKTÖRER SYNKRONISERADE</div>
-        <h1>SE_ALLT.</h1>
-        <div class="search-vault">
-            <input type="text" id="mainSearch" placeholder="SÖK I HELA SVERIGES DATABAS (ORT, ADRESS)...">
-            <button class="btn-search" onclick="executeSearch()">SYNKRONISERA</button>
-        </div>
-    </section>
-
-    <main id="market-stream">
-        </main>
-
-    <div id="sync-log">
-        <div class="log-entry">> INITIALIZING MESH NETWORK...</div>
+<section class="hero">
+    <h1>SÖK_ALLT.</h1>
+    <div class="search-container">
+        <input type="text" id="searchInp" placeholder="ORT, KOMMUN ELLER ADRESS..." oninput="filterData()">
     </div>
+</section>
 
-    <script>
-        // --- KLOCKA ---
-        setInterval(() => {
-            document.getElementById('sys-clock').innerText = new Date().toLocaleTimeString();
-        }, 1000);
+<main id="market-grid"></main>
+<div id="log">> SYSTEM_IDLE_READY</div>
 
-        // --- DATA-MOTOR (HYBRID AGGREGATOR) ---
-        async function connectToRealMarket() {
-            const stream = document.getElementById('market-stream');
-            const log = document.getElementById('sync-log');
+<script>
+    let rawData = [];
 
-            // VIKTIGT: Här är de RIKTIGA adresser som speglas
-            const marketData = [
-                { id: "SF-9912", address: "Sveavägen 114", city: "Stockholm", price: "6 450 000 kr", source: "FASTIGHETSBYRÅN", kvm: 82 },
-                { id: "BJ-4421", address: "Linnégatan 42", city: "Göteborg", price: "5 200 000 kr", source: "BJURFORS", kvm: 65 },
-                { id: "LF-0021", address: "Regementsgatan 15", city: "Malmö", price: "3 950 000 kr", source: "LÄNSFÖRSÄKRINGAR", kvm: 74 },
-                { id: "MH-8812", address: "Drottninggatan 5", city: "Uppsala", price: "4 100 000 kr", source: "MÄKLARHUSET", kvm: 58 },
-                { id: "SK-2219", address: "Storgatan 12", city: "Umeå", price: "2 850 000 kr", source: "SKANDIAMÄKLARNA", kvm: 90 },
-                { id: "NT-3301", address: "Götgatan 88", city: "Stockholm", price: "7 100 000 kr", source: "NOTAR", kvm: 45 },
-                { id: "EO-5521", address: "Vasaplatsen 3", city: "Göteborg", price: "8 900 000 kr", source: "ERIK OLSSON", kvm: 112 },
-                { id: "HH-1102", address: "Hamngatan 2", city: "Visby", price: "12 500 000 kr", source: "HUSMANHAGBERG", kvm: 145 }
-            ];
-
-            // SIMULERAR INLADDNING FRÅN 300 KÄLLOR
-            marketData.forEach((house, index) => {
-                setTimeout(() => {
-                    const node = document.createElement('div');
-                    node.className = 'property-node';
-                    node.innerHTML = `
-                        <div class="live-tag">VERIFIERAD_REALTID // ${house.id}</div>
-                        <div class="address">${house.address.toUpperCase()}</div>
-                        <div class="data-vitals">
-                            STAD: ${house.city}<br>
-                            KÄLLA: ${house.source}<br>
-                            METRICS: ${house.kvm} KVM // ${house.price}
-                        </div>
-                        <div class="ai-calc-box">
-                            <div class="calc-item">
-                                <small>RÄNTE_SÄNKNING</small>
-                                <b>-${(Math.random() * 0.5 + 1.1).toFixed(2)}%</b>
-                            </div>
-                            <div class="calc-item" style="text-align:right;">
-                                <small>MILJÖ_SCORE</small>
-                                <b style="color:var(--eco);">A+ ELIT</b>
-                            </div>
-                        </div>
-                        <button class="btn-sync" onclick="location.href='valvet.html?id=${house.id}'">ÖPPNA INFRASTRUKTUR</button>
-                    `;
-                    stream.insertBefore(node, stream.firstChild);
-                    
-                    // Uppdatera loggen
-                    const entry = document.createElement('div');
-                    entry.className = 'log-entry';
-                    entry.innerText = `> SYNCED ${house.id} FROM ${house.source} [SUCCESS]`;
-                    log.insertBefore(entry, log.firstChild);
-                }, index * 400);
-            });
+    // HÄMTA DATA FRÅN GITHUB-BOTENS FIL
+    async function loadMarket() {
+        try {
+            const res = await fetch('market-data.json');
+            rawData = await res.json();
+            render(rawData);
+            document.getElementById('log').innerText = `> SYNC_COMPLETE: ${rawData.length}_OBJECTS_LOADED`;
+        } catch (e) {
+            document.getElementById('log').innerText = `> ERR: VÄNTAR_PÅ_FÖRSTA_SKANNING...`;
         }
+    }
 
-        function executeSearch() {
-            const val = document.getElementById('mainSearch').value;
-            if(val) window.location.href = `valvet.html?query=${encodeURIComponent(val)}`;
-        }
+    function render(data) {
+        const grid = document.getElementById('market-grid');
+        grid.innerHTML = data.map(h => {
+            // AI-LOGIK: Räkna ut ränte-sparande (simulerat 1.2% sänkning)
+            const savings = Math.floor(h.priceVal * 0.012 / 12) || 0;
+            
+            return `
+                <div class="card">
+                    <div class="ai-tag">SOURCE: ${h.source.toUpperCase()}</div>
+                    <div class="addr">${h.address.toUpperCase()}</div>
+                    <div class="loc">${h.location.toUpperCase()}</div>
+                    <div class="vitals">
+                        <div class="vital-box">
+                            <small>PRIS</small>
+                            <b>${h.price}</b>
+                        </div>
+                        <div class="vital-box">
+                            <small>AI_MÅNADS_SPAR</small>
+                            <b>+${savings} KR</b>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }).join('');
+    }
 
-        // STARTA SYSTEMET OMEDELBART
-        window.onload = connectToRealMarket;
-    </script>
+    function filterData() {
+        const val = document.getElementById('searchInp').value.toLowerCase();
+        const filtered = rawData.filter(h => 
+            h.address.toLowerCase().includes(val) || 
+            h.location.toLowerCase().includes(val) ||
+            h.source.toLowerCase().includes(val)
+        );
+        render(filtered);
+    }
+
+    setInterval(() => { document.getElementById('clock').innerText = new Date().toLocaleTimeString(); }, 1000);
+    window.onload = loadMarket;
+</script>
 </body>
 </html>
