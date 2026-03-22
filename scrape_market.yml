@@ -1,8 +1,8 @@
 name: National Market Sync
 on:
   schedule:
-    - cron: '0 * * * *' # Körs en gång i timmen
-  workflow_dispatch: # Tillåter dig att starta den manuellt
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   build:
@@ -25,8 +25,8 @@ jobs:
 
       - name: Commit and Push Data
         run: |
-          git config --global user.name 'AI-Aggregator-Bot'
+          git config --global user.name 'AI-Bot'
           git config --global user.email 'bot@allabostader.se'
           git add market-data.json
-          git commit -m "AUTO-SYNC: Uppdaterade nationell marknadsdata" || echo "Inga ändringar"
+          git commit -m "AUTO-SYNC: Real Market Data" || echo "No changes"
           git push
