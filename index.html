@@ -3,51 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ALLABOSTÄDER | NATIONELLT KONTROLLCENTER</title>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100;400;900&family=JetBrains+Mono:wght@100;400;800&display=swap" rel="stylesheet">
+    <title>NATIONELL BOSTADSMATRIX | 300+ AKTÖRER SYNKRONISERADE</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100;400;800&family=Outfit:wght@100;400;900&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #000000;
             --accent: #00f2ff;
             --eco: #00ff88;
-            --warning: #ff003c;
-            --glass: rgba(255, 255, 255, 0.02);
+            --white: #ffffff;
+            --glass: rgba(255, 255, 255, 0.03);
             --border: rgba(255, 255, 255, 0.1);
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; cursor: crosshair; }
-        body { background: var(--bg); color: #fff; font-family: 'Outfit', sans-serif; overflow-x: hidden; }
+        body { background: var(--bg); color: var(--white); font-family: 'Outfit', sans-serif; overflow-x: hidden; }
 
-        /* --- SYSTEM SCANNER (BAKGRUND) --- */
-        .scanner-line {
-            position: fixed; top: 0; left: 0; width: 100%; height: 2px;
-            background: rgba(0, 242, 255, 0.1); animation: scan 8s linear infinite; z-index: 1000; pointer-events: none;
+        /* --- GLOBAL HUD LAYER --- */
+        .hud-overlay {
+            position: fixed; inset: 0; pointer-events: none;
+            border: 20px solid rgba(255,255,255,0.02); z-index: 1000;
         }
-        @keyframes scan { from { top: -10%; } to { top: 110%; } }
 
-        /* --- NAVIGATION --- */
         header {
-            padding: 20px 40px; border-bottom: 1px solid var(--border);
+            padding: 30px 50px; border-bottom: 1px solid var(--border);
             display: flex; justify-content: space-between; align-items: center;
-            backdrop-filter: blur(30px); position: sticky; top: 0; z-index: 1100;
-            background: rgba(0,0,0,0.8);
+            background: rgba(0,0,0,0.9); backdrop-filter: blur(20px);
+            position: sticky; top: 0; z-index: 1100;
         }
 
-        .system-status { font-family: 'JetBrains Mono'; font-size: 9px; letter-spacing: 2px; color: var(--eco); }
-        .logo { font-weight: 900; font-size: 20px; letter-spacing: -1px; text-transform: uppercase; }
+        .system-id { font-family: 'JetBrains Mono'; font-size: 10px; color: var(--accent); letter-spacing: 2px; }
 
-        /* --- SEARCH ARCHITECT --- */
-        .search-sector {
-            padding: 100px 40px 60px; text-align: center;
-            background: radial-gradient(circle at center, #001233 0%, #000 70%);
+        /* --- SEARCH ARCHITECT (DOMINATION) --- */
+        .hero-section {
+            padding: 120px 50px; text-align: center;
+            background: radial-gradient(circle at center, #001a33 0%, #000 80%);
         }
 
-        .search-sector h1 { font-size: 10rem; font-weight: 900; letter-spacing: -12px; line-height: 0.8; margin-bottom: 20px; }
-        
-        .search-container {
-            max-width: 1200px; margin: 40px auto; background: var(--glass);
-            border: 1px solid var(--border); display: flex; align-items: center;
-            backdrop-filter: blur(10px); box-shadow: 0 0 100px rgba(0, 242, 255, 0.05);
+        h1 { font-size: 9rem; font-weight: 900; letter-spacing: -10px; line-height: 0.8; margin-bottom: 30px; }
+        h1 span { color: var(--accent); }
+
+        .search-vault {
+            max-width: 1100px; margin: 0 auto; background: var(--glass);
+            border: 1px solid var(--border); display: flex; padding: 5px;
+            box-shadow: 0 0 100px rgba(0, 242, 255, 0.1);
         }
 
         input {
@@ -56,242 +54,168 @@
         }
 
         .search-btn {
-            background: var(--authority-white, #fff); color: #000; border: none;
-            padding: 0 60px; height: 100%; font-weight: 900; letter-spacing: 5px;
-            cursor: pointer; align-self: stretch; transition: 0.3s;
+            background: var(--white); color: #000; border: none; padding: 0 60px;
+            font-weight: 900; letter-spacing: 5px; text-transform: uppercase;
+            cursor: pointer; transition: 0.3s;
         }
-        .search-btn:hover { background: var(--accent); }
+        .search-btn:hover { background: var(--accent); transform: scale(1.02); }
 
-        /* --- LIVE MESH GRID (ALLA HUS) --- */
-        .mesh-container { padding: 40px; max-width: 1800px; margin: 0 auto; }
+        /* --- LIVE MARKET MESH (300 AKTÖRER) --- */
+        .market-mesh { padding: 80px 50px; max-width: 1800px; margin: 0 auto; }
         
-        .mesh-header {
-            border-left: 4px solid var(--accent); padding-left: 20px; margin-bottom: 40px;
+        .mesh-stats {
+            display: flex; gap: 40px; margin-bottom: 60px;
+            font-family: 'JetBrains Mono'; font-size: 10px; border-bottom: 1px solid var(--border);
+            padding-bottom: 20px;
         }
-        .mesh-header h2 { font-size: 12px; font-family: 'JetBrains Mono'; letter-spacing: 5px; opacity: 0.5; }
+        .stat-item b { color: var(--eco); }
 
         .grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-            gap: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 25px;
         }
 
-        .house-node {
+        .property-node {
             background: var(--glass); border: 1px solid var(--border);
-            padding: 40px; position: relative; transition: 0.3s;
-            overflow: hidden;
+            padding: 40px; position: relative; transition: 0.4s;
         }
-        .house-node:hover { border-color: var(--accent); background: rgba(255,255,255,0.05); }
+        .property-node:hover { border-color: var(--accent); background: rgba(0, 242, 255, 0.02); }
 
-        .node-id { font-family: 'JetBrains Mono'; font-size: 8px; opacity: 0.3; margin-bottom: 20px; }
-        .house-title { font-size: 32px; font-weight: 900; letter-spacing: -1px; line-height: 1; margin-bottom: 5px; }
-        .house-loc { font-size: 12px; opacity: 0.5; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 30px; }
-
-        .ai-analysis-box {
-            border: 1px solid rgba(0, 242, 255, 0.2);
-            background: rgba(0, 242, 255, 0.03);
-            padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+        .source-tag {
+            font-family: 'JetBrains Mono'; font-size: 9px; color: var(--accent);
+            text-transform: uppercase; margin-bottom: 15px; display: block;
         }
 
-        .stat-label { font-family: 'JetBrains Mono'; font-size: 8px; opacity: 0.5; margin-bottom: 5px; }
-        .stat-value { font-size: 18px; font-weight: 800; color: var(--accent); }
-        .stat-value.eco { color: var(--eco); }
+        .address { font-size: 28px; font-weight: 900; margin-bottom: 5px; letter-spacing: -1px; }
+        .details { font-size: 12px; opacity: 0.5; margin-bottom: 30px; text-transform: uppercase; }
 
-        .action-link {
-            margin-top: 30px; display: block; text-align: center;
-            padding: 20px; border: 1px solid #fff; color: #fff;
-            text-decoration: none; font-weight: 900; font-size: 11px;
-            letter-spacing: 3px; transition: 0.3s;
+        /* AI DATA BOX */
+        .ai-matrix-box {
+            border-top: 1px solid var(--border); padding-top: 25px;
+            display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
         }
-        .action-link:hover { background: #fff; color: #000; }
+        .matrix-item small { display: block; font-family: 'JetBrains Mono'; font-size: 8px; opacity: 0.4; margin-bottom: 5px; }
+        .matrix-item div { font-weight: 800; font-size: 16px; color: var(--eco); }
+        .matrix-item.blue div { color: var(--accent); }
 
-        /* --- LIVE COUNTER --- */
-        .live-counter {
-            position: fixed; bottom: 40px; right: 40px; background: #000;
-            border: 1px solid var(--eco); padding: 15px 25px; font-family: 'JetBrains Mono';
-            font-size: 10px; z-index: 2000;
+        .analyze-btn {
+            margin-top: 35px; width: 100%; padding: 20px;
+            background: transparent; border: 1px solid var(--white);
+            color: var(--white); font-weight: 900; letter-spacing: 3px;
+            text-transform: uppercase; font-size: 10px; transition: 0.3s;
+        }
+        .analyze-btn:hover { background: var(--white); color: #000; }
+
+        /* --- FOOTER INFO --- */
+        .footer-terminal {
+            padding: 100px 50px; text-align: center; font-family: 'JetBrains Mono';
+            font-size: 9px; opacity: 0.2; letter-spacing: 2px;
         }
     </style>
 </head>
 <body>
 
-    <div class="scanner-line"></div>
+    <div class="hud-overlay"></div>
 
     <header>
-        <div class="logo">ALLA<span>BOSTÄDER</span></div>
-        <div class="system-status">● SYSTEM_DOMINANS_AKTIVERAD // ALLA_OBJEKT_SYNCADE</div>
+        <div class="system-id">GLOBAL_AGGREGATOR_v9.4 // NODE_SVERIGE</div>
+        <div style="font-weight: 900; font-size: 22px; letter-spacing: -2px;">ALLA<span>BOSTÄDER</span></div>
+        <div class="system-id" id="live-time">00:00:00</div>
     </header>
 
-    <section class="search-sector">
-        <div style="font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 10px; margin-bottom: 20px; color: var(--accent);">
-            DEKONSTRUERAR HEMNET & BOOLI... 100% SUCCESS
+    <section class="hero-section">
+        <div style="color: var(--eco); font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 8px; margin-bottom: 30px;">
+            ANSUTEN TILL 300+ MÄKLARSYSTEM & FASTIGHETSREGISTER
         </div>
-        <h1>SVERIGE.</h1>
-        <div class="search-container">
-            <input type="text" id="mainSearch" placeholder="ANGE STAD, ADRESS ELLER KOMMUN FÖR TOTAL ANALYS...">
-            <button class="search-btn" onclick="executeSync()">ANALYSERA</button>
+        <h1>SE <span>ALLT.</span></h1>
+        <div class="search-vault">
+            <input type="text" id="searchInput" placeholder="SÖK I HELA SVERIGE (ADRESS, ORT, KOMMUN)...">
+            <button class="search-btn" onclick="runGlobalSync()">SYNKRONISERA</button>
         </div>
     </section>
 
-    <section class="mesh-container">
-        <div class="mesh-header">
-            <h2>NATIONELL DATASTRÖM // REALTID</h2>
-            <div style="font-size: 40px; font-weight: 900; letter-spacing: -2px;">AKTIVA OBJEKT</div>
+    <section class="market-mesh">
+        <div class="mesh-stats">
+            <div class="stat-item">AKTIVA_OBJEKT: <b id="obj-count">142 891</b></div>
+            <div class="stat-item">ANSLUTNA_AKTÖRER: <b>312</b></div>
+            <div class="stat-item">AI_FUNKTIONER: <b>20 000</b></div>
+            <div class="stat-item">VÄLGÖRENHET_STATUS: <b>100% NO-PROFIT</b></div>
         </div>
 
-        <div class="grid" id="houseMesh">
-            <div class="house-node">
-                <div class="node-id">REF_ID: SE_STHLM_88291</div>
-                <div class="house-title">VASAGATAN 12</div>
-                <div class="house-loc">STOCKHOLM // 4 ROK // 112 KVM</div>
-                
-                <div class="ai-analysis-box">
-                    <div>
-                        <div class="stat-label">AI_RÄNTE_SÄNKNING</div>
-                        <div class="stat-value">-1.45%</div>
+        <div class="grid" id="mesh-grid">
+            <div class="property-node">
+                <span class="source-tag">MÄKLAR-AGGREGATOR_NODE_01</span>
+                <div class="address">DROTTNINGGATAN 44</div>
+                <div class="details">STOCKHOLM // 3 ROK // 78 KVM // 8 450 000 KR</div>
+                <div class="ai-matrix-box">
+                    <div class="matrix-item">
+                        <small>RÄNTEBESPARING</small>
+                        <div>-1.32%</div>
                     </div>
-                    <div>
-                        <div class="stat-label">MILJÖ_AVTRYCK</div>
-                        <div class="stat-value eco">A+ KLIMATPOSITIV</div>
-                    </div>
-                    <div>
-                        <div class="stat-label">VÄLGÖRENHETS_VINST</div>
-                        <div class="stat-value">182 000 KR</div>
-                    </div>
-                    <div>
-                        <div class="stat-label">REKLAM_EXPONERING</div>
-                        <div class="stat-value">MAXIMERAD</div>
+                    <div class="matrix-item blue">
+                        <small>MILJÖ_SCORE</small>
+                        <div>A+ EXTREM</div>
                     </div>
                 </div>
-                <a href="#" onclick="executeSync('Vasagatan 12')" class="action-link">EXEKVERA TOTAL ANALYS</a>
+                <button class="analyze-btn" onclick="runGlobalSync('Drottninggatan 44')">Öppna Infrastruktur</button>
             </div>
 
-            <div class="house-node">
-                <div class="node-id">REF_ID: SE_GBG_11029</div>
-                <div class="house-title">AVENYN 4</div>
-                <div class="house-loc">GÖTEBORG // 3 ROK // 88 KVM</div>
-                
-                <div class="ai-analysis-box">
-                    <div>
-                        <div class="stat-label">AI_RÄNTE_SÄNKNING</div>
-                        <div class="stat-value">-1.10%</div>
+            <div class="property-node">
+                <span class="source-tag">MÄKLAR-AGGREGATOR_NODE_02</span>
+                <div class="address">SKÅNEGATAN 12</div>
+                <div class="details">GÖTEBORG // 4 ROK // 105 KVM // 6 200 000 KR</div>
+                <div class="ai-matrix-box">
+                    <div class="matrix-item">
+                        <small>RÄNTEBESPARING</small>
+                        <div>-1.15%</div>
                     </div>
-                    <div>
-                        <div class="stat-label">MILJÖ_AVTRYCK</div>
-                        <div class="stat-value eco">B- OPTIMERAD</div>
-                    </div>
-                    <div>
-                        <div class="stat-label">VÄLGÖRENHETS_VINST</div>
-                        <div class="stat-value">94 000 KR</div>
-                    </div>
-                    <div>
-                        <div class="stat-label">REKLAM_EXPONERING</div>
-                        <div class="stat-value">MAXIMERAD</div>
+                    <div class="matrix-item blue">
+                        <small>MILJÖ_SCORE</small>
+                        <div>B OPTIMERAD</div>
                     </div>
                 </div>
-                <a href="#" onclick="executeSync('Avenyn 4')" class="action-link">EXEKVERA TOTAL ANALYS</a>
+                <button class="analyze-btn" onclick="runGlobalSync('Skånegatan 12')">Öppna Infrastruktur</button>
             </div>
 
+            <div class="property-node">
+                <span class="source-tag">BANK_PORTAL_SYNC_NODE_09</span>
+                <div class="address">MALMÖVÄGEN 88</div>
+                <div class="details">LUND // 2 ROK // 55 KVM // 2 950 000 KR</div>
+                <div class="ai-matrix-box">
+                    <div class="matrix-item">
+                        <small>RÄNTEBESPARING</small>
+                        <div>-1.45%</div>
+                    </div>
+                    <div class="matrix-item blue">
+                        <small>MILJÖ_SCORE</small>
+                        <div>A++ ELIT</div>
+                    </div>
+                </div>
+                <button class="analyze-btn" onclick="runGlobalSync('Malmövägen 88')">Öppna Infrastruktur</button>
             </div>
+        </div>
     </section>
 
-    <div class="live-counter">
-        DATA_POINTS: <span id="counter">142,891</span> // STATUS: SYNCING...
+    <div class="footer-terminal">
+        SVERIGES NATIONELLA BOSTADSREGISTER // TOTAL_INDEXING_SERVICE_v9 // 100% VÄLGÖRENHET
     </div>
 
     <script>
-        // LIVE COUNTER ANIMATION
-        let count = 142891;
+        // LIVE TIME
         setInterval(() => {
-            count += Math.floor(Math.random() * 10);
-            document.getElementById('counter').innerText = count.toLocaleString();
-        }, 100);
+            document.getElementById('live-time').innerText = new Date().toLocaleTimeString();
+        }, 1000);
 
-        function executeSync(target) {
-            const query = target || document.getElementById('mainSearch').value || 'Sverige';
+        // LIVE COUNTER
+        let c = 142891;
+        setInterval(() => {
+            c += Math.floor(Math.random() * 5);
+            document.getElementById('obj-count').innerText = c.toLocaleString();
+        }, 500);
+
+        function runGlobalSync(target) {
+            const query = target || document.getElementById('searchInput').value || 'Sverige';
             window.location.href = `valvet.html?name=${encodeURIComponent(query)}`;
         }
-    </script>
-</body>
-</html>        }
-        .ai-stats div { display: flex; justify-content: space-between; font-size: 11px; margin-bottom: 5px; }
-        .ai-stats b { color: var(--accent); }
-
-        /* --- THE 46x SERIOUS FOOTER --- */
-        footer {
-            padding: 100px 40px; border-top: 1px solid var(--border);
-            text-align: center; font-family: 'JetBrains Mono'; font-size: 10px; opacity: 0.3;
-        }
-    </style>
-</head>
-<body>
-
-    <div class="system-bg"></div>
-
-    <header>
-        <div class="logo">ALLA<span>BOSTÄDER</span></div>
-        <div style="font-family: 'JetBrains Mono'; font-size: 10px; letter-spacing: 2px;">
-            <span style="color: var(--eco)">●</span> SYSTEM_ACTIVE // NO-PROFIT_INFRASTRUCTURE
-        </div>
-    </header>
-
-    <section class="hero">
-        <div style="color: var(--accent); font-family: 'JetBrains Mono'; font-size: 12px; letter-spacing: 10px; margin-bottom: 20px;">
-            20 000 AI-CORES ANALYSERAR MARKNADEN
-        </div>
-        <h1>SE<span>ALLT.</span></h1>
-        <p style="max-width: 600px; margin: 0 auto 50px; opacity: 0.6; line-height: 1.6;">
-            Vi har eliminerat monopolen. Vår motor speglar varje tillgänglig bostad i Sverige, 
-            applicerar ränte-degradering och miljö-optimering i realtid. 100% Välgörenhet.
-        </p>
-
-        <div class="search-vault">
-            <input type="text" id="searchInput" placeholder="SKRIV ORT ELLER ADRESS FÖR TOTAL ANALYS...">
-            <button class="search-btn" onclick="goToVault()">SÖK</button>
-        </div>
-    </section>
-
-    <section class="feed-container">
-        <div class="feed-header">
-            <div>
-                <h2 style="font-size: 40px; font-weight: 900; letter-spacing: -2px;">LIVE_MARKET_FEED</h2>
-                <p style="font-family: 'JetBrains Mono'; font-size: 10px; opacity: 0.5;">VISAR ALLA OBJEKT FRÅN SAMTLIGA KÄLLOR</p>
-            </div>
-            <div style="text-align: right;">
-                <b style="color: var(--eco);">1 000 000+ FÖRBÄTTRINGAR EXEKVERADE</b>
-            </div>
-        </div>
-
-        <div class="grid" id="propertyGrid">
-            <div class="property-card">
-                <span class="tag">🌿 MILJÖKLASS: A+</span>
-                <div class="address">STRANDVÄGEN 1</div>
-                <div class="meta">STOCKHOLM // 145 KVM // 12 500 000 KR</div>
-                <div class="ai-stats">
-                    <div>RÄNTE-BESPARING (AI) <b>-1.25%</b></div>
-                    <div>SAMHÄLLS-VINST <b>142 000 KR/ÅR</b></div>
-                    <div>REKLAM-MAXIMERING <b>100%</b></div>
-                </div>
-                <button onclick="goToVault()" style="width:100%; margin-top:20px; padding:15px; background:transparent; border:1px solid #fff; color:#fff; font-weight:900; text-transform:uppercase; font-size:10px; cursor:pointer;">Öppna i Valvet</button>
-            </div>
-            
-            </div>
-    </section>
-
-    <footer>
-        NATIONELL BOSTADSAUKTORISERING © 2026 // ALLA RÄTTIGHETER RESERVERADE FÖR FOLKET // NO-PROFIT ENGINE
-    </footer>
-
-    <script>
-        function goToVault() {
-            const val = document.getElementById('searchInput').value || 'Sverige';
-            window.location.href = `valvet.html?name=${encodeURIComponent(val)}`;
-        }
-
-        // Custom Cursor logic
-        document.addEventListener('mousemove', e => {
-            // Här kan vi lägga till visuella effekter som följer musen
-        });
     </script>
 </body>
 </html>
