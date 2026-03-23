@@ -2,100 +2,79 @@ const { Cluster } = require('puppeteer-cluster');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
-const csv = require('csv-parse/sync'); // Kräver: npm install csv-parse
+const csv = require('csv-parse/sync');
 
 puppeteer.use(StealthPlugin());
 
 async function runEliteEmpireScraper() {
-    console.log(">> [SYSTEM] STARTING OMNI-SCRAPER V20: DOMINATION MODE ACTIVE");
+    console.log(">> [SYSTEM] STARTING OMNI-SCRAPER V20: GITHUB-ACTION OPTIMIZED");
 
-    // 1. LADDA AIORTER FÖR Omedelbar KATEGORISERING
-    const aiorterRaw = fs.readFileSync('Aiorter.csv', 'utf8');
-    const orterDB = csv.parse(aiorterRaw, { columns: true, skip_empty_lines: true, delimiter: ';' });
-    console.log(`>> [DB] Loaded ${orterDB.length} strategic locations for SEO mapping.`);
+    // 1. LADDA AIORTER
+    let orterDB = [];
+    try {
+        const aiorterRaw = fs.readFileSync('Aiorter.csv', 'utf8');
+        orterDB = csv.parse(aiorterRaw, { columns: true, skip_empty_lines: true, delimiter: ';' });
+        console.log(`>> [DB] Loaded ${orterDB.length} locations.`);
+    } catch (e) {
+        console.log(">> [ERROR] Aiorter.csv missing or corrupt.");
+    }
 
-    // 2. LADDA EXISTERANDE DATA (Persistence)
+    // 2. LADDA EXISTERANDE DATA
     let vault = [];
     if (fs.existsSync('market-data.json')) {
         vault = JSON.parse(fs.readFileSync('market-data.json', 'utf8'));
     }
 
-    // 3. KONFIGURERA CLUSTER (Massiv parallellkörning)
+    // 3. KONFIGURERA CLUSTER FÖR GITHUB ACTIONS (Kritisk ändring här!)
     const cluster = await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_PAGE,
-        maxConcurrency: 5, // Justera baserat på din CPU/RAM
+        maxConcurrency: 2, // GitHub Actions har begränsat med RAM
         puppeteerOptions: {
             headless: "new",
-            args: ['--no-sandbox', '--disable-setuid-sandbox', '--window-size=1920,1080']
+            args: [
+                '--no-sandbox', 
+                '--disable-setuid-sandbox', 
+                '--disable-dev-shm-usage', // Fixar krascher i Docker/Linux-miljö
+                '--disable-accelerated-2d-canvas',
+                '--no-first-run',
+                '--no-zygote',
+                '--single-process', // Sparar massor av RAM på GitHub
+                '--disable-gpu'
+            ]
         }
     });
 
-    // DEFINIERA LOGIKEN FÖR VARJE SIDA
     await cluster.task(async ({ page, data: target }) => {
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
+        // Maskering
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
         
-        // Blockera onödigt skräp för att spara bandbredd och öka hastighet
-        await page.setRequestInterception(true);
-        page.on('request', (req) => {
-            if (['font', 'media'].includes(req.resourceType())) req.abort();
-            else req.continue();
-        });
-
         try {
             console.log(`>> [TARGET] Infiltrating ${target.name}...`);
-            await page.goto(target.url, { waitUntil: 'networkidle2', timeout: 60000 });
+            // Sätt en rejäl timeout för att inte dö vid segt nätverk
+            await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
 
-            // Simulera mänsklig scroll för att trigga lazy-loading av bilder
-            await page.evaluate(async () => {
-                await new Promise(r => {
-                    let h = 0;
-                    let i = setInterval(() => {
-                        window.scrollBy(0, 400);
-                        h += 400;
-                        if(h >= document.body.scrollHeight) { clearInterval(i); r(); }
-                    }, 100);
-                });
-            });
+            // Enkel scroll för att väcka lazy-loading
+            await page.evaluate(() => window.scrollBy(0, window.innerHeight));
 
-            // AVANCERAD EXTRAHERING (Strukturerad data + DOM)
             const listings = await page.evaluate((orter) => {
                 const found = [];
-                
-                // 1. Försök hitta JSON-LD (Mäklarnas dolda guldgruva)
-                const ldJson = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
-                
-                // 2. DOM-Parsing (För de som inte kör schema.org)
-                const items = document.querySelectorAll('li, div[class*="listing"], article');
+                const items = document.querySelectorAll('li, div[class*="listing"], article, a');
                 
                 items.forEach(el => {
                     const text = el.innerText || "";
                     if (text.includes('kr') && (text.includes('m²') || text.includes('rum'))) {
-                        
-                        // Exakt pris-extrahering
-                        const pRaw = text.replace(/\s/g, '').match(/(\d{6,10})kr/);
+                        const pRaw = text.replace(/\s/g, '').match(/(\d{6,10})/);
                         const price = pRaw ? parseInt(pRaw[1]) : 0;
                         
-                        // Hitta adress & ort
-                        const lines = text.split('\n').filter(l => l.trim().length > 2);
-                        const address = lines[0]?.trim() || "";
-                        const locationRaw = lines[1]?.trim() || "";
-
-                        // Mappa mot Aiorter-databasen för perfekt SEO-matchning
-                        const matchedOrt = orter.find(o => 
-                            locationRaw.toLowerCase().includes(o.Tätort.toLowerCase()) || 
-                            address.toLowerCase().includes(o.Tätort.toLowerCase())
-                        );
-
                         if (price > 100000) {
+                            const link = el.href || el.querySelector('a')?.href || "";
+                            if (!link) return;
+
                             found.push({
-                                a: address,
+                                a: text.split('\n')[0].substring(0, 50),
                                 p: price,
-                                s: matchedOrt ? matchedOrt.Tätort : locationRaw, // Använd ren data från CSV om matchad
-                                k: matchedOrt ? matchedOrt.Kommun : "",
+                                u: link,
                                 img: el.querySelector('img')?.src || "",
-                                u: el.querySelector('a')?.href || window.location.href,
-                                area: text.match(/(\d+)\s?m²/)?.[1] || "",
-                                rooms: text.match(/(\d+)\s?rum/)?.[1] || "",
                                 t: new Date().toISOString()
                             });
                         }
@@ -104,15 +83,13 @@ async function runEliteEmpireScraper() {
                 return found;
             }, orterDB);
 
-            // DATA-TVÄTT & INTELLIGENS
+            // Merge logik
             listings.forEach(item => {
                 const idx = vault.findIndex(v => v.u === item.u);
                 if (idx > -1) {
-                    // PRISHISTORIK (Booli-dödaren)
                     if (vault[idx].p !== item.p) {
                         item.oldPrice = vault[idx].p;
                         item.priceChange = Math.round(((vault[idx].p - item.p) / vault[idx].p) * 100);
-                        item.trend = item.p < vault[idx].p ? 'DOWN' : 'UP';
                     }
                     vault[idx] = { ...vault[idx], ...item };
                 } else {
@@ -121,21 +98,19 @@ async function runEliteEmpireScraper() {
                 }
             });
 
-            // Spara efter varje mål för att säkra datan
             fs.writeFileSync('market-data.json', JSON.stringify(vault, null, 2));
+            console.log(`>> [SUCCESS] ${target.name} processed.`);
 
         } catch (err) {
             console.error(`>> [FAILED] ${target.name}: ${err.message}`);
         }
     });
 
-    // 4. KÖR ALLA TARGETS
     const targets = require('./targets');
     targets.forEach(t => cluster.queue(t));
 
     await cluster.idle();
     await cluster.close();
-    console.log(`>> [SUCCESS] Empire Vault synchronized. ${vault.length} units ready for dominance.`);
 }
 
 runEliteEmpireScraper();
