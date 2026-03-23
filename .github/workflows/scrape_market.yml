@@ -1,1 +1,34 @@
 name: AGGREGATOR-X
+
+on:
+  workflow_dispatch: # Gör att du kan trycka på knappen manuellt
+  schedule:
+    - cron: '0 * * * *' # Körs automatiskt varje timme
+
+jobs:
+  scrape:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # VIKTIGT: Detta låter boten skriva filen
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer
+
+      - name: Run Scraper
+        run: node AGGREGATOR_CORE.js
+
+      - name: Save Data
+        run: |
+          git config --global user.name 'IQ-BOT'
+          git config --global user.email 'bot@allabostader.se'
+          git add market-data.json
+          git commit -m "MATRIX_UPDATE: Nya bostäder hämtade" || echo "Inga ändringar"
+          git push
