@@ -1,153 +1,185 @@
+const { Cluster } = require('puppeteer-cluster');
 const puppeteer = require('puppeteer-extra');
 const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
-const targets = require('./targets');
+const csv = require('csv-parse/sync');
 
 puppeteer.use(StealthPlugin());
 
-async function runEmpireInfiltration() {
-    console.log(">> [SYSTEM] INITIALIZING ELITE INFILTRATION ENGINE V10...");
-    
-    const browser = await puppeteer.launch({
-        headless: "new",
-        args: [
-            '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage',
-            '--disable-web-security', '--disable-features=IsolateOrigins,site-per-process',
-            '--window-size=1920,1080'
-        ]
-    });
+// --- EMPIRE CONFIGURATION ---
+const CONFIG = {
+    maxConcurrency: 2, // GitHub Actions RAM-safe
+    saveInterval: true,
+    userAgent: 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+    minPrice: 100000
+};
 
-    // 1. PERSISTENT STORAGE MANAGEMENT
+async function runEmpireAggregator() {
+    console.log(">> [SYSTEM] INITIALIZING OMNI-SCRAPER V3: TOTAL DOMINATION MODE");
+
+    // 1. DATA INTELLIGENCE SETUP
+    let orterDB = [];
+    try {
+        if (fs.existsSync('Aiorter.csv')) {
+            const raw = fs.readFileSync('Aiorter.csv', 'utf8');
+            orterDB = csv.parse(raw, { columns: true, skip_empty_lines: true, delimiter: ';' });
+        }
+    } catch (e) { console.log(">> [WARN] Aiorter.csv database offline."); }
+
     let vault = [];
     if (fs.existsSync('market-data.json')) {
-        vault = JSON.parse(fs.readFileSync('market-data.json', 'utf8'));
+        try { vault = JSON.parse(fs.readFileSync('market-data.json', 'utf8')); } catch (e) { vault = []; }
     }
 
-    const BATCH_SIZE = 3; // Lägre batch = svårare att upptäcka
-    for (let i = 0; i < targets.length; i += BATCH_SIZE) {
-        const batch = targets.slice(i, i + BATCH_SIZE);
-        
-        await Promise.all(batch.map(async (target) => {
-            const page = await browser.newPage();
-            
-            // Avancerad Stealth: Slumpmässig User Agent och Viewport
-            await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
-            await page.setViewport({ width: 1920 + Math.floor(Math.random() * 100), height: 1080 + Math.floor(Math.random() * 100) });
+    // 2. LAUNCH STEALTH CLUSTER
+    const cluster = await Cluster.launch({
+        concurrency: Cluster.CONCURRENCY_PAGE,
+        maxConcurrency: CONFIG.maxConcurrency,
+        puppeteerOptions: {
+            headless: "new",
+            args: [
+                '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage',
+                '--disable-gpu', '--no-zygote', '--single-process'
+            ]
+        }
+    });
 
-            try {
-                console.log(`>> [PENETRATING] ${target.name}...`);
-                await page.goto(target.url, { waitUntil: 'networkidle2', timeout: 60000 });
+    // 3. THE INFILTRATION TASK
+    await cluster.task(async ({ page, data: target }) => {
+        // Avancerad maskering
+        await page.setUserAgent(CONFIG.userAgent);
+        await page.setViewport({ width: 1920, height: 1080 });
 
-                // AUTOMATISK SCROLL (För att ladda lazy-loaded bilder som Hemnet/Booli kör)
-                await autoScroll(page);
+        try {
+            console.log(`>> [PENETRATING] ${target.name}...`);
+            await page.goto(target.url, { waitUntil: 'networkidle2', timeout: 60000 });
 
-                // EXTRAHERA RAW DATA & METADATA
-                const listings = await page.evaluate(() => {
-                    const results = [];
-                    // Vi letar efter strukturerad data (Schema.org) som är 100% exakt
-                    const scripts = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
-                    
-                    // Om vi hittar strukturerad data, använd den först (Proffs-metoden)
-                    scripts.forEach(s => {
-                        try {
-                            const data = JSON.parse(s.innerText);
-                            if (data['@type'] === 'RealEstateListing' || data.itemListElement) {
-                                // Mappa logik här
+            // Kraftfull auto-scroll för att väcka lazy-loading av bilder och priser
+            await autoScroll(page);
+
+            const results = await page.evaluate((minPrice) => {
+                const found = [];
+                
+                // --- METOD A: JSON-LD (Högsta precision) ---
+                const jsonScripts = document.querySelectorAll('script[type="application/ld+json"]');
+                jsonScripts.forEach(script => {
+                    try {
+                        const data = JSON.parse(script.innerText);
+                        // Hantera både enskilda objekt och listor
+                        const items = data['@type'] === 'ItemList' ? data.itemListElement : [data];
+                        
+                        items.forEach(item => {
+                            const obj = item.item || item;
+                            if (obj['@type'] === 'RealEstateListing' || obj.name) {
+                                let p = 0;
+                                if (obj.offers?.price) p = parseInt(obj.offers.price);
+                                
+                                if (p >= minPrice) {
+                                    found.push({
+                                        a: obj.name || obj.address?.streetAddress,
+                                        p: p,
+                                        u: obj.url || window.location.href,
+                                        img: obj.image || "",
+                                        area: obj.floorSize?.value || 0
+                                    });
+                                }
                             }
-                        } catch(e) {}
-                    });
+                        });
+                    } catch (e) {}
+                });
 
-                    // Fallback: Avancerad DOM-parsing
-                    const items = document.querySelectorAll('li, div[class*="listing"], a[class*="card"]');
-                    items.forEach(el => {
-                        const text = el.innerText || "";
+                // --- METOD B: DOM-FALLBACK (Om JSON-LD saknas) ---
+                if (found.length === 0) {
+                    const cards = document.querySelectorAll('li, article, [class*="card"], [class*="listing"]');
+                    cards.forEach(card => {
+                        const text = card.innerText || "";
                         if (text.includes('kr') && (text.includes('m²') || text.includes('rum'))) {
-                            const link = el.querySelector('a')?.href || window.location.href;
-                            const img = el.querySelector('img')?.src || "";
-                            
-                            // Rensa priset till rent heltal
-                            const priceMatch = text.replace(/\s/g, '').match(/(\d{5,10})kr/);
+                            const priceMatch = text.replace(/\s/g, '').match(/(\d{6,11})/);
                             const price = priceMatch ? parseInt(priceMatch[1]) : 0;
-
-                            // Hitta area
-                            const areaMatch = text.match(/(\d+)\s?m²/);
-                            const area = areaMatch ? parseInt(areaMatch[1]) : 0;
-
-                            if (price > 100000) {
-                                results.push({
-                                    a: text.split('\n')[0].trim(), // Adress
+                            
+                            if (price >= minPrice) {
+                                found.push({
+                                    a: text.split('\n')[0].trim().substring(0, 60),
                                     p: price,
-                                    u: link,
-                                    img: img,
-                                    area: area,
-                                    s: text.split('\n')[1]?.trim() || "Okänt område",
-                                    scrapedAt: new Date().toISOString()
+                                    u: card.querySelector('a')?.href || window.location.href,
+                                    img: card.querySelector('img')?.src || "",
+                                    area: parseInt(text.match(/(\d+)\s?m²/)?.[1]) || 0
                                 });
                             }
                         }
                     });
-                    return results;
-                });
+                }
+                return found;
+            }, CONFIG.minPrice);
 
-                // SMART MERGE & ANALYS
-                listings.forEach(item => {
-                    const existingIdx = vault.findIndex(v => v.u === item.u);
+            // 4. SMART MERGE & PRICE HISTORY ENGINE
+            results.forEach(item => {
+                const idx = vault.findIndex(v => v.u === item.u);
+                const now = new Date().toISOString();
+
+                if (idx > -1) {
+                    const old = vault[idx];
                     
-                    if (existingIdx > -1) {
-                        const old = vault[existingIdx];
-                        // BERÄKNA HISTORIK (Krossa Boolis historik-fördel)
-                        item.firstSeen = old.firstSeen || old.scrapedAt;
-                        item.priceHistory = old.priceHistory || [];
+                    // Spåra prishistorik - Kraftfullare än Booli
+                    if (old.p !== item.p && item.p > 0) {
+                        if (!old.history) old.history = [];
+                        old.history.push({ p: old.p, d: old.t || old.firstSeen });
                         
-                        if (old.p !== item.p) {
-                            item.priceHistory.push({ p: old.p, d: old.scrapedAt });
-                            item.pc = Math.round(((old.p - item.p) / old.p) * 100);
-                            console.log(`>> [PRICE ALERT] ${item.a}: ${item.pc}% change.`);
-                        }
-                        vault[existingIdx] = { ...old, ...item };
-                    } else {
-                        item.firstSeen = item.scrapedAt;
-                        item.priceHistory = [];
-                        vault.push(item);
+                        // Beräkna förändring i %: $$ \Delta \% = \frac{old - new}{old} \times 100 $$
+                        item.pc = Math.round(((old.p - item.p) / old.p) * 100);
+                        item.trend = item.p < old.p ? 'DOWN' : 'UP';
                     }
-                });
 
-            } catch (err) {
-                console.log(`>> [ERROR] Target ${target.name} failed. Moving on.`);
-            } finally {
-                await page.close();
-            }
-        }));
+                    // Behåll ursprungligt datum
+                    item.firstSeen = old.firstSeen || old.t;
+                    item.history = old.history || [];
+                    vault[idx] = { ...old, ...item, t: now };
+                } else {
+                    // Ny infiltration
+                    item.firstSeen = now;
+                    item.t = now;
+                    item.history = [];
+                    vault.push(item);
+                }
+            });
 
-        // ATOMÄR LAGRING (Spara direkt för att undvika dataförlust)
-        fs.writeFileSync('market-data.json', JSON.stringify(vault, null, 2));
-        console.log(`>> [PROGRESS] ${vault.length} units in vault.`);
-        
-        // Human-like delay
-        await new Promise(r => setTimeout(r, 5000 + Math.random() * 5000));
-    }
+            // 5. ATOMÄR SPARNING (Förlustminimering)
+            fs.writeFileSync('market-data.json', JSON.stringify(vault, null, 2));
+            console.log(`>> [SUCCESS] ${target.name}: Found ${results.length} units.`);
 
-    await browser.close();
-    console.log(">> [MISSION COMPLETE] Database synchronized.");
+        } catch (err) {
+            console.error(`>> [FAILED] ${target.name}: ${err.message}`);
+        }
+    });
+
+    // 6. TARGETING ENGINE
+    try {
+        const targets = require('./targets');
+        targets.forEach(t => cluster.queue(t));
+    } catch (e) { console.error(">> [FATAL] targets.js missing."); }
+
+    await cluster.idle();
+    await cluster.close();
+    console.log(`>> [COMPLETE] Vault updated. Total assets: ${vault.length}`);
 }
 
-// HJÄLPFUNKTION FÖR ATT LADDA ALLA BILDER
-async function autoScroll(page){
+// HJÄLPFUNKTION: REALISTISK SCROLL
+async function autoScroll(page) {
     await page.evaluate(async () => {
         await new Promise((resolve) => {
             let totalHeight = 0;
-            let distance = 100;
+            let distance = 150;
             let timer = setInterval(() => {
                 let scrollHeight = document.body.scrollHeight;
                 window.scrollBy(0, distance);
                 totalHeight += distance;
-                if(totalHeight >= scrollHeight){
+                if (totalHeight >= scrollHeight || totalHeight > 5000) {
                     clearInterval(timer);
                     resolve();
                 }
-            }, 100);
+            }, 150);
         });
     });
 }
 
-runEmpireInfiltration();
+runEmpireAggregator();
