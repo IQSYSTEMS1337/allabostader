@@ -3,75 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SOVEREIGN // TERMINAL</title>
+    <title>MARKNADSTERMINAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --blue: #3b82f6; --red: #ef4444; --bg: #050505; }
+        :root { --accent: #3b82f6; --danger: #ef4444; --bg: #050505; }
         body { 
             background: var(--bg); 
             color: #fff; 
             font-family: 'Inter', sans-serif; 
             letter-spacing: -0.02em;
             -webkit-tap-highlight-color: transparent;
+            margin: 0;
+            padding: 0;
         }
-        .glass { background: rgba(20, 20, 20, 0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.05); }
-        .card { transition: transform 0.2s active; border-radius: 2rem; overflow: hidden; }
-        .card:active { transform: scale(0.97); }
-        .panic-border { border: 1px solid rgba(239, 68, 68, 0.4); box-shadow: 0 0 20px rgba(239, 68, 68, 0.1); }
+        .glass { 
+            background: rgba(20, 20, 20, 0.7); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255,255,255,0.05); 
+        }
+        .card { 
+            transition: transform 0.2s ease, border-color 0.3s ease; 
+            border-radius: 2.5rem; 
+        }
+        .card:active { transform: scale(0.98); }
         
-        /* Mobil-anpassad scroll */
-        .hide-scroll::-webkit-scrollbar { display: none; }
-        
-        /* Logo glöd */
-        .logo-glow { filter: drop-shadow(0 0 10px rgba(59, 130, 246, 0.5)); }
-        
-        /* Bottom Sheet för filter på mobil */
-        @media (max-width: 768px) {
-            .mobile-filter { position: sticky; bottom: 1rem; z-index: 50; margin-top: 2rem; }
+        .panic-mode { 
+            border: 2px solid rgba(239, 68, 68, 0.5) !important; 
+            box-shadow: 0 0 30px rgba(239, 68, 68, 0.15); 
+            animation: pulse-border 2s infinite;
+        }
+        @keyframes pulse-border {
+            0% { border-color: rgba(239, 68, 68, 0.3); }
+            50% { border-color: rgba(239, 68, 68, 0.7); }
+            100% { border-color: rgba(239, 68, 68, 0.3); }
+        }
+
+        .main-logo {
+            width: 220px;
+            height: 220px;
+            object-fit: contain;
+            filter: drop-shadow(0 0 30px rgba(59, 130, 246, 0.4));
+            margin-bottom: 1rem;
         }
     </style>
 </head>
-<body class="p-4 md:p-12 pb-24">
+<body class="p-4 md:p-12 pb-32">
 
-    <header class="max-w-[1400px] mx-auto mb-10 flex flex-col items-center text-center space-y-4">
-        <div class="relative">
-            <div class="absolute -inset-2 bg-blue-600 rounded-full blur-xl opacity-20"></div>
-            <img src="logo.png" alt="Logo" class="relative w-24 h-24 object-contain logo-glow rounded-full glass p-3 border-white/10">
+    <header class="max-w-[1400px] mx-auto mb-16 flex flex-col items-center">
+        <div class="relative group">
+            <div class="absolute -inset-6 bg-blue-600 rounded-full blur-3xl opacity-20 group-hover:opacity-40 transition duration-1000"></div>
+            <img src="logo.png" alt="Logo" class="relative main-logo">
         </div>
-        <div>
-            <div class="flex items-center justify-center gap-2 mb-1">
-                <span class="w-2 h-2 bg-blue-500 rounded-full animate-pulse"></span>
-                <span class="text-[10px] font-black tracking-[0.3em] text-blue-500 uppercase">System Aktivt // Autonom Infiltration</span>
-            </div>
-            <h1 class="text-5xl font-black tracking-tighter italic uppercase">Sovereign<span class="text-blue-600">.</span></h1>
+        <div class="flex items-center gap-2 mt-4">
+            <span class="w-2 h-2 bg-blue-500 rounded-full animate-ping"></span>
+            <span class="text-[10px] font-black tracking-[0.5em] text-blue-500 uppercase italic">Neural Kontroll Aktiv</span>
         </div>
     </header>
 
-    <div class="max-w-[1400px] mx-auto grid grid-cols-2 gap-4 mb-8">
-        <div class="glass p-6 rounded-3xl text-center">
-            <div id="count-total" class="text-3xl font-black italic">0</div>
-            <div class="text-[9px] text-gray-500 font-bold uppercase tracking-widest mt-1">Bevakade Objekt</div>
+    <div class="max-w-[1200px] mx-auto grid grid-cols-2 gap-4 mb-10">
+        <div class="glass p-8 rounded-[2.5rem] text-center">
+            <div id="stat-total" class="text-4xl font-black italic">0</div>
+            <div class="text-[10px] text-gray-500 font-bold uppercase tracking-widest mt-2">Aktiva Objekt</div>
         </div>
-        <div class="glass p-6 rounded-3xl text-center border-red-500/20">
-            <div id="count-panic" class="text-3xl font-black text-red-500 italic">0</div>
-            <div class="text-[9px] text-red-500 font-bold uppercase tracking-widest mt-1">Panik-Möjligheter</div>
+        <div class="glass p-8 rounded-[2.5rem] text-center border-red-500/20">
+            <div id="stat-panic" class="text-4xl font-black text-red-500 italic">0</div>
+            <div class="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-2">Panik-Möjligheter</div>
         </div>
     </div>
 
-    <section class="max-w-[1400px] mx-auto mb-10 space-y-4">
-        <div class="glass p-2 rounded-[2rem] flex items-center px-6">
-            <input type="text" id="search" placeholder="Sök adress eller område..." 
-                   class="bg-transparent w-full py-4 outline-none text-lg font-medium text-white placeholder:text-gray-700">
+    <section class="max-w-[1200px] mx-auto mb-12 space-y-4">
+        <div class="glass p-2 rounded-[2.5rem] flex items-center px-8 border-white/10">
+            <input type="text" id="searchInput" placeholder="Sök adress, stad eller mäklare..." 
+                   class="bg-transparent w-full py-5 outline-none text-xl font-medium text-white placeholder:text-gray-800">
         </div>
         
-        <div class="grid grid-cols-2 gap-3 mobile-filter">
-            <select id="filter" class="glass p-5 rounded-2xl text-[11px] font-black uppercase text-white outline-none appearance-none text-center">
+        <div class="grid grid-cols-2 gap-4">
+            <select id="filterType" class="glass p-6 rounded-3xl text-[11px] font-black uppercase text-white outline-none cursor-pointer border-none">
                 <option value="all">Alla Objekt</option>
-                <option value="distressed">📉 Panik-Score</option>
-                <option value="whale">🐋 Whale (>20M)</option>
+                <option value="panic">📉 Hög Panik</option>
+                <option value="whale">🐋 Premium (>20M)</option>
             </select>
-            <select id="sort" class="glass p-5 rounded-2xl text-[11px] font-black uppercase text-white outline-none appearance-none text-center">
+            <select id="sortOrder" class="glass p-6 rounded-3xl text-[11px] font-black uppercase text-white outline-none cursor-pointer border-none">
                 <option value="dscore">Högst dScore</option>
                 <option value="newest">Senast Inkommet</option>
                 <option value="price-asc">Lägst Pris</option>
@@ -79,86 +92,102 @@
         </div>
     </section>
 
-    <main id="mainGrid" class="max-w-[1400px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+    <main id="grid" class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         </main>
 
     <script>
-        let rawData = [];
+        let db = [];
 
-        async function updateVault() {
+        async function updateData() {
             try {
-                const res = await fetch('market-data.json');
-                rawData = await res.json();
+                const response = await fetch('market-data.json');
+                db = await response.json();
                 render();
-            } catch (e) {
-                document.getElementById('mainGrid').innerHTML = `<div class="col-span-full py-20 text-center text-gray-700 font-bold uppercase tracking-tighter">Väntar på dataström...</div>`;
+            } catch (err) {
+                document.getElementById('grid').innerHTML = `<div class="col-span-full py-32 text-center text-gray-800 font-black text-xl uppercase italic">Väntar på data...</div>`;
             }
         }
 
         function render() {
-            const grid = document.getElementById('mainGrid');
-            const search = document.getElementById('search').value.toLowerCase();
-            const filter = document.getElementById('filter').value;
-            const sort = document.getElementById('sort').value;
+            const grid = document.getElementById('grid');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+            const filter = document.getElementById('filterType').value;
+            const sort = document.getElementById('sortOrder').value;
 
-            let filtered = [...rawData];
+            // FILTRERING + SÄKERHETSKONTROLLER (Anti-NaN/Anti-Undefined)
+            let data = db.filter(item => {
+                const adress = (item.a || "").toLowerCase();
+                const maklare = (item.s || "").toLowerCase();
+                const matchSearch = adress.includes(search) || maklare.includes(search);
+                
+                if (filter === 'panic') return matchSearch && ((item.dScore || 0) > 75 || (item.pc || 0) > 0);
+                if (filter === 'whale') return matchSearch && (item.p || 0) > 20000000;
+                return matchSearch;
+            });
 
-            if (search) filtered = filtered.filter(x => x.a.toLowerCase().includes(search) || x.s.toLowerCase().includes(search));
-            if (filter === 'distressed') filtered = filtered.filter(x => x.pc > 0 || x.dScore > 75);
-            if (filter === 'whale') filtered = filtered.filter(x => x.p > 20000000);
+            // SORTERING
+            if (sort === 'dscore') data.sort((a, b) => (b.dScore || 0) - (a.dScore || 0));
+            if (sort === 'newest') data.sort((a, b) => new Date(b.firstSeen || 0) - new Date(a.firstSeen || 0));
+            if (sort === 'price-asc') data.sort((a, b) => (a.p || 0) - (b.p || 0));
 
-            if (sort === 'dscore') filtered.sort((a,b) => b.dScore - a.dScore);
-            if (sort === 'newest') filtered.sort((a,b) => new Date(b.firstSeen) - new Date(a.firstSeen));
-            if (sort === 'price-asc') filtered.sort((a,b) => a.p - b.p);
+            // STATISTIK
+            document.getElementById('stat-total').innerText = db.length;
+            document.getElementById('stat-panic').innerText = db.filter(x => ((x.pc || 0) > 0 || (x.dScore || 0) > 75)).length;
 
-            document.getElementById('count-total').innerText = rawData.length;
-            document.getElementById('count-panic').innerText = rawData.filter(x => x.pc > 0).length;
+            // RENDERING AV KORT
+            grid.innerHTML = data.map(item => {
+                const adress = item.a || "Adress saknas";
+                const maklare = item.s || "Privat";
+                const dScore = Math.round(item.dScore || 0);
+                const prisMkr = item.p ? (item.p / 1000000).toFixed(1) : "?";
+                const kvadrat = item.area || "?";
+                const rum = item.rooms || "?";
+                const url = item.u || "#";
+                const prissankning = item.pc || 0;
 
-            grid.innerHTML = filtered.map(item => `
-                <div class="glass p-8 card flex flex-col justify-between ${item.dScore > 85 ? 'panic-border' : ''}">
-                    <div>
-                        <div class="flex justify-between items-start mb-6">
-                            <span class="text-[9px] font-black px-3 py-1 bg-white/5 rounded-full text-gray-500 uppercase tracking-widest">${item.s || 'MÄKLARE'}</span>
-                            <div class="text-right">
-                                <div class="text-[10px] font-black text-blue-500 uppercase tracking-widest">dScore</div>
-                                <div class="text-2xl font-black text-white italic">${item.dScore}%</div>
+                return `
+                    <div class="glass p-10 card flex flex-col justify-between ${dScore > 85 ? 'panic-mode' : ''}">
+                        <div>
+                            <div class="flex justify-between items-start mb-8">
+                                <span class="text-[9px] font-black px-4 py-1.5 bg-white/5 rounded-full text-gray-500 uppercase italic tracking-widest border border-white/5">${maklare}</span>
+                                <div class="text-right">
+                                    <div class="text-[10px] font-black text-blue-500 uppercase tracking-widest">Index</div>
+                                    <div class="text-3xl font-black text-white italic">${dScore}%</div>
+                                </div>
                             </div>
-                        </div>
 
-                        <h2 class="text-2xl font-black text-white leading-tight mb-1 uppercase italic truncate">${item.a}</h2>
-                        <div class="text-gray-500 font-bold text-[10px] mb-8 uppercase tracking-widest">
-                            ${item.rooms || '?'} ROK // ${item.area || '?'} M²
-                        </div>
-
-                        <div class="mb-4">
-                            <span class="text-5xl font-black text-white tracking-tighter">${(item.p / 1000000).toFixed(1)}</span>
-                            <span class="text-gray-600 font-black text-xl uppercase italic">Mkr</span>
-                        </div>
-
-                        ${item.pc > 0 ? `
-                            <div class="text-red-500 font-black text-[11px] uppercase tracking-widest animate-pulse">
-                                📉 -${item.pc}% | Sänkt ${( (item.pHistory[0].p - item.p) / 1000).toFixed(0)}k
+                            <h2 class="text-3xl font-black text-white leading-[1.1] mb-2 uppercase italic tracking-tighter truncate">${adress}</h2>
+                            <div class="text-gray-600 font-bold text-[11px] mb-10 uppercase tracking-[0.1em]">
+                                ${rum} RUM • ${kvadrat} M²
                             </div>
-                        ` : `
-                            <div class="text-emerald-500 font-black text-[9px] uppercase tracking-widest italic">Marknadsvärde Stabiliserat</div>
-                        `}
-                    </div>
 
-                    <div class="mt-10">
-                        <a href="${item.u}" target="_blank" class="block w-full bg-white text-black text-center font-black py-5 rounded-2xl hover:bg-blue-600 hover:text-white transition-all uppercase text-[11px] tracking-[0.2em]">
-                            Öppna Objekt
-                        </a>
+                            <div class="mb-4">
+                                <span class="text-5xl font-black text-white tracking-tighter">${prisMkr}</span>
+                                <span class="text-gray-600 font-black text-xl uppercase italic">Mkr</span>
+                            </div>
+
+                            ${prissankning > 0 ? 
+                                `<div class="text-red-500 font-black text-[11px] uppercase tracking-widest animate-pulse italic">📉 -${prissankning}% sänkt</div>` : 
+                                `<div class="text-gray-800 font-black text-[9px] uppercase tracking-widest italic">Fast pris</div>`
+                            }
+                        </div>
+
+                        <div class="mt-12">
+                            <a href="${url}" target="_blank" class="block w-full bg-white text-black text-center font-black py-5 rounded-2xl hover:bg-blue-600 hover:text-white transition-all uppercase text-[11px] tracking-[0.3em]">
+                                Öppna Infiltration
+                            </a>
+                        </div>
                     </div>
-                </div>
-            `).join('');
+                `;
+            }).join('');
         }
 
-        document.getElementById('search').addEventListener('input', render);
-        document.getElementById('filter').addEventListener('change', render);
-        document.getElementById('sort').addEventListener('change', render);
+        document.getElementById('searchInput').addEventListener('input', render);
+        document.getElementById('filterType').addEventListener('change', render);
+        document.getElementById('sortOrder').addEventListener('change', render);
 
-        updateVault();
-        setInterval(updateVault, 60000);
+        updateData();
+        setInterval(updateData, 60000);
     </script>
 </body>
 </html>
