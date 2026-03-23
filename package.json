@@ -1,1 +1,16 @@
-"puppeteer": "^24.0.0"
+{
+  "name": "allabostader",
+  "version": "1.0.0",
+  "description": "Market Infiltration System",
+  "main": "AGGREGATOR_CORE.js",
+  "dependencies": {
+    "puppeteer": "^24.0.0",
+    "node-fetch": "^2.7.0"
+  },
+  "scripts": {
+    "start": "node AGGREGATOR_CORE.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
