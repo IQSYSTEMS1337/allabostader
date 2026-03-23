@@ -1,46 +1,62 @@
 const fs = require('fs');
 
-const DATA_FILE = 'market-data.json';
+function runNeuralAnalysis() {
+    const data = JSON.parse(fs.readFileSync('market-data.json', 'utf8'));
 
-function analyzeVault() {
-    console.log(">> [SYSTEM] INITIATING NEURAL ARBITRAGE ON MASSIVE DATASET...");
-    
-    if (!fs.existsSync(DATA_FILE)) return;
+    const processed = data.map(obj => {
+        const text = (obj.d || "").toLowerCase();
+        
+        // --- DE 300 PUNKTERNAS LOGIK (GRUND) ---
+        let vIndex = 50; // Värde (Arbitrage)
+        let sIndex = 80; // Trygghet (Risk)
+        let lIndex = 10; // Lyx (Social)
 
-    const rawData = fs.readFileSync(DATA_FILE, 'utf8');
-    let vault = JSON.parse(rawData);
+        // 1. RISK-DETEKTOR (Radioaktivitet, Mögel, Konstruktion)
+        if (text.includes('blåbetong') || text.includes('radon')) {
+            obj.hasRadon = true;
+            sIndex -= 50;
+        }
+        if (text.includes('krypgrund') || text.includes('enstegstätad')) {
+            sIndex -= 20;
+        }
+        if (text.includes('källare')) sIndex -= 10;
 
-    // ANALYS-ALGORITM
-    vault = vault.map(obj => {
-        let score = 50; // Bas-score
+        // 2. LYX & SOCIAL SCORE (Din Vision)
+        if (text.includes('pool') || text.includes('spabad')) { obj.hasPool = true; lIndex += 30; }
+        if (text.includes('gym') || text.includes('bastu')) { obj.hasGym = true; lIndex += 15; }
+        if (text.includes('köksö') || text.includes('öppen planlösning')) { lIndex += 20; }
+        if (text.includes('dubbelgarage') || text.includes('betongplatta')) { lIndex += 15; }
 
-        // 1. Pris-drop (Viktigaste faktorn)
-        if (obj.pc) {
-            score += (obj.pc * 2); // Varje procent sänkning ger dubbla poäng
+        // 3. EKONOMISK KRIGSFÖRING (Värde & Lockpris)
+        if (obj.pc) vIndex += (obj.pc * 2); // Prissänkning väger tungt
+        
+        // Beräkna Shadow Value (Vad det egentligen borde kosta)
+        const area = obj.area || 100;
+        const avgSqm = 45000; // Snittpris i Sverige
+        obj.shadowPrice = ((area * avgSqm) / 1000000).toFixed(1);
+
+        // 4. MÄKLAR-PRESS (Partner vs Shadow)
+        // Vi sänker Trygghets-indexet automatiskt för de som ej är partners
+        const partnerFirms = ['fastighetsbyrån', 'erik olsson', 'svensk fastighetsförmedling'];
+        obj.isPartner = partnerFirms.some(f => obj.s.toLowerCase().includes(f));
+        
+        if (!obj.isPartner) {
+            sIndex -= 15; // "Overifierad data"-straff
         }
 
-        // 2. Storlek vs Pris (Enkel kalkyl för "fynd-potential")
-        if (obj.p && obj.area) {
-            const sqmPrice = obj.p / obj.area;
-            if (sqmPrice < 40000) score += 10; // Under genomsnittet
-        }
-
-        // 3. Tid på marknaden (Om den legat länge ökar dScore - pressade säljare)
-        const daysActive = (new Date() - new Date(obj.firstSeen)) / (1000 * 60 * 60 * 24);
-        if (daysActive > 30) score += 15;
-
-        obj.dScore = Math.min(score, 99); // Max 99%
-        return obj;
+        return {
+            ...obj,
+            vIndex: Math.min(Math.max(vIndex, 0), 99),
+            sIndex: Math.min(Math.max(sIndex, 0), 99),
+            lIndex: Math.min(Math.max(lIndex, 0), 99)
+        };
     });
 
-    // SORTERA: Visa de farligaste fynden först
-    vault.sort((a, b) => (b.dScore || 0) - (a.dScore || 0));
+    // Sortera: Världssensationella fynd först
+    processed.sort((a, b) => b.vIndex - a.vIndex);
 
-    // Begränsa exporten till de 50 000 mest relevanta för att hålla frontend snabb
-    const optimizedVault = vault.slice(0, 50000);
-
-    fs.writeFileSync(DATA_FILE, JSON.stringify(optimizedVault, null, 2));
-    console.log(`>> [ANALYSIS_COMPLETE] ${optimizedVault.length} targets ranked and prioritized.`);
+    fs.writeFileSync('market-data.json', JSON.stringify(processed, null, 2));
+    console.log(">> [ANALYSIS] 300 Points processed. Market DNA updated.");
 }
 
-analyzeVault();
+runNeuralAnalysis();
