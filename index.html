@@ -2,221 +2,328 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>SOVEREIGN MATRIX | Absolute Dominance</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;400;600;800;900&display=swap">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>AllaBostäder | Hitta ditt drömhem</title>
+    
+    <meta name="description" content="Sök bland Sveriges bostäder. Äkta priser, snabbare plattform och 6000+ orter. Bättre än Booli och Hemnet.">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
     <style>
         :root {
-            --neon-green: #00ff88; --luxury-gold: #ffcc00; --danger-red: #ff3333;
-            --deep-black: #020202; --card-bg: #0a0a0b; --shadow-blue: #00d9ff;
-            --glass-border: rgba(255, 255, 255, 0.08);
+            --primary: #004D40; /* Seriös mörkgrön/blå premiumfärg */
+            --primary-hover: #00332A;
+            --bg-color: #F8F9FA;
+            --card-bg: #FFFFFF;
+            --text-dark: #1A1A1A;
+            --text-muted: #6C757D;
+            --border-color: #E9ECEF;
+            --price-color: #212529;
         }
 
-        body {
-            background: var(--deep-black); color: #fff; font-family: 'Inter', sans-serif;
-            margin: 0; overflow-x: hidden; letter-spacing: -0.02em;
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        
+        body { background-color: var(--bg-color); color: var(--text-dark); }
+
+        /* --- PREMIUM NAVBAR --- */
+        .navbar {
+            background: var(--card-bg);
+            border-bottom: 1px solid var(--border-color);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+        }
+        .navbar img { max-height: 45px; width: auto; } /* Din logo.jpg */
+
+        /* --- HERO & SÖKMOTOR --- */
+        .hero {
+            background: #fff;
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
+        .hero p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px; }
+
+        .search-container {
+            max-width: 700px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        .search-input {
+            width: 100%;
+            padding: 20px 25px;
+            font-size: 1.1rem;
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            outline: none;
+            transition: all 0.2s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .search-input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 77, 64, 0.1);
         }
 
-        /* --- NEURAL HEADER & LOGO AURA --- */
-        header {
-            padding: 50px 0; text-align: center; background: radial-gradient(circle at center, #111 0%, var(--deep-black) 100%);
-            border-bottom: 1px solid var(--glass-border); position: relative;
+        /* AUTOCOMPLETE DROPDOWN */
+        .autocomplete-list {
+            position: absolute;
+            top: 100%; left: 0; right: 0;
+            background: #fff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            margin-top: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+            z-index: 100;
+            text-align: left;
+        }
+        .autocomplete-item {
+            padding: 15px 25px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 500;
+        }
+        .autocomplete-item:hover { background: var(--bg-color); color: var(--primary); }
+
+        /* --- FASTIGHETS-GRID --- */
+        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
+        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
+        .results-count { font-weight: 600; color: var(--text-muted); }
+
+        .property-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
         }
 
-        .logo-main {
-            font-family: 'Orbitron'; font-size: 3.5rem; font-weight: 900; margin: 0;
-            background: linear-gradient(90deg, #fff 30%, var(--neon-green) 100%);
-            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
+        /* --- PREMIUM KORT --- */
+        .property-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+        }
+        .property-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
         }
 
-        /* --- TACTICAL HUD CONTROLS --- */
-        .hud-vault {
-            max-width: 1200px; margin: -35px auto 40px; display: grid;
-            grid-template-columns: 2fr 1fr 1fr; gap: 15px; padding: 0 20px;
+        .card-image {
+            width: 100%;
+            height: 240px;
+            position: relative;
+            background: #E9ECEF;
+        }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; }
+        
+        .badge {
+            position: absolute;
+            top: 15px; left: 15px;
+            background: #fff;
+            padding: 6px 12px;
+            border-radius: 8px;
+            font-size: 0.75rem;
+            font-weight: 700;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
-        .hud-input {
-            background: rgba(15, 15, 15, 0.9); border: 1px solid var(--glass-border);
-            padding: 22px; border-radius: 18px; color: var(--neon-green);
-            font-family: 'Orbitron'; font-size: 1rem; outline: none;
-            backdrop-filter: blur(20px); transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .hud-input:focus { border-color: var(--neon-green); box-shadow: 0 0 30px rgba(0, 255, 136, 0.15); transform: translateY(-2px); }
+        .card-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+        
+        .price { font-size: 1.6rem; font-weight: 800; color: var(--price-color); margin-bottom: 8px; }
+        .address { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; line-height: 1.3; }
+        .location { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px; }
 
-        /* --- THE MATRIX GRID --- */
-        .matrix-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
-            gap: 35px; padding: 20px 40px; max-width: 1900px; margin: 0 auto;
-        }
-
-        /* --- SOVEREIGN UNIT CARD --- */
-        .unit {
-            background: var(--card-bg); border-radius: 24px; border: 1px solid var(--glass-border);
-            position: relative; overflow: hidden; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
-        }
-        .unit:hover { border-color: #444; transform: translateY(-10px); box-shadow: 0 40px 80px rgba(0,0,0,0.8); }
-
-        /* GAUGES (Top) */
-        .gauges {
-            display: flex; justify-content: space-around; padding: 20px;
-            background: rgba(0,0,0,0.6); border-bottom: 1px solid var(--glass-border);
-        }
-        .gauge { text-align: center; }
-        .g-val { display: block; font-family: 'Orbitron'; font-size: 1.4rem; font-weight: 900; }
-        .g-lab { font-size: 0.6rem; text-transform: uppercase; color: #555; letter-spacing: 2px; margin-top: 4px; }
-        .v-color { color: var(--neon-green); text-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
-        .s-color { color: var(--danger-red); }
-        .l-color { color: var(--luxury-gold); }
-
-        /* BODY */
-        .unit-content { padding: 30px; }
-        .price-row { display: flex; align-items: baseline; gap: 15px; margin-bottom: 5px; }
-        .actual-price { font-size: 2.8rem; font-weight: 900; letter-spacing: -2px; }
-        .shadow-price { color: var(--shadow-blue); font-size: 0.9rem; font-family: 'Orbitron'; font-weight: 400; opacity: 0.8; }
-
-        .location { font-size: 1.2rem; font-weight: 600; color: #aaa; margin-bottom: 20px; }
-
-        /* 100-POINT TAGS */
-        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
-        .tag {
-            padding: 7px 14px; border-radius: 8px; font-size: 0.65rem; font-weight: 800;
-            background: rgba(255,255,255,0.03); border: 1px solid #222; text-transform: uppercase; letter-spacing: 0.5px;
-        }
-        .tag-risk { border-color: var(--danger-red); color: var(--danger-red); background: rgba(255, 51, 51, 0.05); }
-        .tag-asset { border-color: var(--luxury-gold); color: var(--luxury-gold); }
-        .tag-roi { border-color: var(--neon-green); color: var(--neon-green); }
-
-        /* TACTICAL ACTIONS */
-        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 25px; }
-        .btn {
-            padding: 18px; border-radius: 14px; font-family: 'Orbitron'; font-size: 0.7rem;
-            font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s;
-            text-align: center; text-decoration: none; border: 1px solid #333;
-        }
-        .btn-main { background: var(--neon-green); color: #000; border: none; }
-        .btn-main:hover { background: #fff; box-shadow: 0 0 30px var(--neon-green); }
-        .btn-view { background: transparent; color: #fff; }
-        .btn-view:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
-
-        /* RISK OVERLAY */
-        .risk-stripe {
-            position: absolute; top: 0; left: 0; width: 100%; height: 5px;
-            background: var(--danger-red); box-shadow: 0 0 20px var(--danger-red); display: none;
+        .specs {
+            display: flex;
+            gap: 15px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 15px;
+            margin-top: auto;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+            font-weight: 500;
         }
 
-        /* SHIMMER LOAD */
-        .skeleton { background: #0a0a0a; height: 500px; border-radius: 24px; animation: pulse 1.5s infinite; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        .action-btn {
+            display: block; width: 100%;
+            text-align: center; background: var(--bg-color);
+            color: var(--text-dark); padding: 12px;
+            border-radius: 8px; font-weight: 600; text-decoration: none;
+            margin-top: 20px; border: 1px solid var(--border-color);
+            transition: 0.2s;
+        }
+        .property-card:hover .action-btn { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+        /* MOBILANPASSNING */
+        @media (max-width: 768px) {
+            .hero { padding: 40px 15px; }
+            .hero h1 { font-size: 2rem; }
+            .search-input { padding: 16px 20px; font-size: 1rem; }
+            .property-grid { grid-template-columns: 1fr; gap: 20px; }
+            .card-image { height: 220px; }
+        }
     </style>
 </head>
 <body>
 
-<header>
-    <div class="logo-box">
-        <h1 class="logo-main">SOVEREIGN<span>MATRIX</span></h1>
-        <div style="font-size: 0.7rem; letter-spacing: 8px; color: #444; font-weight: 900; margin-top: 10px;">SINGULARITY ENGINE v6.0</div>
-    </div>
-</header>
-
-<div class="hud-vault">
-    <input type="text" id="search" class="hud-input" placeholder="INFILTRERA DATAVALVET...">
-    <select id="sort" class="hud-input">
-        <option value="vIndex">FYND (V-INDEX)</option>
-        <option value="sIndex">TRYGGHET (S-INDEX)</option>
-        <option value="lIndex">LYX (L-INDEX)</option>
-    </select>
-    <div id="stats" class="hud-input" style="text-align:center; pointer-events:none;">0 UNITS</div>
+<div class="navbar">
+    <a href="/">
+        <img src="logo.jpg" alt="AllaBostäder Logo">
+    </a>
 </div>
 
-<div class="matrix-grid" id="grid">
-    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+<div class="hero">
+    <h1>Hitta ditt nästa hem</h1>
+    <p>Sök bland marknadens alla bostäder, villor och lägenheter.</p>
+    
+    <div class="search-container">
+        <input type="text" id="searchInput" class="search-input" placeholder="Sök område, kommun eller adress (t.ex. Gävle)..." autocomplete="off">
+        <div id="autocompleteList" class="autocomplete-list"></div>
+    </div>
+</div>
+
+<div class="container">
+    <div class="results-header">
+        <div class="results-count" id="resultsCount">Laddar bostäder...</div>
+    </div>
+    <div class="property-grid" id="propertyGrid">
+        </div>
 </div>
 
 <script>
-    const Matrix = {
-        vault: [],
+    const App = {
+        data: [],
+        locations: [],
         
         async init() {
             try {
-                const res = await fetch('market-data.json');
-                this.vault = await res.json();
-                this.updateUI();
-            } catch (e) {
-                document.getElementById('grid').innerHTML = "<h1 style='grid-column:1/-1; text-align:center;'>!! OFFLINE: STARTA AGGREGATORN !!</h1>";
-            }
+                // Ladda marknadsdata och ortsdatabasen (Aiorter.csv)
+                const [marketRes, aiorterRes] = await Promise.all([
+                    fetch('market-data.json').catch(() => null),
+                    fetch('Aiorter.csv').then(r => r.text()).catch(() => "")
+                ]);
+                
+                if (marketRes) {
+                    this.data = await marketRes.json();
+                }
 
-            document.getElementById('search').addEventListener('input', () => this.updateUI());
-            document.getElementById('sort').addEventListener('change', () => this.updateUI());
+                if (aiorterRes) {
+                    // Extrahera tätorter från CSV-filen
+                    this.locations = aiorterRes.split('\n')
+                        .slice(1) // Hoppa över header
+                        .map(row => {
+                            const cols = row.split(';');
+                            return cols[0] ? cols[0].trim() : null;
+                        }).filter(Boolean);
+                }
+
+                this.setupSearch();
+                this.renderFeed();
+                
+            } catch (error) {
+                document.getElementById('propertyGrid').innerHTML = '<p style="text-align:center; width:100%; color:red;">Systemet kunde inte hämta data. Försök igen senare.</p>';
+            }
         },
 
-        updateUI() {
-            const grid = document.getElementById('grid');
-            const term = document.getElementById('search').value.toLowerCase();
-            const sortBy = document.getElementById('sort').value;
+        setupSearch() {
+            const input = document.getElementById('searchInput');
+            const list = document.getElementById('autocompleteList');
 
-            const filtered = this.vault
-                .filter(u => u.a.toLowerCase().includes(term) || u.s.toLowerCase().includes(term))
-                .sort((a, b) => b[sortBy] - a[sortBy])
-                .slice(0, 100);
+            // Autocomplete logik kopplad till Aiorter.csv
+            input.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                this.renderFeed(query); // Filtrera grid direkt
 
-            document.getElementById('stats').innerText = `${filtered.length} UNITS DETECTED`;
+                if (query.length > 1 && this.locations.length > 0) {
+                    const matches = this.locations.filter(loc => loc.toLowerCase().startsWith(query)).slice(0, 8);
+                    
+                    if (matches.length > 0) {
+                        list.innerHTML = matches.map(match => `<div class="autocomplete-item">${match}</div>`).join('');
+                        list.style.display = 'block';
+                    } else {
+                        list.style.display = 'none';
+                    }
+                } else {
+                    list.style.display = 'none';
+                }
+            });
 
-            grid.innerHTML = filtered.map(u => {
-                // Skapa länk till Google Maps & Street View
-                const googleMapUrl = `https://www.google.com/maps/search/${encodeURIComponent(u.a)}`;
+            // Klick på förslag
+            list.addEventListener('click', (e) => {
+                if (e.target.classList.contains('autocomplete-item')) {
+                    input.value = e.target.innerText;
+                    list.style.display = 'none';
+                    this.renderFeed(input.value.toLowerCase());
+                }
+            });
+
+            // Stäng lista om man klickar utanför
+            document.addEventListener('click', (e) => {
+                if (!e.target.closest('.search-container')) {
+                    list.style.display = 'none';
+                }
+            });
+        },
+
+        renderFeed(filter = "") {
+            const grid = document.getElementById('propertyGrid');
+            const counter = document.getElementById('resultsCount');
+            
+            // Sök i adress eller område
+            const filtered = this.data.filter(item => {
+                const address = (item.a || "").toLowerCase();
+                const location = (item.s || "").toLowerCase();
+                return address.includes(filter) || location.includes(filter);
+            });
+
+            counter.innerText = `${filtered.length} bostäder till salu`;
+
+            grid.innerHTML = filtered.slice(0, 100).map(item => {
+                // Äkta prisformatering. Inga shadow-priser.
+                const priceFormatted = new Intl.NumberFormat('sv-SE').format(item.p) + ' kr';
+                const area = item.area ? `${item.area} m²` : 'Kvm saknas';
+                const rooms = item.rooms ? `${item.rooms} rum` : '';
                 
                 return `
-                <div class="unit">
-                    ${u.sIndex < 45 ? '<div class="risk-stripe" style="display:block"></div>' : ''}
-                    
-                    <div class="gauges">
-                        <div class="gauge">
-                            <span class="g-val v-color">${u.vIndex}%</span>
-                            <span class="g-lab">Value</span>
-                        </div>
-                        <div class="gauge">
-                            <span class="g-val s-color">${u.sIndex}%</span>
-                            <span class="g-lab">Safety</span>
-                        </div>
-                        <div class="gauge">
-                            <span class="g-val l-color">${u.lIndex}%</span>
-                            <span class="g-lab">Luxury</span>
-                        </div>
+                <div class="property-card" onclick="window.open('${item.u}', '_blank')">
+                    <div class="card-image">
+                        <div class="badge">Till salu</div>
+                        <img src="${item.img || 'https://via.placeholder.com/600x400?text=Bilder+på+väg'}" loading="lazy" alt="${item.a}">
                     </div>
-
-                    <div class="unit-content">
-                        <div class="price-row">
-                            <span class="actual-price">${(u.p / 1000000).toFixed(2)}M</span>
-                            <span class="shadow-price">SHADOW: ${u.shadowPrice}M</span>
-                        </div>
-                        <div class="location">${u.a}</div>
+                    <div class="card-content">
+                        <div class="price">${priceFormatted}</div>
+                        <div class="address">${item.a}</div>
+                        <div class="location">${item.s}</div>
                         
-                        <div style="font-size: 0.8rem; color: #666; font-weight: 600;">
-                            ${u.area || '?'} m² • ${u.rooms || '?'} RUM • ${u.s}
+                        <div class="specs">
+                            <span>${area}</span>
+                            ${rooms ? `<span>•</span><span>${rooms}</span>` : ''}
                         </div>
-
-                        <div class="tag-cloud">
-                            ${(u.tags || []).map(t => {
-                                let cls = '';
-                                if (t.includes('⚠️') || t.includes('☢️') || t.includes('🚫') || t.includes('⚖️')) cls = 'tag-risk';
-                                if (t.includes('💎') || t.includes('💰') || t.includes('📐') || t.includes('🚀')) cls = 'tag-roi';
-                                if (t.includes('🏊') || t.includes('🍷') || t.includes('🌊') || t.includes('🏎️')) cls = 'tag-asset';
-                                return `<span class="tag ${cls}">${t}</span>`;
-                            }).join('')}
-                        </div>
-
-                        <div class="action-grid">
-                            <a href="${u.u}" target="_blank" class="btn btn-main">INFILTRERA KÄLLAN</a>
-                            <a href="${googleMapUrl}" target="_blank" class="btn btn-view">VIEW ON GOOGLE</a>
-                        </div>
+                        
+                        <a href="${item.u}" target="_blank" class="action-btn" onclick="event.stopPropagation()">Läs mer hos mäklaren</a>
                     </div>
                 </div>
-            `}).join('');
+                `;
+            }).join('');
         }
     };
 
-    window.onload = () => Matrix.init();
+    // Initiera appen
+    window.addEventListener('DOMContentLoaded', () => App.init());
 </script>
 
 </body>
