@@ -1,12 +1,22 @@
 {
-  "name": "allabostader",
+  "name": "allabostader-engine",
   "version": "1.0.0",
-  "main": "scraper.js",
+  "description": "Premium Real Estate Aggregator & Analytics Engine",
+  "main": "AGGREGATOR_CORE.js",
+  "scripts": {
+    "start": "node AGGREGATOR_CORE.js",
+    "seo": "node SEO_EMPIRE_GENERATOR.js",
+    "analyze": "node analyzer.js"
+  },
   "dependencies": {
-    "csv-parse": "^5.5.3",
-    "puppeteer": "^21.0.0",
-    "puppeteer-cluster": "^0.23.0",
+    "puppeteer": "^22.0.0",
     "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-stealth": "^2.11.2"
+    "puppeteer-extra-plugin-stealth": "^2.11.2",
+    "puppeteer-cluster": "^0.23.0",
+    "csv-parse": "^5.5.3",
+    "fs": "0.0.1-security"
+  },
+  "engines": {
+    "node": ">=22.0.0"
   }
 }
