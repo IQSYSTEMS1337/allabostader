@@ -3,191 +3,220 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>ALLABOSTÄDER | The Sovereign Singularity</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;400;700;900&display=swap">
+    <title>SOVEREIGN MATRIX | Absolute Dominance</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;400;600;800;900&display=swap">
     <style>
         :root {
-            --neon-green: #00ff88; --luxury-gold: #ffcc00; --danger-red: #ff4444;
-            --deep-black: #050505; --card-bg: #0a0a0a; --glass: rgba(255, 255, 255, 0.03);
+            --neon-green: #00ff88; --luxury-gold: #ffcc00; --danger-red: #ff3333;
+            --deep-black: #020202; --card-bg: #0a0a0b; --shadow-blue: #00d9ff;
+            --glass-border: rgba(255, 255, 255, 0.08);
         }
 
         body {
             background: var(--deep-black); color: #fff; font-family: 'Inter', sans-serif;
-            margin: 0; overflow-x: hidden; -webkit-tap-highlight-color: transparent;
+            margin: 0; overflow-x: hidden; letter-spacing: -0.02em;
         }
 
-        /* --- LOGO AURA & NEURAL HEADER --- */
+        /* --- NEURAL HEADER & LOGO AURA --- */
         header {
-            padding: 60px 0; text-align: center; background: radial-gradient(circle at center, #111 0%, #050505 100%);
-            position: relative; border-bottom: 1px solid #151515;
+            padding: 50px 0; text-align: center; background: radial-gradient(circle at center, #111 0%, var(--deep-black) 100%);
+            border-bottom: 1px solid var(--glass-border); position: relative;
         }
 
-        .logo-container { position: relative; display: inline-block; padding: 25px; }
-        .main-logo {
-            font-family: 'Orbitron'; font-size: 3.5rem; font-weight: 900; letter-spacing: -3px; margin: 0;
-            position: relative; z-index: 10; text-transform: uppercase;
-        }
-        .main-logo span { color: var(--neon-green); text-shadow: 0 0 30px rgba(0,255,136,0.6); }
-
-        .logo-aura {
-            position: absolute; inset: 0; border: 2px solid var(--neon-green); border-radius: 20px;
-            animation: rotateAura 6s linear infinite; box-shadow: 0 0 50px rgba(0,255,136,0.2);
-        }
-        @keyframes rotateAura {
-            0% { transform: rotate(0deg); border-radius: 20px; }
-            50% { transform: rotate(180deg); border-radius: 50px; border-color: var(--luxury-gold); }
-            100% { transform: rotate(360deg); border-radius: 20px; }
+        .logo-main {
+            font-family: 'Orbitron'; font-size: 3.5rem; font-weight: 900; margin: 0;
+            background: linear-gradient(90deg, #fff 30%, var(--neon-green) 100%);
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
         }
 
-        /* --- CONTROL INTERFACE --- */
-        .control-vault {
-            max-width: 1000px; margin: -40px auto 40px; position: relative; z-index: 100; padding: 0 20px;
+        /* --- TACTICAL HUD CONTROLS --- */
+        .hud-vault {
+            max-width: 1200px; margin: -35px auto 40px; display: grid;
+            grid-template-columns: 2fr 1fr 1fr; gap: 15px; padding: 0 20px;
         }
-        .search-bar {
-            width: 100%; background: #1a1a1a; border: 2px solid #333; padding: 25px 35px;
-            border-radius: 100px; color: var(--neon-green); font-size: 1.4rem; font-weight: 800;
-            outline: none; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
-        }
-        .search-bar:focus { border-color: var(--neon-green); transform: scale(1.03); box-shadow: 0 0 40px rgba(0, 255, 136, 0.2); }
 
-        /* --- GRID & CARDS --- */
+        .hud-input {
+            background: rgba(15, 15, 15, 0.9); border: 1px solid var(--glass-border);
+            padding: 22px; border-radius: 18px; color: var(--neon-green);
+            font-family: 'Orbitron'; font-size: 1rem; outline: none;
+            backdrop-filter: blur(20px); transition: 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .hud-input:focus { border-color: var(--neon-green); box-shadow: 0 0 30px rgba(0, 255, 136, 0.15); transform: translateY(-2px); }
+
+        /* --- THE MATRIX GRID --- */
         .matrix-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-            gap: 30px; padding: 40px; max-width: 1600px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+            gap: 35px; padding: 20px 40px; max-width: 1900px; margin: 0 auto;
         }
 
-        .unit-card {
-            background: var(--card-bg); border-radius: 28px; border: 1px solid #1a1a1a;
-            overflow: hidden; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative;
+        /* --- SOVEREIGN UNIT CARD --- */
+        .unit {
+            background: var(--card-bg); border-radius: 24px; border: 1px solid var(--glass-border);
+            position: relative; overflow: hidden; transition: 0.5s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        .unit-card:hover { transform: translateY(-12px); border-color: #333; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
+        .unit:hover { border-color: #444; transform: translateY(-10px); box-shadow: 0 40px 80px rgba(0,0,0,0.8); }
 
-        /* --- HUD METERS (Top of Card) --- */
-        .card-hud {
-            display: grid; grid-template-columns: 1fr 1fr 1fr; background: rgba(0,0,0,0.4);
-            padding: 15px; border-bottom: 1px solid #1a1a1a; backdrop-filter: blur(10px);
+        /* GAUGES (Top) */
+        .gauges {
+            display: flex; justify-content: space-around; padding: 20px;
+            background: rgba(0,0,0,0.6); border-bottom: 1px solid var(--glass-border);
         }
-        .hud-item { text-align: center; }
-        .hud-val { display: block; font-size: 1.2rem; font-weight: 900; font-family: 'Orbitron'; }
-        .hud-label { font-size: 0.6rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
+        .gauge { text-align: center; }
+        .g-val { display: block; font-family: 'Orbitron'; font-size: 1.4rem; font-weight: 900; }
+        .g-lab { font-size: 0.6rem; text-transform: uppercase; color: #555; letter-spacing: 2px; margin-top: 4px; }
+        .v-color { color: var(--neon-green); text-shadow: 0 0 15px rgba(0, 255, 136, 0.4); }
+        .s-color { color: var(--danger-red); }
+        .l-color { color: var(--luxury-gold); }
 
-        .v-idx { color: var(--neon-green); }
-        .s-idx { color: var(--danger-red); }
-        .l-idx { color: var(--luxury-gold); }
+        /* BODY */
+        .unit-content { padding: 30px; }
+        .price-row { display: flex; align-items: baseline; gap: 15px; margin-bottom: 5px; }
+        .actual-price { font-size: 2.8rem; font-weight: 900; letter-spacing: -2px; }
+        .shadow-price { color: var(--shadow-blue); font-size: 0.9rem; font-family: 'Orbitron'; font-weight: 400; opacity: 0.8; }
 
-        /* --- CONTENT --- */
-        .card-body { padding: 25px; }
-        .price-tag { font-size: 2.4rem; font-weight: 900; letter-spacing: -2px; color: #fff; margin-bottom: 5px; }
-        .price-diff { color: var(--danger-red); font-size: 0.9rem; font-weight: 700; margin-left: 10px; }
-        .address-text { font-size: 1.1rem; color: #888; margin-bottom: 20px; font-weight: 500; }
+        .location { font-size: 1.2rem; font-weight: 600; color: #aaa; margin-bottom: 20px; }
 
-        /* --- TAGS --- */
-        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        /* 100-POINT TAGS */
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin: 20px 0; }
         .tag {
-            padding: 6px 12px; border-radius: 8px; font-size: 0.7rem; font-weight: 800;
-            background: #151515; border: 1px solid #222; text-transform: uppercase;
+            padding: 7px 14px; border-radius: 8px; font-size: 0.65rem; font-weight: 800;
+            background: rgba(255,255,255,0.03); border: 1px solid #222; text-transform: uppercase; letter-spacing: 0.5px;
         }
-        .tag-risk { color: var(--danger-red); border-color: rgba(255,68,68,0.2); background: rgba(255,68,68,0.05); }
-        .tag-gold { color: var(--luxury-gold); border-color: rgba(255,204,0,0.2); }
+        .tag-risk { border-color: var(--danger-red); color: var(--danger-red); background: rgba(255, 51, 51, 0.05); }
+        .tag-asset { border-color: var(--luxury-gold); color: var(--luxury-gold); }
+        .tag-roi { border-color: var(--neon-green); color: var(--neon-green); }
 
-        /* --- ACTION --- */
-        .btn-infiltrate {
-            width: 100%; padding: 18px; background: transparent; border: 1px solid var(--neon-green);
-            color: var(--neon-green); border-radius: 15px; font-family: 'Orbitron'; font-weight: 900;
-            cursor: pointer; transition: 0.3s; letter-spacing: 2px; font-size: 0.8rem;
+        /* TACTICAL ACTIONS */
+        .action-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 25px; }
+        .btn {
+            padding: 18px; border-radius: 14px; font-family: 'Orbitron'; font-size: 0.7rem;
+            font-weight: 900; text-transform: uppercase; cursor: pointer; transition: 0.3s;
+            text-align: center; text-decoration: none; border: 1px solid #333;
         }
-        .btn-infiltrate:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 30px var(--neon-green); }
+        .btn-main { background: var(--neon-green); color: #000; border: none; }
+        .btn-main:hover { background: #fff; box-shadow: 0 0 30px var(--neon-green); }
+        .btn-view { background: transparent; color: #fff; }
+        .btn-view:hover { background: rgba(255,255,255,0.1); border-color: #fff; }
 
-        /* --- SKELETON ANIMATION --- */
-        .shimmer { background: linear-gradient(90deg, #0a0a0a 25%, #151515 50%, #0a0a0a 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
-        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+        /* RISK OVERLAY */
+        .risk-stripe {
+            position: absolute; top: 0; left: 0; width: 100%; height: 5px;
+            background: var(--danger-red); box-shadow: 0 0 20px var(--danger-red); display: none;
+        }
+
+        /* SHIMMER LOAD */
+        .skeleton { background: #0a0a0a; height: 500px; border-radius: 24px; animation: pulse 1.5s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-container">
-        <div class="logo-aura"></div>
-        <h1 class="main-logo">ALLA<span>BOSTÄDER</span></h1>
+    <div class="logo-box">
+        <h1 class="logo-main">SOVEREIGN<span>MATRIX</span></h1>
+        <div style="font-size: 0.7rem; letter-spacing: 8px; color: #444; font-weight: 900; margin-top: 10px;">SINGULARITY ENGINE v6.0</div>
     </div>
 </header>
 
-<div class="control-vault">
-    <input type="text" id="master-search" class="search-bar" placeholder="SÖK I MATRIX (EX. 'POOLVILLA SOLLENTUNA')...">
+<div class="hud-vault">
+    <input type="text" id="search" class="hud-input" placeholder="INFILTRERA DATAVALVET...">
+    <select id="sort" class="hud-input">
+        <option value="vIndex">FYND (V-INDEX)</option>
+        <option value="sIndex">TRYGGHET (S-INDEX)</option>
+        <option value="lIndex">LYX (L-INDEX)</option>
+    </select>
+    <div id="stats" class="hud-input" style="text-align:center; pointer-events:none;">0 UNITS</div>
 </div>
 
-<div class="matrix-grid" id="main-grid">
-    </div>
+<div class="matrix-grid" id="grid">
+    <div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div>
+</div>
 
 <script>
-    const SovereignMatrix = {
+    const Matrix = {
         vault: [],
         
         async init() {
-            const grid = document.getElementById('main-grid');
-            // Initiera med 8 skeletons
-            grid.innerHTML = Array(8).fill('<div class="unit-card shimmer" style="height:450px"></div>').join('');
-            
             try {
                 const res = await fetch('market-data.json');
                 this.vault = await res.json();
-                this.render();
+                this.updateUI();
             } catch (e) {
-                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color:gray;">SYSTEM OFFLINE: VÄNTAR PÅ DATAINFILTRATION...</div>`;
+                document.getElementById('grid').innerHTML = "<h1 style='grid-column:1/-1; text-align:center;'>!! OFFLINE: STARTA AGGREGATORN !!</h1>";
             }
 
-            document.getElementById('master-search').addEventListener('input', (e) => this.render(e.target.value));
+            document.getElementById('search').addEventListener('input', () => this.updateUI());
+            document.getElementById('sort').addEventListener('change', () => this.updateUI());
         },
 
-        render(filter = '') {
-            const grid = document.getElementById('main-grid');
-            const term = filter.toLowerCase();
-            
-            const filtered = this.vault.filter(u => 
-                u.a.toLowerCase().includes(term) || u.s.toLowerCase().includes(term) || (u.d && u.d.toLowerCase().includes(term))
-            ).slice(0, 100);
+        updateUI() {
+            const grid = document.getElementById('grid');
+            const term = document.getElementById('search').value.toLowerCase();
+            const sortBy = document.getElementById('sort').value;
 
-            grid.innerHTML = filtered.map(u => `
-                <div class="unit-card">
-                    <div class="card-hud">
-                        <div class="hud-item">
-                            <span class="hud-val v-idx">${u.vIndex || 0}%</span>
-                            <span class="hud-label">Värde</span>
+            const filtered = this.vault
+                .filter(u => u.a.toLowerCase().includes(term) || u.s.toLowerCase().includes(term))
+                .sort((a, b) => b[sortBy] - a[sortBy])
+                .slice(0, 100);
+
+            document.getElementById('stats').innerText = `${filtered.length} UNITS DETECTED`;
+
+            grid.innerHTML = filtered.map(u => {
+                // Skapa länk till Google Maps & Street View
+                const googleMapUrl = `https://www.google.com/maps/search/${encodeURIComponent(u.a)}`;
+                
+                return `
+                <div class="unit">
+                    ${u.sIndex < 45 ? '<div class="risk-stripe" style="display:block"></div>' : ''}
+                    
+                    <div class="gauges">
+                        <div class="gauge">
+                            <span class="g-val v-color">${u.vIndex}%</span>
+                            <span class="g-lab">Value</span>
                         </div>
-                        <div class="hud-item">
-                            <span class="hud-val s-idx">${u.sIndex || 0}%</span>
-                            <span class="hud-label">Trygghet</span>
+                        <div class="gauge">
+                            <span class="g-val s-color">${u.sIndex}%</span>
+                            <span class="g-lab">Safety</span>
                         </div>
-                        <div class="hud-item">
-                            <span class="hud-val l-idx">${u.lIndex || 0}%</span>
-                            <span class="hud-label">Lyx</span>
+                        <div class="gauge">
+                            <span class="g-val l-color">${u.lIndex}%</span>
+                            <span class="g-lab">Luxury</span>
                         </div>
                     </div>
-                    
-                    <div class="card-body">
-                        <div class="price-tag">
-                            ${(u.p / 1000000).toFixed(1)}<span style="font-size:1.2rem; color:var(--neon-green)">M</span>
-                            ${u.pc ? `<span class="price-diff">-${u.pc}%</span>` : ''}
+
+                    <div class="unit-content">
+                        <div class="price-row">
+                            <span class="actual-price">${(u.p / 1000000).toFixed(2)}M</span>
+                            <span class="shadow-price">SHADOW: ${u.shadowPrice}M</span>
                         </div>
-                        <div class="address-text">${u.a}</div>
+                        <div class="location">${u.a}</div>
                         
-                        <div class="tag-cloud">
-                            <div class="tag">${u.area || '?'} m²</div>
-                            <div class="tag">${u.rooms || '?'} RUM</div>
-                            ${u.hasRadon ? '<div class="tag tag-risk">⚠️ RISK: RADON</div>' : ''}
-                            ${u.hasPool ? '<div class="tag tag-gold">🏊 POOL</div>' : ''}
-                            ${u.lIndex > 80 ? '<div class="tag tag-gold">💎 ELIT-OBJEKT</div>' : ''}
+                        <div style="font-size: 0.8rem; color: #666; font-weight: 600;">
+                            ${u.area || '?'} m² • ${u.rooms || '?'} RUM • ${u.s}
                         </div>
 
-                        <button class="btn-infiltrate" onclick="window.open('${u.u}', '_blank')">INFILTRERA KÄLLAN</button>
+                        <div class="tag-cloud">
+                            ${(u.tags || []).map(t => {
+                                let cls = '';
+                                if (t.includes('⚠️') || t.includes('☢️') || t.includes('🚫') || t.includes('⚖️')) cls = 'tag-risk';
+                                if (t.includes('💎') || t.includes('💰') || t.includes('📐') || t.includes('🚀')) cls = 'tag-roi';
+                                if (t.includes('🏊') || t.includes('🍷') || t.includes('🌊') || t.includes('🏎️')) cls = 'tag-asset';
+                                return `<span class="tag ${cls}">${t}</span>`;
+                            }).join('')}
+                        </div>
+
+                        <div class="action-grid">
+                            <a href="${u.u}" target="_blank" class="btn btn-main">INFILTRERA KÄLLAN</a>
+                            <a href="${googleMapUrl}" target="_blank" class="btn btn-view">VIEW ON GOOGLE</a>
+                        </div>
                     </div>
                 </div>
-            `).join('');
+            `}).join('');
         }
     };
 
-    window.onload = () => SovereignMatrix.init();
+    window.onload = () => Matrix.init();
 </script>
 
 </body>
