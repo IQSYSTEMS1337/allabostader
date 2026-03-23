@@ -3,17 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
     <title>AllaBostäder | Hitta ditt drömhem före alla andra</title>
+    <meta name="description" content="Sök bland Sveriges bostäder. Exakta och äkta priser. Inga dolda avgifter. Vi täcker Gävle, Hille, Strömsbro, Bergby och 6000 andra orter.">
+    <meta name="theme-color" content="#ffffff">
     
-    <meta name="description" content="Sök bland Sveriges bostäder med äkta priser. Vi täcker Gävle, Hille, Strömsbro, Bergby och 6000 andra orter. Bättre och snabbare.">
-    
+    <meta property="og:title" content="AllaBostäder | Marknadens snabbaste bostadssök">
+    <meta property="og:description" content="Rå, ofiltrerad bostadsdata. Hitta ditt nästa hem här.">
+    <meta property="og:type" content="website">
+
+    <link rel="apple-touch-icon" href="logo.png">
+    <link rel="icon" type="image/png" href="logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #004D40; 
-            --primary-hover: #00332A;
-            --accent: #10B981;
+            --primary: #0F172A; 
+            --primary-hover: #1E293B;
+            --accent: #10B981;  
             --bg-color: #F8FAFC;
             --card-bg: #FFFFFF;
             --text-dark: #0F172A;
@@ -21,244 +31,228 @@
             --border-color: #E2E8F0;
             --danger: #EF4444;
             --heart: #F43F5E;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            --radius-lg: 16px;
+            --radius-xl: 24px;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-        
-        body { background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; scroll-behavior: smooth; }
+        body { background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; }
 
-        /* --- PREMIUM NAVBAR --- */
+        /* --- SMART NAVBAR --- */
         .navbar {
-            background: rgba(255, 255, 255, 0.9);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(226, 232, 240, 0.8);
-            padding: 15px 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 2000;
+            padding: 16px 24px;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 2000;
+            transition: all 0.3s ease;
         }
-        .navbar img { max-height: 45px; width: auto; display: block; }
+        .navbar.scrolled { padding: 10px 24px; box-shadow: var(--shadow-md); background: rgba(255, 255, 255, 0.95); }
+        .navbar img { max-height: 44px; width: auto; transition: 0.3s; }
+        .navbar.scrolled img { max-height: 36px; }
         
-        .nav-links { display: flex; gap: 20px; align-items: center; }
         .nav-btn { 
-            background: none; border: none; font-size: 1rem; font-weight: 600; 
-            color: var(--text-dark); cursor: pointer; display: flex; align-items: center; gap: 8px; 
-            padding: 8px 12px; border-radius: 8px; transition: 0.2s;
+            background: #F1F5F9; border: none; font-weight: 600; color: var(--text-dark); font-size: 0.95rem;
+            cursor: pointer; display: flex; align-items: center; gap: 8px; 
+            padding: 10px 16px; border-radius: 12px; transition: all 0.2s ease;
         }
-        .nav-btn:hover { background: #F1F5F9; color: var(--primary); }
+        .nav-btn:hover { background: #E2E8F0; transform: translateY(-1px); }
+        .nav-btn.active { background: var(--heart); color: #fff; box-shadow: 0 4px 12px rgba(244, 63, 94, 0.3); }
+        .nav-btn.active svg { stroke: #fff; fill: #fff; }
 
-        /* --- HERO & SÖKMOTOR --- */
+        /* --- HERO --- */
         .hero {
             background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
-            padding: 70px 20px 60px;
-            text-align: center;
-            border-bottom: 1px solid var(--border-color);
+            padding: 70px 20px 60px; text-align: center;
         }
-        .hero h1 { 
-            font-size: clamp(2.5rem, 5vw, 4rem); 
-            font-weight: 900; 
-            margin-bottom: 15px; 
-            letter-spacing: -1.5px; 
-            color: var(--text-dark);
-            line-height: 1.1;
-        }
-        .hero h1 span { color: var(--accent); }
-        .hero p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 500; max-width: 600px; margin-inline: auto; }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 4.5rem); font-weight: 900; letter-spacing: -0.04em; line-height: 1.05; margin-bottom: 16px;}
+        .hero h1 span { color: var(--accent); position: relative; }
+        .hero p { font-size: clamp(1.1rem, 3vw, 1.3rem); color: var(--text-muted); font-weight: 500; max-width: 650px; margin: 0 auto 40px; }
 
-        /* FILTER PANEL */
+        /* --- FILTER MATRIX V2 --- */
         .search-wrapper { max-width: 900px; margin: 0 auto; position: relative; z-index: 100; }
         
         .filter-grid {
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 12px;
-            background: #fff;
-            padding: 12px;
-            border-radius: 20px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            display: grid; grid-template-columns: minmax(200px, 2fr) 1fr 1fr; gap: 12px;
+            background: #fff; padding: 12px; border-radius: var(--radius-xl);
+            box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.1);
             border: 1px solid var(--border-color);
         }
 
         .filter-input, .filter-select {
-            width: 100%; padding: 20px 25px; font-size: 1.1rem; font-weight: 600;
-            border: 1px solid transparent; border-radius: 12px;
-            outline: none; transition: 0.3s; color: var(--text-dark);
-            background: #F8FAFC;
+            width: 100%; padding: 20px 24px; font-size: 1.1rem; font-weight: 600;
+            border: 2px solid transparent; border-radius: var(--radius-lg);
+            outline: none; transition: all 0.2s ease; background: #F8FAFC; color: var(--text-dark);
+            min-height: 64px; /* Touch-vänligt */
         }
-        .filter-input:focus, .filter-select:focus { 
-            background: #fff; border-color: var(--primary); 
-            box-shadow: 0 0 0 4px rgba(0, 77, 64, 0.1); 
-        }
+        .filter-input:focus, .filter-select:focus { background: #fff; border-color: var(--primary); box-shadow: 0 0 0 4px rgba(15, 23, 42, 0.05); }
         .filter-input::placeholder { color: #94A3B8; font-weight: 500; }
         
         .filter-select {
             cursor: pointer; appearance: none; -webkit-appearance: none;
-            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230F172A%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
-            background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;
-            padding-right: 2.5rem;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20fill%3D%22none%22%20stroke%3D%22%230F172A%22%20stroke-width%3D%222.5%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat; background-position: right 20px center; background-size: 18px; padding-right: 45px;
         }
 
-        /* AUTOCOMPLETE */
+        /* AUTOCOMPLETE MED TANGENTBORDSSTÖD */
         .autocomplete-list {
-            position: absolute; top: 100%; left: 12px; right: 12px;
-            background: #fff; border: 1px solid var(--border-color);
-            border-radius: 16px; margin-top: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
-            max-height: 350px; overflow-y: auto; display: none; text-align: left;
+            position: absolute; top: calc(100% + 12px); left: 12px; right: 12px; background: #fff;
+            border: 1px solid var(--border-color); border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg); max-height: 320px; overflow-y: auto; display: none; text-align: left;
         }
-        .autocomplete-item {
-            padding: 16px 25px; cursor: pointer; border-bottom: 1px solid var(--border-color);
-            font-weight: 600; font-size: 1.05rem; color: var(--text-dark); transition: 0.2s;
-        }
-        .autocomplete-item:hover { background: #F1F5F9; color: var(--primary); padding-left: 30px; }
+        .autocomplete-item { padding: 16px 24px; cursor: pointer; border-bottom: 1px solid var(--border-color); font-weight: 600; transition: background 0.1s; }
+        .autocomplete-item:last-child { border-bottom: none; }
+        .autocomplete-item:hover, .autocomplete-item.focused { background: #F1F5F9; color: var(--primary); }
 
-        /* --- VERKTYGSFÄLT --- */
-        .toolbar {
-            max-width: 1400px; margin: 30px auto; padding: 0 20px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .results-count { font-weight: 800; color: var(--text-dark); font-size: 1.3rem; letter-spacing: -0.5px; }
+        /* --- TOOLBAR --- */
+        .toolbar { max-width: 1400px; margin: 0 auto 30px; padding: 0 24px; display: flex; justify-content: space-between; align-items: center; }
+        .results-count { font-weight: 800; font-size: 1.25rem; letter-spacing: -0.02em; }
+        .sort-select { padding: 12px 20px; min-height: 48px; border-radius: 12px; background-color: #fff; border: 1px solid var(--border-color); font-size: 0.95rem; }
 
-        /* --- FASTIGHETS-GRID --- */
-        .container { max-width: 1400px; margin: 0 auto 80px; padding: 0 20px; min-height: 500px; }
-        .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
+        /* --- GRID & CARDS --- */
+        .container { max-width: 1400px; margin: 0 auto 80px; padding: 0 24px; min-height: 60vh; }
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 32px; }
 
-        /* --- KORT-DESIGN (PREMIUM) --- */
         .property-card {
-            background: var(--card-bg); border: 1px solid var(--border-color);
-            border-radius: 20px; overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            cursor: pointer; display: flex; flex-direction: column; position: relative;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            opacity: 0; transform: translateY(20px);
-            animation: fadeUp 0.5s ease forwards;
+            background: var(--card-bg); border: 1px solid var(--border-color); border-radius: var(--radius-xl);
+            overflow: hidden; cursor: pointer; display: flex; flex-direction: column; position: relative;
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.3s ease;
+            will-change: transform, opacity;
         }
-        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
-        .property-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); border-color: transparent; }
+        .property-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); border-color: transparent; }
 
-        .card-image { width: 100%; height: 260px; position: relative; background: #E2E8F0; overflow: hidden; }
-        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        /* CLS Fix: aspect-ratio */
+        .card-image { width: 100%; aspect-ratio: 4/3; background: #E2E8F0; position: relative; overflow: hidden; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1); }
         .property-card:hover .card-image img { transform: scale(1.05); }
-        
-        .badge-container { position: absolute; top: 15px; left: 15px; display: flex; gap: 8px; flex-direction: column; z-index: 10; }
-        .badge {
-            background: rgba(255,255,255,0.95); padding: 8px 14px; border-radius: 10px;
-            font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1); backdrop-filter: blur(5px); color: var(--text-dark);
-        }
-        .badge.drop { background: var(--danger); color: #fff; }
 
-        /* FAVORIT-HJÄRTA */
         .fav-btn {
-            position: absolute; top: 15px; right: 15px; z-index: 20;
-            background: rgba(255,255,255,0.9); width: 40px; height: 40px;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-            transition: 0.2s;
+            position: absolute; top: 16px; right: 16px; z-index: 20;
+            background: rgba(255,255,255,0.95); width: 44px; height: 44px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; border: none; cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1); backdrop-filter: blur(8px); transition: 0.2s;
         }
         .fav-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--text-dark); stroke-width: 2; transition: 0.2s; }
-        .fav-btn:hover { transform: scale(1.1); }
-        .fav-btn.active svg { fill: var(--heart); stroke: var(--heart); }
+        .fav-btn:hover { transform: scale(1.08); }
+        .fav-btn:active { transform: scale(0.95); }
+        .fav-btn.active svg { fill: var(--heart); stroke: var(--heart); stroke-width: 1.5; }
 
-        .card-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
+        .badges { position: absolute; top: 16px; left: 16px; display: flex; flex-direction: column; gap: 8px; z-index: 10; }
+        .badge { background: rgba(255,255,255,0.95); backdrop-filter: blur(4px); padding: 6px 14px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; box-shadow: var(--shadow-sm); color: var(--text-dark); }
+        .badge.drop { background: var(--danger); color: #fff; }
+
+        .card-content { padding: 24px; display: flex; flex-direction: column; flex-grow: 1; }
+        .price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; flex-wrap: wrap; }
+        .price { font-size: 1.7rem; font-weight: 900; letter-spacing: -0.03em; }
+        .old-price { font-size: 1.05rem; color: var(--text-muted); text-decoration: line-through; font-weight: 600; }
         
-        .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
-        .price { font-size: 1.8rem; font-weight: 900; color: var(--text-dark); letter-spacing: -0.5px; }
-        .old-price { font-size: 1.1rem; color: var(--text-muted); text-decoration: line-through; font-weight: 600; }
+        .address { font-size: 1.25rem; font-weight: 700; margin-bottom: 6px; line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .location { font-size: 1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 20px; }
 
-        .address { font-size: 1.25rem; font-weight: 700; margin-bottom: 5px; line-height: 1.3; }
-        .location { font-size: 1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 25px; }
+        .specs { display: flex; gap: 16px; border-top: 1px solid var(--border-color); padding-top: 20px; font-weight: 600; font-size: 1rem; margin-top: auto; }
+        
+        /* --- SKELETON CSS GRID (No layout shifts) --- */
+        .skeleton { border-radius: var(--radius-xl); border: 1px solid var(--border-color); background: #fff; display: flex; flex-direction: column; }
+        .skel-img { width: 100%; aspect-ratio: 4/3; background: #E2E8F0; animation: pulse 1.5s infinite ease-in-out; border-radius: var(--radius-xl) var(--radius-xl) 0 0; }
+        .skel-body { padding: 24px; flex-grow: 1; display: flex; flex-direction: column; gap: 12px; }
+        .skel-line { height: 24px; background: #E2E8F0; border-radius: 6px; animation: pulse 1.5s infinite ease-in-out; }
+        @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.4; } }
 
-        .specs {
-            display: flex; gap: 15px; border-top: 1px solid var(--border-color);
-            padding-top: 20px; margin-top: auto; color: var(--text-dark); font-size: 1.05rem; font-weight: 600;
-        }
-
-        .action-btn {
-            display: block; width: 100%; text-align: center; background: #F1F5F9;
-            color: var(--text-dark); padding: 16px; border-radius: 12px; font-weight: 700;
-            text-decoration: none; margin-top: 25px; transition: 0.3s; font-size: 1.05rem;
-        }
-        .property-card:hover .action-btn { background: var(--primary); color: #fff; }
-
-        /* --- MOBILANPASSNING --- */
+        /* --- MOBILE PERFECTION --- */
         @media (max-width: 768px) {
-            .hero { padding: 40px 15px 30px; }
-            .filter-grid { grid-template-columns: 1fr; gap: 10px; padding: 10px; }
-            .filter-input, .filter-select { padding: 16px 20px; }
-            .toolbar { flex-direction: column; gap: 15px; align-items: flex-start; }
-            .property-grid { grid-template-columns: 1fr; gap: 20px; }
-            .card-image { height: 240px; }
+            .navbar { padding: 12px 16px; }
+            .hero { padding: 40px 16px 30px; }
+            .filter-grid { grid-template-columns: 1fr; gap: 8px; padding: 8px; border-radius: var(--radius-lg); }
+            .filter-input, .filter-select { min-height: 56px; padding: 16px; font-size: 1rem; }
+            .toolbar { flex-direction: column; align-items: flex-start; gap: 16px; padding: 0 16px; margin-bottom: 20px; }
+            .sort-select { width: 100%; }
+            .container { padding: 0 16px; gap: 24px; }
+            .property-grid { gap: 20px; }
+            .card-content { padding: 20px; }
         }
     </style>
 </head>
 <body>
 
-<div class="navbar">
-    <a href="/">
-        <img src="logo.png" alt="AllaBostäder Logo" onerror="this.src='logo.jpg'">
+<header class="navbar" id="navbar">
+    <a href="/" aria-label="Till startsidan">
+        <img src="logo.jpg" alt="AllaBostäder" onerror="this.src='logo.png'">
     </a>
-    <div class="nav-links">
-        <button class="nav-btn" onclick="App.toggleFavoritesView()" id="favNavBtn">
-            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-            Sparade
-        </button>
-    </div>
-</div>
+    <button class="nav-btn" onclick="App.toggleFavorites()" id="favNavBtn" aria-label="Visa sparade bostäder">
+        <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+        <span style="display:none; @media(min-width:400px){display:inline;}">Sparade</span>
+    </button>
+</header>
 
-<div class="hero">
-    <h1>Hitta ditt <span>drömhem</span></h1>
-    <p>Sveriges modernaste bostadssök. Inga shadow-priser. Ren fakta.</p>
-    
-    <div class="search-wrapper">
-        <div class="filter-grid">
-            <input type="text" id="searchInput" class="filter-input" placeholder="Sök Gävle, Hille, Strömsbro..." autocomplete="off">
-            <select id="maxPriceSelect" class="filter-select">
-                <option value="">Maxpris</option>
-                <option value="2000000">2 000 000 kr</option>
-                <option value="4000000">4 000 000 kr</option>
-                <option value="6000000">6 000 000 kr</option>
-                <option value="10000000">10 000 000 kr</option>
-            </select>
-            <select id="minRoomsSelect" class="filter-select">
-                <option value="">Rum</option>
-                <option value="2">2+ rum</option>
-                <option value="3">3+ rum</option>
-                <option value="4">4+ rum</option>
-                <option value="5">5+ rum</option>
-            </select>
+<main>
+    <section class="hero">
+        <h1>Hitta ditt <span>drömhem</span></h1>
+        <p>Marknadens snabbaste sökmotor. Äkta priser. Inga dolda avgifter.</p>
+        
+        <div class="search-wrapper">
+            <div class="filter-grid">
+                <input type="text" id="searchInput" class="filter-input" placeholder="Sök ort, kommun eller adress..." autocomplete="off" aria-label="Sökfält">
+                <select id="maxPriceSelect" class="filter-select" aria-label="Maxpris">
+                    <option value="">Maxpris</option>
+                    <option value="1500000">1 500 000 kr</option>
+                    <option value="3000000">3 000 000 kr</option>
+                    <option value="5000000">5 000 000 kr</option>
+                    <option value="7000000">7 000 000 kr</option>
+                    <option value="10000000">10 000 000 kr</option>
+                </select>
+                <select id="minRoomsSelect" class="filter-select" aria-label="Minsta antal rum">
+                    <option value="">Rum</option>
+                    <option value="2">2+ rum</option>
+                    <option value="3">3+ rum</option>
+                    <option value="4">4+ rum</option>
+                    <option value="5">5+ rum</option>
+                </select>
+            </div>
+            <div id="autocompleteList" class="autocomplete-list" role="listbox"></div>
         </div>
-        <div id="autocompleteList" class="autocomplete-list"></div>
+    </section>
+
+    <div class="toolbar">
+        <h2 class="results-count" id="resultsCount">Ansluter till marknaden...</h2>
+        <select id="sortSelect" class="filter-select sort-select" aria-label="Sortera resultat">
+            <option value="newest">Senast inkommet</option>
+            <option value="price_drop_desc">Störst prissänkning</option>
+            <option value="price_asc">Billigast först</option>
+            <option value="price_desc">Dyrast först</option>
+        </select>
     </div>
-</div>
 
-<div class="toolbar">
-    <div class="results-count" id="resultsCount">Söker igenom marknaden...</div>
-    <select id="sortSelect" class="filter-select" style="max-width: 250px;">
-        <option value="newest">Senast inkommet</option>
-        <option value="price_drop_desc">Störst prissänkning</option>
-        <option value="price_asc">Billigast först</option>
-        <option value="price_desc">Dyrast först</option>
-    </select>
-</div>
-
-<div class="container">
-    <div class="property-grid" id="propertyGrid">
+    <section class="container">
+        <div class="property-grid" id="propertyGrid">
+            <div class="skeleton"><div class="skel-img"></div><div class="skel-body"><div class="skel-line" style="width:50%"></div><div class="skel-line" style="width:90%"></div><div class="skel-line" style="width:40%; margin-top:auto;"></div></div></div>
+            <div class="skeleton"><div class="skel-img"></div><div class="skel-body"><div class="skel-line" style="width:50%"></div><div class="skel-line" style="width:90%"></div><div class="skel-line" style="width:40%; margin-top:auto;"></div></div></div>
+            <div class="skeleton"><div class="skel-img"></div><div class="skel-body"><div class="skel-line" style="width:50%"></div><div class="skel-line" style="width:90%"></div><div class="skel-line" style="width:40%; margin-top:auto;"></div></div></div>
+            <div class="skeleton"><div class="skel-img"></div><div class="skel-body"><div class="skel-line" style="width:50%"></div><div class="skel-line" style="width:90%"></div><div class="skel-line" style="width:40%; margin-top:auto;"></div></div></div>
+            <div class="skeleton"><div class="skel-img"></div><div class="skel-body"><div class="skel-line" style="width:50%"></div><div class="skel-line" style="width:90%"></div><div class="skel-line" style="width:40%; margin-top:auto;"></div></div></div>
+            <div class="skeleton"><div class="skel-img"></div><div class="skel-body"><div class="skel-line" style="width:50%"></div><div class="skel-line" style="width:90%"></div><div class="skel-line" style="width:40%; margin-top:auto;"></div></div></div>
         </div>
-</div>
+    </section>
+</main>
 
 <script>
     const App = {
         data: [],
         locations: [],
         currentQuery: "",
-        favorites: JSON.parse(localStorage.getItem('empire_favs') || '[]'),
-        viewingFavorites: false,
+        favorites: JSON.parse(localStorage.getItem('allabostader_favs') || '[]'),
+        viewFavs: false,
+        debounceTimer: null,
+        focusedAutocompleteIndex: -1,
         
         async init() {
+            this.handleScroll();
             try {
+                // Parallell hämtning. Om Aiorter dör, kraschar inte marknadsdatan.
                 const [marketRes, aiorterRes] = await Promise.all([
                     fetch('market-data.json').catch(() => null),
                     fetch('Aiorter.csv').then(r => r.text()).catch(() => "")
@@ -267,100 +261,168 @@
                 if (marketRes && marketRes.ok) this.data = await marketRes.json();
 
                 if (aiorterRes) {
+                    // Tvätta Aiorter.csv från citattecken och tomma rader
                     this.locations = aiorterRes.split('\n').slice(1).map(row => {
                         const cols = row.split(';');
-                        return cols[0] ? cols[0].trim() : null;
+                        return cols[0] ? cols[0].replace(/"/g, '').trim() : null;
                     }).filter(Boolean);
                 }
 
                 this.setupEvents();
                 this.renderFeed();
             } catch (error) {
-                document.getElementById('propertyGrid').innerHTML = '<p style="text-align:center; width:100%; color:red; font-weight:bold;">Kunde inte ansluta till databasen.</p>';
+                document.getElementById('propertyGrid').innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 40px; background: #fff; border-radius: 16px; color: var(--danger); font-weight: bold;">Ett fel uppstod vid hämtning av marknadsdata. Vänligen ladda om sidan.</div>';
             }
+        },
+
+        handleScroll() {
+            const navbar = document.getElementById('navbar');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 20) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            }, { passive: true });
         },
 
         setupEvents() {
             const input = document.getElementById('searchInput');
             const list = document.getElementById('autocompleteList');
-            const maxPrice = document.getElementById('maxPriceSelect');
-            const minRooms = document.getElementById('minRoomsSelect');
-            const sortSelect = document.getElementById('sortSelect');
-
-            // Realtids-filtrering
-            const triggerRender = () => {
-                this.viewingFavorites = false;
-                this.currentQuery = input.value.toLowerCase();
-                this.renderFeed();
-            };
-
+            
+            // 1. SÖKNING & DEBOUNCE
             input.addEventListener('input', (e) => {
-                triggerRender();
-                if (this.currentQuery.length > 1 && this.locations.length > 0) {
-                    const matches = this.locations.filter(loc => loc.toLowerCase().startsWith(this.currentQuery)).slice(0, 8);
-                    if (matches.length > 0) {
-                        list.innerHTML = matches.map(match => `<div class="autocomplete-item">${match}</div>`).join('');
-                        list.style.display = 'block';
+                clearTimeout(this.debounceTimer);
+                this.currentQuery = e.target.value.toLowerCase().trim();
+                this.focusedAutocompleteIndex = -1; // Reset fokus
+                
+                this.debounceTimer = setTimeout(() => {
+                    this.viewFavs = false;
+                    document.getElementById('favNavBtn').classList.remove('active');
+                    this.renderFeed();
+
+                    if (this.currentQuery.length > 1 && this.locations.length > 0) {
+                        const matches = this.locations.filter(loc => loc.toLowerCase().startsWith(this.currentQuery)).slice(0, 8);
+                        if (matches.length > 0) {
+                            list.innerHTML = matches.map((m, i) => `<div class="autocomplete-item" role="option" id="ac-${i}">${m}</div>`).join('');
+                            list.style.display = 'block';
+                        } else list.style.display = 'none';
                     } else list.style.display = 'none';
-                } else list.style.display = 'none';
+                }, 150);
+            });
+
+            // 2. TANGENTBORDS-NAVIGERING (Premium UX)
+            input.addEventListener('keydown', (e) => {
+                const items = list.querySelectorAll('.autocomplete-item');
+                if (list.style.display !== 'block' || items.length === 0) return;
+
+                if (e.key === 'ArrowDown') {
+                    e.preventDefault();
+                    this.focusedAutocompleteIndex++;
+                    if (this.focusedAutocompleteIndex >= items.length) this.focusedAutocompleteIndex = 0;
+                    this.updateAutocompleteFocus(items);
+                } else if (e.key === 'ArrowUp') {
+                    e.preventDefault();
+                    this.focusedAutocompleteIndex--;
+                    if (this.focusedAutocompleteIndex < 0) this.focusedAutocompleteIndex = items.length - 1;
+                    this.updateAutocompleteFocus(items);
+                } else if (e.key === 'Enter') {
+                    e.preventDefault();
+                    if (this.focusedAutocompleteIndex > -1) {
+                        items[this.focusedAutocompleteIndex].click();
+                    } else if (items.length > 0) {
+                        items[0].click(); // Välj första automatiskt vid enter
+                    }
+                } else if (e.key === 'Escape') {
+                    list.style.display = 'none';
+                }
             });
 
             list.addEventListener('click', (e) => {
                 if (e.target.classList.contains('autocomplete-item')) {
                     input.value = e.target.innerText;
+                    this.currentQuery = input.value.toLowerCase();
                     list.style.display = 'none';
-                    triggerRender();
+                    this.renderFeed();
                 }
             });
 
-            maxPrice.addEventListener('change', triggerRender);
-            minRooms.addEventListener('change', triggerRender);
-            sortSelect.addEventListener('change', triggerRender);
+            // 3. FILTER EVENTS
+            ['maxPriceSelect', 'minRoomsSelect', 'sortSelect'].forEach(id => {
+                document.getElementById(id).addEventListener('change', () => {
+                    this.renderFeed();
+                });
+            });
 
+            // Stäng autocomplete vid klick utanför
             document.addEventListener('click', (e) => {
                 if (!e.target.closest('.search-wrapper')) list.style.display = 'none';
             });
         },
 
-        toggleFavoriteStatus(url, event) {
-            event.stopPropagation();
+        updateAutocompleteFocus(items) {
+            items.forEach(item => item.classList.remove('focused'));
+            if (this.focusedAutocompleteIndex > -1) {
+                const activeItem = items[this.focusedAutocompleteIndex];
+                activeItem.classList.add('focused');
+                // Scrolla dropdown om det behövs
+                activeItem.scrollIntoView({ block: 'nearest' });
+            }
+        },
+
+        toggleFav(url, e) {
+            e.stopPropagation();
+            e.preventDefault();
             const idx = this.favorites.indexOf(url);
             if (idx > -1) {
                 this.favorites.splice(idx, 1);
-                event.currentTarget.classList.remove('active');
+                e.currentTarget.classList.remove('active');
             } else {
                 this.favorites.push(url);
-                event.currentTarget.classList.add('active');
+                e.currentTarget.classList.add('active');
             }
-            localStorage.setItem('empire_favs', JSON.stringify(this.favorites));
+            localStorage.setItem('allabostader_favs', JSON.stringify(this.favorites));
             
-            if (this.viewingFavorites) this.renderFeed();
+            // Om vi är i favorit-vyn, ta bort kortet direkt ur DOM:en för snabbhet
+            if (this.viewFavs && idx > -1) {
+                const card = e.currentTarget.closest('a');
+                if(card) {
+                    card.style.opacity = '0';
+                    setTimeout(() => this.renderFeed(), 300); // Låt animationen spela
+                }
+            }
         },
 
-        toggleFavoritesView() {
-            this.viewingFavorites = !this.viewingFavorites;
-            document.getElementById('favNavBtn').style.color = this.viewingFavorites ? "var(--heart)" : "var(--text-dark)";
+        toggleFavorites() {
+            this.viewFavs = !this.viewFavs;
+            const btn = document.getElementById('favNavBtn');
+            this.viewFavs ? btn.classList.add('active') : btn.classList.remove('active');
             this.renderFeed();
         },
 
         renderFeed() {
             const grid = document.getElementById('propertyGrid');
-            const counter = document.getElementById('resultsCount');
-            const sortMethod = document.getElementById('sortSelect').value;
             const maxPrice = parseInt(document.getElementById('maxPriceSelect').value) || Infinity;
             const minRooms = parseInt(document.getElementById('minRoomsSelect').value) || 0;
+            const sortMethod = document.getElementById('sortSelect').value;
             
-            // 1. Filtrering
+            // TOKENIZED SEARCH: Dela upp sökord. "Gävle villa" -> ['gävle', 'villa']
+            const searchTokens = this.currentQuery.split(' ').filter(Boolean);
+
+            // 1. O(N) Filtrering
             let filtered = this.data.filter(item => {
-                if (this.viewingFavorites && !this.favorites.includes(item.u)) return false;
+                if (this.viewFavs && !this.favorites.includes(item.u)) return false;
+                if (item.p > maxPrice) return false;
+                if ((parseInt(item.rooms) || 0) < minRooms) return false;
                 
-                const address = (item.a || "").toLowerCase();
-                const location = (item.s || "").toLowerCase();
-                const matchText = address.includes(this.currentQuery) || location.includes(this.currentQuery);
-                const matchPrice = item.p <= maxPrice;
-                const matchRooms = (parseInt(item.rooms) || 0) >= minRooms;
+                // Måste matcha ALLA ord i sökningen (oavsett ordning)
+                if (searchTokens.length > 0) {
+                    const searchBase = `${item.a || ""} ${item.s || ""} ${item.k || ""}`.toLowerCase();
+                    const matchesAll = searchTokens.every(token => searchBase.includes(token));
+                    if (!matchesAll) return false;
+                }
                 
-                return matchText && matchPrice && matchRooms;
+                return true;
             });
 
             // 2. Sortering
@@ -368,69 +430,74 @@
                 if (sortMethod === 'price_asc') return a.p - b.p;
                 if (sortMethod === 'price_desc') return b.p - a.p;
                 if (sortMethod === 'price_drop_desc') return (b.pc || 0) - (a.pc || 0);
-                return new Date(b.t || 0) - new Date(a.t || 0);
+                // Default: Nyast först
+                return new Date(b.firstSeen || b.t || 0) > new Date(a.firstSeen || a.t || 0) ? -1 : 1;
             });
 
-            counter.innerText = this.viewingFavorites 
-                ? `${filtered.length} sparade bostäder` 
-                : `${new Intl.NumberFormat('sv-SE').format(filtered.length)} bostäder till salu`;
+            // 3. Uppdatera H2 Räknare
+            const formatter = new Intl.NumberFormat('sv-SE');
+            const countStr = formatter.format(filtered.length);
+            document.getElementById('resultsCount').innerText = this.viewFavs ? `${countStr} sparade bostäder` : `${countStr} träffar`;
+
+            // Töm grid
+            grid.innerHTML = '';
 
             if (filtered.length === 0) {
-                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #64748B; font-size: 1.2rem; background: #fff; border-radius: 20px; border: 1px solid #E2E8F0;">Inga bostäder hittades. Justera dina filter.</div>';
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; background: #fff; border-radius: 16px; border: 1px dashed var(--border-color); color: var(--text-muted); font-size: 1.1rem;">Inga bostäder matchade din sökning. Prova att ändra dina filter.</div>';
                 return;
             }
 
-            const formatter = new Intl.NumberFormat('sv-SE');
-
-            grid.innerHTML = filtered.slice(0, 100).map((item, index) => {
+            // 4. VIRTUAL DOM FRAGMENT (Förhindrar webbläsarlagg)
+            const fragment = document.createDocumentFragment();
+            
+            // Renderar max 120 åt gången för prestanda (Laddar resten via lazy om vi bygger ut det)
+            filtered.slice(0, 120).forEach((item, index) => {
                 const exactPrice = formatter.format(item.p) + ' kr';
-                const area = item.area ? `${item.area} m²` : '';
-                const rooms = item.rooms ? `${item.rooms} rum` : '';
                 const isFav = this.favorites.includes(item.u) ? 'active' : '';
                 
-                let badgesHTML = '';
+                let badges = '';
                 if (item.pc && item.pc > 0) {
-                    badgesHTML += `<div class="badge drop">Prissänkt ${item.pc}%</div>`;
-                } else if (item.firstSeen && (new Date() - new Date(item.firstSeen)) < 604800000) {
-                    badgesHTML += `<div class="badge">Nyhet</div>`;
+                    badges += `<div class="badge drop">Sänkt ${item.pc}%</div>`;
+                } else if (item.firstSeen && (new Date() - new Date(item.firstSeen)) < 432000000) { 
+                    // < 5 dagar
+                    badges += `<div class="badge">Ny</div>`; 
                 }
 
-                let oldPriceHTML = '';
-                if (item.oldPrice && item.oldPrice > item.p) {
-                    oldPriceHTML = `<div class="old-price">${formatter.format(item.oldPrice)} kr</div>`;
-                }
-
-                // Staggered animation delay
-                const delay = (index % 12) * 0.05;
-
-                return `
-                <div class="property-card" style="animation-delay: ${delay}s;" onclick="window.open('${item.u}', '_blank')">
-                    <button class="fav-btn ${isFav}" onclick="App.toggleFavoriteStatus('${item.u}', event)" aria-label="Spara bostad">
-                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
-                    </button>
-                    <div class="card-image">
-                        <div class="badge-container">${badgesHTML}</div>
-                        <img src="${item.img || 'https://via.placeholder.com/600x400?text=Bild+saknas'}" loading="lazy" alt="${item.a}">
-                    </div>
-                    <div class="card-content">
-                        <div class="price-row">
-                            <div class="price">${exactPrice}</div>
-                            ${oldPriceHTML}
+                const cardHtml = `
+                <a href="${item.u}" target="_blank" rel="noopener noreferrer" style="text-decoration:none; color:inherit; display:block;">
+                    <div class="property-card">
+                        <button class="fav-btn ${isFav}" onclick="App.toggleFav('${item.u}', event)" aria-label="Spara bostad">
+                            <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                        </button>
+                        <div class="card-image">
+                            <div class="badges">${badges}</div>
+                            <img src="${item.img || 'https://via.placeholder.com/600x450?text=Bild+saknas'}" loading="lazy" decoding="async" alt="${item.a}">
                         </div>
-                        <h2 class="address">${item.a}</h2>
-                        <div class="location">${item.s || 'Sverige'}</div>
-                        
-                        <div class="specs">
-                            ${area ? `<span>${area}</span>` : ''}
-                            ${area && rooms ? '<span>•</span>' : ''}
-                            ${rooms ? `<span>${rooms}</span>` : ''}
+                        <div class="card-content">
+                            <div class="price-row">
+                                <div class="price">${exactPrice}</div>
+                                ${item.oldPrice && item.oldPrice > item.p ? `<div class="old-price">${formatter.format(item.oldPrice)} kr</div>` : ''}
+                            </div>
+                            <h2 class="address">${item.a}</h2>
+                            <div class="location">${item.s || ''} ${item.k ? `(${item.k})` : ''}</div>
+                            <div class="specs">
+                                ${item.area ? `<span>${item.area} m²</span>` : ''}
+                                ${item.area && item.rooms ? '<span style="color:var(--border-color);">|</span>' : ''}
+                                ${item.rooms ? `<span>${item.rooms} rum</span>` : ''}
+                            </div>
                         </div>
-                        
-                        <a href="${item.u}" target="_blank" class="action-btn" onclick="event.stopPropagation()">Gå till mäklaren</a>
                     </div>
-                </div>
+                </a>
                 `;
-            }).join('');
+                
+                // Omvandla strängen till ett riktigt DOM-element för att lägga i fragmentet
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = cardHtml.trim();
+                fragment.appendChild(tempDiv.firstChild);
+            });
+
+            // Tryck in allt på skärmen samtidigt = Noll lagg.
+            grid.appendChild(fragment);
         }
     };
 
