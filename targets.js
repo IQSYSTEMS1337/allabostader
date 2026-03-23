@@ -1,44 +1,81 @@
-// targets.js - FULLSTÄNDIG TARGET-LISTA FÖR TOTAL DOMINANS
-const baseAgencies = [
-    { name: "Fastighetsbyrån", url: "https://www.fastighetsbyran.com/sv/sverige/till-salu" },
-    { name: "Svensk Fast", url: "https://www.svenskfast.se/bostad" },
-    { name: "Länsförsäkringar", url: "https://www.lansfast.se/till-salu" },
-    { name: "Bjurfors", url: "https://www.bjurfors.se/sv/tillsalu" },
-    { name: "Mäklarhuset", url: "https://www.maklarhuset.se/forsaljning" },
-    { name: "HusmanHagberg", url: "https://www.husmanhagberg.se/objekt-till-salu" },
-    { name: "SkandiaMäklarna", url: "https://www.skandiamaklarna.se/till-salu" },
-    { name: "Erik Olsson", url: "https://www.erikolsson.se/sok-bostad" },
-    { name: "Notar", url: "https://www.notar.se/kopa-bostad/objekt-till-salu" },
-    { name: "Mäklarringen", url: "https://www.maklarringen.se/kopa/sok-bostad" },
-    { name: "Mohv", url: "https://www.mohv.se/kopa/bostader-till-salu" },
-    { name: "Våningen & Villan", url: "https://www.vaningen.se/objekt" },
-    { name: "Lagerlings", url: "https://lagerlings.se/objekt" },
-    { name: "Wrede", url: "https://www.wrede.se/objekt" },
-    { name: "Skeppsholmen", url: "https://www.skeppsholmen.se/objekt" },
-    { name: "ESNY", url: "https://esny.se/objekt" },
-    { name: "Fantastic Frank", url: "https://www.fantasticfrank.se/bostader-till-salu" },
-    { name: "Historiska Hem", url: "https://historiskahem.se/tillsalu" },
-    { name: "JM", url: "https://www.jm.se/sok-bostad" },
-    { name: "Bonava", url: "https://www.bonava.se/bostad" },
-    { name: "OBOS", url: "https://obos.se/hitta-bostad" }
-    // ... systemet fyller i resterande 280+ via kommun-sharding nedan
+// targets.js - THE APEX SHARDING MATRIX (Laglig & Maximal Täckning)
+
+const swedishCounties = [
+    "stockholms-lan", "skane-lan", "vastra-gotalands-lan", 
+    "uppsala-lan", "ostergotlands-lan", "sodermanlands-lan",
+    "jonkopings-lan", "kronobergs-lan", "kalmar-lan", 
+    "gotlands-lan", "blekinge-lan", "hallands-lan", 
+    "varmlands-lan", "orebro-lan", "vastmanlands-lan", 
+    "dalarnas-lan", "gavleborgs-lan", "vasternorrlands-lan", 
+    "jamtlands-lan", "vasterbottens-lan", "norrbottens-lan"
 ];
 
-const swedishMunicipalities = [
-    "stockholm", "goteborg", "malmo", "uppsala", "vasteras", "orebro", "linkoping", "helsingborg", "jonkoping", "norrkoping",
-    "lund", "umea", "gavle", "boras", "sodertalje", "eskilstuna", "halmstad", "vaxjo", "karlstad", "taby", "sundsvall",
-    "ostersund", "lulea", "trollhattan", "lidingo", "molndal", "varberg", "ornskoldsvik", "nykoping", "falun", "skelleftea",
-    "uddevalla", "skovde", "karlskrona", "kristianstad", "kungsbacka", "akersberga", "vallentuna", "solna", "huddinge", "nacka",
-    "botkyrka", "haninge", "tyreso", "upplands-vasby", "upplands-bro", "sigtuna", "danderyd", "jarfalla", "ekerö"
-    // Denna lista expanderas automatiskt till alla 290 kommuner
-];
+// Generera regionala djuplänkar för att kringgå gränser för sökresultat
+const generateDeepShards = () => {
+    const targets = [];
+    
+    swedishCounties.forEach(county => {
+        // Fastighetsbyrån
+        targets.push({
+            name: `Fastighetsbyrån (${county})`,
+            url: `https://www.fastighetsbyran.com/sv/sverige/till-salu/${county}`
+        });
+        
+        // Svensk Fastighetsförmedling
+        targets.push({
+            name: `Svensk Fast (${county})`,
+            url: `https://www.svenskfast.se/bostad/${county}/`
+        });
 
-const targets = [...baseAgencies];
-swedishMunicipalities.forEach(city => {
-    targets.push({
-        name: `DeepScan ${city.toUpperCase()}`,
-        url: `https://www.hemnet.se/bostader?location_ids[]=${city}`
+        // Bjurfors
+        targets.push({
+            name: `Bjurfors (${county})`,
+            url: `https://www.bjurfors.se/sv/tillsalu/${county}/?view=list`
+        });
+
+        // Länsförsäkringar Fastighetsförmedling
+        targets.push({
+            name: `Länsförsäkringar (${county})`,
+            url: `https://www.lansfast.se/till-salu/bostad/sok/?q=${county}`
+        });
+        
+        // SkandiaMäklarna
+        targets.push({
+            name: `SkandiaMäklarna (${county})`,
+            url: `https://www.skandiamaklarna.se/till-salu/bostader/${county}`
+        });
+        
+        // HusmanHagberg
+        targets.push({
+            name: `HusmanHagberg (${county})`,
+            url: `https://www.husmanhagberg.se/sok/alla/?lan=${county}`
+        });
+        
+        // Mäklarhuset
+        targets.push({
+            name: `Mäklarhuset (${county})`,
+            url: `https://www.maklarhuset.se/bostad/${county}`
+        });
     });
-});
 
-module.exports = targets;
+    return targets;
+};
+
+// Premium-mäklare och nischbyråer (Deras utbud är mindre, nationell sökning räcker)
+const boutiqueAgencies = [
+    { name: "Erik Olsson", url: "https://www.erikolsson.se/bostader-till-salu/" },
+    { name: "Notar", url: "https://www.notar.se/kopa-bostad/bostader-till-salu" },
+    { name: "Mohv", url: "https://www.mohv.se/bostader-till-salu/" },
+    { name: "Våningen & Villan", url: "https://www.vaningen.se/objekt" },
+    { name: "Lagerlings", url: "https://lagerlings.se/bostader-till-salu/" },
+    { name: "Wrede", url: "https://www.wrede.se/objekt" },
+    { name: "Skeppsholmen", url: "https://www.skeppsholmen.se/sv/bostader/" },
+    { name: "ESNY", url: "https://esny.se/tillsalu/" },
+    { name: "Fantastic Frank", url: "https://www.fantasticfrank.se/bostader-till-salu" },
+    { name: "Historiska Hem", url: "https://historiskahem.se/tillsalu/" },
+    { name: "Mäklarringen", url: "https://www.maklarringen.se/kopa/sok-bostad/" }
+];
+
+const apexTargets = [...generateDeepShards(), ...boutiqueAgencies];
+
+module.exports = apexTargets;
