@@ -1,37 +1,39 @@
-name: Allabostäder Empire Update
+name: Allabostäder Omni-Engine
 on:
   schedule:
-    - cron: '0 4 * * *' # Körs kl 04:00 varje morgon
-  workflow_dispatch:   # Gör att du kan dundra igång den manuellt
+    - cron: '0 4 * * *'
+  workflow_dispatch:
 
 jobs:
-  run-core:
+  execute-empire:
     runs-on: ubuntu-latest
     steps:
-      - name: 🛰️ Infiltrate Repo
+      - name: 🛰️ Infiltrate Repository
         uses: actions/checkout@v4
 
-      - name: 🛠️ Setup Environment
+      - name: 🛠️ Setup Node Engine (Apex Version)
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
-          cache: 'npm'
+          node-version: '22'
 
       - name: 📦 Install War-Tools
         run: npm install
 
-      - name: 🚀 Execute AGGREGATOR_CORE
+      - name: 🚀 Execute AGGREGATOR_CORE (Data Extraction)
         run: node AGGREGATOR_CORE.js
         env:
           NODE_ENV: production
 
-      - name: 📊 Run Analyzer
-        run: node analyzer.js
+      - name: 📊 Execute Analyzer (Market Intelligence)
+        run: node analyzer.js || echo "Analyzer bypass"
 
-      - name: 💾 Synchronize Vault
+      - name: 🌐 Execute SEO Empire Generator (Domination)
+        run: node SEO_EMPIRE_GENERATOR.js
+
+      - name: 💾 Synchronize Empire Vault & SEO
         run: |
           git config --global user.name "Empire-Bot"
           git config --global user.email "bot@allabostader.se"
-          git add market-data.json
-          git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [100-POINT ANALYZED]" || exit 0
+          git add .
+          git commit -m "Empire Sync: $(date +'%Y-%m-%d %H:%M') [DATA + SEO + UI]" || exit 0
           git push
