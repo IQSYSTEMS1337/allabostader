@@ -3,121 +3,99 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs');
 const targets = require('./targets');
 
+// Aktivera Stealth för att se ut som en vanlig människa (undvik bannlysning)
 puppeteer.use(StealthPlugin());
 
-// KONFIGURATION
-const CONCURRENCY_LIMIT = 10; // Hur många mäklarsidor som infiltreras samtidigt
-const DATA_FILE = 'market-data.json';
-
-async function scrapeTarget(target, browser) {
-    const page = await browser.newPage();
-    // Maskera som en vanlig användare på iPhone/Chrome
-    await page.setUserAgent('Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1');
-    
-    try {
-        console.log(`>> [ATTACK] Infiltrating: ${target.name}...`);
-        
-        // Gå till källan med generös timeout
-        await page.goto(target.url, { waitUntil: 'networkidle2', timeout: 60000 });
-
-        // Scrolla ner för att trigga lazy-loading (viktigt för att ta ALLA objekt)
-        await page.evaluate(async () => {
-            await new Promise((resolve) => {
-                let totalHeight = 0;
-                let distance = 100;
-                let timer = setInterval(() => {
-                    let scrollHeight = document.body.scrollHeight;
-                    window.scrollBy(0, distance);
-                    totalHeight += distance;
-                    if (totalHeight >= scrollHeight) {
-                        clearInterval(timer);
-                        resolve();
-                    }
-                }, 100);
-            });
-        });
-
-        // EXTRAHERA DATA (Anpassad för att hitta de vanligaste CSS-strukturerna)
-        const listings = await page.evaluate((sourceName) => {
-            // Sök efter allt som ser ut som en länk till ett objekt eller ett priskort
-            const cards = Array.from(document.querySelectorAll('a, div[class*="card"], li[class*="item"]'));
-            
-            return cards.map(c => {
-                const text = c.innerText || "";
-                // Enkel regex för att hitta priser (t.ex. 4 500 000 kr)
-                const priceMatch = text.match(/(\d[\d\s]{4,})\s*(kr|sek)/i);
-                // Regex för kvadratmeter
-                const areaMatch = text.match(/(\d+)\s*(m²|kvm)/i);
-                
-                if (!priceMatch) return null;
-
-                return {
-                    a: text.split('\n')[0].substring(0, 50), // Gissad adress (första raden)
-                    p: parseInt(priceMatch[1].replace(/\s/g, '')),
-                    area: areaMatch ? parseInt(areaMatch[1]) : null,
-                    u: c.href || window.location.href,
-                    s: sourceName,
-                    firstSeen: new Date().toISOString()
-                };
-            }).filter(item => item && item.p > 100000); // Filtrera bort skräp
-        }, target.name);
-
-        await page.close();
-        return listings;
-
-    } catch (err) {
-        console.error(`[!] FAILED ${target.name}: ${err.message}`);
-        await page.close();
-        return [];
-    }
-}
-
 async function runTotalInfiltration() {
-    console.log(`\n>> [SYSTEM] INITIALIZING NEURAL SWEEP: ${targets.length} SOURCES`);
+    console.log(">> [SYSTEM] INITIALIZING MASSIVE MARKET INFILTRATION...");
     
     const browser = await puppeteer.launch({
         headless: "new",
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-web-security']
+        args: [
+            '--no-sandbox', 
+            '--disable-setuid-sandbox', 
+            '--disable-dev-shm-usage',
+            '--disable-accelerated-2d-canvas',
+            '--disable-gpu',
+            '--window-size=1920,1080'
+        ]
     });
 
+    // Ladda befintlig data för att kunna jämföra prissänkningar (Ditt 300-punkts index kräver historik)
     let vault = [];
-    if (fs.existsSync(DATA_FILE)) {
-        vault = JSON.parse(fs.readFileSync(DATA_FILE, 'utf8'));
+    if (fs.existsSync('market-data.json')) {
+        vault = JSON.parse(fs.readFileSync('market-data.json', 'utf8'));
     }
 
-    // PARALLELL EXEKVERING (BATCHES)
-    for (let i = 0; i < targets.length; i += CONCURRENCY_LIMIT) {
-        const batch = targets.slice(i, i + CONCURRENCY_LIMIT);
-        const results = await Promise.all(batch.map(t => scrapeTarget(t, browser)));
+    for (const target of targets) {
+        console.log(`>> [SCANNING] Target: ${target.name} | URL: ${target.url}`);
+        const page = await browser.newPage();
         
-        const newObjects = results.flat();
-        
-        // Merge & De-duplicate (Håll Vaultet rent)
-        newObjects.forEach(obj => {
-            const exists = vault.find(v => v.u === obj.u);
-            if (!exists) {
-                vault.push(obj);
-            } else {
-                // Uppdatera pris om det ändrats (Price Drop detection)
-                if (exists.p > obj.p) {
-                    exists.pc = Math.round(((exists.p - obj.p) / exists.p) * 100);
-                    exists.p = obj.p;
+        // Sätt en realistisk User-Agent
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36');
+
+        try {
+            // Gå till källan
+            await page.goto(target.url, { waitUntil: 'networkidle2', timeout: 60000 });
+
+            // DEEP SCAN: Vi hämtar ALLT. Adress, Pris, Area, och hela beskrivningen för din 300-punkts analys.
+            const listings = await page.evaluate((sName) => {
+                const results = [];
+                // Vi letar efter alla länkar som ser ut som bostäder
+                const anchors = Array.from(document.querySelectorAll('a'));
+                
+                anchors.forEach(a => {
+                    const text = a.innerText || "";
+                    // Filter: Måste innehålla pris eller yta för att vara ett objekt
+                    if (text.includes('kr') || text.includes('m²') || text.includes('rum')) {
+                        results.push({
+                            a: text.split('\n')[0].trim(), // Adress (ofta första raden)
+                            p: parseInt(text.replace(/\D/g, '')) || 0, // Extrahera siffror för pris
+                            u: a.href, // Länken till objektet
+                            s: sName, // Vilken mäklare (för Partner-status)
+                            d: text.replace(/\s+/g, ' ').trim(), // Hela textmassan för Analyzer.js
+                            scrapedAt: new Date().toISOString()
+                        });
+                    }
+                });
+                return results;
+            }, target.name);
+
+            // INTELLIGENT MERGE & PRICE TRACKING
+            listings.forEach(newItem => {
+                const existingIndex = vault.findIndex(v => v.u === newItem.u);
+                
+                if (existingIndex > -1) {
+                    // Om priset har ändrats -> Beräkna prissänkning (Din PC-faktor)
+                    const oldPrice = vault[existingIndex].p;
+                    if (newItem.p < oldPrice && newItem.p > 0) {
+                        newItem.pc = Math.round(((oldPrice - newItem.p) / oldPrice) * 100);
+                        console.log(`>> [PRICE DROP] Detected -${newItem.pc}% på ${newItem.a}`);
+                    } else if (vault[existingIndex].pc) {
+                        newItem.pc = vault[existingIndex].pc; // Behåll gammal sänkning om priset är samma
+                    }
+                    vault[existingIndex] = { ...vault[existingIndex], ...newItem };
+                } else {
+                    // Nytt objekt hittat (Kommande eller nyss utlagt)
+                    vault.push(newItem);
                 }
-            }
-        });
+            });
 
-        console.log(`>> [PROGRESS] ${i + batch.length}/${targets.length} targets processed. Vault size: ${vault.length}`);
+        } catch (err) {
+            console.log(`>> [WARN] Could not infiltrate ${target.name}: ${err.message}`);
+        } finally {
+            await page.close();
+        }
         
-        // Spara efter varje batch så vi inte tappar data vid krasch
-        fs.writeFileSync(DATA_FILE, JSON.stringify(vault, null, 2));
+        // Slumpmässig paus för att lura anti-bot system
+        await new Promise(r => setTimeout(r, 2000 + Math.random() * 3000));
     }
 
+    // SPARA ALL DATA TILL DIN DATABASE (JSON)
+    fs.writeFileSync('market-data.json', JSON.stringify(vault, null, 2));
+    
     await browser.close();
-    console.log(`\n>> [SUCCESS] TOTAL INFILTRATION COMPLETE.`);
-    console.log(`>> [STATS] TOTAL OBJECTS IN VAULT: ${vault.length}`);
+    console.log(`>> [SUCCESS] Infiltration complete. ${vault.length} targets in vault.`);
 }
 
-runTotalInfiltration().catch(err => {
-    console.error("CRITICAL SYSTEM ERROR:", err);
-    process.exit(1);
-});
+runTotalInfiltration();
