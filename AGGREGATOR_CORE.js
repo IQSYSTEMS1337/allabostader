@@ -5,51 +5,59 @@ const fs = require('fs');
 puppeteer.use(StealthPlugin());
 
 (async () => {
-    console.log("🚀 STARTAR AGGREGATOR-X v3.0...");
+    console.log("🚀 AGGREGATOR-X: DEEP SCAN STARTING...");
     const browser = await puppeteer.launch({ 
         headless: "new", 
-        args: ['--no-sandbox', '--disable-setuid-sandbox'] 
+        args: ['--no-sandbox', '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'] 
     });
     const page = await browser.newPage();
     
-    // Vi testar en stabil länk först för att se att allt lirar
-    const targetUrl = 'https://www.booli.se/slutpriser/stockholms+lan/1'; 
+    // Vi testar Hemnet istället, de är ofta lättare att skrapa utan inlogg
+    const targetUrl = 'https://www.hemnet.se/bostader?location_ids%5B%5D=17755'; 
     
     try {
-        console.log(`🌐 SURFAR TILL: ${targetUrl}`);
-        await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });
+        await page.setViewport({ width: 1280, height: 800 });
+        console.log(`🌐 SCANNING: ${targetUrl}`);
+        await page.goto(targetUrl, { waitUntil: 'domcontentloaded', timeout: 60000 });
         
-        // Vänta på att husen faktiskt dyker upp på skärmen
-        await page.waitForSelector('a', { timeout: 10000 });
+        // Vänta på att listan laddar
+        await page.waitForTimeout(5000); 
 
         const listings = await page.evaluate(() => {
-            const results = [];
-            // Vi letar efter alla länkar som ser ut som bostäder
-            document.querySelectorAll('a').forEach(el => {
-                if(el.href.includes('/annons/') || el.href.includes('/bostad/')) {
-                    results.push({
-                        address: el.innerText.split('\n')[0] || "Dold Adress",
-                        url: el.href,
-                        source: "BOOLI_X",
-                        date: new Date().toLocaleDateString()
+            const items = [];
+            // Letar efter Hemnets nya CSS-klasser
+            document.querySelectorAll('.hcl-card').forEach(el => {
+                const address = el.querySelector('.hcl-card__title')?.innerText;
+                const price = el.querySelector('.hcl-card__content-item')?.innerText;
+                const link = el.querySelector('a')?.href;
+                
+                if(address && link) {
+                    items.push({
+                        address: address.trim(),
+                        price: price ? price.trim() : "Pris saknas",
+                        url: link,
+                        source: "HEMNET_LIVE",
+                        date: new Date().toLocaleTimeString()
                     });
                 }
             });
-            return results.slice(0, 10); // Ta de 10 senaste
+            return items;
         });
 
-        console.log(`✅ HITTADE ${listings.length} BOSTÄDER!`);
+        console.log(`✅ SUCCESS: HITTADE ${listings.length} OBJEKT!`);
         
-        // Spara filen (Här sker magin)
-        fs.writeFileSync('market-data.json', JSON.stringify(listings, null, 2));
-        console.log("💾 FIL SPARAD: market-data.json");
+        if(listings.length > 0) {
+            fs.writeFileSync('market-data.json', JSON.stringify(listings, null, 2));
+            console.log("💾 MATRIX UPDATED.");
+        } else {
+            // Om den inte hittar något, skapa en nödfils-lista så vi ser att boten lever
+            fs.writeFileSync('market-data.json', JSON.stringify([{address: "SÖKER EFTER NYA OBJEKT...", source: "SYSTEM_IDLE"}], null, 2));
+        }
 
     } catch (error) {
-        console.log("❌ ERROR:", error.message);
-        // Skapa en tom fil om det skiter sig så sajten inte dör helt
-        fs.writeFileSync('market-data.json', JSON.stringify([{address: "Inga nya objekt hittade just nu", url: "#"}], null, 2));
+        console.log("❌ CRITICAL ERROR:", error.message);
     }
 
     await browser.close();
-    console.log("🏁 KLAR.");
+    console.log("🏁 SCAN COMPLETE.");
 })();
