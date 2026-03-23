@@ -1,116 +1,34 @@
-const { Cluster } = require('puppeteer-cluster');
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const fs = require('fs');
-const csv = require('csv-parse/sync');
+name: Allabostäder Daily Infiltration
+on:
+  schedule:
+    - cron: '0 4 * * *' # Automatiskt varje morgon
+  workflow_dispatch:   # Manuell start-knapp (viktigt för tester)
 
-puppeteer.use(StealthPlugin());
+jobs:
+  empire-build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🛰️ Infiltrate Repository
+        uses: actions/checkout@v4
 
-async function runEliteEmpireScraper() {
-    console.log(">> [SYSTEM] STARTING OMNI-SCRAPER V20: GITHUB-ACTION OPTIMIZED");
+      - name: 🛠️ Setup Node Engine
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
 
-    // 1. LADDA AIORTER
-    let orterDB = [];
-    try {
-        const aiorterRaw = fs.readFileSync('Aiorter.csv', 'utf8');
-        orterDB = csv.parse(aiorterRaw, { columns: true, skip_empty_lines: true, delimiter: ';' });
-        console.log(`>> [DB] Loaded ${orterDB.length} locations.`);
-    } catch (e) {
-        console.log(">> [ERROR] Aiorter.csv missing or corrupt.");
-    }
+      - name: 📦 Install War-Tools
+        run: npm install
 
-    // 2. LADDA EXISTERANDE DATA
-    let vault = [];
-    if (fs.existsSync('market-data.json')) {
-        vault = JSON.parse(fs.readFileSync('market-data.json', 'utf8'));
-    }
+      - name: 🚀 Execute Omni-Scraper V20
+        run: node scraper.js
+        env:
+          NODE_ENV: production
 
-    // 3. KONFIGURERA CLUSTER FÖR GITHUB ACTIONS (Kritisk ändring här!)
-    const cluster = await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_PAGE,
-        maxConcurrency: 2, // GitHub Actions har begränsat med RAM
-        puppeteerOptions: {
-            headless: "new",
-            args: [
-                '--no-sandbox', 
-                '--disable-setuid-sandbox', 
-                '--disable-dev-shm-usage', // Fixar krascher i Docker/Linux-miljö
-                '--disable-accelerated-2d-canvas',
-                '--no-first-run',
-                '--no-zygote',
-                '--single-process', // Sparar massor av RAM på GitHub
-                '--disable-gpu'
-            ]
-        }
-    });
-
-    await cluster.task(async ({ page, data: target }) => {
-        // Maskering
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
-        
-        try {
-            console.log(`>> [TARGET] Infiltrating ${target.name}...`);
-            // Sätt en rejäl timeout för att inte dö vid segt nätverk
-            await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: 60000 });
-
-            // Enkel scroll för att väcka lazy-loading
-            await page.evaluate(() => window.scrollBy(0, window.innerHeight));
-
-            const listings = await page.evaluate((orter) => {
-                const found = [];
-                const items = document.querySelectorAll('li, div[class*="listing"], article, a');
-                
-                items.forEach(el => {
-                    const text = el.innerText || "";
-                    if (text.includes('kr') && (text.includes('m²') || text.includes('rum'))) {
-                        const pRaw = text.replace(/\s/g, '').match(/(\d{6,10})/);
-                        const price = pRaw ? parseInt(pRaw[1]) : 0;
-                        
-                        if (price > 100000) {
-                            const link = el.href || el.querySelector('a')?.href || "";
-                            if (!link) return;
-
-                            found.push({
-                                a: text.split('\n')[0].substring(0, 50),
-                                p: price,
-                                u: link,
-                                img: el.querySelector('img')?.src || "",
-                                t: new Date().toISOString()
-                            });
-                        }
-                    }
-                });
-                return found;
-            }, orterDB);
-
-            // Merge logik
-            listings.forEach(item => {
-                const idx = vault.findIndex(v => v.u === item.u);
-                if (idx > -1) {
-                    if (vault[idx].p !== item.p) {
-                        item.oldPrice = vault[idx].p;
-                        item.priceChange = Math.round(((vault[idx].p - item.p) / vault[idx].p) * 100);
-                    }
-                    vault[idx] = { ...vault[idx], ...item };
-                } else {
-                    item.firstSeen = new Date().toISOString();
-                    vault.push(item);
-                }
-            });
-
-            fs.writeFileSync('market-data.json', JSON.stringify(vault, null, 2));
-            console.log(`>> [SUCCESS] ${target.name} processed.`);
-
-        } catch (err) {
-            console.error(`>> [FAILED] ${target.name}: ${err.message}`);
-        }
-    });
-
-    const targets = require('./targets');
-    targets.forEach(t => cluster.queue(t));
-
-    await cluster.idle();
-    await cluster.close();
-}
-
-runEliteEmpireScraper();
+      - name: 💾 Synchronize Empire Vault
+        run: |
+          git config --global user.name "Empire-Bot"
+          git config --global user.email "bot@allabostader.se"
+          git add market-data.json
+          git commit -m "Market Update: $(date +'%Y-%m-%d %H:%M')" || exit 0
+          git push
