@@ -1,0 +1,35 @@
+name: Eternal Market Infiltration
+
+on:
+  schedule:
+    - cron: '*/15 * * * *' # Kör var 15:e minut
+  workflow_dispatch:      # Tillåter dig att starta den manuellt
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Run Aggregator
+        run: node AGGREGATOR_CORE.js
+
+      - name: Run Analyzer
+        run: node analyzer.js
+
+      - name: Commit & Push Changes
+        run: |
+          git config --global user.name "Sovereign-Bot"
+          git config --global user.email "bot@sovereign.ai"
+          git add market-data.json
+          git commit -m "Automatisk uppdatering: $(date)" || exit 0
+          git push
