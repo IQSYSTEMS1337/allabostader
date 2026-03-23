@@ -2,7 +2,7 @@ name: Eternal Market Infiltration
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
+    - cron: '*/10 * * * *' # KÖR VAR 10:E MINUT NU
   workflow_dispatch:
 
 jobs:
@@ -17,24 +17,24 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20' # Uppgraderat till v20 för bättre stöd
+          node-version: '20'
 
       - name: Install Dependencies
-        # Vi lägger till --no-audit och struntar i varningar helt
-        run: |
-          npm install --no-audit --no-fund --loglevel=error || npm install --legacy-peer-deps
+        run: npm install --no-audit --no-fund --loglevel=error
 
-      - name: Run Aggregator
-        # Om den dör här, skrivs felet ut men bygget stoppas inte helt
-        run: node AGGREGATOR_CORE.js || echo "Aggregator slutförd med varningar."
+      - name: Deep Infiltration
+        # Vi lägger till en miljövariabel som säger åt skrapan att köra DJUPT
+        run: node AGGREGATOR_CORE.js --depth=MAX --shards=300
+        env:
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: false
 
-      - name: Run Analyzer
+      - name: Neural Arbitrage
         run: node analyzer.js
 
-      - name: Commit & Push Changes
+      - name: Sync Vault
         run: |
           git config --global user.name "Sovereign-Bot"
           git config --global user.email "bot@sovereign.ai"
           git add market-data.json
-          git commit -m "Auto-Update: $(date)" || exit 0
+          git commit -m "Infiltration Level Up: $(date)" || exit 0
           git push
