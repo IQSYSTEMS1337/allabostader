@@ -4,43 +4,52 @@ const fs = require('fs');
 
 puppeteer.use(StealthPlugin());
 
-async function runGlobalScan() {
+(async () => {
+    console.log("🚀 STARTAR AGGREGATOR-X v3.0...");
     const browser = await puppeteer.launch({ 
         headless: "new", 
-        args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage'] 
+        args: ['--no-sandbox', '--disable-setuid-sandbox'] 
     });
-
-    const targets = [
-        { name: 'Hemnet', url: 'https://www.hemnet.se/bostader', selector: '.js-listing-card' },
-        { name: 'Booli', url: 'https://www.booli.se/sok/till-salu', selector: '[data-testid="search-result-item"]' },
-        { name: 'Fastighetsbyran', url: 'https://www.fastighetsbyran.com/sv/sverige/till-salu/', selector: '.property-card-container' }
-    ];
-
-    let allHouses = [];
     const page = await browser.newPage();
-    await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
+    
+    // Vi testar en stabil länk först för att se att allt lirar
+    const targetUrl = 'https://www.booli.se/slutpriser/stockholms+lan/1'; 
+    
+    try {
+        console.log(`🌐 SURFAR TILL: ${targetUrl}`);
+        await page.goto(targetUrl, { waitUntil: 'networkidle2', timeout: 60000 });
+        
+        // Vänta på att husen faktiskt dyker upp på skärmen
+        await page.waitForSelector('a', { timeout: 10000 });
 
-    for (let target of targets) {
-        try {
-            await page.goto(target.url, { waitUntil: 'networkidle2', timeout: 60000 });
-            const data = await page.evaluate((sel, sourceName) => {
-                return Array.from(document.querySelectorAll(sel)).map(el => {
-                    const priceText = el.querySelector('[class*="price"], [class*="pris"]')?.innerText || "0";
-                    return {
-                        id: Math.random().toString(36).substr(2, 9).toUpperCase(),
-                        address: el.querySelector('h2, .address')?.innerText.trim() || "ADRESS SAKNAS",
-                        location: el.querySelector('[class*="location"], [class*="area"]')?.innerText.trim() || "SVERIGE",
-                        price: priceText,
-                        source: sourceName
-                    };
-                });
-            }, target.selector, target.name);
-            allHouses = [...allHouses, ...data];
-        } catch (e) { console.log(`Blockad hos ${target.name}`); }
+        const listings = await page.evaluate(() => {
+            const results = [];
+            // Vi letar efter alla länkar som ser ut som bostäder
+            document.querySelectorAll('a').forEach(el => {
+                if(el.href.includes('/annons/') || el.href.includes('/bostad/')) {
+                    results.push({
+                        address: el.innerText.split('\n')[0] || "Dold Adress",
+                        url: el.href,
+                        source: "BOOLI_X",
+                        date: new Date().toLocaleDateString()
+                    });
+                }
+            });
+            return results.slice(0, 10); // Ta de 10 senaste
+        });
+
+        console.log(`✅ HITTADE ${listings.length} BOSTÄDER!`);
+        
+        // Spara filen (Här sker magin)
+        fs.writeFileSync('market-data.json', JSON.stringify(listings, null, 2));
+        console.log("💾 FIL SPARAD: market-data.json");
+
+    } catch (error) {
+        console.log("❌ ERROR:", error.message);
+        // Skapa en tom fil om det skiter sig så sajten inte dör helt
+        fs.writeFileSync('market-data.json', JSON.stringify([{address: "Inga nya objekt hittade just nu", url: "#"}], null, 2));
     }
 
-    // SPARAR DEN ÄKTA FILEN SOM INDEX.HTML LÄSER
-    fs.writeFileSync('market-data.json', JSON.stringify(allHouses, null, 2));
     await browser.close();
-}
-runGlobalScan();
+    console.log("🏁 KLAR.");
+})();
