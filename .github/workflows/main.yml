@@ -1,59 +1,70 @@
-name: Eternal Market Infiltration - 300+ Sources
+name: Eternal Market Infiltration - 400K Matrix
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # Kör var 15:e minut för konstant uppdatering
-  workflow_dispatch: # Tillåter dig att starta den manuellt när du vill
+    - cron: '*/15 * * * *' # Körs var 15:e minut för konstant dominans
+  workflow_dispatch: # Tillåter manuell start för omedelbar infiltration
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Vi ger jobbet extra tid eftersom 300 källor kräver uthållighet
+    # Vi ger processen 6 timmar. Inget ska kunna stoppa oss.
     timeout-minutes: 360 
     
     permissions:
-      contents: write # Krävs för att boten ska kunna pusha datan till ditt repo
+      contents: write # KRITISKT för att boten ska kunna skriva till ditt vault
 
     steps:
-      - name: Checkout Code
+      - name: Checkout Sovereign Code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Hämtar hela historiken så git push fungerar felfritt
 
-      - name: Setup Node.js
+      - name: Setup Node.js (High Performance)
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
+          cache: 'npm' # Snabbare omstarter genom att cacha moduler
 
-      - name: Install Dependencies
-        # Vi tvingar installationen att ignorera varningar för att spara tid
+      - name: Install Stealth Dependencies
+        # Vi installerar exakt det som behövs, snabbt och tyst.
         run: |
-          npm install --no-audit --no-fund --loglevel=error || npm install --legacy-peer-deps
+          npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer --no-audit --no-fund --loglevel=error
 
-      - name: Prepare Vault
-        # Ser till att filen finns så skriptet inte kraschar första gången
+      - name: Prepare Persistence Vault
+        # Denna rad ser till att vi inte raderar gammal data.
         run: |
           if [ ! -f market-data.json ]; then
             echo "[]" > market-data.json
           fi
 
-      - name: Execute Total Aggregation
-        # Här kör vi din nya Parallel Stealth Engine
+      - name: Execute Aggregator (Parallel Stealth Engine)
+        # Vi ger Node 4GB RAM för att hantera den massiva datan utan krasch.
         run: node AGGREGATOR_CORE.js
         env:
-          NODE_OPTIONS: "--max-old-space-size=4096" # Ger Node mer RAM för 400k objekt
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
-      - name: Neural Arbitrage (Analyzer)
-        # Analyserar fynden och räknar ut dScore
-        run: node analyzer.js || echo "Analyzer skip"
+      - name: Neural Arbitrage (The 300 Point Analysis)
+        # Analyserar allt från Radon till Pool och räknar ut Shadow Value.
+        run: node ANALYZER.js || echo "Analyzer encounterd a minor glitch, skipping to save data."
+        env:
+          NODE_OPTIONS: "--max-old-space-size=4096"
 
-      - name: Commit & Push to Sovereign Vault
-        # Sparar allt till ditt GitHub-repo
+      - name: Sync & Commit to Sovereign Vault
+        # Detta är "Sensationen". Vi sparar datan permanent i ditt repo.
         run: |
           git config --global user.name "Sovereign-Bot"
-          git config --global user.email "bot@sovereign.ai"
+          git config --global user.email "bot@allabostader.se"
+          
+          # Hämta eventuella ändringar som skett under tiden vi skannade
+          git pull origin main --rebase || echo "Inga externa ändringar att synka"
+          
           git add market-data.json
-          # Vi använder 'exit 0' så att bygget inte lyser rött om inga nya objekt hittades
-          git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [Total Infiltration]" || exit 0
-          git push
+          
+          # Vi kollar om filen faktiskt har ändrats för att undvika tomma commits
+          if git diff --staged --quiet; then
+            echo "Ingen ny marknads-DNA hittad denna gång."
+          else
+            git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [Infiltration Complete]"
+            git push origin main
+          fi
