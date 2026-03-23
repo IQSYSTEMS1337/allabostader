@@ -2,179 +2,195 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>AllaBostäder | Hitta ditt drömhem</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>AllaBostäder | Hitta ditt drömhem före alla andra</title>
     
-    <meta name="description" content="Sök bland Sveriges bostäder. Äkta priser, snabbare plattform och 6000+ orter. Bättre än Booli och Hemnet.">
+    <meta name="description" content="Sök bland Sveriges bostäder med äkta priser. Vi täcker Gävle, Hille, Strömsbro, Bergby och 6000 andra orter. Bättre och snabbare.">
     
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <style>
         :root {
-            --primary: #004D40; /* Seriös mörkgrön/blå premiumfärg */
+            --primary: #004D40; 
             --primary-hover: #00332A;
-            --bg-color: #F8F9FA;
+            --accent: #10B981;
+            --bg-color: #F8FAFC;
             --card-bg: #FFFFFF;
-            --text-dark: #1A1A1A;
-            --text-muted: #6C757D;
-            --border-color: #E9ECEF;
-            --price-color: #212529;
+            --text-dark: #0F172A;
+            --text-muted: #64748B;
+            --border-color: #E2E8F0;
+            --danger: #EF4444;
+            --heart: #F43F5E;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         
-        body { background-color: var(--bg-color); color: var(--text-dark); }
+        body { background-color: var(--bg-color); color: var(--text-dark); overflow-x: hidden; scroll-behavior: smooth; }
 
         /* --- PREMIUM NAVBAR --- */
         .navbar {
-            background: var(--card-bg);
-            border-bottom: 1px solid var(--border-color);
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(226, 232, 240, 0.8);
             padding: 15px 20px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
             position: sticky;
             top: 0;
-            z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+            z-index: 2000;
         }
-        .navbar img { max-height: 45px; width: auto; } /* Din logo.jpg */
+        .navbar img { max-height: 45px; width: auto; display: block; }
+        
+        .nav-links { display: flex; gap: 20px; align-items: center; }
+        .nav-btn { 
+            background: none; border: none; font-size: 1rem; font-weight: 600; 
+            color: var(--text-dark); cursor: pointer; display: flex; align-items: center; gap: 8px; 
+            padding: 8px 12px; border-radius: 8px; transition: 0.2s;
+        }
+        .nav-btn:hover { background: #F1F5F9; color: var(--primary); }
 
         /* --- HERO & SÖKMOTOR --- */
         .hero {
-            background: #fff;
-            padding: 60px 20px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+            padding: 70px 20px 60px;
             text-align: center;
             border-bottom: 1px solid var(--border-color);
         }
-        .hero h1 { font-size: 2.5rem; font-weight: 800; margin-bottom: 15px; letter-spacing: -1px; }
-        .hero p { font-size: 1.1rem; color: var(--text-muted); margin-bottom: 30px; }
-
-        .search-container {
-            max-width: 700px;
-            margin: 0 auto;
-            position: relative;
+        .hero h1 { 
+            font-size: clamp(2.5rem, 5vw, 4rem); 
+            font-weight: 900; 
+            margin-bottom: 15px; 
+            letter-spacing: -1.5px; 
+            color: var(--text-dark);
+            line-height: 1.1;
         }
+        .hero h1 span { color: var(--accent); }
+        .hero p { font-size: 1.25rem; color: var(--text-muted); margin-bottom: 40px; font-weight: 500; max-width: 600px; margin-inline: auto; }
+
+        /* FILTER PANEL */
+        .search-wrapper { max-width: 900px; margin: 0 auto; position: relative; z-index: 100; }
         
-        .search-input {
-            width: 100%;
-            padding: 20px 25px;
-            font-size: 1.1rem;
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            outline: none;
-            transition: all 0.2s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        .search-input:focus {
-            border-color: var(--primary);
-            box-shadow: 0 0 0 4px rgba(0, 77, 64, 0.1);
+        .filter-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 12px;
+            background: #fff;
+            padding: 12px;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
         }
 
-        /* AUTOCOMPLETE DROPDOWN */
+        .filter-input, .filter-select {
+            width: 100%; padding: 20px 25px; font-size: 1.1rem; font-weight: 600;
+            border: 1px solid transparent; border-radius: 12px;
+            outline: none; transition: 0.3s; color: var(--text-dark);
+            background: #F8FAFC;
+        }
+        .filter-input:focus, .filter-select:focus { 
+            background: #fff; border-color: var(--primary); 
+            box-shadow: 0 0 0 4px rgba(0, 77, 64, 0.1); 
+        }
+        .filter-input::placeholder { color: #94A3B8; font-weight: 500; }
+        
+        .filter-select {
+            cursor: pointer; appearance: none; -webkit-appearance: none;
+            background-image: url("data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%230F172A%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.5-12.8z%22%2F%3E%3C%2Fsvg%3E");
+            background-repeat: no-repeat; background-position: right 1rem top 50%; background-size: 0.65rem auto;
+            padding-right: 2.5rem;
+        }
+
+        /* AUTOCOMPLETE */
         .autocomplete-list {
-            position: absolute;
-            top: 100%; left: 0; right: 0;
-            background: #fff;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            margin-top: 8px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            max-height: 300px;
-            overflow-y: auto;
-            display: none;
-            z-index: 100;
-            text-align: left;
+            position: absolute; top: 100%; left: 12px; right: 12px;
+            background: #fff; border: 1px solid var(--border-color);
+            border-radius: 16px; margin-top: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            max-height: 350px; overflow-y: auto; display: none; text-align: left;
         }
         .autocomplete-item {
-            padding: 15px 25px;
-            cursor: pointer;
-            border-bottom: 1px solid var(--border-color);
-            font-weight: 500;
+            padding: 16px 25px; cursor: pointer; border-bottom: 1px solid var(--border-color);
+            font-weight: 600; font-size: 1.05rem; color: var(--text-dark); transition: 0.2s;
         }
-        .autocomplete-item:hover { background: var(--bg-color); color: var(--primary); }
+        .autocomplete-item:hover { background: #F1F5F9; color: var(--primary); padding-left: 30px; }
+
+        /* --- VERKTYGSFÄLT --- */
+        .toolbar {
+            max-width: 1400px; margin: 30px auto; padding: 0 20px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .results-count { font-weight: 800; color: var(--text-dark); font-size: 1.3rem; letter-spacing: -0.5px; }
 
         /* --- FASTIGHETS-GRID --- */
-        .container { max-width: 1400px; margin: 40px auto; padding: 0 20px; }
-        .results-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; }
-        .results-count { font-weight: 600; color: var(--text-muted); }
+        .container { max-width: 1400px; margin: 0 auto 80px; padding: 0 20px; min-height: 500px; }
+        .property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
 
-        .property-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-            gap: 25px;
-        }
-
-        /* --- PREMIUM KORT --- */
+        /* --- KORT-DESIGN (PREMIUM) --- */
         .property-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
+            background: var(--card-bg); border: 1px solid var(--border-color);
+            border-radius: 20px; overflow: hidden; transition: 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer; display: flex; flex-direction: column; position: relative;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            opacity: 0; transform: translateY(20px);
+            animation: fadeUp 0.5s ease forwards;
         }
-        .property-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.08);
-        }
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+        .property-card:hover { transform: translateY(-8px); box-shadow: 0 25px 50px rgba(0,0,0,0.1); border-color: transparent; }
 
-        .card-image {
-            width: 100%;
-            height: 240px;
-            position: relative;
-            background: #E9ECEF;
-        }
-        .card-image img { width: 100%; height: 100%; object-fit: cover; }
+        .card-image { width: 100%; height: 260px; position: relative; background: #E2E8F0; overflow: hidden; }
+        .card-image img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
+        .property-card:hover .card-image img { transform: scale(1.05); }
         
+        .badge-container { position: absolute; top: 15px; left: 15px; display: flex; gap: 8px; flex-direction: column; z-index: 10; }
         .badge {
-            position: absolute;
-            top: 15px; left: 15px;
-            background: #fff;
-            padding: 6px 12px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
+            background: rgba(255,255,255,0.95); padding: 8px 14px; border-radius: 10px;
+            font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); backdrop-filter: blur(5px); color: var(--text-dark);
         }
+        .badge.drop { background: var(--danger); color: #fff; }
+
+        /* FAVORIT-HJÄRTA */
+        .fav-btn {
+            position: absolute; top: 15px; right: 15px; z-index: 20;
+            background: rgba(255,255,255,0.9); width: 40px; height: 40px;
+            border-radius: 50%; display: flex; align-items: center; justify-content: center;
+            border: none; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: 0.2s;
+        }
+        .fav-btn svg { width: 22px; height: 22px; fill: none; stroke: var(--text-dark); stroke-width: 2; transition: 0.2s; }
+        .fav-btn:hover { transform: scale(1.1); }
+        .fav-btn.active svg { fill: var(--heart); stroke: var(--heart); }
 
         .card-content { padding: 25px; display: flex; flex-direction: column; flex-grow: 1; }
         
-        .price { font-size: 1.6rem; font-weight: 800; color: var(--price-color); margin-bottom: 8px; }
-        .address { font-size: 1.1rem; font-weight: 600; margin-bottom: 5px; line-height: 1.3; }
-        .location { font-size: 0.95rem; color: var(--text-muted); margin-bottom: 15px; }
+        .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 8px; flex-wrap: wrap; }
+        .price { font-size: 1.8rem; font-weight: 900; color: var(--text-dark); letter-spacing: -0.5px; }
+        .old-price { font-size: 1.1rem; color: var(--text-muted); text-decoration: line-through; font-weight: 600; }
+
+        .address { font-size: 1.25rem; font-weight: 700; margin-bottom: 5px; line-height: 1.3; }
+        .location { font-size: 1rem; color: var(--text-muted); font-weight: 500; margin-bottom: 25px; }
 
         .specs {
-            display: flex;
-            gap: 15px;
-            border-top: 1px solid var(--border-color);
-            padding-top: 15px;
-            margin-top: auto;
-            color: var(--text-dark);
-            font-size: 0.95rem;
-            font-weight: 500;
+            display: flex; gap: 15px; border-top: 1px solid var(--border-color);
+            padding-top: 20px; margin-top: auto; color: var(--text-dark); font-size: 1.05rem; font-weight: 600;
         }
 
         .action-btn {
-            display: block; width: 100%;
-            text-align: center; background: var(--bg-color);
-            color: var(--text-dark); padding: 12px;
-            border-radius: 8px; font-weight: 600; text-decoration: none;
-            margin-top: 20px; border: 1px solid var(--border-color);
-            transition: 0.2s;
+            display: block; width: 100%; text-align: center; background: #F1F5F9;
+            color: var(--text-dark); padding: 16px; border-radius: 12px; font-weight: 700;
+            text-decoration: none; margin-top: 25px; transition: 0.3s; font-size: 1.05rem;
         }
-        .property-card:hover .action-btn { background: var(--primary); color: #fff; border-color: var(--primary); }
+        .property-card:hover .action-btn { background: var(--primary); color: #fff; }
 
-        /* MOBILANPASSNING */
+        /* --- MOBILANPASSNING --- */
         @media (max-width: 768px) {
-            .hero { padding: 40px 15px; }
-            .hero h1 { font-size: 2rem; }
-            .search-input { padding: 16px 20px; font-size: 1rem; }
+            .hero { padding: 40px 15px 30px; }
+            .filter-grid { grid-template-columns: 1fr; gap: 10px; padding: 10px; }
+            .filter-input, .filter-select { padding: 16px 20px; }
+            .toolbar { flex-direction: column; gap: 15px; align-items: flex-start; }
             .property-grid { grid-template-columns: 1fr; gap: 20px; }
-            .card-image { height: 220px; }
+            .card-image { height: 240px; }
         }
     </style>
 </head>
@@ -182,24 +198,53 @@
 
 <div class="navbar">
     <a href="/">
-        <img src="logo.jpg" alt="AllaBostäder Logo">
+        <img src="logo.png" alt="AllaBostäder Logo" onerror="this.src='logo.jpg'">
     </a>
+    <div class="nav-links">
+        <button class="nav-btn" onclick="App.toggleFavoritesView()" id="favNavBtn">
+            <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+            Sparade
+        </button>
+    </div>
 </div>
 
 <div class="hero">
-    <h1>Hitta ditt nästa hem</h1>
-    <p>Sök bland marknadens alla bostäder, villor och lägenheter.</p>
+    <h1>Hitta ditt <span>drömhem</span></h1>
+    <p>Sveriges modernaste bostadssök. Inga shadow-priser. Ren fakta.</p>
     
-    <div class="search-container">
-        <input type="text" id="searchInput" class="search-input" placeholder="Sök område, kommun eller adress (t.ex. Gävle)..." autocomplete="off">
+    <div class="search-wrapper">
+        <div class="filter-grid">
+            <input type="text" id="searchInput" class="filter-input" placeholder="Sök Gävle, Hille, Strömsbro..." autocomplete="off">
+            <select id="maxPriceSelect" class="filter-select">
+                <option value="">Maxpris</option>
+                <option value="2000000">2 000 000 kr</option>
+                <option value="4000000">4 000 000 kr</option>
+                <option value="6000000">6 000 000 kr</option>
+                <option value="10000000">10 000 000 kr</option>
+            </select>
+            <select id="minRoomsSelect" class="filter-select">
+                <option value="">Rum</option>
+                <option value="2">2+ rum</option>
+                <option value="3">3+ rum</option>
+                <option value="4">4+ rum</option>
+                <option value="5">5+ rum</option>
+            </select>
+        </div>
         <div id="autocompleteList" class="autocomplete-list"></div>
     </div>
 </div>
 
+<div class="toolbar">
+    <div class="results-count" id="resultsCount">Söker igenom marknaden...</div>
+    <select id="sortSelect" class="filter-select" style="max-width: 250px;">
+        <option value="newest">Senast inkommet</option>
+        <option value="price_drop_desc">Störst prissänkning</option>
+        <option value="price_asc">Billigast först</option>
+        <option value="price_desc">Dyrast först</option>
+    </select>
+</div>
+
 <div class="container">
-    <div class="results-header">
-        <div class="results-count" id="resultsCount">Laddar bostäder...</div>
-    </div>
     <div class="property-grid" id="propertyGrid">
         </div>
 </div>
@@ -208,113 +253,180 @@
     const App = {
         data: [],
         locations: [],
+        currentQuery: "",
+        favorites: JSON.parse(localStorage.getItem('empire_favs') || '[]'),
+        viewingFavorites: false,
         
         async init() {
             try {
-                // Ladda marknadsdata och ortsdatabasen (Aiorter.csv)
                 const [marketRes, aiorterRes] = await Promise.all([
                     fetch('market-data.json').catch(() => null),
                     fetch('Aiorter.csv').then(r => r.text()).catch(() => "")
                 ]);
                 
-                if (marketRes) {
-                    this.data = await marketRes.json();
-                }
+                if (marketRes && marketRes.ok) this.data = await marketRes.json();
 
                 if (aiorterRes) {
-                    // Extrahera tätorter från CSV-filen
-                    this.locations = aiorterRes.split('\n')
-                        .slice(1) // Hoppa över header
-                        .map(row => {
-                            const cols = row.split(';');
-                            return cols[0] ? cols[0].trim() : null;
-                        }).filter(Boolean);
+                    this.locations = aiorterRes.split('\n').slice(1).map(row => {
+                        const cols = row.split(';');
+                        return cols[0] ? cols[0].trim() : null;
+                    }).filter(Boolean);
                 }
 
-                this.setupSearch();
+                this.setupEvents();
                 this.renderFeed();
-                
             } catch (error) {
-                document.getElementById('propertyGrid').innerHTML = '<p style="text-align:center; width:100%; color:red;">Systemet kunde inte hämta data. Försök igen senare.</p>';
+                document.getElementById('propertyGrid').innerHTML = '<p style="text-align:center; width:100%; color:red; font-weight:bold;">Kunde inte ansluta till databasen.</p>';
             }
         },
 
-        setupSearch() {
+        setupEvents() {
             const input = document.getElementById('searchInput');
             const list = document.getElementById('autocompleteList');
+            const maxPrice = document.getElementById('maxPriceSelect');
+            const minRooms = document.getElementById('minRoomsSelect');
+            const sortSelect = document.getElementById('sortSelect');
 
-            // Autocomplete logik kopplad till Aiorter.csv
+            // Realtids-filtrering
+            const triggerRender = () => {
+                this.viewingFavorites = false;
+                this.currentQuery = input.value.toLowerCase();
+                this.renderFeed();
+            };
+
             input.addEventListener('input', (e) => {
-                const query = e.target.value.toLowerCase();
-                this.renderFeed(query); // Filtrera grid direkt
-
-                if (query.length > 1 && this.locations.length > 0) {
-                    const matches = this.locations.filter(loc => loc.toLowerCase().startsWith(query)).slice(0, 8);
-                    
+                triggerRender();
+                if (this.currentQuery.length > 1 && this.locations.length > 0) {
+                    const matches = this.locations.filter(loc => loc.toLowerCase().startsWith(this.currentQuery)).slice(0, 8);
                     if (matches.length > 0) {
                         list.innerHTML = matches.map(match => `<div class="autocomplete-item">${match}</div>`).join('');
                         list.style.display = 'block';
-                    } else {
-                        list.style.display = 'none';
-                    }
-                } else {
-                    list.style.display = 'none';
-                }
+                    } else list.style.display = 'none';
+                } else list.style.display = 'none';
             });
 
-            // Klick på förslag
             list.addEventListener('click', (e) => {
                 if (e.target.classList.contains('autocomplete-item')) {
                     input.value = e.target.innerText;
                     list.style.display = 'none';
-                    this.renderFeed(input.value.toLowerCase());
+                    triggerRender();
                 }
             });
 
-            // Stäng lista om man klickar utanför
+            maxPrice.addEventListener('change', triggerRender);
+            minRooms.addEventListener('change', triggerRender);
+            sortSelect.addEventListener('change', triggerRender);
+
             document.addEventListener('click', (e) => {
-                if (!e.target.closest('.search-container')) {
-                    list.style.display = 'none';
-                }
+                if (!e.target.closest('.search-wrapper')) list.style.display = 'none';
             });
         },
 
-        renderFeed(filter = "") {
+        toggleFavoriteStatus(url, event) {
+            event.stopPropagation();
+            const idx = this.favorites.indexOf(url);
+            if (idx > -1) {
+                this.favorites.splice(idx, 1);
+                event.currentTarget.classList.remove('active');
+            } else {
+                this.favorites.push(url);
+                event.currentTarget.classList.add('active');
+            }
+            localStorage.setItem('empire_favs', JSON.stringify(this.favorites));
+            
+            if (this.viewingFavorites) this.renderFeed();
+        },
+
+        toggleFavoritesView() {
+            this.viewingFavorites = !this.viewingFavorites;
+            document.getElementById('favNavBtn').style.color = this.viewingFavorites ? "var(--heart)" : "var(--text-dark)";
+            this.renderFeed();
+        },
+
+        renderFeed() {
             const grid = document.getElementById('propertyGrid');
             const counter = document.getElementById('resultsCount');
+            const sortMethod = document.getElementById('sortSelect').value;
+            const maxPrice = parseInt(document.getElementById('maxPriceSelect').value) || Infinity;
+            const minRooms = parseInt(document.getElementById('minRoomsSelect').value) || 0;
             
-            // Sök i adress eller område
-            const filtered = this.data.filter(item => {
+            // 1. Filtrering
+            let filtered = this.data.filter(item => {
+                if (this.viewingFavorites && !this.favorites.includes(item.u)) return false;
+                
                 const address = (item.a || "").toLowerCase();
                 const location = (item.s || "").toLowerCase();
-                return address.includes(filter) || location.includes(filter);
+                const matchText = address.includes(this.currentQuery) || location.includes(this.currentQuery);
+                const matchPrice = item.p <= maxPrice;
+                const matchRooms = (parseInt(item.rooms) || 0) >= minRooms;
+                
+                return matchText && matchPrice && matchRooms;
             });
 
-            counter.innerText = `${filtered.length} bostäder till salu`;
+            // 2. Sortering
+            filtered.sort((a, b) => {
+                if (sortMethod === 'price_asc') return a.p - b.p;
+                if (sortMethod === 'price_desc') return b.p - a.p;
+                if (sortMethod === 'price_drop_desc') return (b.pc || 0) - (a.pc || 0);
+                return new Date(b.t || 0) - new Date(a.t || 0);
+            });
 
-            grid.innerHTML = filtered.slice(0, 100).map(item => {
-                // Äkta prisformatering. Inga shadow-priser.
-                const priceFormatted = new Intl.NumberFormat('sv-SE').format(item.p) + ' kr';
-                const area = item.area ? `${item.area} m²` : 'Kvm saknas';
+            counter.innerText = this.viewingFavorites 
+                ? `${filtered.length} sparade bostäder` 
+                : `${new Intl.NumberFormat('sv-SE').format(filtered.length)} bostäder till salu`;
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 60px; color: #64748B; font-size: 1.2rem; background: #fff; border-radius: 20px; border: 1px solid #E2E8F0;">Inga bostäder hittades. Justera dina filter.</div>';
+                return;
+            }
+
+            const formatter = new Intl.NumberFormat('sv-SE');
+
+            grid.innerHTML = filtered.slice(0, 100).map((item, index) => {
+                const exactPrice = formatter.format(item.p) + ' kr';
+                const area = item.area ? `${item.area} m²` : '';
                 const rooms = item.rooms ? `${item.rooms} rum` : '';
+                const isFav = this.favorites.includes(item.u) ? 'active' : '';
                 
+                let badgesHTML = '';
+                if (item.pc && item.pc > 0) {
+                    badgesHTML += `<div class="badge drop">Prissänkt ${item.pc}%</div>`;
+                } else if (item.firstSeen && (new Date() - new Date(item.firstSeen)) < 604800000) {
+                    badgesHTML += `<div class="badge">Nyhet</div>`;
+                }
+
+                let oldPriceHTML = '';
+                if (item.oldPrice && item.oldPrice > item.p) {
+                    oldPriceHTML = `<div class="old-price">${formatter.format(item.oldPrice)} kr</div>`;
+                }
+
+                // Staggered animation delay
+                const delay = (index % 12) * 0.05;
+
                 return `
-                <div class="property-card" onclick="window.open('${item.u}', '_blank')">
+                <div class="property-card" style="animation-delay: ${delay}s;" onclick="window.open('${item.u}', '_blank')">
+                    <button class="fav-btn ${isFav}" onclick="App.toggleFavoriteStatus('${item.u}', event)" aria-label="Spara bostad">
+                        <svg viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
+                    </button>
                     <div class="card-image">
-                        <div class="badge">Till salu</div>
-                        <img src="${item.img || 'https://via.placeholder.com/600x400?text=Bilder+på+väg'}" loading="lazy" alt="${item.a}">
+                        <div class="badge-container">${badgesHTML}</div>
+                        <img src="${item.img || 'https://via.placeholder.com/600x400?text=Bild+saknas'}" loading="lazy" alt="${item.a}">
                     </div>
                     <div class="card-content">
-                        <div class="price">${priceFormatted}</div>
-                        <div class="address">${item.a}</div>
-                        <div class="location">${item.s}</div>
+                        <div class="price-row">
+                            <div class="price">${exactPrice}</div>
+                            ${oldPriceHTML}
+                        </div>
+                        <h2 class="address">${item.a}</h2>
+                        <div class="location">${item.s || 'Sverige'}</div>
                         
                         <div class="specs">
-                            <span>${area}</span>
-                            ${rooms ? `<span>•</span><span>${rooms}</span>` : ''}
+                            ${area ? `<span>${area}</span>` : ''}
+                            ${area && rooms ? '<span>•</span>' : ''}
+                            ${rooms ? `<span>${rooms}</span>` : ''}
                         </div>
                         
-                        <a href="${item.u}" target="_blank" class="action-btn" onclick="event.stopPropagation()">Läs mer hos mäklaren</a>
+                        <a href="${item.u}" target="_blank" class="action-btn" onclick="event.stopPropagation()">Gå till mäklaren</a>
                     </div>
                 </div>
                 `;
@@ -322,7 +434,6 @@
         }
     };
 
-    // Initiera appen
     window.addEventListener('DOMContentLoaded', () => App.init());
 </script>
 
