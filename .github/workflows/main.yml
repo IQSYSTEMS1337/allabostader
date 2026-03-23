@@ -1,39 +1,68 @@
-name: Allabostäder Omni-Engine
+name: 🌐 Allabostäder Omni-Engine
 on:
   schedule:
-    - cron: '0 4 * * *'
+    - cron: '0 4 * * *' # Körs automatiskt varje natt
   workflow_dispatch:
+
+# 1. KOLLISIONSSKYDD: Om en körning redan pågår, ställs nästa i kö. Noll risk för korrupt data.
+concurrency:
+  group: empire-engine
+  cancel-in-progress: false
+
+# 2. RÄTTIGHETER: Låser upp skrivrättigheter så att boten aldrig får "Permission Denied".
+permissions:
+  contents: write
 
 jobs:
   execute-empire:
     runs-on: ubuntu-latest
+    timeout-minutes: 60 # 3. SKYDD: Avbryter om mäklarnas servrar hänger sig, sparar dina GitHub-minuter.
+
     steps:
       - name: 🛰️ Infiltrate Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # Laddar ner historiken för att kunna lösa merge-konflikter automatiskt.
 
-      - name: 🛠️ Setup Node Engine (Apex Version)
+      - name: 🛠️ Setup Node Engine (Apex Version 22)
         uses: actions/setup-node@v4
         with:
           node-version: '22'
 
-      - name: 📦 Install War-Tools
-        run: npm install
+      - name: 📦 Install War-Tools (Silent Mode)
+        # 4. NPM-OPTIMERING: Installerar blixtsnabbt och tystar onödiga varningar.
+        run: npm install --no-audit --no-fund --loglevel=error
 
       - name: 🚀 Execute AGGREGATOR_CORE (Data Extraction)
         run: node AGGREGATOR_CORE.js
         env:
           NODE_ENV: production
+          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: false
 
       - name: 📊 Execute Analyzer (Market Intelligence)
-        run: node analyzer.js || echo "Analyzer bypass"
+        run: node analyzer.js || echo ">> [WARN] Analyzer bypassed due to missing data."
+        continue-on-error: true # Krascha inte hela bygget om analysen pausar.
 
-      - name: 🌐 Execute SEO Empire Generator (Domination)
+      - name: 🕸️ Execute SEO Empire Generator (Domination)
         run: node SEO_EMPIRE_GENERATOR.js
+        continue-on-error: true
 
       - name: 💾 Synchronize Empire Vault & SEO
+        # 5. RÄDDNINGSPROTOKOLL: Sparar ALLTID datan som samlats in, även om ett steg ovanför fick rött kort.
+        if: always() 
         run: |
           git config --global user.name "Empire-Bot"
           git config --global user.email "bot@allabostader.se"
           git add .
-          git commit -m "Empire Sync: $(date +'%Y-%m-%d %H:%M') [DATA + SEO + UI]" || exit 0
-          git push
+          
+          # 6. SVENSK TIDSZON: Tvingar servern att logga rätt svensk tid för commiten.
+          TIMESTAMP=$(TZ=Europe/Stockholm date +'%Y-%m-%d %H:%M')
+          
+          # 7. TOM COMMIT-Hantering: Om ingen ny data hittades, gör ingenting (istället för att krascha).
+          git diff --staged --quiet || git commit -m "Empire Sync: $TIMESTAMP [DATA + SEO + UI]"
+          
+          # 8. REBASE-PANSAR: Hämtar in ändringar DU gjort på GitHub innan den pushar, så den aldrig blockeras.
+          git pull --rebase origin main || true
+          
+          # Tryck upp guldgruvan till molnet.
+          git push origin main
