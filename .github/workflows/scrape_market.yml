@@ -21,8 +21,9 @@ jobs:
         with:
           node-version: '24'
 
-      - name: Install Dependencies
-        run: npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer
+      - name: Install Latest Dependencies
+        # Här tvingar vi fram de senaste versionerna för att slippa 'deprecated'
+        run: npm install puppeteer@latest puppeteer-extra@latest puppeteer-extra-plugin-stealth@latest --no-fund --no-audit
 
       - name: Run Scraper
         run: node AGGREGATOR_CORE.js
