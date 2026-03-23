@@ -3,80 +3,110 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALLABOSTÄDER // MATRIX_v2.7</title>
+    <title>ALLABOSTÄDER // PRE-MARKET_v3.0</title>
     <style>
-        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; padding: 20px; text-transform: uppercase; }
-        .header { border-bottom: 2px solid #0f0; padding-bottom: 10px; margin-bottom: 20px; }
-        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
-        .card { border: 1px solid #040; padding: 15px; transition: 0.3s; cursor: pointer; position: relative; overflow: hidden; }
-        .card:hover { border-color: #0f0; background: rgba(0, 255, 0, 0.05); box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
-        .address { font-size: 1.2rem; font-weight: bold; color: #fff; }
-        .meta { font-size: 0.8rem; color: #0a0; margin-top: 5px; }
-        .tag { background: #0f0; color: #000; padding: 2px 5px; font-size: 0.7rem; font-weight: bold; }
-        .roi { color: #0ff; font-size: 0.9rem; margin-top: 10px; border-top: 1px dashed #040; padding-top: 5px; }
-        .status-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #0f0; color: #000; padding: 5px; font-size: 0.8rem; font-weight: bold; }
-        a { text-decoration: none; color: inherit; }
+        :root { --matrix-green: #0f0; --matrix-dark: #050; --alert-red: #ff003c; }
+        body { background: #000; color: var(--matrix-green); font-family: 'Courier New', monospace; margin: 0; padding: 20px; text-transform: uppercase; }
+        
+        .header { border-bottom: 2px solid var(--matrix-green); padding-bottom: 20px; margin-bottom: 30px; }
+        
+        /* GRID LAYOUT SOM DU BAD OM */
+        .grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+            gap: 20px; 
+            padding-bottom: 60px;
+        }
+
+        .card { 
+            border: 1px solid var(--matrix-dark); 
+            padding: 20px; 
+            text-decoration: none; 
+            color: inherit; 
+            transition: 0.2s; 
+            position: relative;
+            background: rgba(0, 20, 0, 0.5);
+        }
+        
+        .card:hover { 
+            border-color: var(--matrix-green); 
+            background: rgba(0, 255, 0, 0.05); 
+            transform: translateY(-5px); 
+            box-shadow: 0 0 15px rgba(0, 255, 0, 0.2);
+        }
+
+        .status-badge { 
+            display: inline-block; 
+            padding: 4px 10px; 
+            font-size: 0.7rem; 
+            font-weight: bold; 
+            margin-bottom: 15px; 
+        }
+        
+        .status-kommande { 
+            background: var(--alert-red); 
+            color: #fff; 
+            box-shadow: 0 0 10px var(--alert-red); 
+            animation: pulse 1.5s infinite;
+        }
+        
+        .status-tillsalu { background: var(--matrix-green); color: #000; }
+
+        .address { font-size: 1.1rem; font-weight: bold; color: #fff; line-height: 1.2; margin-bottom: 10px; }
+        .meta { font-size: 0.75rem; color: #888; }
+
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.7; }
+            100% { opacity: 1; }
+        }
+
+        .status-bar { 
+            position: fixed; bottom: 0; left: 0; width: 100%; 
+            background: var(--matrix-green); color: #000; 
+            padding: 8px; font-size: 0.8rem; font-weight: bold; text-align: center;
+        }
     </style>
 </head>
 <body>
 
 <div class="header">
-    <h1>ALLABOSTÄDER // SYSTEM_v2.7</h1>
-    <p>STATUS: <span id="ai-status">SYNCING WITH RADAR...</span></p>
+    <h1>ALLABOSTÄDER // OMNI-SCANNER_v3.0</h1>
+    <div id="stats">SCANNING SVERIGE...</div>
 </div>
 
-<div id="valvet" class="grid">
-    LADDAR MATRIX-DATA...
-</div>
+<div id="valvet" class="grid">SYSTEM_LOADING...</div>
 
-<div class="status-bar">
-    AI_STATUS: ACTIVE | BERÄKNAD RÄNTA: 3.2% | DATA_SOURCE: HEMNET_LIVE_SYNC
-</div>
+<div class="status-bar" id="bar">AI_STATUS: ACTIVE | RADAR: SVERIGE_TOTAL</div>
 
 <script>
-    async function loadValvet() {
+    async function load() {
         try {
-            // Vi lägger till ett tidsstämpel-trick för att tvinga webbläsaren att hämta nyaste filen
-            const response = await fetch('market-data.json?v=' + new Date().getTime());
-            const data = await response.json();
+            const r = await fetch('market-data.json?v=' + Date.now());
+            const data = await r.json();
             const container = document.getElementById('valvet');
-            const status = document.getElementById('ai-status');
-            
-            if (!data || data.length === 0 || data[0].source === "SYSTEM_IDLE") {
-                container.innerHTML = "SÖKER... (HITTADE 0 JUST NU)";
-                status.innerText = "RADAR SCANNING...";
-                return;
-            }
-
             container.innerHTML = '';
-            status.innerText = "SYNC COMPLETE - " + data.length + " OBJEKT HITTADE";
-
-            data.forEach(hus => {
+            
+            data.forEach(h => {
                 const card = document.createElement('a');
-                card.href = hus.url;
-                card.target = "_blank";
-                card.className = 'card';
+                card.href = h.url; card.target = "_blank"; card.className = 'card';
+                const isK = h.status.includes('KOMMANDE');
                 
                 card.innerHTML = `
-                    <div class="address">${hus.address}</div>
-                    <div class="meta">
-                        <span class="tag">${hus.source}</span> | SYNC_TIME: ${hus.date}
-                    </div>
-                    <div class="roi">
-                        EST. MÅNADSKOSTNAD: 14,200 SEK (EXKL. AMORT)
-                    </div>
+                    <div class="status-badge ${isK ? 'status-kommande' : 'status-tillsalu'}">${h.status}</div>
+                    <div class="address">${h.address}</div>
+                    <div class="meta">KÄLLA: ${h.source} | SYNC: ${h.date}</div>
                 `;
                 container.appendChild(card);
             });
+            document.getElementById('stats').innerText = `${data.length} OBJEKT IDENTIFIERADE`;
+            document.getElementById('bar').innerText = `LAST UPDATE: ${new Date().toLocaleTimeString()} | TOTALT: ${data.length} BOSTÄDER`;
         } catch (e) {
-            document.getElementById('valvet').innerHTML = "SYSTEM ERROR: KUNDE INTE LÄSA MARKET-DATA.JSON";
+            document.getElementById('valvet').innerText = "VÄNTAR PÅ DATA FRÅN SKRAPAN...";
         }
     }
-
-    loadValvet();
-    // Uppdatera var 5:e minut
-    setInterval(loadValvet, 300000);
+    load();
+    setInterval(load, 60000);
 </script>
-
 </body>
 </html>
