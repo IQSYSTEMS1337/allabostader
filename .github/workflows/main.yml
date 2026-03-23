@@ -1,78 +1,141 @@
-name: 👁️ ETERNAL MATRIX INFILTRATION - THE MASTER VAULT
+const { Cluster } = require('puppeteer-cluster');
+const puppeteer = require('puppeteer-extra');
+const StealthPlugin = require('puppeteer-extra-plugin-stealth');
+const fs = require('fs');
+const csv = require('csv-parse/sync'); // Kräver: npm install csv-parse
 
-on:
-  schedule:
-    - cron: '*/15 * * * *' # Infiltrerar varje kvart för total dominans
-  workflow_dispatch:      # Manuell trigger för omedelbar attack
+puppeteer.use(StealthPlugin());
 
-permissions:
-  contents: write
+async function runEliteEmpireScraper() {
+    console.log(">> [SYSTEM] STARTING OMNI-SCRAPER V20: DOMINATION MODE ACTIVE");
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 360  # Sex timmar av oavbruten dataskörd
-    
-    steps:
-      - name: 🛰️ INFILTRATING REPOSITORY
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Hämtar hela historiken för säker synk
+    // 1. LADDA AIORTER FÖR Omedelbar KATEGORISERING
+    const aiorterRaw = fs.readFileSync('Aiorter.csv', 'utf8');
+    const orterDB = csv.parse(aiorterRaw, { columns: true, skip_empty_lines: true, delimiter: ';' });
+    console.log(`>> [DB] Loaded ${orterDB.length} strategic locations for SEO mapping.`);
 
-      - name: ⚡ SETTING UP NODE.JS (STABLE CORE V20)
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
+    // 2. LADDA EXISTERANDE DATA (Persistence)
+    let vault = [];
+    if (fs.existsSync('market-data.json')) {
+        vault = JSON.parse(fs.readFileSync('market-data.json', 'utf8'));
+    }
 
-      - name: 🛠️ INSTALLING STEALTH WEAPONRY
-        # Installerar ALLT: Puppeteer för skrapning + Axios/Fs för analys
-        run: |
-          npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer axios fs path --no-audit --no-fund --loglevel=error
+    // 3. KONFIGURERA CLUSTER (Massiv parallellkörning)
+    const cluster = await Cluster.launch({
+        concurrency: Cluster.CONCURRENCY_PAGE,
+        maxConcurrency: 5, // Justera baserat på din CPU/RAM
+        puppeteerOptions: {
+            headless: "new",
+            args: ['--no-sandbox', '--disable-setuid-sandbox', '--window-size=1920,1080']
+        }
+    });
 
-      - name: 🗄️ INITIALIZING PERSISTENT VAULT
-        run: |
-          if [ ! -f market-data.json ]; then
-            echo "[]" > market-data.json
-          fi
+    // DEFINIERA LOGIKEN FÖR VARJE SIDA
+    await cluster.task(async ({ page, data: target }) => {
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
+        
+        // Blockera onödigt skräp för att spara bandbredd och öka hastighet
+        await page.setRequestInterception(true);
+        page.on('request', (req) => {
+            if (['font', 'media'].includes(req.resourceType())) req.abort();
+            else req.continue();
+        });
 
-      - name: 🚀 EXECUTING AGGREGATOR (RAW HARVEST)
-        # Maxar minnet till 4GB för att hantera tiotusentals hus utan krasch
-        run: node AGGREGATOR_CORE.js
-        env:
-          NODE_OPTIONS: "--max-old-space-size=4096"
+        try {
+            console.log(`>> [TARGET] Infiltrating ${target.name}...`);
+            await page.goto(target.url, { waitUntil: 'networkidle2', timeout: 60000 });
 
-      - name: 🧠 RUNNING 100-POINT NEURAL ARBITRAGE
-        # Kör din ANALYZER oavsett filnamn och applicerar 100-punktsprotokollet
-        run: |
-          if [ -f ANALYZER.js ]; then node ANALYZER.js; 
-          elif [ -f analyzer.js ]; then node analyzer.js;
-          else echo "!! ANALYZER NOT FOUND - CRITICAL ERROR !!"; exit 1; fi
-        env:
-          NODE_OPTIONS: "--max-old-space-size=4096"
+            // Simulera mänsklig scroll för att trigga lazy-loading av bilder
+            await page.evaluate(async () => {
+                await new Promise(r => {
+                    let h = 0;
+                    let i = setInterval(() => {
+                        window.scrollBy(0, 400);
+                        h += 400;
+                        if(h >= document.body.scrollHeight) { clearInterval(i); r(); }
+                    }, 100);
+                });
+            });
 
-      - name: 🔄 SYNCING & SECURING MARKET DNA (REBASE PROTOCOL)
-        # Detta är den viktigaste biten för att slippa manuellt strul
-        run: |
-          git config --global user.name "Sovereign-Bot"
-          git config --global user.email "bot@allabostader.se"
-          
-          # 1. Lägg till den nya, analyserade datan
-          git add market-data.json
-          
-          # 2. Stash:a undan den lokala ändringen temporärt
-          git stash
-          
-          # 3. Pull:a de senaste ändringarna från GitHub (om du ändrat index.html t.ex.)
-          git pull origin main --rebase || echo "No remote changes to merge"
-          
-          # 4. Lägg tillbaka den nya datan ovanpå
-          git stash pop || echo "No stashed changes"
-          
-          # 5. Commit & Push
-          git add market-data.json
-          if git diff --staged --quiet; then
-            echo "No changes in Market DNA. Standing by."
-          else
-            git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [100-POINT ANALYZED]"
-            git push origin main
-          fi
+            // AVANCERAD EXTRAHERING (Strukturerad data + DOM)
+            const listings = await page.evaluate((orter) => {
+                const found = [];
+                
+                // 1. Försök hitta JSON-LD (Mäklarnas dolda guldgruva)
+                const ldJson = Array.from(document.querySelectorAll('script[type="application/ld+json"]'));
+                
+                // 2. DOM-Parsing (För de som inte kör schema.org)
+                const items = document.querySelectorAll('li, div[class*="listing"], article');
+                
+                items.forEach(el => {
+                    const text = el.innerText || "";
+                    if (text.includes('kr') && (text.includes('m²') || text.includes('rum'))) {
+                        
+                        // Exakt pris-extrahering
+                        const pRaw = text.replace(/\s/g, '').match(/(\d{6,10})kr/);
+                        const price = pRaw ? parseInt(pRaw[1]) : 0;
+                        
+                        // Hitta adress & ort
+                        const lines = text.split('\n').filter(l => l.trim().length > 2);
+                        const address = lines[0]?.trim() || "";
+                        const locationRaw = lines[1]?.trim() || "";
+
+                        // Mappa mot Aiorter-databasen för perfekt SEO-matchning
+                        const matchedOrt = orter.find(o => 
+                            locationRaw.toLowerCase().includes(o.Tätort.toLowerCase()) || 
+                            address.toLowerCase().includes(o.Tätort.toLowerCase())
+                        );
+
+                        if (price > 100000) {
+                            found.push({
+                                a: address,
+                                p: price,
+                                s: matchedOrt ? matchedOrt.Tätort : locationRaw, // Använd ren data från CSV om matchad
+                                k: matchedOrt ? matchedOrt.Kommun : "",
+                                img: el.querySelector('img')?.src || "",
+                                u: el.querySelector('a')?.href || window.location.href,
+                                area: text.match(/(\d+)\s?m²/)?.[1] || "",
+                                rooms: text.match(/(\d+)\s?rum/)?.[1] || "",
+                                t: new Date().toISOString()
+                            });
+                        }
+                    }
+                });
+                return found;
+            }, orterDB);
+
+            // DATA-TVÄTT & INTELLIGENS
+            listings.forEach(item => {
+                const idx = vault.findIndex(v => v.u === item.u);
+                if (idx > -1) {
+                    // PRISHISTORIK (Booli-dödaren)
+                    if (vault[idx].p !== item.p) {
+                        item.oldPrice = vault[idx].p;
+                        item.priceChange = Math.round(((vault[idx].p - item.p) / vault[idx].p) * 100);
+                        item.trend = item.p < vault[idx].p ? 'DOWN' : 'UP';
+                    }
+                    vault[idx] = { ...vault[idx], ...item };
+                } else {
+                    item.firstSeen = new Date().toISOString();
+                    vault.push(item);
+                }
+            });
+
+            // Spara efter varje mål för att säkra datan
+            fs.writeFileSync('market-data.json', JSON.stringify(vault, null, 2));
+
+        } catch (err) {
+            console.error(`>> [FAILED] ${target.name}: ${err.message}`);
+        }
+    });
+
+    // 4. KÖR ALLA TARGETS
+    const targets = require('./targets');
+    targets.forEach(t => cluster.queue(t));
+
+    await cluster.idle();
+    await cluster.close();
+    console.log(`>> [SUCCESS] Empire Vault synchronized. ${vault.length} units ready for dominance.`);
+}
+
+runEliteEmpireScraper();
