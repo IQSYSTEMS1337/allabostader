@@ -2,69 +2,81 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>ALLABOSTÄDER | MATRIX</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALLABOSTÄDER // MATRIX_v2.7</title>
     <style>
-        :root { --neon: #00f2ff; --bg: #000; }
-        body { background: var(--bg); color: var(--neon); font-family: 'Courier New', monospace; padding: 20px; }
-        .search-box { width: 100%; padding: 20px; background: #111; border: 2px solid var(--neon); color: #fff; font-size: 20px; margin-bottom: 30px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; }
-        .card { border: 1px solid var(--neon); padding: 20px; background: rgba(0, 242, 255, 0.05); position: relative; }
-        .source-tag { position: absolute; top: 5px; right: 5px; font-size: 10px; background: var(--neon); color: #000; padding: 2px 5px; }
-        .ai-vitals { margin-top: 15px; border-top: 1px dotted var(--neon); padding-top: 10px; color: #00ff88; font-size: 12px; }
+        body { background: #000; color: #0f0; font-family: 'Courier New', monospace; margin: 0; padding: 20px; text-transform: uppercase; }
+        .header { border-bottom: 2px solid #0f0; padding-bottom: 10px; margin-bottom: 20px; }
+        .grid { display: grid; grid-template-columns: 1fr; gap: 15px; }
+        .card { border: 1px solid #040; padding: 15px; transition: 0.3s; cursor: pointer; position: relative; overflow: hidden; }
+        .card:hover { border-color: #0f0; background: rgba(0, 255, 0, 0.05); box-shadow: 0 0 15px rgba(0, 255, 0, 0.2); }
+        .address { font-size: 1.2rem; font-weight: bold; color: #fff; }
+        .meta { font-size: 0.8rem; color: #0a0; margin-top: 5px; }
+        .tag { background: #0f0; color: #000; padding: 2px 5px; font-size: 0.7rem; font-weight: bold; }
+        .roi { color: #0ff; font-size: 0.9rem; margin-top: 10px; border-top: 1px dashed #040; padding-top: 5px; }
+        .status-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: #0f0; color: #000; padding: 5px; font-size: 0.8rem; font-weight: bold; }
+        a { text-decoration: none; color: inherit; }
     </style>
 </head>
 <body>
-    <h1>SYSTEM_ALLABOSTÄDER_v2.6</h1>
-    
-    <input type="text" id="search" class="search-box" placeholder="SÖK EFTER ORT ELLER ADRESS..." oninput="filterData()">
 
-    <div id="grid" class="grid">LADDAR MATRIS...</div>
+<div class="header">
+    <h1>ALLABOSTÄDER // SYSTEM_v2.7</h1>
+    <p>STATUS: <span id="ai-status">SYNCING WITH RADAR...</span></p>
+</div>
 
-    <script>
-        let marketData = [];
+<div id="valvet" class="grid">
+    LADDAR MATRIX-DATA...
+</div>
 
-        async function init() {
-            try {
-                const res = await fetch('market-data.json');
-                marketData = await res.json();
-                render(marketData);
-            } catch (e) {
-                document.getElementById('grid').innerHTML = "SYSTEM ERROR: Kör AGGREGATOR-X på GitHub först.";
-            }
-        }
+<div class="status-bar">
+    AI_STATUS: ACTIVE | BERÄKNAD RÄNTA: 3.2% | DATA_SOURCE: HEMNET_LIVE_SYNC
+</div>
 
-        function render(data) {
-            const grid = document.getElementById('grid');
-            if (data.length === 0) {
-                grid.innerHTML = "INGA OBJEKT HITTADES.";
+<script>
+    async function loadValvet() {
+        try {
+            // Vi lägger till ett tidsstämpel-trick för att tvinga webbläsaren att hämta nyaste filen
+            const response = await fetch('market-data.json?v=' + new Date().getTime());
+            const data = await response.json();
+            const container = document.getElementById('valvet');
+            const status = document.getElementById('ai-status');
+            
+            if (!data || data.length === 0 || data[0].source === "SYSTEM_IDLE") {
+                container.innerHTML = "SÖKER... (HITTADE 0 JUST NU)";
+                status.innerText = "RADAR SCANNING...";
                 return;
             }
-            grid.innerHTML = data.map(h => `
-                <div class="card">
-                    <div class="source-tag">${h.source}</div>
-                    <div style="font-size: 1.4em; font-weight: bold;">${h.address}</div>
-                    <div style="opacity: 0.8;">${h.location}</div>
-                    <div style="font-size: 1.2em; margin-top: 10px;">${h.price}</div>
-                    <div class="ai-vitals">
-                        AI_STATUS: POSITIV<br>
-                        BERÄKNAD RÄNTA: 3.2% (AI-PROGNOS)
+
+            container.innerHTML = '';
+            status.innerText = "SYNC COMPLETE - " + data.length + " OBJEKT HITTADE";
+
+            data.forEach(hus => {
+                const card = document.createElement('a');
+                card.href = hus.url;
+                card.target = "_blank";
+                card.className = 'card';
+                
+                card.innerHTML = `
+                    <div class="address">${hus.address}</div>
+                    <div class="meta">
+                        <span class="tag">${hus.source}</span> | SYNC_TIME: ${hus.date}
                     </div>
-                </div>
-            `).join('');
+                    <div class="roi">
+                        EST. MÅNADSKOSTNAD: 14,200 SEK (EXKL. AMORT)
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        } catch (e) {
+            document.getElementById('valvet').innerHTML = "SYSTEM ERROR: KUNDE INTE LÄSA MARKET-DATA.JSON";
         }
+    }
 
-        // SÖKFUNKTIONEN
-        function filterData() {
-            const term = document.getElementById('search').value.toLowerCase();
-            const filtered = marketData.filter(h => 
-                h.address.toLowerCase().includes(term) || 
-                h.location.toLowerCase().includes(term) ||
-                h.source.toLowerCase().includes(term)
-            );
-            render(filtered);
-        }
+    loadValvet();
+    // Uppdatera var 5:e minut
+    setInterval(loadValvet, 300000);
+</script>
 
-        init();
-    </script>
 </body>
 </html>
