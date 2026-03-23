@@ -5,11 +5,14 @@ on:
   schedule:
     - cron: '0 0 * * *'
 
+# DENNA RAD DÖDAR VARNINGARNA
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     permissions:
       contents: write
     steps:
@@ -22,8 +25,8 @@ jobs:
           node-version: '24'
 
       - name: Install Latest Dependencies
-        # Här tvingar vi fram de senaste versionerna för att slippa 'deprecated'
-        run: npm install puppeteer@latest puppeteer-extra@latest puppeteer-extra-plugin-stealth@latest --no-fund --no-audit
+        # Vi lägger till --silent för att göra loggen helt ren
+        run: npm install puppeteer@latest puppeteer-extra@latest puppeteer-extra-plugin-stealth@latest --no-fund --no-audit --silent
 
       - name: Run Scraper
         run: node AGGREGATOR_CORE.js
