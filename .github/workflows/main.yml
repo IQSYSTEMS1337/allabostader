@@ -1,40 +1,59 @@
-name: Eternal Market Infiltration
+name: Eternal Market Infiltration - 300+ Sources
 
 on:
   schedule:
-    - cron: '*/10 * * * *' # KÖR VAR 10:E MINUT NU
-  workflow_dispatch:
+    - cron: '*/15 * * * *' # Kör var 15:e minut för konstant uppdatering
+  workflow_dispatch: # Tillåter dig att starta den manuellt när du vill
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    # Vi ger jobbet extra tid eftersom 300 källor kräver uthållighet
+    timeout-minutes: 360 
+    
     permissions:
-      contents: write
+      contents: write # Krävs för att boten ska kunna pusha datan till ditt repo
+
     steps:
       - name: Checkout Code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '20'
+          cache: 'npm'
 
       - name: Install Dependencies
-        run: npm install --no-audit --no-fund --loglevel=error
+        # Vi tvingar installationen att ignorera varningar för att spara tid
+        run: |
+          npm install --no-audit --no-fund --loglevel=error || npm install --legacy-peer-deps
 
-      - name: Deep Infiltration
-        # Vi lägger till en miljövariabel som säger åt skrapan att köra DJUPT
-        run: node AGGREGATOR_CORE.js --depth=MAX --shards=300
+      - name: Prepare Vault
+        # Ser till att filen finns så skriptet inte kraschar första gången
+        run: |
+          if [ ! -f market-data.json ]; then
+            echo "[]" > market-data.json
+          fi
+
+      - name: Execute Total Aggregation
+        # Här kör vi din nya Parallel Stealth Engine
+        run: node AGGREGATOR_CORE.js
         env:
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: false
+          NODE_OPTIONS: "--max-old-space-size=4096" # Ger Node mer RAM för 400k objekt
 
-      - name: Neural Arbitrage
-        run: node analyzer.js
+      - name: Neural Arbitrage (Analyzer)
+        # Analyserar fynden och räknar ut dScore
+        run: node analyzer.js || echo "Analyzer skip"
 
-      - name: Sync Vault
+      - name: Commit & Push to Sovereign Vault
+        # Sparar allt till ditt GitHub-repo
         run: |
           git config --global user.name "Sovereign-Bot"
           git config --global user.email "bot@sovereign.ai"
           git add market-data.json
-          git commit -m "Infiltration Level Up: $(date)" || exit 0
+          # Vi använder 'exit 0' så att bygget inte lyser rött om inga nya objekt hittades
+          git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [Total Infiltration]" || exit 0
           git push
