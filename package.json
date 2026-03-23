@@ -1,18 +1,12 @@
 {
   "name": "allabostader",
   "version": "1.0.0",
-  "description": "Market Infiltration System",
-  "main": "AGGREGATOR_CORE.js",
+  "main": "scraper.js",
   "dependencies": {
-    "puppeteer": "^24.0.0",
+    "csv-parse": "^5.5.3",
+    "puppeteer": "^21.0.0",
+    "puppeteer-cluster": "^0.23.0",
     "puppeteer-extra": "^3.3.6",
-    "puppeteer-extra-plugin-stealth": "^2.11.2",
-    "node-fetch": "^2.7.0"
-  },
-  "scripts": {
-    "start": "node AGGREGATOR_CORE.js"
-  },
-  "engines": {
-    "node": ">=20.0.0"
+    "puppeteer-extra-plugin-stealth": "^2.11.2"
   }
 }
