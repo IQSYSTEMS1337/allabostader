@@ -57,7 +57,7 @@
         </div>
         <div class="flex items-center gap-2 mt-4">
             <span class="w-2 h-2 bg-blue-500 rounded-full animate-ping"></span>
-            <span class="text-[10px] font-black tracking-[0.5em] text-blue-500 uppercase italic">Neural Kontroll Aktiv</span>
+            <span class="text-[10px] font-black tracking-[0.5em] text-blue-500 uppercase italic text-center">Neural Infiltration Aktiv</span>
         </div>
     </header>
 
@@ -68,7 +68,7 @@
         </div>
         <div class="glass p-8 rounded-[2.5rem] text-center border-red-500/20">
             <div id="stat-panic" class="text-4xl font-black text-red-500 italic">0</div>
-            <div class="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-2">Panik-Möjligheter</div>
+            <div class="text-[10px] text-red-500 font-bold uppercase tracking-widest mt-2">Panik-Deals</div>
         </div>
     </div>
 
@@ -79,12 +79,12 @@
         </div>
         
         <div class="grid grid-cols-2 gap-4">
-            <select id="filterType" class="glass p-6 rounded-3xl text-[11px] font-black uppercase text-white outline-none cursor-pointer border-none">
+            <select id="filterType" class="glass p-6 rounded-3xl text-[11px] font-black uppercase text-white outline-none cursor-pointer border-none bg-transparent">
                 <option value="all">Alla Objekt</option>
                 <option value="panic">📉 Hög Panik</option>
                 <option value="whale">🐋 Premium (>20M)</option>
             </select>
-            <select id="sortOrder" class="glass p-6 rounded-3xl text-[11px] font-black uppercase text-white outline-none cursor-pointer border-none">
+            <select id="sortOrder" class="glass p-6 rounded-3xl text-[11px] font-black uppercase text-white outline-none cursor-pointer border-none bg-transparent">
                 <option value="dscore">Högst dScore</option>
                 <option value="newest">Senast Inkommet</option>
                 <option value="price-asc">Lägst Pris</option>
@@ -93,18 +93,30 @@
     </section>
 
     <main id="grid" class="max-w-[1200px] mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        </main>
+        <div class="col-span-full py-32 text-center text-gray-800 font-black text-xl uppercase italic tracking-widest">
+            Väntar på marknadsinfiltration...
+        </div>
+    </main>
 
     <script>
         let db = [];
 
+        // DIN NYA ASYNC FUNKTION MED CACHE-BRYTARE
         async function updateData() {
             try {
-                const response = await fetch('market-data.json');
+                // Tillsätt ett slumpmässigt nummer i slutet av URL:en för att lura cachen
+                const response = await fetch('market-data.json?v=' + new Date().getTime());
                 db = await response.json();
                 render();
             } catch (err) {
-                document.getElementById('grid').innerHTML = `<div class="col-span-full py-32 text-center text-gray-800 font-black text-xl uppercase italic">Väntar på data...</div>`;
+                console.error("Infiltrationsfel:", err);
+                // Grid-fallback vid fel
+                if (db.length === 0) {
+                    document.getElementById('grid').innerHTML = `
+                        <div class="col-span-full py-32 text-center text-gray-800 font-black text-xl uppercase italic">
+                            Synkroniserar Vault...
+                        </div>`;
+                }
             }
         }
 
@@ -114,7 +126,7 @@
             const filter = document.getElementById('filterType').value;
             const sort = document.getElementById('sortOrder').value;
 
-            // FILTRERING + SÄKERHETSKONTROLLER (Anti-NaN/Anti-Undefined)
+            // SÄKER FILTRERING (Anti-NaN & Anti-Undefined)
             let data = db.filter(item => {
                 const adress = (item.a || "").toLowerCase();
                 const maklare = (item.s || "").toLowerCase();
@@ -130,12 +142,18 @@
             if (sort === 'newest') data.sort((a, b) => new Date(b.firstSeen || 0) - new Date(a.firstSeen || 0));
             if (sort === 'price-asc') data.sort((a, b) => (a.p || 0) - (b.p || 0));
 
-            // STATISTIK
+            // UPPDATERA STATISTIK
             document.getElementById('stat-total').innerText = db.length;
             document.getElementById('stat-panic').innerText = db.filter(x => ((x.pc || 0) > 0 || (x.dScore || 0) > 75)).length;
 
             // RENDERING AV KORT
+            if (data.length === 0) {
+                grid.innerHTML = `<div class="col-span-full py-20 text-center text-gray-700 font-bold uppercase italic tracking-tighter">Inga objekt matchar sökningen.</div>`;
+                return;
+            }
+
             grid.innerHTML = data.map(item => {
+                // FALLBACKS FÖR ALL DATA
                 const adress = item.a || "Adress saknas";
                 const maklare = item.s || "Privat";
                 const dScore = Math.round(item.dScore || 0);
@@ -174,7 +192,7 @@
 
                         <div class="mt-12">
                             <a href="${url}" target="_blank" class="block w-full bg-white text-black text-center font-black py-5 rounded-2xl hover:bg-blue-600 hover:text-white transition-all uppercase text-[11px] tracking-[0.3em]">
-                                Öppna Infiltration
+                                Öppna Objekt
                             </a>
                         </div>
                     </div>
@@ -182,12 +200,14 @@
             }).join('');
         }
 
+        // Event Listeners
         document.getElementById('searchInput').addEventListener('input', render);
         document.getElementById('filterType').addEventListener('change', render);
         document.getElementById('sortOrder').addEventListener('change', render);
 
+        // Starta loop
         updateData();
-        setInterval(updateData, 60000);
+        setInterval(updateData, 60000); // Uppdatera 1 gång per minut
     </script>
 </body>
 </html>
