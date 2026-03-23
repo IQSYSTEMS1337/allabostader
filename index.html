@@ -2,284 +2,193 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ALLABOSTÄDER | The Sovereign Matrix</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>ALLABOSTÄDER | The Sovereign Singularity</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;900&family=Inter:wght@300;400;700;900&display=swap">
     <style>
         :root {
-            --neon-green: #00ff88;
-            --danger-red: #ff4444;
-            --luxury-gold: #ffcc00;
-            --bg-dark: #050505;
-            --card-bg: #111111;
+            --neon-green: #00ff88; --luxury-gold: #ffcc00; --danger-red: #ff4444;
+            --deep-black: #050505; --card-bg: #0a0a0a; --glass: rgba(255, 255, 255, 0.03);
         }
 
         body {
-            background: var(--bg-dark);
-            color: #fff;
-            font-family: 'Inter', sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow-x: hidden;
+            background: var(--deep-black); color: #fff; font-family: 'Inter', sans-serif;
+            margin: 0; overflow-x: hidden; -webkit-tap-highlight-color: transparent;
         }
 
-        /* LIVE LOGO ANIMATION - DIN VISION */
-        .header {
-            text-align: center;
-            padding: 60px 0;
-            background: radial-gradient(circle at center, #111 0%, #050505 100%);
+        /* --- LOGO AURA & NEURAL HEADER --- */
+        header {
+            padding: 60px 0; text-align: center; background: radial-gradient(circle at center, #111 0%, #050505 100%);
+            position: relative; border-bottom: 1px solid #151515;
         }
 
-        .logo-container {
-            position: relative;
-            display: inline-block;
-            padding: 30px;
-        }
-
+        .logo-container { position: relative; display: inline-block; padding: 25px; }
         .main-logo {
-            font-size: 4rem;
-            font-weight: 900;
-            letter-spacing: -4px;
-            margin: 0;
-            position: relative;
-            z-index: 10;
-            text-transform: uppercase;
+            font-family: 'Orbitron'; font-size: 3.5rem; font-weight: 900; letter-spacing: -3px; margin: 0;
+            position: relative; z-index: 10; text-transform: uppercase;
         }
-
         .main-logo span { color: var(--neon-green); text-shadow: 0 0 30px rgba(0,255,136,0.6); }
 
-        /* Den roterande auran som rör sig hela tiden */
         .logo-aura {
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            border: 2px solid var(--neon-green);
-            border-radius: 20px;
-            animation: rotateAura 6s linear infinite;
-            box-shadow: 0 0 50px rgba(0,255,136,0.2);
+            position: absolute; inset: 0; border: 2px solid var(--neon-green); border-radius: 20px;
+            animation: rotateAura 6s linear infinite; box-shadow: 0 0 50px rgba(0,255,136,0.2);
         }
-
-        .logo-pulse {
-            position: absolute;
-            top: -10px; left: -10px; right: -10px; bottom: -10px;
-            border: 1px solid var(--neon-green);
-            border-radius: 25px;
-            animation: pulseAura 2s ease-out infinite;
-        }
-
         @keyframes rotateAura {
             0% { transform: rotate(0deg); border-radius: 20px; }
-            50% { transform: rotate(180deg); border-radius: 50px; border-color: #00ffee; }
+            50% { transform: rotate(180deg); border-radius: 50px; border-color: var(--luxury-gold); }
             100% { transform: rotate(360deg); border-radius: 20px; }
         }
 
-        @keyframes pulseAura {
-            0% { transform: scale(1); opacity: 0.6; }
-            100% { transform: scale(1.2); opacity: 0; }
+        /* --- CONTROL INTERFACE --- */
+        .control-vault {
+            max-width: 1000px; margin: -40px auto 40px; position: relative; z-index: 100; padding: 0 20px;
+        }
+        .search-bar {
+            width: 100%; background: #1a1a1a; border: 2px solid #333; padding: 25px 35px;
+            border-radius: 100px; color: var(--neon-green); font-size: 1.4rem; font-weight: 800;
+            outline: none; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.8);
+        }
+        .search-bar:focus { border-color: var(--neon-green); transform: scale(1.03); box-shadow: 0 0 40px rgba(0, 255, 136, 0.2); }
+
+        /* --- GRID & CARDS --- */
+        .matrix-grid {
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+            gap: 30px; padding: 40px; max-width: 1600px; margin: 0 auto;
         }
 
-        /* SEARCH INTERFACE - MAXIMAL TYDLIGHET */
-        .search-section {
-            max-width: 900px;
-            margin: -40px auto 60px;
-            position: relative;
-            z-index: 20;
+        .unit-card {
+            background: var(--card-bg); border-radius: 28px; border: 1px solid #1a1a1a;
+            overflow: hidden; transition: 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); position: relative;
         }
+        .unit-card:hover { transform: translateY(-12px); border-color: #333; box-shadow: 0 30px 60px rgba(0,0,0,0.5); }
 
-        #search-input {
-            width: 100%;
-            padding: 30px 40px;
-            background: #1a1a1a;
-            border: 2px solid #333;
-            border-radius: 100px;
-            color: var(--neon-green);
-            font-size: 1.6rem;
-            font-weight: 800;
-            outline: none;
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.7);
+        /* --- HUD METERS (Top of Card) --- */
+        .card-hud {
+            display: grid; grid-template-columns: 1fr 1fr 1fr; background: rgba(0,0,0,0.4);
+            padding: 15px; border-bottom: 1px solid #1a1a1a; backdrop-filter: blur(10px);
         }
+        .hud-item { text-align: center; }
+        .hud-val { display: block; font-size: 1.2rem; font-weight: 900; font-family: 'Orbitron'; }
+        .hud-label { font-size: 0.6rem; color: #666; text-transform: uppercase; letter-spacing: 1px; }
 
-        #search-input:focus {
-            border-color: var(--neon-green);
-            box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
-            transform: scale(1.02);
-        }
+        .v-idx { color: var(--neon-green); }
+        .s-idx { color: var(--danger-red); }
+        .l-idx { color: var(--luxury-gold); }
 
-        /* RESULTS GRID */
-        #results-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
-            gap: 30px;
-            padding: 0 40px 100px;
-            max-width: 1600px;
-            margin: 0 auto;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            border: 1px solid #222;
-            overflow: hidden;
-            position: relative;
-            transition: 0.4s;
-        }
-
-        .card:hover { transform: translateY(-15px); border-color: #444; }
-
-        /* MÄKLAR STATUS */
-        .status-tag {
-            position: absolute;
-            top: 20px; right: 20px;
-            padding: 8px 16px;
-            border-radius: 8px;
-            font-size: 0.75rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            z-index: 5;
-        }
-        .status-partner { background: var(--neon-green); color: #000; box-shadow: 0 0 15px var(--neon-green); }
-        .status-shadow { background: #222; color: #666; border: 1px solid #333; }
-
-        /* THE 3 INDEX METERS */
-        .meters-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr 1fr;
-            background: rgba(0,0,0,0.5);
-            padding: 20px;
-            border-bottom: 1px solid #222;
-        }
-
-        .meter { text-align: center; }
-        .meter-val { display: block; font-size: 1.5rem; font-weight: 900; }
-        .meter-label { font-size: 0.65rem; color: #888; text-transform: uppercase; letter-spacing: 1px; }
-
-        .v-index { color: var(--neon-green); } /* Prisvärdhet */
-        .s-index { color: var(--danger-red); }  /* Trygghet/Risk */
-        .l-index { color: var(--luxury-gold); } /* Lyx/Social */
-
+        /* --- CONTENT --- */
         .card-body { padding: 25px; }
-        .price-row { display: flex; align-items: baseline; gap: 10px; margin-bottom: 5px; }
-        .main-price { font-size: 2.2rem; font-weight: 900; }
-        .price-diff { color: var(--danger-red); font-size: 1rem; font-weight: 700; }
-        .address { font-size: 1.1rem; color: #aaa; margin-bottom: 20px; }
+        .price-tag { font-size: 2.4rem; font-weight: 900; letter-spacing: -2px; color: #fff; margin-bottom: 5px; }
+        .price-diff { color: var(--danger-red); font-size: 0.9rem; font-weight: 700; margin-left: 10px; }
+        .address-text { font-size: 1.1rem; color: #888; margin-bottom: 20px; font-weight: 500; }
 
-        /* RISK & FEAT TAGS */
-        .tags-container { display: flex; flex-wrap: wrap; gap: 8px; }
+        /* --- TAGS --- */
+        .tag-cloud { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
         .tag {
-            padding: 6px 12px;
-            border-radius: 6px;
-            font-size: 0.7rem;
-            font-weight: 700;
-            background: #1a1a1a;
+            padding: 6px 12px; border-radius: 8px; font-size: 0.7rem; font-weight: 800;
+            background: #151515; border: 1px solid #222; text-transform: uppercase;
         }
-        .tag-risk { color: var(--danger-red); border: 1px solid rgba(255,68,68,0.3); }
-        .tag-luxury { color: var(--luxury-gold); border: 1px solid rgba(255,204,0,0.3); }
+        .tag-risk { color: var(--danger-red); border-color: rgba(255,68,68,0.2); background: rgba(255,68,68,0.05); }
+        .tag-gold { color: var(--luxury-gold); border-color: rgba(255,204,0,0.2); }
 
-        /* GOD MODE HUD */
-        #god-mode-toggle {
-            position: fixed;
-            bottom: 30px; right: 30px;
-            z-index: 100;
-            background: var(--neon-green);
-            color: #000;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-weight: 900;
-            cursor: pointer;
-            box-shadow: 0 0 30px rgba(0,255,136,0.5);
+        /* --- ACTION --- */
+        .btn-infiltrate {
+            width: 100%; padding: 18px; background: transparent; border: 1px solid var(--neon-green);
+            color: var(--neon-green); border-radius: 15px; font-family: 'Orbitron'; font-weight: 900;
+            cursor: pointer; transition: 0.3s; letter-spacing: 2px; font-size: 0.8rem;
         }
+        .btn-infiltrate:hover { background: var(--neon-green); color: #000; box-shadow: 0 0 30px var(--neon-green); }
+
+        /* --- SKELETON ANIMATION --- */
+        .shimmer { background: linear-gradient(90deg, #0a0a0a 25%, #151515 50%, #0a0a0a 75%); background-size: 200% 100%; animation: loading 1.5s infinite; }
+        @keyframes loading { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
     </style>
 </head>
 <body>
 
-    <button id="god-mode-toggle" onclick="toggleGodMode()">ACTIVATE GOD MODE</button>
+<header>
+    <div class="logo-container">
+        <div class="logo-aura"></div>
+        <h1 class="main-logo">ALLA<span>BOSTÄDER</span></h1>
+    </div>
+</header>
 
-    <div class="header">
-        <div class="logo-container">
-            <div class="logo-aura"></div>
-            <div class="logo-pulse"></div>
-            <h1 class="main-logo">ALLA<span>BOSTÄDER</span></h1>
-        </div>
+<div class="control-vault">
+    <input type="text" id="master-search" class="search-bar" placeholder="SÖK I MATRIX (EX. 'POOLVILLA SOLLENTUNA')...">
+</div>
+
+<div class="matrix-grid" id="main-grid">
     </div>
 
-    <div class="search-section">
-        <input type="text" id="search-input" placeholder="Sök bland 400 000+ objekt (ex. 'Radonfri poolvilla Sollentuna')...">
-    </div>
-
-    <div id="results-grid">
-        </div>
-
-    <script>
-        let isGodMode = false;
-        let allData = [];
-
-        async function init() {
+<script>
+    const SovereignMatrix = {
+        vault: [],
+        
+        async init() {
+            const grid = document.getElementById('main-grid');
+            // Initiera med 8 skeletons
+            grid.innerHTML = Array(8).fill('<div class="unit-card shimmer" style="height:450px"></div>').join('');
+            
             try {
                 const res = await fetch('market-data.json');
-                allData = await res.json();
-                render(allData);
-            } catch (e) { console.error("Data saknas än."); }
-        }
+                this.vault = await res.json();
+                this.render();
+            } catch (e) {
+                grid.innerHTML = `<div style="grid-column: 1/-1; text-align:center; color:gray;">SYSTEM OFFLINE: VÄNTAR PÅ DATAINFILTRATION...</div>`;
+            }
 
-        function toggleGodMode() {
-            isGodMode = !isGodMode;
-            const btn = document.getElementById('god-mode-toggle');
-            btn.innerText = isGodMode ? "GOD MODE ACTIVE" : "ACTIVATE GOD MODE";
-            btn.style.background = isGodMode ? "#ff4444" : "#00ff88";
-            render(allData);
-        }
+            document.getElementById('master-search').addEventListener('input', (e) => this.render(e.target.value));
+        },
 
-        function render(data) {
-            const grid = document.getElementById('results-grid');
-            grid.innerHTML = data.slice(0, 50).map(obj => `
-                <div class="card">
-                    <div class="status-tag ${obj.isPartner ? 'status-partner' : 'status-shadow'}">
-                        ${obj.isPartner ? 'Verifierad Partner' : 'Overifierad Källa'}
-                    </div>
+        render(filter = '') {
+            const grid = document.getElementById('main-grid');
+            const term = filter.toLowerCase();
+            
+            const filtered = this.vault.filter(u => 
+                u.a.toLowerCase().includes(term) || u.s.toLowerCase().includes(term) || (u.d && u.d.toLowerCase().includes(term))
+            ).slice(0, 100);
 
-                    <div class="meters-grid">
-                        <div class="meter">
-                            <span class="meter-val v-index">${obj.vIndex}%</span>
-                            <span class="meter-label">Värde</span>
+            grid.innerHTML = filtered.map(u => `
+                <div class="unit-card">
+                    <div class="card-hud">
+                        <div class="hud-item">
+                            <span class="hud-val v-idx">${u.vIndex || 0}%</span>
+                            <span class="hud-label">Värde</span>
                         </div>
-                        <div class="meter">
-                            <span class="meter-val s-index">${obj.sIndex}%</span>
-                            <span class="meter-label">Trygghet</span>
+                        <div class="hud-item">
+                            <span class="hud-val s-idx">${u.sIndex || 0}%</span>
+                            <span class="hud-label">Trygghet</span>
                         </div>
-                        <div class="meter">
-                            <span class="meter-val l-index">${obj.lIndex}%</span>
-                            <span class="meter-label">Social</span>
+                        <div class="hud-item">
+                            <span class="hud-val l-idx">${u.lIndex || 0}%</span>
+                            <span class="hud-label">Lyx</span>
                         </div>
                     </div>
-
+                    
                     <div class="card-body">
-                        <div class="price-row">
-                            <span class="main-price">${(obj.p/1000000).toFixed(1)}M</span>
-                            ${obj.pc ? `<span class="price-diff">-${obj.pc}%</span>` : ''}
+                        <div class="price-tag">
+                            ${(u.p / 1000000).toFixed(1)}<span style="font-size:1.2rem; color:var(--neon-green)">M</span>
+                            ${u.pc ? `<span class="price-diff">-${u.pc}%</span>` : ''}
                         </div>
-                        <div class="address">${obj.a}</div>
+                        <div class="address-text">${u.a}</div>
                         
-                        <div class="tags-container">
-                            ${obj.hasRadon ? '<span class="tag tag-risk">⚠️ RADIOAKTIVITET</span>' : ''}
-                            ${obj.hasPool ? '<span class="tag tag-luxury">🏊 POOL</span>' : ''}
-                            ${obj.hasGym ? '<span class="tag tag-luxury">🏋️ GYM</span>' : ''}
-                            ${isGodMode ? `<span class="tag" style="color: cyan">SHADOW: ${obj.shadowPrice}M</span>` : ''}
+                        <div class="tag-cloud">
+                            <div class="tag">${u.area || '?'} m²</div>
+                            <div class="tag">${u.rooms || '?'} RUM</div>
+                            ${u.hasRadon ? '<div class="tag tag-risk">⚠️ RISK: RADON</div>' : ''}
+                            ${u.hasPool ? '<div class="tag tag-gold">🏊 POOL</div>' : ''}
+                            ${u.lIndex > 80 ? '<div class="tag tag-gold">💎 ELIT-OBJEKT</div>' : ''}
                         </div>
+
+                        <button class="btn-infiltrate" onclick="window.open('${u.u}', '_blank')">INFILTRERA KÄLLAN</button>
                     </div>
                 </div>
             `).join('');
         }
+    };
 
-        document.getElementById('search-input').addEventListener('input', (e) => {
-            const t = e.target.value.toLowerCase();
-            const filtered = allData.filter(o => 
-                o.a.toLowerCase().includes(t) || o.s.toLowerCase().includes(t) || (o.d && o.d.toLowerCase().includes(t))
-            );
-            render(filtered);
-        });
+    window.onload = () => SovereignMatrix.init();
+</script>
 
-        init();
-    </script>
 </body>
 </html>
