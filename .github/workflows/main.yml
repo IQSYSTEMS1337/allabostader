@@ -1,17 +1,17 @@
-name: Allabostäder Daily Infiltration
+name: Allabostäder Empire Update
 on:
   schedule:
-    - cron: '0 4 * * *' # Automatiskt varje morgon
-  workflow_dispatch:   # Manuell start-knapp (viktigt för tester)
+    - cron: '0 4 * * *' # Körs kl 04:00 varje morgon
+  workflow_dispatch:   # Gör att du kan dundra igång den manuellt
 
 jobs:
-  empire-build:
+  run-core:
     runs-on: ubuntu-latest
     steps:
-      - name: 🛰️ Infiltrate Repository
+      - name: 🛰️ Infiltrate Repo
         uses: actions/checkout@v4
 
-      - name: 🛠️ Setup Node Engine
+      - name: 🛠️ Setup Environment
         uses: actions/setup-node@v4
         with:
           node-version: '20'
@@ -20,15 +20,18 @@ jobs:
       - name: 📦 Install War-Tools
         run: npm install
 
-      - name: 🚀 Execute Omni-Scraper V20
-        run: node scraper.js
+      - name: 🚀 Execute AGGREGATOR_CORE
+        run: node AGGREGATOR_CORE.js
         env:
           NODE_ENV: production
 
-      - name: 💾 Synchronize Empire Vault
+      - name: 📊 Run Analyzer
+        run: node analyzer.js
+
+      - name: 💾 Synchronize Vault
         run: |
           git config --global user.name "Empire-Bot"
           git config --global user.email "bot@allabostader.se"
           git add market-data.json
-          git commit -m "Market Update: $(date +'%Y-%m-%d %H:%M')" || exit 0
+          git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [100-POINT ANALYZED]" || exit 0
           git push
