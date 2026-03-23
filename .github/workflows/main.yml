@@ -2,69 +2,67 @@ name: Eternal Market Infiltration - THE MASTER VAULT
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # Dominans var 15:e minut
-  workflow_dispatch: # Fullständig manuell makt
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 360 # 6 timmars uthållighet för total skanning
+    timeout-minutes: 360 
     
     permissions:
-      contents: write # KRITISKT för att skriva till ditt digitala imperium
+      contents: write
 
     steps:
       - name: 🛰️ Infiltrating Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Hämtar hela historiken för säker git-hantering
+          fetch-depth: 0
 
       - name: ⚡ Setting Up Node.js (Stable Core)
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          # Cache borttagen för att eliminera "lock-file" krascher permanent
 
       - name: 🛠️ Installing Stealth Weaponry
-        # Vi installerar allt i ett svep för att minimera overhead
         run: |
           npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer --no-audit --no-fund --loglevel=error
 
       - name: 🗄️ Initializing Persistent Vault
-        # Garanterar att market-data.json aldrig är tom eller saknas
         run: |
           if [ ! -f market-data.json ]; then
             echo "[]" > market-data.json
           fi
 
-      - name: 🚀 Executing Aggregator (Parallel Stealth Engine)
-        # Vi ger maskinen maximalt RAM (4GB) för att hantera massiv data
+      - name: 🚀 Executing Aggregator
         run: node AGGREGATOR_CORE.js
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
-      - name: 🧠 Running Neural Arbitrage (300 Point Analysis)
-        # Kör din Analyzer med full kraft
-        run: node ANALYZER.js || echo "Analyzer encounterd a minor glitch, continuing to save data..."
+      - name: 🧠 Running Neural Arbitrage
+        # FIX: Vi kollar om filen heter ANALYZER.js eller analyzer.js så det aldrig kraschar
+        run: |
+          if [ -f ANALYZER.js ]; then node ANALYZER.js; 
+          elif [ -f analyzer.js ]; then node analyzer.js;
+          else echo "Analyzer file not found, skipping..."; fi
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
       - name: 🔄 Syncing & Securing Market DNA
-        # Denna sektion är nu 1000x mer robust
         run: |
           git config --global user.name "Sovereign-Bot"
           git config --global user.email "bot@allabostader.se"
           
-          # Hämta dagsfärsk data för att undvika konflikter vid push
-          git pull origin main --rebase || echo "No remote changes to merge"
+          # FIX: Vi stashar undan den nya datan temporärt, drar ner senaste från molnet, och lägger tillbaka den.
+          git add market-data.json
+          git stash
+          git pull origin main --rebase || echo "No remote changes"
+          git stash pop || echo "No stashed changes"
           
           git add market-data.json
-          
-          # Intelligent kontroll: Pusha endast om ny information har extraherats
           if git diff --staged --quiet; then
-            echo "No new market DNA detected in this cycle."
+            echo "No new market DNA detected."
           else
             git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [Infiltration Complete]"
-            # Force-retry vid push om GitHub är segt
-            git push origin main || (sleep 10 && git push origin main)
+            git push origin main
           fi
