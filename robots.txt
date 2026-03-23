@@ -1,0 +1,9 @@
+User-agent: *
+Allow: /
+Allow: /orter/
+Disallow: /property-structure/
+Disallow: /property-location/
+Disallow: /wp-admin/
+Disallow: /wp-content/
+
+Sitemap: https://allabostader.se/sitemap.xml
