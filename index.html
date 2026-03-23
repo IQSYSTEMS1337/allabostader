@@ -3,174 +3,178 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OMNI-BLACK // PRIVATE INDEX</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600;900&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap">
+    <title>SOVEREIGN // PRESTIGE TERMINAL v42.0</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #000000;
-            --accent: #00ffa3; /* Hyper-Green */
-            --accent-glow: rgba(0, 255, 163, 0.2);
-            --surface: rgba(255, 255, 255, 0.03);
-            --border: rgba(255, 255, 255, 0.07);
-            --text-p: #888888;
-            --text-h: #ffffff;
-            --flip: #bcfe2b; /* Volt Yellow för Investering */
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-font-smoothing: antialiased; }
+        :root { --accent: #3b82f6; --danger: #ef4444; --bg: #020202; }
         body { 
-            background: var(--bg); color: var(--text-h); 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            line-height: 1.6; overflow-x: hidden;
+            background-color: var(--bg); 
+            color: #fafafa; 
+            font-family: 'Inter', sans-serif; 
+            letter-spacing: -0.04em;
+            background-image: radial-gradient(circle at 50% -10%, #151515 0%, #020202 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
         }
-
-        /* MESH BACKGROUND EFFECT */
-        body::before {
-            content: ""; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: radial-gradient(circle at 50% -20%, #111 0%, #000 100%);
-            z-index: -1;
+        .glass { background: rgba(10, 10, 10, 0.8); backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.06); }
+        .card { 
+            transition: all 0.7s cubic-bezier(0.15, 1, 0.3, 1); 
+            border: 1px solid rgba(255,255,255,0.03);
+            background: linear-gradient(180deg, rgba(15,15,15,0.9) 0%, rgba(5,5,5,0.9) 100%);
         }
-
-        /* SIDE-BAR MINI-OS */
-        .sidebar {
-            position: fixed; left: 0; top: 0; bottom: 0; width: 80px;
-            background: rgba(0,0,0,0.8); border-right: 1px solid var(--border);
-            display: flex; flex-direction: column; align-items: center; padding: 30px 0;
-            backdrop-filter: blur(20px); z-index: 100; transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        .card:hover { 
+            transform: translateY(-10px) scale(1.015); 
+            border-color: rgba(59, 130, 246, 0.5);
+            box-shadow: 0 50px 100px rgba(0,0,0,0.9);
         }
-        .sidebar:hover { width: 240px; }
-        .sidebar:hover .nav-label { opacity: 1; pointer-events: auto; }
-
-        .nav-item { 
-            width: 100%; padding: 20px; display: flex; align-items: center; 
-            color: var(--text-p); text-decoration: none; transition: 0.2s; position: relative;
+        .panic-aura { animation: panic-glow 3s infinite; border-color: rgba(239, 68, 68, 0.4) !important; }
+        @keyframes panic-glow {
+            0%, 100% { box-shadow: 0 0 0px rgba(239, 68, 68, 0); }
+            50% { box-shadow: 0 0 30px rgba(239, 68, 68, 0.15); }
         }
-        .nav-item:hover { color: var(--accent); background: rgba(255,255,255,0.02); }
-        .nav-icon { min-width: 40px; font-size: 1.2rem; text-align: center; }
-        .nav-label { opacity: 0; pointer-events: none; white-space: nowrap; margin-left: 15px; font-weight: 600; font-size: 0.85rem; }
-
-        /* CONTENT AREA */
-        .main-stage { margin-left: 80px; padding: 60px 80px; transition: margin-left 0.3s; }
-
-        /* TYPOGRAPHY */
-        .hero-title { font-family: 'Outfit', sans-serif; font-size: 4rem; font-weight: 900; letter-spacing: -3px; line-height: 1; margin-bottom: 40px; }
-        .hero-title span { color: var(--accent); }
-
-        /* TACTICAL SEARCH */
-        .search-bar {
-            width: 100%; max-width: 600px; background: var(--surface); border: 1px solid var(--border);
-            padding: 18px 30px; border-radius: 12px; color: #fff; font-size: 1rem;
-            outline: none; transition: 0.3s; margin-bottom: 60px;
-        }
-        .search-bar:focus { border-color: var(--accent); box-shadow: 0 0 30px var(--accent-glow); }
-
-        /* DATA GRID */
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(380px, 1fr)); gap: 40px; }
-
-        /* ELITE CARD DESIGN */
-        .card {
-            text-decoration: none; color: inherit; position: relative;
-            background: transparent; transition: 0.4s;
-        }
-        .card::before {
-            content: ""; position: absolute; inset: 0; background: var(--surface);
-            border: 1px solid var(--border); border-radius: 24px; z-index: -1; transition: 0.4s;
-        }
-        .card:hover::before { transform: scale(1.02); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
-
-        .card-img { width: 100%; height: 240px; background: #111; border-radius: 20px; overflow: hidden; margin-bottom: 20px; }
-        .card-img div { width: 100%; height: 100%; background: linear-gradient(45deg, #0a0a0a, #1a1a1a); position: relative; }
-        
-        .card-content { padding: 0 10px 25px 10px; }
-        .card-tag { 
-            font-size: 0.65rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; 
-            color: var(--accent); margin-bottom: 12px; display: block;
-        }
-        .card-title { font-family: 'Outfit', sans-serif; font-size: 1.6rem; font-weight: 600; margin-bottom: 5px; }
-        .card-meta { color: var(--text-p); font-size: 0.85rem; margin-bottom: 20px; }
-
-        .price-wrap { display: flex; align-items: baseline; gap: 12px; }
-        .price-main { font-size: 1.8rem; font-weight: 600; color: #fff; }
-        .price-info { color: var(--flip); font-weight: 700; font-size: 0.9rem; }
-
-        /* FLOATING ACTION BUTTON */
-        .fab {
-            position: fixed; bottom: 40px; right: 40px; background: var(--accent);
-            color: #000; width: 60px; height: 60px; border-radius: 50%;
-            display: flex; align-items: center; justify-content: center;
-            box-shadow: 0 10px 30px var(--accent-glow); cursor: pointer; transition: 0.3s;
-        }
-        .fab:hover { transform: scale(1.1) rotate(90deg); }
-
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .sidebar { width: 0; display: none; }
-            .main-stage { margin-left: 0; padding: 40px 20px; }
-            .hero-title { font-size: 2.5rem; }
-        }
+        .whale-badge { border-color: rgba(234, 179, 8, 0.4) !important; background: linear-gradient(135deg, rgba(20,20,20,1) 0%, rgba(30,25,0,0.3) 100%); }
+        .hide-scroll::-webkit-scrollbar { width: 0px; }
+        .neon-text { text-shadow: 0 0 30px rgba(59, 130, 246, 0.5); }
     </style>
 </head>
-<body>
+<body class="p-4 md:p-14 hide-scroll">
 
-<div class="sidebar">
-    <a href="#" class="nav-item" onclick="setFilter('ALL')"><span class="nav-icon">▤</span><span class="nav-label">MARKNADEN</span></a>
-    <a href="#" class="nav-item" onclick="setFilter('FLIP')"><span class="nav-icon">⚡</span><span class="nav-label">FLIP_ALGORITM</span></a>
-    <a href="#" class="nav-item" onclick="setFilter('WHALE')"><span class="nav-icon">🐋</span><span class="nav-label">WHALE_WATCH</span></a>
-    <a href="#" class="nav-item" onclick="setFilter('DESP')"><span class="nav-icon">⚠️</span><span class="nav-label">DESPERATION</span></a>
-</div>
-
-<div class="main-stage">
-    <h1 class="hero-title">PRIVATE<span>INDEX</span>.</h1>
-    
-    <input type="text" id="search" class="search-bar" placeholder="SÖK_SYSTEM_QUERY...">
-
-    <div class="grid" id="mainGrid">
+    <header class="max-w-[1900px] mx-auto mb-20 flex flex-col xl:flex-row justify-between items-start xl:items-end gap-12">
+        <div class="space-y-4">
+            <div class="flex items-center gap-3">
+                <span class="w-2.5 h-2.5 bg-blue-600 rounded-full animate-pulse"></span>
+                <span class="text-[10px] font-black tracking-[0.6em] text-blue-600 uppercase">Neural Market Feed v42.0</span>
+            </div>
+            <h1 class="text-9xl font-black tracking-tighter text-white uppercase italic leading-[0.8] neon-text">Sovereign<span class="text-blue-600">.</span></h1>
+            <p class="text-gray-700 font-bold text-[11px] tracking-[0.4em] uppercase pl-2">Absolute Zero Intelligence // Prestige Terminal</p>
         </div>
-</div>
 
-<div class="fab" onclick="window.scrollTo({top: 0, behavior: 'smooth'})">＋</div>
+        <div class="flex gap-6">
+            <div class="glass px-12 py-8 rounded-[2.5rem] min-w-[220px]">
+                <div id="stat-count" class="text-6xl font-black text-white italic tracking-tighter">0</div>
+                <div class="text-[10px] text-gray-600 font-black uppercase tracking-widest mt-2">Active Targets</div>
+            </div>
+            <div class="glass px-12 py-8 rounded-[2.5rem] min-w-[220px] border-red-500/20">
+                <div id="stat-panic" class="text-6xl font-black text-red-600 italic tracking-tighter">0</div>
+                <div class="text-[10px] text-red-600 font-black uppercase tracking-widest mt-2">Distressed Deals</div>
+            </div>
+        </div>
+    </header>
 
-<script>
-    let db = [];
-    let filter = 'ALL';
+    <section class="max-w-[1900px] mx-auto mb-16 glass p-4 rounded-[3.5rem] flex flex-wrap items-center gap-6 shadow-3xl">
+        <div class="flex-1 min-w-[350px] px-8">
+            <input type="text" id="search" placeholder="Enter Address, City or Broker Agent..." 
+                   class="bg-transparent w-full p-4 outline-none text-2xl font-bold text-white placeholder:text-gray-900">
+        </div>
+        
+        <div class="flex gap-4 p-2">
+            <select id="filter" class="bg-black/80 border border-white/5 p-6 rounded-[2.5rem] text-[11px] font-black text-white outline-none cursor-pointer hover:border-blue-500 transition-all uppercase tracking-widest">
+                <option value="all">Full Market</option>
+                <option value="distressed">📉 Panic Mode Only</option>
+                <option value="whale">🐋 Whale Deals (>30M)</option>
+            </select>
+            <select id="sort" class="bg-black/80 border border-white/5 p-6 rounded-[2.5rem] text-[11px] font-black text-white outline-none cursor-pointer hover:border-blue-500 transition-all uppercase tracking-widest">
+                <option value="dscore">Panic Index (H)</option>
+                <option value="newest">Latest Entry</option>
+                <option value="price-asc">Floor Price</option>
+            </select>
+            <button onclick="syncVault()" class="bg-blue-600 hover:bg-blue-500 text-white font-black px-14 py-6 rounded-[2.5rem] transition-all uppercase text-[11px] tracking-[0.3em]">
+                Sync Engine
+            </button>
+        </div>
+    </section>
 
-    async function load() {
-        const r = await fetch('market-data.json?v=' + Date.now());
-        db = await r.json();
-        render();
-    }
+    <main id="terminal" class="max-w-[1900px] mx-auto grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 3xl:grid-cols-4 gap-12">
+        </main>
 
-    function setFilter(f) { filter = f; render(); }
+    <script>
+        let vault = [];
 
-    function render() {
-        const query = document.getElementById('search').value.toLowerCase();
-        let list = db;
+        async function syncVault() {
+            try {
+                const res = await fetch('market-data.json');
+                vault = await res.json();
+                renderTerminal();
+            } catch (e) {
+                document.getElementById('terminal').innerHTML = `<div class="col-span-full py-80 text-center text-gray-900 font-black text-4xl tracking-tighter uppercase italic">Waiting for Market Data Infiltration...</div>`;
+            }
+        }
 
-        if(filter === 'FLIP') list = db.filter(x => x.flip?.isHotFlip);
-        if(filter === 'WHALE') list = db.filter(x => x.isWhale);
-        if(filter === 'DESP') list = db.filter(x => x.dScore > 75);
+        function renderTerminal() {
+            const grid = document.getElementById('terminal');
+            const q = document.getElementById('search').value.toLowerCase();
+            const f = document.getElementById('filter').value;
+            const s = document.getElementById('sort').value;
 
-        if(query) list = list.filter(x => x.a.toLowerCase().includes(query));
+            let data = [...vault];
 
-        document.getElementById('mainGrid').innerHTML = list.slice(0, 80).map((h, i) => `
-            <a href="${h.u}" target="_blank" class="card">
-                <div class="card-img"><div></div></div>
-                <div class="card-content">
-                    <span class="card-tag">${h.isWhale ? 'Whale Class' : h.flip?.isHotFlip ? 'Alpha Deal' : h.s}</span>
-                    <div class="card-title">${h.a.split(',')[0]}</div>
-                    <div class="card-meta">${h.a.split(',')[1] || 'Sverige'} • ${h.area || '--'} m²</div>
-                    <div class="price-wrap">
-                        <div class="price-main">${(h.p/1000000).toFixed(2)}M</div>
-                        ${h.streetDiff < 0 ? `<div class="price-info">${h.streetDiff}% VS GATA</div>` : ''}
+            if (q) data = data.filter(x => x.a.toLowerCase().includes(q) || x.s.toLowerCase().includes(q));
+            if (f === 'distressed') data = data.filter(x => x.pc > 0 || x.dScore > 80);
+            if (f === 'whale') data = data.filter(x => x.p > 30000000);
+
+            if (s === 'dscore') data.sort((a,b) => b.dScore - a.dScore);
+            if (s === 'newest') data.sort((a,b) => new Date(b.firstSeen) - new Date(a.firstSeen));
+            if (s === 'price-asc') data.sort((a,b) => a.p - b.p);
+
+            document.getElementById('stat-count').innerText = vault.length;
+            document.getElementById('stat-panic').innerText = vault.filter(x => x.pc > 0).length;
+
+            grid.innerHTML = data.map(item => {
+                const isPanic = item.dScore > 85;
+                const isWhale = item.p > 30000000;
+                const dropAmt = item.pHistory.length > 1 ? (item.pHistory[0].p - item.p) : 0;
+
+                return `
+                    <div class="glass p-12 rounded-[3.5rem] card flex flex-col justify-between ${isPanic ? 'panic-aura' : ''} ${isWhale ? 'whale-badge' : ''}">
+                        <div>
+                            <div class="flex justify-between items-start mb-12">
+                                <span class="text-[10px] font-black px-5 py-2 bg-white/5 rounded-full text-gray-500 uppercase tracking-[0.3em]">${item.s || 'BROKER'}</span>
+                                <div class="text-right">
+                                    <div class="text-[10px] font-black text-blue-500 uppercase tracking-widest">Index Score</div>
+                                    <div class="text-4xl font-black text-white italic">${item.dScore}%</div>
+                                </div>
+                            </div>
+
+                            <h2 class="text-4xl font-black text-white leading-none mb-3 tracking-tighter uppercase italic truncate" title="${item.a}">${item.a}</h2>
+                            <div class="text-gray-700 font-bold text-[11px] mb-12 uppercase tracking-[0.3em]">
+                                ${item.rooms || '?'} ROK // ${item.area || '?'} M² // ${item.kvm ? (item.kvm/1000).toFixed(0)+'K' : '?'} KR/M²
+                            </div>
+
+                            <div class="flex items-baseline gap-1 mb-6">
+                                <span class="text-7xl font-black text-white tracking-tighter">${(item.p / 1000000).toFixed(1)}</span>
+                                <span class="text-gray-700 font-black text-2xl uppercase italic">Mkr</span>
+                            </div>
+
+                            ${dropAmt > 0 ? `
+                                <div class="inline-block px-5 py-2.5 rounded-2xl bg-red-600/10 border border-red-600/20 text-red-600 font-black text-[11px] uppercase tracking-widest">
+                                    📉 -${item.pc}% | SÄNKT ${(dropAmt/1000).toFixed(0)}K SEK
+                                </div>
+                            ` : `
+                                <div class="text-emerald-600 font-black text-[10px] uppercase tracking-[0.4em]">● Market Resistance High</div>
+                            `}
+                        </div>
+
+                        <div class="mt-14 pt-10 border-t border-white/5">
+                            <div class="flex justify-between text-[10px] text-gray-800 font-black uppercase mb-8">
+                                <span>Persistence: ${item.days} D</span>
+                                <span>Detected: ${item.firstSeen.split('T')[0]}</span>
+                            </div>
+                            <a href="${item.u}" target="_blank" class="block w-full bg-white text-black text-center font-black py-7 rounded-[2rem] hover:bg-blue-600 hover:text-white transition-all uppercase text-[11px] tracking-[0.5em]">
+                                Execute Infiltration
+                            </a>
+                        </div>
                     </div>
-                </div>
-            </a>
-        `).join('');
-    }
+                `;
+            }).join('');
+        }
 
-    document.getElementById('search').addEventListener('input', render);
-    load();
-</script>
+        document.getElementById('search').addEventListener('input', renderTerminal);
+        document.getElementById('filter').addEventListener('change', renderTerminal);
+        document.getElementById('sort').addEventListener('change', renderTerminal);
 
+        syncVault();
+        setInterval(syncVault, 30000);
+    </script>
 </body>
 </html>
