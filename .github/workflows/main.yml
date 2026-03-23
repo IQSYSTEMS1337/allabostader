@@ -1,68 +1,78 @@
-name: Eternal Market Infiltration - THE MASTER VAULT
+name: 👁️ ETERNAL MATRIX INFILTRATION - THE MASTER VAULT
 
 on:
   schedule:
-    - cron: '*/15 * * * *'
-  workflow_dispatch:
+    - cron: '*/15 * * * *' # Infiltrerar varje kvart för total dominans
+  workflow_dispatch:      # Manuell trigger för omedelbar attack
+
+permissions:
+  contents: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    timeout-minutes: 360 
+    timeout-minutes: 360  # Sex timmar av oavbruten dataskörd
     
-    permissions:
-      contents: write
-
     steps:
-      - name: 🛰️ Infiltrating Repository
+      - name: 🛰️ INFILTRATING REPOSITORY
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0 # Hämtar hela historiken för säker synk
 
-      - name: ⚡ Setting Up Node.js (Stable Core)
+      - name: ⚡ SETTING UP NODE.JS (STABLE CORE V20)
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      - name: 🛠️ Installing Stealth Weaponry
+      - name: 🛠️ INSTALLING STEALTH WEAPONRY
+        # Installerar ALLT: Puppeteer för skrapning + Axios/Fs för analys
         run: |
-          npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer --no-audit --no-fund --loglevel=error
+          npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer axios fs path --no-audit --no-fund --loglevel=error
 
-      - name: 🗄️ Initializing Persistent Vault
+      - name: 🗄️ INITIALIZING PERSISTENT VAULT
         run: |
           if [ ! -f market-data.json ]; then
             echo "[]" > market-data.json
           fi
 
-      - name: 🚀 Executing Aggregator
+      - name: 🚀 EXECUTING AGGREGATOR (RAW HARVEST)
+        # Maxar minnet till 4GB för att hantera tiotusentals hus utan krasch
         run: node AGGREGATOR_CORE.js
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
-      - name: 🧠 Running Neural Arbitrage
-        # FIX: Vi kollar om filen heter ANALYZER.js eller analyzer.js så det aldrig kraschar
+      - name: 🧠 RUNNING 100-POINT NEURAL ARBITRAGE
+        # Kör din ANALYZER oavsett filnamn och applicerar 100-punktsprotokollet
         run: |
           if [ -f ANALYZER.js ]; then node ANALYZER.js; 
           elif [ -f analyzer.js ]; then node analyzer.js;
-          else echo "Analyzer file not found, skipping..."; fi
+          else echo "!! ANALYZER NOT FOUND - CRITICAL ERROR !!"; exit 1; fi
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
-      - name: 🔄 Syncing & Securing Market DNA
+      - name: 🔄 SYNCING & SECURING MARKET DNA (REBASE PROTOCOL)
+        # Detta är den viktigaste biten för att slippa manuellt strul
         run: |
           git config --global user.name "Sovereign-Bot"
           git config --global user.email "bot@allabostader.se"
           
-          # FIX: Vi stashar undan den nya datan temporärt, drar ner senaste från molnet, och lägger tillbaka den.
+          # 1. Lägg till den nya, analyserade datan
           git add market-data.json
+          
+          # 2. Stash:a undan den lokala ändringen temporärt
           git stash
-          git pull origin main --rebase || echo "No remote changes"
+          
+          # 3. Pull:a de senaste ändringarna från GitHub (om du ändrat index.html t.ex.)
+          git pull origin main --rebase || echo "No remote changes to merge"
+          
+          # 4. Lägg tillbaka den nya datan ovanpå
           git stash pop || echo "No stashed changes"
           
+          # 5. Commit & Push
           git add market-data.json
           if git diff --staged --quiet; then
-            echo "No new market DNA detected."
+            echo "No changes in Market DNA. Standing by."
           else
-            git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [Infiltration Complete]"
+            git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [100-POINT ANALYZED]"
             git push origin main
           fi
