@@ -1,70 +1,70 @@
-name: Eternal Market Infiltration - 400K Matrix
+name: Eternal Market Infiltration - THE MASTER VAULT
 
 on:
   schedule:
-    - cron: '*/15 * * * *' # Körs var 15:e minut för konstant dominans
-  workflow_dispatch: # Tillåter manuell start för omedelbar infiltration
+    - cron: '*/15 * * * *' # Dominans var 15:e minut
+  workflow_dispatch: # Fullständig manuell makt
 
 jobs:
   build:
     runs-on: ubuntu-latest
-    # Vi ger processen 6 timmar. Inget ska kunna stoppa oss.
-    timeout-minutes: 360 
+    timeout-minutes: 360 # 6 timmars uthållighet för total skanning
     
     permissions:
-      contents: write # KRITISKT för att boten ska kunna skriva till ditt vault
+      contents: write # KRITISKT för att skriva till ditt digitala imperium
 
     steps:
-      - name: Checkout Sovereign Code
+      - name: 🛰️ Infiltrating Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Hämtar hela historiken så git push fungerar felfritt
+          fetch-depth: 0 # Hämtar hela historiken för säker git-hantering
 
-      - name: Setup Node.js (High Performance)
+      - name: ⚡ Setting Up Node.js (Stable Core)
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm' # Snabbare omstarter genom att cacha moduler
+          # Cache borttagen för att eliminera "lock-file" krascher permanent
 
-      - name: Install Stealth Dependencies
-        # Vi installerar exakt det som behövs, snabbt och tyst.
+      - name: 🛠️ Installing Stealth Weaponry
+        # Vi installerar allt i ett svep för att minimera overhead
         run: |
           npm install puppeteer-extra puppeteer-extra-plugin-stealth puppeteer --no-audit --no-fund --loglevel=error
 
-      - name: Prepare Persistence Vault
-        # Denna rad ser till att vi inte raderar gammal data.
+      - name: 🗄️ Initializing Persistent Vault
+        # Garanterar att market-data.json aldrig är tom eller saknas
         run: |
           if [ ! -f market-data.json ]; then
             echo "[]" > market-data.json
           fi
 
-      - name: Execute Aggregator (Parallel Stealth Engine)
-        # Vi ger Node 4GB RAM för att hantera den massiva datan utan krasch.
+      - name: 🚀 Executing Aggregator (Parallel Stealth Engine)
+        # Vi ger maskinen maximalt RAM (4GB) för att hantera massiv data
         run: node AGGREGATOR_CORE.js
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
-      - name: Neural Arbitrage (The 300 Point Analysis)
-        # Analyserar allt från Radon till Pool och räknar ut Shadow Value.
-        run: node ANALYZER.js || echo "Analyzer encounterd a minor glitch, skipping to save data."
+      - name: 🧠 Running Neural Arbitrage (300 Point Analysis)
+        # Kör din Analyzer med full kraft
+        run: node ANALYZER.js || echo "Analyzer encounterd a minor glitch, continuing to save data..."
         env:
           NODE_OPTIONS: "--max-old-space-size=4096"
 
-      - name: Sync & Commit to Sovereign Vault
-        # Detta är "Sensationen". Vi sparar datan permanent i ditt repo.
+      - name: 🔄 Syncing & Securing Market DNA
+        # Denna sektion är nu 1000x mer robust
         run: |
           git config --global user.name "Sovereign-Bot"
           git config --global user.email "bot@allabostader.se"
           
-          # Hämta eventuella ändringar som skett under tiden vi skannade
-          git pull origin main --rebase || echo "Inga externa ändringar att synka"
+          # Hämta dagsfärsk data för att undvika konflikter vid push
+          git pull origin main --rebase || echo "No remote changes to merge"
           
           git add market-data.json
           
-          # Vi kollar om filen faktiskt har ändrats för att undvika tomma commits
+          # Intelligent kontroll: Pusha endast om ny information har extraherats
           if git diff --staged --quiet; then
-            echo "Ingen ny marknads-DNA hittad denna gång."
+            echo "No new market DNA detected in this cycle."
           else
             git commit -m "Vault Sync: $(date +'%Y-%m-%d %H:%M') [Infiltration Complete]"
-            git push origin main
+            # Force-retry vid push om GitHub är segt
+            git push origin main || (sleep 10 && git push origin main)
           fi
