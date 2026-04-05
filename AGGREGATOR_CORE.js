@@ -4,11 +4,11 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs').promises;
 const csv = require('csv-parse/sync');
 
-// Aktivera Stealth för att glida förbi anti-bot system
+// Aktivera Stealth-protokoll för att runda mäklarnas blockeringar
 puppeteer.use(StealthPlugin());
 
 const CONFIG = {
-    maxConcurrency: 1, // GitHub RAM-limitering kräver 1 för 100% stabilitet
+    maxConcurrency: 1, // GitHub RAM-skydd (kör en i taget för stabilitet)
     minPrice: 100000,
     maxScrollDepth: 18000,
     timeout: 90000,
@@ -21,14 +21,14 @@ let isDirty = false;
 let orterMap = new Map();
 
 /**
- * BOOTSTRAP: Ladda intelligens och befintlig data
+ * BOOTSTRAP: Ladda strategisk intelligens och marknadsarkiv
  */
 async function bootstrap() {
-    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V30: ABSOLUTE DOMINATION ONLINE");
+    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V34: EMPIRE ENGINE ONLINE");
     try {
         const raw = await fs.readFile('Aiorter.csv', 'utf8');
         const records = csv.parse(raw.replace(/^\uFEFF/, ''), { columns: true, delimiter: ';' });
-        // Sortera på längd för att matcha exakt (t.ex. "Stockholm" före "Stock")
+        // Sortera efter längd för att undvika "Malmö" vs "Malmö-Vellinge" konflikter
         records.sort((a, b) => b.Tätort.length - a.Tätort.length).forEach(r => {
             orterMap.set(r.Tätort.toLowerCase().trim(), r.Kommun?.trim());
         });
@@ -42,7 +42,7 @@ async function bootstrap() {
 }
 
 /**
- * GEO-MAPPING: Identifiera ort och kommun från textmassan
+ * GEO-MAPPING: Identifiera ort och kommun i realtid
  */
 const mapLocationFast = (text) => {
     const lowText = text.toLowerCase();
@@ -53,7 +53,7 @@ const mapLocationFast = (text) => {
 };
 
 /**
- * AUTO-SCROLL: Simulerar organiskt scrollbeteende
+ * AUTO-SCROLL: Simulerar mänsklig rörelse för att trigga lazy-loading
  */
 async function autoScroll(page, max) {
     await page.evaluate(async (max) => {
@@ -73,7 +73,7 @@ async function autoScroll(page, max) {
 }
 
 /**
- * MAIN ENGINE
+ * MAIN EXECUTION ENGINE
  */
 async function run() {
     await bootstrap();
@@ -95,7 +95,7 @@ async function run() {
         }
     });
 
-    // Autosave ticker
+    // Autosave Ticker
     const saveTicker = setInterval(async () => {
         if (isDirty) {
             console.log(">> [IO] Syncing Vault to disk...");
@@ -104,11 +104,12 @@ async function run() {
         }
     }, CONFIG.saveInterval);
 
+    // INFILTRATION TASK
     await cluster.task(async ({ page, data: target }) => {
         console.log(`>> [SCANNING] ${target.name}`);
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
         
-        // Resource Assassin: Blockera onödiga filer
+        // Resource Assassin: Blockera bilder och onödigt skräp för hastighet
         await page.setRequestInterception(true);
         page.on('request', (req) => {
             if (['image', 'media', 'font', 'stylesheet'].includes(req.resourceType())) {
@@ -121,7 +122,7 @@ async function run() {
         try {
             await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: CONFIG.timeout });
             
-            // Bypass cookies
+            // Bypass Cookie Banners
             await page.evaluate(() => {
                 const btn = Array.from(document.querySelectorAll('button, a, span'))
                     .find(el => /acceptera|godkänn|ok|agree|accept/i.test(el.innerText));
@@ -152,7 +153,7 @@ async function run() {
                 }).filter(i => i !== null);
             }, CONFIG.minPrice);
 
-            // VAULT SYNC
+            // VAULT MERGE & SOLD TRACKING
             const hostname = new URL(target.url).hostname;
             const seenNow = new Set();
 
@@ -179,7 +180,7 @@ async function run() {
                 isDirty = true;
             });
 
-            // SOLD DETECTION
+            // SOLD DETECTION: Markera försvunna objekt
             if (extracted.length > 5) {
                 vault.forEach(v => {
                     if (v.u.includes(hostname) && !seenNow.has(v.u) && v.status === "ACTIVE") {
@@ -197,8 +198,14 @@ async function run() {
         }
     });
 
-    const targets = require('./targets');
-    targets.forEach(t => cluster.queue(t));
+    // QUEUE TARGETS (Laddar från targets.js i samma mapp)
+    try {
+        const targets = require('./targets');
+        targets.forEach(t => cluster.queue(t));
+    } catch (e) {
+        console.error(">> [FATAL] Targets file missing!");
+        process.exit(1);
+    }
 
     await cluster.idle();
     await cluster.close();
@@ -208,6 +215,6 @@ async function run() {
 }
 
 run().catch(err => {
-    console.error(">> [FATAL GLOBAL ERROR]:", err.message);
+    console.error(">> [FATAL ERROR]:", err.message);
     process.exit(1);
 });
