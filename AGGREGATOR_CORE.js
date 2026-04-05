@@ -1,218 +1,262 @@
-const { Cluster } = require('puppeteer-cluster');
-const puppeteer = require('puppeteer-extra');
-const StealthPlugin = require('puppeteer-extra-plugin-stealth');
-const fs = require('fs');
-const csv = require('csv-parse/sync');
+<!DOCTYPE html>
+<html lang="sv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    
+    <title>AllaBostäder | Hela Sveriges bostadsmarknad på ett ställe</title>
+    <meta name="description" content="Sök bland Sveriges alla villor, lägenheter och tomter. Få oberoende marknadsdata, exakta priser och drönarvyer.">
+    <meta name="theme-color" content="#0B0F19">
 
-// Infiltrations-plugins
-puppeteer.use(StealthPlugin());
-
-const CONFIG = {
-    maxConcurrency: 2, 
-    minPrice: 100000,
-    maxScrollDepth: 18000,
-    timeout: 90000, 
-    retryLimit: 4 // Höjd gräns för att tvinga sig igenom
-};
-
-async function runEmpireAggregator() {
-    console.log(">> [SYSTEM] INITIALIZING OMNI-REVENANT V19: GHOST PROTOCOL ACTIVATED");
-
-    // 1. DATA INTELLIGENCE SETUP
-    let orterDB = [];
-    try {
-        if (fs.existsSync('Aiorter.csv')) {
-            const raw = fs.readFileSync('Aiorter.csv', 'utf8').replace(/^\uFEFF/, '');
-            orterDB = csv.parse(raw, { columns: true, skip_empty_lines: true, delimiter: ';' });
-            orterDB = orterDB.sort((a, b) => (b.Tätort?.length || 0) - (a.Tätort?.length || 0));
-            console.log(`>> [DB] Strategic Matrix Loaded: ${orterDB.length} Locations.`);
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-page: #0B0F19;
+            --surface-card: #111827;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent-dark: #000000; 
+            --accent-brand: #3B82F6; 
+            --border-light: #1E293B;
+            --tag-success-bg: rgba(4, 120, 87, 0.2);
+            --tag-success-txt: #34D399;
+            --tag-alert-bg: rgba(185, 28, 28, 0.2);
+            --tag-alert-txt: #F87171;
+            --shadow-float: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            --radius-card: 16px;
+            --radius-btn: 12px;
         }
-    } catch (e) { console.log(">> [WARN] Intelligence source offline."); }
 
-    let vault = [];
-    if (fs.existsSync('market-data.json')) {
-        try { vault = JSON.parse(fs.readFileSync('market-data.json', 'utf8')); } catch (e) { vault = []; }
-    }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
+        body { background-color: var(--bg-page); color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth; }
 
-    const mapLocation = (text) => {
-        if (!orterDB.length) return { s: "", k: "" };
-        const lowText = text.toLowerCase();
-        for (let ort of orterDB) {
-            if (!ort.Tätort) continue;
-            const name = ort.Tätort.trim();
-            if (new RegExp(`\\b${name}\\b`, 'i').test(lowText)) {
-                return { s: name, k: ort.Kommun?.trim() || "" };
+        .navbar {
+            background: #000000; 
+            border-bottom: 1px solid #1E293B; 
+            padding: 16px 5vw;
+            display: flex; justify-content: space-between; align-items: center;
+            position: sticky; top: 0; z-index: 2000;
+        }
+        
+        .logo-container {
+            display: flex; align-items: center; justify-content: center;
+            background: #FFFFFF; padding: 8px 16px; border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+        }
+        .logo { max-height: 40px; width: auto; object-fit: contain; }
+        
+        .market-status {
+            display: flex; align-items: center; gap: 10px; background: #111827;
+            padding: 8px 16px; border-radius: 100px; border: 1px solid #1E293B;
+            font-size: 0.8rem; font-weight: 700; color: #E2E8F0;
+        }
+        .status-dot { width: 8px; height: 8px; background: #10B981; border-radius: 50%; box-shadow: 0 0 10px #10B981; animation: pulse 2s infinite; }
+        @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
+        
+        .hero { position: relative; background: #0B0F19; padding: 80px 20px 60px; text-align: center; border-bottom: 1px solid var(--border-light); }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -0.04em; margin-bottom: 20px; color: #FFFFFF; }
+        .hero h1 span { background: linear-gradient(135deg, #3B82F6, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        .search-engine {
+            background: #111827; border: 1px solid #334155;
+            border-radius: 100px; padding: 10px; display: flex; align-items: center; box-shadow: var(--shadow-float);
+            max-width: 800px; margin: 30px auto 0; position: relative;
+        }
+        .main-search-input { flex-grow: 1; border: none; outline: none; font-size: 1.1rem; font-weight: 600; padding: 12px 20px; background: transparent; color: #FFFFFF; }
+        .main-search-input::placeholder { color: #64748B; }
+
+        .feed { max-width: 1400px; margin: 50px auto; padding: 0 20px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
+
+        .card { background: var(--surface-card); border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--border-light); transition: all 0.3s; display: block; text-decoration: none; color: inherit; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: #3B82F6; }
+
+        .c-media { position: relative; aspect-ratio: 16/10; background: #1E293B; overflow: hidden; }
+        .c-img { width: 100%; height: 100%; object-fit: cover; }
+        .c-map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; }
+        .card.is-map .c-map { display: block; }
+
+        .c-controls { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; z-index: 10; }
+        .c-badge { padding: 6px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 800; background: var(--tag-success-bg); color: var(--tag-success-txt); border: 1px solid rgba(52, 211, 153, 0.3); backdrop-filter: blur(4px); }
+        .cb-drop { background: var(--tag-alert-bg); color: var(--tag-alert-txt); border-color: rgba(248, 113, 113, 0.3); }
+
+        .btn-map { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 100px; font-weight: 800; font-size: 0.75rem; color: #FFF; cursor: pointer; backdrop-filter: blur(4px); transition: 0.2s; pointer-events: auto; }
+        .btn-map:hover { background: #3B82F6; border-color: #3B82F6; }
+
+        .c-data { padding: 24px; }
+        .c-price { font-size: 1.6rem; font-weight: 900; color: #FFFFFF; }
+        .c-addr { font-size: 1.15rem; font-weight: 800; margin: 8px 0 4px; color: #E2E8F0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .c-loc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 500; }
+
+        .c-specs { display: flex; justify-content: space-between; border-top: 1px solid var(--border-light); padding-top: 16px; }
+        .spec-item { display: flex; flex-direction: column; }
+        .s-lbl { font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); font-weight: 800; letter-spacing: 0.5px; }
+        .s-val { font-size: 0.95rem; font-weight: 700; color: #E2E8F0; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo-container">
+        <img src="logo.jpg" alt="AllaBostäder" class="logo" onerror="this.src='logo.png'">
+    </div>
+    <div class="market-status">
+        <div class="status-dot"></div><span>Säker anslutning</span>
+    </div>
+</nav>
+
+<header class="hero">
+    <div class="hero-content">
+        <h1>Hela Sveriges utbud.<br><span>Slipp leta överallt.</span></h1>
+        <div class="search-engine">
+            <input type="text" id="searchInput" class="main-search-input" placeholder="Sök ort eller adress...">
+        </div>
+    </div>
+</header>
+
+<main class="feed">
+    <div class="grid" id="propertyGrid"></div>
+</main>
+
+<script>
+    const API_KEY = 'AIzaSyBdYJrPg9-q7OQW7A8hW_RH46aHOjRPNJU';
+
+    const App = {
+        data: [],
+        currentQuery: "",
+        
+        async init() {
+            try {
+                // Tvingar bort cachen helt
+                const response = await fetch('market-data.json?v=' + new Date().getTime());
+                let fetchedData = await response.json();
+                
+                if(!fetchedData || fetchedData.length === 0) {
+                    console.warn("Varning: market-data.json är tom.");
+                }
+
+                this.data = fetchedData;
+                this.setupEvents();
+                this.renderFeed();
+            } catch (e) { 
+                console.error("Kunde inte ladda data", e); 
             }
+        },
+
+        setupEvents() {
+            document.getElementById('searchInput').addEventListener('input', (e) => {
+                this.currentQuery = e.target.value.toLowerCase();
+                this.renderFeed();
+            });
+        },
+
+        toggleMap(e, btn, address) {
+            e.preventDefault();
+            const card = btn.closest('.card');
+            const iframe = card.querySelector('.c-map');
+            
+            if (card.classList.contains('is-map')) {
+                card.classList.remove('is-map');
+                btn.innerHTML = '🗺️ Drönarvy';
+            } else {
+                if (!iframe.src) {
+                    const q = encodeURIComponent(address + ", Sverige");
+                    // RÄTTAD LÄNK FÖR DRÖNARVY - Använder den officiella Embed API v1
+                    iframe.src = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
+                }
+                card.classList.add('is-map');
+                btn.innerHTML = '📸 Fasadbild';
+            }
+        },
+
+        formatTitleCase(str) {
+            if (!str) return '';
+            return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+        },
+
+        getStreetView(item) {
+            const rawAddr = item.a || '';
+            const cleanAddress = rawAddr.replace(/^idag\s+/i, '').split(',')[0].trim();
+            const loc = encodeURIComponent(`${cleanAddress}, ${item.s}, Sverige`);
+            return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${loc}&radius=2000&key=${API_KEY}&return_error_code=true`;
+        },
+
+        renderFeed() {
+            const grid = document.getElementById('propertyGrid');
+            const fmt = new Intl.NumberFormat('sv-SE');
+            
+            const filtered = this.data.filter(item => 
+                (item.a && item.a.toLowerCase().includes(this.currentQuery)) || 
+                (item.s && item.s.toLowerCase().includes(this.currentQuery))
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `<h2 style="color: #fff; text-align: center; width: 100%; grid-column: 1 / -1;">Inga bostäder hittades i din datafil.</h2>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.slice(0, 100).map(item => {
+                
+                const rawAddr = item.a || 'Okänd Adress';
+                const strippedAddr = rawAddr.replace(/^idag\s+/i, '').trim();
+                const finalAddr = this.formatTitleCase(strippedAddr);
+
+                const rawOrt = item.s || '';
+                const cleanOrt = rawOrt.includes('ALPHA_') ? '' : this.formatTitleCase(rawOrt);
+                const rawKommun = item.k || '';
+                const cleanKommun = (rawKommun && String(rawKommun) !== 'undefined' && rawKommun !== 'null') ? this.formatTitleCase(String(rawKommun)) : '';
+                
+                let finalLoc = '';
+                if (cleanOrt && cleanKommun) finalLoc = `${cleanOrt} — ${cleanKommun}`;
+                else if (cleanOrt) finalLoc = cleanOrt;
+                else if (cleanKommun) finalLoc = cleanKommun;
+                else finalLoc = 'Sverige';
+
+                const priceText = item.p ? `${fmt.format(item.p)} kr` : 'Pris saknas';
+                const areaVal = item.area ? `${item.area} m²` : '-';
+                const roomVal = item.rooms ? `${item.rooms} rok` : '-';
+                const sqmPrice = (item.area && item.area > 0 && item.p) ? `${fmt.format(Math.round(item.p/item.area))} kr` : '-';
+
+                // SKOTTSÄKER FALLBACK: Ingen mer trasig fil-ikon. Bara en ren, säker URL-bild utan citattecken-krockar.
+                const safeFallback = 'https://via.placeholder.com/640x400/1E293B/94A3B8?text=Fasadbild+saknas';
+
+                return `
+                <div class="card">
+                    <a href="${item.u}" target="_blank" style="text-decoration:none; color:inherit;">
+                        <div class="c-media">
+                            <div class="c-controls">
+                                <div class="c-badges">
+                                    ${item.pc > 0 ? `<div class="c-badge cb-drop">-${item.pc}% prissänkt</div>` : '<div class="c-badge">Nyhet</div>'}
+                                </div>
+                                <button class="btn-map" onclick="App.toggleMap(event, this, '${finalAddr}, ${cleanOrt}')">🗺️ Drönarvy</button>
+                            </div>
+                            
+                            <img src="${this.getStreetView(item)}" class="c-img" loading="lazy" onerror="this.onerror=null; this.src='${safeFallback}';">
+                            
+                            <iframe class="c-map" allowfullscreen></iframe>
+                        </div>
+                        <div class="c-data">
+                            <div class="c-price">${priceText}</div>
+                            <h3 class="c-addr">${finalAddr}</h3>
+                            <div class="c-loc">${finalLoc}</div>
+                            <div class="c-specs">
+                                <div class="spec-item"><span class="s-lbl">Area</span><span class="s-val">${areaVal}</span></div>
+                                <div class="spec-item"><span class="s-lbl">Rum</span><span class="s-val">${roomVal}</span></div>
+                                <div class="spec-item"><span class="s-lbl">Pris/m²</span><span class="s-val">${sqmPrice}</span></div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `}).join('');
         }
-        return { s: "", k: "" };
     };
 
-    // 2. THE CLUSTER ENGINE - STEALTH MODE
-    const cluster = await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_PAGE,
-        maxConcurrency: CONFIG.maxConcurrency,
-        retryLimit: CONFIG.retryLimit,
-        puppeteerOptions: {
-            headless: "new",
-            args: [
-                '--no-sandbox', 
-                '--disable-setuid-sandbox', 
-                '--disable-dev-shm-usage',
-                '--disable-web-security', 
-                '--disable-blink-features=AutomationControlled', // Dödar webdriver-flaggor
-                '--disable-features=IsolateOrigins,site-per-process'
-            ]
-        }
-    });
+    window.addEventListener('DOMContentLoaded', () => App.init());
+</script>
 
-    // 3. THE INFILTRATION TASK
-    await cluster.task(async ({ page, data: target }) => {
-        
-        // Ghost Protocol: Roterande fönsterstorlek & Human UA
-        const uas = [
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0'
-        ];
-        await page.setUserAgent(uas[Math.floor(Math.random() * uas.length)]);
-        await page.setViewport({ 
-            width: 1920 + Math.floor(Math.random() * 100), 
-            height: 1080 + Math.floor(Math.random() * 100) 
-        });
-
-        // Resource Assassin: Blockera tunga/spårande element för maxhastighet
-        await page.setRequestInterception(true);
-        page.on('request', (req) => {
-            const type = req.resourceType();
-            if (['image', 'stylesheet', 'font', 'media'].includes(type)) {
-                req.abort();
-            } else {
-                req.continue();
-            }
-        });
-
-        try {
-            // Använd domcontentloaded för snabbare intrång, fallback på networkidle
-            await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: CONFIG.timeout });
-            
-            // Human delay: Ge anti-bot-systemen en sekund att slappna av
-            await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000));
-
-            // Hantera Cookies - Skottsäker mot Execution Context Destruction
-            try {
-                const clicked = await page.evaluate(() => {
-                    const keywords = ['acceptera', 'godkänn', 'stäng', 'ok', 'agree', 'accept', 'tillåt alla'];
-                    const elements = document.querySelectorAll('button, span, a, div[role="button"]');
-                    for (let el of elements) {
-                        if (keywords.some(k => el.innerText.toLowerCase().includes(k))) {
-                            el.click(); return true;
-                        }
-                    }
-                    return false;
-                });
-                // Om vi klickade, vänta ifall sidan laddar om
-                if (clicked) await new Promise(r => setTimeout(r, 2000));
-            } catch (err) { /* Ignorera om ingen cookie-ruta fanns */ }
-
-            // Organiskt scrollande
-            await autoScrollAdvanced(page, CONFIG.maxScrollDepth);
-
-            // EXTRACTION (Med extra try-catch per element för att överleva mutationer)
-            const rawResults = await page.evaluate(({ minPrice }) => {
-                const items = [];
-                const cards = document.querySelectorAll('li, article, [class*="card"], [class*="listing"]');
-                cards.forEach(c => {
-                    try {
-                        const txt = c.innerText || "";
-                        if (txt.includes('kr')) {
-                            const pMatch = txt.replace(/[\s\xa0.]/g, '').match(/(\d{6,11})kr/i);
-                            const price = pMatch ? parseInt(pMatch[1]) : 0;
-                            if (price >= minPrice) {
-                                const link = c.href || c.querySelector('a')?.href;
-                                if (!link) return;
-                                
-                                // Plocka fram area och rum lite smartare för att minska skräp
-                                const rawText = txt.substring(0, 300);
-                                let area = 0, rooms = 0;
-                                const areaMatch = rawText.match(/(\d+)\s*m/i);
-                                if (areaMatch) area = parseInt(areaMatch[1]);
-                                const roomMatch = rawText.match(/(\d+)\s*rum|rok/i);
-                                if (roomMatch) rooms = parseInt(roomMatch[1]);
-
-                                items.push({
-                                    a: txt.split('\n')[0].trim().substring(0, 85),
-                                    p: price,
-                                    area: area,
-                                    rooms: rooms,
-                                    u: link.split('?')[0].split('#')[0],
-                                    img: "", // Bilder blockeras ändå av Resource Assassin, vi använder drönarvyn
-                                    rawText: rawText
-                                });
-                            }
-                        }
-                    } catch (e) { /* Enstaka kort kraschar inte hela systemet */ }
-                });
-                return items;
-            }, { minPrice: CONFIG.minPrice });
-
-            const targetHostname = new URL(target.url).hostname;
-            const currentRunUrls = new Set(rawResults.map(r => r.u));
-
-            // Injektion till Vault
-            rawResults.forEach(item => {
-                const geo = mapLocation(item.a + " " + (item.rawText || ""));
-                item.s = geo.s; item.k = geo.k; delete item.rawText;
-                const idx = vault.findIndex(v => v.u === item.u);
-                if (idx > -1) {
-                    vault[idx] = { ...vault[idx], ...item, t: new Date().toISOString(), status: "ACTIVE" };
-                } else {
-                    item.firstSeen = new Date().toISOString(); item.t = item.firstSeen; item.status = "ACTIVE";
-                    vault.push(item);
-                }
-            });
-
-            // --- THE ABSOLUTE SAFEGUARD ---
-            if (rawResults.length > 10) { 
-                vault.forEach(v => {
-                    if (v.u.includes(targetHostname) && !currentRunUrls.has(v.u) && v.status !== "SOLD") {
-                        v.status = "SOLD";
-                        v.soldAt = new Date().toISOString();
-                    }
-                });
-                console.log(`>> [SUCCESS] ${target.name}: Sync genomförd. Hittade ${rawResults.length} objekt.`);
-            } else {
-                console.log(`>> [SAFEGUARD] Blockering detekterad (Hittade bara ${rawResults.length} objekt). Behåller befintlig data för ${target.name}.`);
-            }
-
-            fs.writeFileSync('market-data.json', JSON.stringify(vault, null, 2));
-
-        } catch (err) { console.error(`>> [FAILED] ${target.name}: ${err.message}`); }
-    });
-
-    const targets = require('./targets');
-    targets.forEach(t => cluster.queue(t));
-    await cluster.idle();
-    await cluster.close();
-    
-    console.log(`>> [COMPLETE] Empire Synchronized. Total Assets: ${vault.length}`);
-}
-
-async function autoScrollAdvanced(page, max) {
-    await page.evaluate(async (max) => {
-        await new Promise((resolve) => {
-            let total = 0;
-            let timer = setInterval(() => {
-                // Mänskligare scroll: Slumpmässiga steg istället för exakt 400px
-                let step = 300 + Math.floor(Math.random() * 200);
-                window.scrollBy(0, step);
-                total += step;
-                if (total >= document.body.scrollHeight || total > max) {
-                    clearInterval(timer);
-                    resolve();
-                }
-            }, 100 + Math.floor(Math.random() * 100)); // Slumpmässig paus
-        });
-    }, max);
-}
-
-runEmpireAggregator();
+</body>
+</html>
