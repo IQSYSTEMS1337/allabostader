@@ -1,4 +1,4 @@
-name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V30
+name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V34
 
 on:
   schedule:
@@ -12,7 +12,7 @@ concurrency:
 permissions:
   contents: write
 
-# ABSOLUT FIX FÖR GITHUB ACTIONS DEPRECATION VARNINGAR
+# ABSOLUT SYSTEM-OVERRIDE: Tvingar GitHub att köra allt på Node 24
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
@@ -35,9 +35,10 @@ jobs:
           cache: 'npm'
 
       - name: 🛡️ Install Chrome System Dependencies
+        # Fix för Ubuntu 24.04 (Noble): Vi installerar libasound2t64 istället för libasound2
         run: |
           sudo apt-get update
-          sudo apt-get install -y libgbm-dev libnss3 libatk-bridge2.0-0 libgtk-3-0
+          sudo apt-get install -y libgbm-dev libnss3 libatk-bridge2.0-0 libgtk-3-0 libasound2t64
           npx puppeteer browsers install chrome --with-deps
 
       - name: 📦 Install War-Tools (Silent Mode)
@@ -66,7 +67,7 @@ jobs:
           if [[ -n "$(git status --porcelain)" ]]; then
             TIMESTAMP=$(TZ=Europe/Stockholm date +'%Y-%m-%d %H:%M')
             git add .
-            git commit -m "Empire Sync: $TIMESTAMP [VOIDWALKER V30 - ABSOLUTE FORCE]"
+            git commit -m "Empire Sync: $TIMESTAMP [VOIDWALKER V34 - TOTAL FORCE]"
             git pull --rebase origin main
             git push origin main
           else
