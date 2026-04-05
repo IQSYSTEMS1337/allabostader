@@ -20,7 +20,7 @@ let isDirty = false;
 let orterMap = new Map();
 
 async function bootstrap() {
-    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V38: CI-STABILIZED PROTOCOL");
+    console.log(">> [SYSTEM] VOIDWALKER V39: TOTAL DOMINATION STARTING...");
     try {
         const raw = await fs.readFile('Aiorter.csv', 'utf8');
         const records = csv.parse(raw.replace(/^\uFEFF/, ''), { columns: true, delimiter: ';' });
@@ -36,7 +36,7 @@ async function bootstrap() {
     } catch (e) { vault = []; }
 }
 
-const mapLocationFast = (text) => {
+const mapLocation = (text) => {
     const lowText = text.toLowerCase();
     for (let [ort, kommun] of orterMap) {
         if (lowText.includes(ort)) return { s: ort, k: kommun };
@@ -44,40 +44,24 @@ const mapLocationFast = (text) => {
     return { s: "", k: "" };
 };
 
-async function autoScroll(page, max) {
-    await page.evaluate(async (max) => {
-        await new Promise((resolve) => {
-            let totalHeight = 0;
-            const timer = setInterval(() => {
-                const distance = 400 + Math.floor(Math.random() * 200);
-                window.scrollBy(0, distance);
-                totalHeight += distance;
-                if (totalHeight >= document.body.scrollHeight || totalHeight >= max) {
-                    clearInterval(timer);
-                    resolve();
-                }
-            }, 150);
-        });
-    }, max);
-}
-
 async function run() {
     await bootstrap();
 
+    console.log(">> [LAUNCH] Booting Chrome Matrix...");
     const cluster = await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_PAGE, // Ändrat från CONTEXT till PAGE för max stabilitet
+        concurrency: Cluster.CONCURRENCY_PAGE, 
         maxConcurrency: CONFIG.maxConcurrency,
         retryLimit: CONFIG.retryLimit,
         puppeteerOptions: {
             headless: true,
+            dumpio: true, // Nu ser vi exakt vad Chrome gör i loggen!
             args: [
                 '--no-sandbox',
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-gpu',
-                '--no-zygote',
-                '--single-process', // Krävs ibland i extremt låsta miljöer
-                '--disable-software-rasterizer'
+                '--no-zygote'
+                // --single-process är BORTTAGEN, den orsakade felet på Ubuntu 24.04
             ]
         }
     });
@@ -90,7 +74,7 @@ async function run() {
     }, CONFIG.saveInterval);
 
     await cluster.task(async ({ page, data: target }) => {
-        console.log(`>> [SCANNING] ${target.name}`);
+        console.log(`>> [INFILTRATING] ${target.name}`);
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
         
         await page.setRequestInterception(true);
@@ -101,11 +85,26 @@ async function run() {
 
         try {
             await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: CONFIG.timeout });
-            await autoScroll(page, CONFIG.maxScrollDepth);
+            
+            // Auto-scroll logic...
+            await page.evaluate(async (max) => {
+                await new Promise((resolve) => {
+                    let totalHeight = 0;
+                    const timer = setInterval(() => {
+                        const distance = 500;
+                        window.scrollBy(0, distance);
+                        totalHeight += distance;
+                        if (totalHeight >= document.body.scrollHeight || totalHeight >= max) {
+                            clearInterval(timer);
+                            resolve();
+                        }
+                    }, 100);
+                });
+            }, CONFIG.maxScrollDepth);
 
             const extracted = await page.evaluate((minPrice) => {
-                const cards = Array.from(document.querySelectorAll('li, article, [class*="card"]'));
-                return cards.map(el => {
+                const items = Array.from(document.querySelectorAll('li, article, [class*="card"]'));
+                return items.map(el => {
                     const txt = el.innerText || "";
                     const pMatch = txt.replace(/[\s\xa0.]/g, '').match(/(\d{6,11})kr/i);
                     const p = pMatch ? parseInt(pMatch[1]) : 0;
@@ -125,7 +124,7 @@ async function run() {
             const seenNow = new Set();
 
             extracted.forEach(item => {
-                const loc = mapLocationFast(item.title + " " + item.raw);
+                const loc = mapLocation(item.title + " " + item.raw);
                 const entry = {
                     u: item.url, a: item.title, p: item.price, s: loc.s, k: loc.k,
                     t: new Date().toISOString(), status: "ACTIVE"
@@ -157,16 +156,17 @@ async function run() {
     });
 
     const targets = require('./targets');
+    console.log(`>> [QUEUE] Loaded ${targets.length} targets.`);
     targets.forEach(t => cluster.queue(t));
 
     await cluster.idle();
     await cluster.close();
     clearInterval(saveTicker);
     await fs.writeFile('market-data.json', JSON.stringify(vault, null, 2));
-    console.log(">> [COMPLETE]");
+    console.log(">> [COMPLETE] Allabostäder Sync Success.");
 }
 
 run().catch(err => {
-    console.error(">> [FATAL ERROR]:", err.message);
+    console.error(">> [FATAL]:", err.message);
     process.exit(1);
 });
