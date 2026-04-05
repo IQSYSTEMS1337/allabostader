@@ -12,6 +12,7 @@ concurrency:
 permissions:
   contents: write
 
+# FIXAR DEPRECATION: Tvingar alla actions att köra på Node 24 direkt
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
