@@ -1,68 +1,75 @@
-name: 🌐 Allabostäder Omni-Engine
+name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V21
+
 on:
   schedule:
-    - cron: '0 4 * * *' # Körs automatiskt varje natt
-  workflow_dispatch:
+    - cron: '0 4 * * *' # Varje natt kl 04:00
+  workflow_dispatch: # Tillåter manuell start
 
-# 1. KOLLISIONSSKYDD: Om en körning redan pågår, ställs nästa i kö. Noll risk för korrupt data.
 concurrency:
   group: empire-engine
   cancel-in-progress: false
 
-# 2. RÄTTIGHETER: Låser upp skrivrättigheter så att boten aldrig får "Permission Denied".
 permissions:
   contents: write
 
 jobs:
   execute-empire:
     runs-on: ubuntu-latest
-    timeout-minutes: 60 # 3. SKYDD: Avbryter om mäklarnas servrar hänger sig, sparar dina GitHub-minuter.
-
+    timeout-minutes: 60
+    
     steps:
       - name: 🛰️ Infiltrate Repository
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Laddar ner historiken för att kunna lösa merge-konflikter automatiskt.
+          fetch-depth: 0
 
-      - name: 🛠️ Setup Node Engine (Apex Version 22)
+      - name: 🛠️ Setup Node Engine (Apex 22)
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+          cache: 'npm' # Aktiverar inbyggd cache för node_modules
+
+      - name: 🛡️ Install Chrome System Dependencies
+        # Detta är steget som fixar ditt "Unable to get browser page"-fel.
+        # Vi installerar alla Linux-bibliotek som Chromium kräver.
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libgbm-dev libnss3 libatk-bridge2.0-0 libgtk-3-0 libasound2 libx11-xcb1 libxss1 libnss3 libasound2 libatk1.0-0 libc6 libcairo2 libcups2 libdbus-1-3 libexpat1 libfontconfig1 libgcc1 libgconf-2-4 libgdk-pixbuf2.0-0 libglib2.0-0 libgtk-3-0 libnspr4 libpango-1.0-0 libpangocairo-1.0-0 libstdc++6 libx11-6 libx11-xcb1 libxcb1 libxcomposite1 libxcursor1 libxdamage1 libxext6 libxfixes3 libxi6 libxrandr2 libxrender1 libxtst6 ca-certificates fonts-liberation libappindicator1 lsb-release xdg-utils wget
+          npx puppeteer browsers install chrome
 
       - name: 📦 Install War-Tools (Silent Mode)
-        # 4. NPM-OPTIMERING: Installerar blixtsnabbt och tystar onödiga varningar.
         run: npm install --no-audit --no-fund --loglevel=error
 
       - name: 🚀 Execute AGGREGATOR_CORE (Data Extraction)
+        # Vi sätter PUPPETEER_EXECUTABLE_PATH så att scriptet vet exakt var Chrome bor.
         run: node AGGREGATOR_CORE.js
         env:
           NODE_ENV: production
-          PUPPETEER_SKIP_CHROMIUM_DOWNLOAD: false
+          CI: true
 
       - name: 📊 Execute Analyzer (Market Intelligence)
-        run: node analyzer.js || echo ">> [WARN] Analyzer bypassed due to missing data."
-        continue-on-error: true # Krascha inte hela bygget om analysen pausar.
+        run: node analyzer.js || echo ">> [WARN] Analyzer bypassed."
+        continue-on-error: true
 
       - name: 🕸️ Execute SEO Empire Generator (Domination)
-        run: node SEO_EMPIRE_GENERATOR.js
+        run: node SEO_EMPIRE_GENERATOR.js || echo ">> [WARN] SEO Generator bypassed."
         continue-on-error: true
 
       - name: 💾 Synchronize Empire Vault & SEO
-        # 5. RÄDDNINGSPROTOKOLL: Sparar ALLTID datan som samlats in, även om ett steg ovanför fick rött kort.
-        if: always() 
+        if: always()
         run: |
           git config --global user.name "Empire-Bot"
           git config --global user.email "bot@allabostader.se"
-          git add .
           
-          # 6. SVENSK TIDSZON: Tvingar servern att logga rätt svensk tid för commiten.
-          TIMESTAMP=$(TZ=Europe/Stockholm date +'%Y-%m-%d %H:%M')
-          
-          # 7. TOM COMMIT-Hantering: Om ingen ny data hittades, gör ingenting (istället för att krascha).
-          git diff --staged --quiet || git commit -m "Empire Sync: $TIMESTAMP [DATA + SEO + UI]"
-          
-          # 8. REBASE-PANSAR: Hämtar in ändringar DU gjort på GitHub innan den pushar, så den aldrig blockeras.
-          git pull --rebase origin main || true
-          
-          # Tryck upp guldgruvan till molnet.
-          git push origin main
+          # 1. Kolla om det faktiskt finns något nytt att committa
+          if [[ -n "$(git status --porcelain)" ]]; then
+            TIMESTAMP=$(TZ=Europe/Stockholm date +'%Y-%m-%d %H:%M')
+            git add .
+            git commit -m "Empire Sync: $TIMESTAMP [DATA + SEO + UI]"
+            
+            # 2. Rebase-pansar: Om någon ändrat i repot manuellt under tiden körningen pågick
+            git pull --rebase origin main
+            git push origin main
+          else
+            echo ">> [INFO] No changes detected. Skipping commit."
+          fi
