@@ -1,4 +1,4 @@
-name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V34
+name: VOIDWALKER-V37-FINAL
 
 on:
   schedule:
@@ -12,7 +12,6 @@ concurrency:
 permissions:
   contents: write
 
-# ABSOLUT SYSTEM-OVERRIDE: Tvingar GitHub att köra allt på Node 24
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
   ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
@@ -35,7 +34,7 @@ jobs:
           cache: 'npm'
 
       - name: 🛡️ Install Chrome System Dependencies
-        # Fix för Ubuntu 24.04 (Noble): Vi installerar libasound2t64 istället för libasound2
+        # KRITISK FIX: libasound2t64 krävs för Ubuntu 24.04 (Noble)
         run: |
           sudo apt-get update
           sudo apt-get install -y libgbm-dev libnss3 libatk-bridge2.0-0 libgtk-3-0 libasound2t64
@@ -50,26 +49,15 @@ jobs:
           NODE_ENV: production
           CI: true
 
-      - name: 📊 Execute Analyzer (Market Intelligence)
-        run: node analyzer.js || echo ">> [WARN] Analyzer bypassed."
-        continue-on-error: true
-
-      - name: 🕸️ Execute SEO Empire Generator (Domination)
-        run: node SEO_EMPIRE_GENERATOR.js || echo ">> [WARN] SEO Generator bypassed."
-        continue-on-error: true
-
-      - name: 💾 Synchronize Empire Vault & SEO
+      - name: 💾 Synchronize Empire Vault
         if: always()
         run: |
           git config --global user.name "Empire-Bot"
           git config --global user.email "bot@allabostader.se"
-          
           if [[ -n "$(git status --porcelain)" ]]; then
             TIMESTAMP=$(TZ=Europe/Stockholm date +'%Y-%m-%d %H:%M')
             git add .
-            git commit -m "Empire Sync: $TIMESTAMP [VOIDWALKER V34 - TOTAL FORCE]"
+            git commit -m "Empire Sync: $TIMESTAMP [VOIDWALKER V37]"
             git pull --rebase origin main
             git push origin main
-          else
-            echo ">> [INFO] No changes detected. Skipping commit."
           fi
