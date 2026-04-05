@@ -79,7 +79,7 @@
         .card { background: var(--surface-card); border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--border-light); transition: all 0.3s; display: block; text-decoration: none; color: inherit; }
         .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); }
 
-        .c-media { position: relative; aspect-ratio: 16/10; background: #eee; overflow: hidden; }
+        .c-media { position: relative; aspect-ratio: 16/10; background: #E2E8F0; overflow: hidden; }
         .c-img { width: 100%; height: 100%; object-fit: cover; }
         .c-map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; }
         .card.is-map .c-map { display: block; }
@@ -92,13 +92,13 @@
 
         .c-data { padding: 20px; }
         .c-price { font-size: 1.5rem; font-weight: 900; color: var(--accent-dark); }
-        .c-addr { font-size: 1.1rem; font-weight: 800; margin: 5px 0; }
-        .c-loc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; }
+        .c-addr { font-size: 1.1rem; font-weight: 800; margin: 5px 0; color: var(--accent-dark); }
+        .c-loc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 15px; font-weight: 500; }
 
         .c-specs { display: flex; justify-content: space-between; border-top: 1px solid var(--border-light); padding-top: 15px; }
         .spec-item { display: flex; flex-direction: column; }
         .s-lbl { font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); font-weight: 700; }
-        .s-val { font-size: 0.9rem; font-weight: 700; }
+        .s-val { font-size: 0.9rem; font-weight: 700; color: var(--accent-dark); }
     </style>
 </head>
 <body>
@@ -161,7 +161,6 @@
             } else {
                 if (!iframe.src) {
                     const q = encodeURIComponent(address + ", Sverige");
-                    // Den 100% korrekta och officiella Google Maps Embed API-URL:en för drönarvyn
                     iframe.src = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
                 }
                 card.classList.add('is-map');
@@ -169,13 +168,16 @@
             }
         },
 
+        // Format-verktyg för att tvinga fram perfekt grammatik (Title Case)
+        formatTitleCase(str) {
+            if (!str) return '';
+            return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+        },
+
         getStreetView(item) {
             const rawAddr = item.a || '';
-            // Datatvätt: Ta bort "IDAG" i början av adressen
             const cleanAddress = rawAddr.replace(/^idag\s+/i, '').split(',')[0].trim();
             const loc = encodeURIComponent(`${cleanAddress}, ${item.s}, Sverige`);
-            
-            // Radie på 2000 meter garanterar att en fasad hittas om den exakta adressen saknas
             return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${loc}&radius=2000&key=${API_KEY}&return_error_code=true`;
         },
 
@@ -190,20 +192,31 @@
 
             grid.innerHTML = filtered.slice(0, 100).map(item => {
                 
-                // Formaterings-tvätt för användargränssnittet
-                const rawAddr = item.a || 'Adress saknas';
-                const displayAddr = rawAddr.replace(/^idag\s+/i, '').trim();
+                // 1. Total Datatvätt: Adress
+                const rawAddr = item.a || 'Okänd Adress';
+                const strippedAddr = rawAddr.replace(/^idag\s+/i, '').trim();
+                const finalAddr = this.formatTitleCase(strippedAddr);
 
+                // 2. Total Datatvätt: Ort & Kommun
                 const rawOrt = item.s || '';
-                const displayOrt = rawOrt.includes('ALPHA_') ? '' : rawOrt;
-                const displayKommun = (item.k && String(item.k) !== 'undefined') ? ` — ${item.k}` : '';
-                const displayLocation = `${displayOrt}${displayKommun}`.trim() || 'Sverige';
+                const cleanOrt = rawOrt.includes('ALPHA_') ? '' : this.formatTitleCase(rawOrt);
+                const rawKommun = item.k || '';
+                const cleanKommun = (rawKommun && String(rawKommun) !== 'undefined') ? this.formatTitleCase(String(rawKommun)) : '';
+                
+                let finalLoc = '';
+                if (cleanOrt && cleanKommun) finalLoc = `${cleanOrt} — ${cleanKommun}`;
+                else if (cleanOrt) finalLoc = cleanOrt;
+                else if (cleanKommun) finalLoc = cleanKommun;
+                else finalLoc = 'Sverige';
 
-                // Pris-hantering för säkerhet (om priset saknas)
+                // 3. Area, Rum & Pris formatering
                 const priceText = item.p ? `${fmt.format(item.p)} kr` : 'Pris saknas';
+                const areaVal = item.area ? `${item.area} m²` : '-';
+                const roomVal = item.rooms ? `${item.rooms} rok` : '-';
+                const sqmPrice = (item.area && item.area > 0 && item.p) ? `${fmt.format(Math.round(item.p/item.area))} kr` : '-';
 
-                // Elegant placeholder när varken fasad eller närliggande hus hittas
-                const fallbackHouseUrl = `https://via.placeholder.com/640x400/F8FAFC/64748B?text=Fasadbild+saknas`;
+                // 4. Skottsäker Inbyggd Fallback-bild (För att döda trasiga ikoner för gott)
+                const safeFallback = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='400' viewBox='0 0 640 400'%3E%3Crect width='100%25' height='100%25' fill='%23F8FAFC'/%3E%3Ctext x='50%25' y='50%25' font-family='sans-serif' font-size='22' font-weight='600' fill='%2394A3B8' text-anchor='middle' dy='.3em'%3EFasadbild saknas%3C/text%3E%3C/svg%3E`;
 
                 return `
                 <div class="card">
@@ -213,21 +226,21 @@
                                 <div class="c-badges">
                                     ${item.pc > 0 ? `<div class="c-badge cb-drop">-${item.pc}% prissänkt</div>` : '<div class="c-badge">Nyhet</div>'}
                                 </div>
-                                <button class="btn-map" onclick="App.toggleMap(event, this, '${displayAddr}, ${displayOrt}')">🗺️ Drönarvy</button>
+                                <button class="btn-map" onclick="App.toggleMap(event, this, '${finalAddr}, ${cleanOrt}')">🗺️ Drönarvy</button>
                             </div>
                             
-                            <img src="${this.getStreetView(item)}" class="c-img" loading="lazy" onerror="this.onerror=null; this.src='${fallbackHouseUrl}';">
+                            <img src="${this.getStreetView(item)}" class="c-img" loading="lazy" onerror="this.onerror=null; this.src='${safeFallback}';">
                             
                             <iframe class="c-map" allowfullscreen></iframe>
                         </div>
                         <div class="c-data">
                             <div class="c-price">${priceText}</div>
-                            <h3 class="c-addr" style="text-transform: capitalize;">${displayAddr}</h3>
-                            <div class="c-loc">${displayLocation}</div>
+                            <h3 class="c-addr">${finalAddr}</h3>
+                            <div class="c-loc">${finalLoc}</div>
                             <div class="c-specs">
-                                <div class="spec-item"><span class="s-lbl">Area</span><span class="s-val">${item.area || '-'} m²</span></div>
-                                <div class="spec-item"><span class="s-lbl">Rum</span><span class="s-val">${item.rooms || '-'} rok</span></div>
-                                <div class="spec-item"><span class="s-lbl">Pris/m²</span><span class="s-val">${item.area && item.area > 0 && item.p ? Math.round(item.p/item.area) : '-'} kr</span></div>
+                                <div class="spec-item"><span class="s-lbl">Area</span><span class="s-val">${areaVal}</span></div>
+                                <div class="spec-item"><span class="s-lbl">Rum</span><span class="s-val">${roomVal}</span></div>
+                                <div class="spec-item"><span class="s-lbl">Pris/m²</span><span class="s-val">${sqmPrice}</span></div>
                             </div>
                         </div>
                     </a>
