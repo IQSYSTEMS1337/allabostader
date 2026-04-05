@@ -1,4 +1,4 @@
-name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V22
+name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V23
 
 on:
   schedule:
@@ -12,7 +12,7 @@ concurrency:
 permissions:
   contents: write
 
-# FIXAR DEPRECATION: Tvingar alla actions att köra på Node 24 direkt
+# DETTA FIXAR VARNINGARNA: Tvingar GitHub att köra allt på Node 24
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -42,17 +42,17 @@ jobs:
       - name: 📦 Install War-Tools (Silent Mode)
         run: npm install --no-audit --no-fund --loglevel=error
 
-      - name: 🚀 Execute AGGREGATOR_CORE (Data Extraction)
+      - name: 🚀 Execute AGGREGATOR_CORE
         run: node AGGREGATOR_CORE.js
         env:
           NODE_ENV: production
           CI: true
 
-      - name: 📊 Execute Analyzer (Market Intelligence)
+      - name: 📊 Execute Analyzer
         run: node analyzer.js || echo ">> [WARN] Analyzer bypassed."
         continue-on-error: true
 
-      - name: 🕸️ Execute SEO Empire Generator (Domination)
+      - name: 🕸️ Execute SEO Empire Generator
         run: node SEO_EMPIRE_GENERATOR.js || echo ">> [WARN] SEO Generator bypassed."
         continue-on-error: true
 
@@ -65,7 +65,7 @@ jobs:
           if [[ -n "$(git status --porcelain)" ]]; then
             TIMESTAMP=$(TZ=Europe/Stockholm date +'%Y-%m-%d %H:%M')
             git add .
-            git commit -m "Empire Sync: $TIMESTAMP [NODE 24 UPGRADE]"
+            git commit -m "Empire Sync: $TIMESTAMP [NODE 24 FIXED]"
             git pull --rebase origin main
             git push origin main
           else
