@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <meta name="referrer" content="no-referrer">
     
     <title>AllaBostäder | Hela Sveriges bostadsmarknad på ett ställe</title>
     <meta name="description" content="Sök bland Sveriges alla villor, lägenheter och tomter. Få oberoende marknadsdata, exakta priser och drönarvyer.">
@@ -161,7 +160,7 @@
                 if (!iframe.src) {
                     const q = encodeURIComponent(address + ", Sverige");
                     // Officiell Google Maps Embed API för satellitvy
-                    iframe.src = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
+                 iframe.src = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
                 }
                 card.classList.add('is-map');
                 btn.innerHTML = '📸 Fasadbild';
