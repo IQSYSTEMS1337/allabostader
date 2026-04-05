@@ -4,45 +4,46 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs').promises;
 const csv = require('csv-parse/sync');
 
-// Aktivera stealth för att undvika Cloudflare/Bot-detection
+// Aktivera stealth-skydd
 puppeteer.use(StealthPlugin());
 
 const CONFIG = {
-    maxConcurrency: 2, // Sänkt till 2 för stabilitet i CI (GitHub Actions har begränsat RAM)
+    maxConcurrency: 1, // GitHub Actions RAM är begränsat, kör en i taget för stabilitet
     minPrice: 100000,
-    maxScrollDepth: 15000,
-    timeout: 90000, // Ökad timeout för långsamma nätverk
+    maxScrollDepth: 18000,
+    timeout: 90000,
     retryLimit: 3,
-    saveInterval: 10000 // Spara var 10:e sekund
+    saveInterval: 10000
 };
 
-let orterMap = new Map();
 let vault = [];
 let isDirty = false;
+let orterMap = new Map();
 
 /**
- * BOOTSTRAP: Förbered systemet och ladda intelligens
+ * BOOTSTRAP: Ladda intelligens och befintlig data
  */
 async function bootstrap() {
-    console.log(">> [SYSTEM] VOIDWALKER V21 ACTIVATED: CI-STABILIZED PROTOCOL");
-
-    // Ladda Orter - O(1) sökning
+    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V28: EMPIRE ENGINE ONLINE");
     try {
         const raw = await fs.readFile('Aiorter.csv', 'utf8');
         const records = csv.parse(raw.replace(/^\uFEFF/, ''), { columns: true, delimiter: ';' });
+        // Sortera på längd för att matcha "Stockholm" före "Stock"
         records.sort((a, b) => b.Tätort.length - a.Tätort.length).forEach(r => {
             orterMap.set(r.Tätort.toLowerCase().trim(), r.Kommun?.trim());
         });
         console.log(`>> [DB] Strategic Nodes Online: ${orterMap.size}`);
-    } catch (e) { console.log(">> [WARN] Geolocation DB offline. Continuing without mapping."); }
+    } catch (e) { console.log(">> [WARN] Geolocation DB offline."); }
 
-    // Ladda befintlig data
     try {
         const data = await fs.readFile('market-data.json', 'utf8');
         vault = JSON.parse(data);
     } catch (e) { vault = []; }
 }
 
+/**
+ * GEO-MAPPING: Identifiera ort och kommun från text
+ */
 const mapLocationFast = (text) => {
     const lowText = text.toLowerCase();
     for (let [ort, kommun] of orterMap) {
@@ -52,54 +53,66 @@ const mapLocationFast = (text) => {
 };
 
 /**
- * CORE ENGINE
+ * AUTO-SCROLL: Ladda lazy-loading element organiskt
+ */
+async function autoScroll(page, max) {
+    await page.evaluate(async (max) => {
+        await new Promise((resolve) => {
+            let totalHeight = 0;
+            const timer = setInterval(() => {
+                const distance = 400 + Math.floor(Math.random() * 200);
+                window.scrollBy(0, distance);
+                totalHeight += distance;
+                if (totalHeight >= document.body.scrollHeight || totalHeight >= max) {
+                    clearInterval(timer);
+                    resolve();
+                }
+            }, 150);
+        });
+    }, max);
+}
+
+/**
+ * MAIN EXECUTION ENGINE
  */
 async function run() {
     await bootstrap();
 
-    // CLUSTER LAUNCH - Optimerad för GitHub Actions (Linux/Docker)
-    let cluster;
-    try {
-        cluster = await Cluster.launch({
-            concurrency: Cluster.CONCURRENCY_CONTEXT,
-            maxConcurrency: CONFIG.maxConcurrency,
-            puppeteerOptions: {
-                headless: true, // Standard headless är säkrast i CI
-                args: [
-                    '--no-sandbox',
-                    '--disable-setuid-sandbox',
-                    '--disable-dev-shm-usage', // KRITISKT: Förhindrar krasch i containrar
-                    '--disable-gpu',
-                    '--disable-notifications',
-                    '--no-zygote',
-                    '--single-process' // Sparar enormt mycket RAM
-                ]
-            }
-        });
-    } catch (err) {
-        console.error(">> [FATAL] Browser Cluster failed to ignite:", err.message);
-        process.exit(1);
-    }
+    const cluster = await Cluster.launch({
+        concurrency: Cluster.CONCURRENCY_CONTEXT,
+        maxConcurrency: CONFIG.maxConcurrency,
+        retryLimit: CONFIG.retryLimit,
+        puppeteerOptions: {
+            headless: true,
+            args: [
+                '--no-sandbox',
+                '--disable-setuid-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-gpu',
+                '--no-zygote',
+                '--disable-extensions'
+            ]
+        }
+    });
 
-    // Atomic I/O Ticker
-    const saveVault = async () => {
+    // Autosave ticker
+    const saveTicker = setInterval(async () => {
         if (isDirty) {
-            console.log(">> [IO] Synchronizing Vault to disk...");
+            console.log(">> [IO] Autosaving Vault...");
             await fs.writeFile('market-data.json', JSON.stringify(vault, null, 2));
             isDirty = false;
         }
-    };
-    const saveTicker = setInterval(saveVault, CONFIG.saveInterval);
+    }, CONFIG.saveInterval);
 
+    // THE INFILTRATION TASK
     await cluster.task(async ({ page, data: target }) => {
-        // Ghost Profile
-        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36');
+        console.log(`>> [SCANNING] ${target.name}`);
+        await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
         
-        // Resource Assassin 3.0: Döda allt onödigt för hastighet
+        // Resource Assassin: Blockera tunga element
         await page.setRequestInterception(true);
         page.on('request', (req) => {
-            const blocked = ['image', 'media', 'font', 'stylesheet', 'other'];
-            if (blocked.includes(req.resourceType()) || req.url().includes('analytics') || req.url().includes('facebook')) {
+            if (['image', 'media', 'font', 'stylesheet'].includes(req.resourceType())) {
                 req.abort();
             } else {
                 req.continue();
@@ -107,22 +120,21 @@ async function run() {
         });
 
         try {
-            console.log(`>> [INFILTRATING] ${target.name}...`);
             await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: CONFIG.timeout });
-
-            // Hantera cookies snabbt
+            
+            // Bypass cookies
             await page.evaluate(() => {
-                const btn = Array.from(document.querySelectorAll('button, a, div'))
+                const btn = Array.from(document.querySelectorAll('button, a, span'))
                     .find(el => /acceptera|godkänn|ok|agree|accept/i.test(el.innerText));
                 if (btn) btn.click();
             }).catch(() => {});
 
             await autoScroll(page, CONFIG.maxScrollDepth);
 
-            // EXTRACTION ENGINE
+            // DATA EXTRACTION ENGINE
             const extracted = await page.evaluate((minPrice) => {
-                const items = Array.from(document.querySelectorAll('li, article, [class*="card"], [class*="item"]'));
-                return items.map(el => {
+                const cards = Array.from(document.querySelectorAll('li, article, [class*="card"], [class*="item"]'));
+                return cards.map(el => {
                     const txt = el.innerText || "";
                     const pMatch = txt.replace(/[\s\xa0.]/g, '').match(/(\d{6,11})kr/i);
                     const p = pMatch ? parseInt(pMatch[1]) : 0;
@@ -141,7 +153,7 @@ async function run() {
                 }).filter(i => i !== null);
             }, CONFIG.minPrice);
 
-            // DATA MERGE & SYNC
+            // VAULT MERGE
             const hostname = new URL(target.url).hostname;
             const seenNow = new Set();
 
@@ -160,7 +172,7 @@ async function run() {
                 seenNow.add(entry.u);
                 const idx = vault.findIndex(v => v.u === entry.u);
                 if (idx > -1) {
-                    vault[idx] = { ...vault[idx], ...entry };
+                    vault[idx] = { ...vault[idx], ...entry, status: "ACTIVE" };
                 } else {
                     entry.firstSeen = entry.t;
                     vault.push(entry);
@@ -168,7 +180,7 @@ async function run() {
                 isDirty = true;
             });
 
-            // SOLD DETECTION (Safety check: Endast om vi faktiskt fick resultat)
+            // SOLD DETECTION: Markera objekt som försvunnit
             if (extracted.length > 5) {
                 vault.forEach(v => {
                     if (v.u.includes(hostname) && !seenNow.has(v.u) && v.status === "ACTIVE") {
@@ -179,14 +191,14 @@ async function run() {
                 });
             }
 
-            console.log(`>> [SUCCESS] ${target.name}: Found ${extracted.length} assets.`);
+            console.log(`>> [SUCCESS] ${target.name}: Sync Complete. Found ${extracted.length} objects.`);
 
         } catch (err) {
-            console.error(`>> [ERROR] ${target.name}: ${err.message}`);
+            console.error(`>> [FAILED] ${target.name}: ${err.message}`);
         }
     });
 
-    // Köa targets
+    // START QUEUE
     try {
         const targets = require('./targets');
         targets.forEach(t => cluster.queue(t));
@@ -198,25 +210,11 @@ async function run() {
     await cluster.idle();
     await cluster.close();
     clearInterval(saveTicker);
-    await saveVault();
-    console.log(`>> [COMPLETE] Empire Synchronized. Total Vault Assets: ${vault.length}`);
+    await fs.writeFile('market-data.json', JSON.stringify(vault, null, 2));
+    console.log(">> [COMPLETE] Empire Synchronized.");
 }
 
-async function autoScroll(page, max) {
-    await page.evaluate(async (max) => {
-        await new Promise((resolve) => {
-            let totalHeight = 0;
-            const timer = setInterval(() => {
-                const distance = 500;
-                window.scrollBy(0, distance);
-                totalHeight += distance;
-                if (totalHeight >= document.body.scrollHeight || totalHeight >= max) {
-                    clearInterval(timer);
-                    resolve();
-                }
-            }, 100);
-        });
-    }, max);
-}
-
-run();
+run().catch(err => {
+    console.error(">> [FATAL ERROR]:", err.message);
+    process.exit(1);
+});
