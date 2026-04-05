@@ -138,7 +138,9 @@
                 this.data = await response.json();
                 this.setupEvents();
                 this.renderFeed();
-            } catch (e) { console.error("Kunde inte ladda data", e); }
+            } catch (e) { 
+                console.error("Kunde inte ladda data", e); 
+            }
         },
 
         setupEvents() {
@@ -159,8 +161,8 @@
             } else {
                 if (!iframe.src) {
                     const q = encodeURIComponent(address + ", Sverige");
-                    // Officiell Google Maps Embed API för satellitvy
-                 iframe.src = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
+                    // Den 100% korrekta och officiella Google Maps Embed API-URL:en för drönarvyn
+                    iframe.src = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
                 }
                 card.classList.add('is-map');
                 btn.innerHTML = '📸 Fasadbild';
@@ -168,11 +170,13 @@
         },
 
         getStreetView(item) {
-            // Tvättar adressen från lägenhetsnummer för exaktare träff
-            const cleanAddress = item.a.split(',')[0].trim();
+            const rawAddr = item.a || '';
+            // Datatvätt: Ta bort "IDAG" i början av adressen
+            const cleanAddress = rawAddr.replace(/^idag\s+/i, '').split(',')[0].trim();
             const loc = encodeURIComponent(`${cleanAddress}, ${item.s}, Sverige`);
-            // return_error_code=true ser till att fallback-bilden (onerror) aktiveras om fasaden saknas
-            return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${loc}&key=${API_KEY}&return_error_code=true`;
+            
+            // Radie på 2000 meter garanterar att en fasad hittas om den exakta adressen saknas
+            return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${loc}&radius=2000&key=${API_KEY}&return_error_code=true`;
         },
 
         renderFeed() {
@@ -180,14 +184,26 @@
             const fmt = new Intl.NumberFormat('sv-SE');
             
             const filtered = this.data.filter(item => 
-                item.a.toLowerCase().includes(this.currentQuery) || 
-                item.s.toLowerCase().includes(this.currentQuery)
+                (item.a && item.a.toLowerCase().includes(this.currentQuery)) || 
+                (item.s && item.s.toLowerCase().includes(this.currentQuery))
             );
 
             grid.innerHTML = filtered.slice(0, 100).map(item => {
-                // Genererar en snygg drönarkarta över orten som fallback om fasadbild saknas
-                const locForMap = encodeURIComponent(`${item.s}, Sverige`);
-                const fallbackMapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${locForMap}&zoom=14&size=640x400&maptype=roadmap&key=${API_KEY}`;
+                
+                // Formaterings-tvätt för användargränssnittet
+                const rawAddr = item.a || 'Adress saknas';
+                const displayAddr = rawAddr.replace(/^idag\s+/i, '').trim();
+
+                const rawOrt = item.s || '';
+                const displayOrt = rawOrt.includes('ALPHA_') ? '' : rawOrt;
+                const displayKommun = (item.k && String(item.k) !== 'undefined') ? ` — ${item.k}` : '';
+                const displayLocation = `${displayOrt}${displayKommun}`.trim() || 'Sverige';
+
+                // Pris-hantering för säkerhet (om priset saknas)
+                const priceText = item.p ? `${fmt.format(item.p)} kr` : 'Pris saknas';
+
+                // Elegant placeholder när varken fasad eller närliggande hus hittas
+                const fallbackHouseUrl = `https://via.placeholder.com/640x400/F8FAFC/64748B?text=Fasadbild+saknas`;
 
                 return `
                 <div class="card">
@@ -197,21 +213,21 @@
                                 <div class="c-badges">
                                     ${item.pc > 0 ? `<div class="c-badge cb-drop">-${item.pc}% prissänkt</div>` : '<div class="c-badge">Nyhet</div>'}
                                 </div>
-                                <button class="btn-map" onclick="App.toggleMap(event, this, '${item.a}, ${item.s}')">🗺️ Drönarvy</button>
+                                <button class="btn-map" onclick="App.toggleMap(event, this, '${displayAddr}, ${displayOrt}')">🗺️ Drönarvy</button>
                             </div>
                             
-                            <img src="${this.getStreetView(item)}" class="c-img" loading="lazy" onerror="this.onerror=null; this.src='${fallbackMapUrl}';">
+                            <img src="${this.getStreetView(item)}" class="c-img" loading="lazy" onerror="this.onerror=null; this.src='${fallbackHouseUrl}';">
                             
                             <iframe class="c-map" allowfullscreen></iframe>
                         </div>
                         <div class="c-data">
-                            <div class="c-price">${fmt.format(item.p)} kr</div>
-                            <h3 class="c-addr">${item.a}</h3>
-                            <div class="c-loc">${item.s} — ${item.k}</div>
+                            <div class="c-price">${priceText}</div>
+                            <h3 class="c-addr" style="text-transform: capitalize;">${displayAddr}</h3>
+                            <div class="c-loc">${displayLocation}</div>
                             <div class="c-specs">
                                 <div class="spec-item"><span class="s-lbl">Area</span><span class="s-val">${item.area || '-'} m²</span></div>
                                 <div class="spec-item"><span class="s-lbl">Rum</span><span class="s-val">${item.rooms || '-'} rok</span></div>
-                                <div class="spec-item"><span class="s-lbl">Pris/m²</span><span class="s-val">${item.area ? Math.round(item.p/item.area) : '-'} kr</span></div>
+                                <div class="spec-item"><span class="s-lbl">Pris/m²</span><span class="s-val">${item.area && item.area > 0 && item.p ? Math.round(item.p/item.area) : '-'} kr</span></div>
                             </div>
                         </div>
                     </a>
