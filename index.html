@@ -6,7 +6,7 @@
     
     <title>AllaBostäder | Hela Sveriges bostadsmarknad på ett ställe</title>
     <meta name="description" content="Sök bland Sveriges alla villor, lägenheter och tomter. Få oberoende marknadsdata, exakta priser och drönarvyer.">
-    <meta name="theme-color" content="#020617">
+    <meta name="theme-color" content="#0B0F19">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -14,19 +14,20 @@
     
     <style>
         :root {
-            --bg-page: #F1F5F9;
-            --surface-card: #FFFFFF;
-            --text-main: #0F172A;
-            --text-muted: #64748B;
-            --accent-dark: #020617; 
-            --accent-brand: #2563EB; 
-            --border-light: #E2E8F0;
-            --tag-success-bg: #ECFDF5;
-            --tag-success-txt: #047857;
-            --tag-alert-bg: #FEF2F2;
-            --tag-alert-txt: #B91C1C;
-            --shadow-float: 0 20px 40px -15px rgba(0, 0, 0, 0.08);
-            --shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+            /* DEEP DARK MODE VARIABLES */
+            --bg-page: #0B0F19;
+            --surface-card: #111827;
+            --text-main: #F8FAFC;
+            --text-muted: #94A3B8;
+            --accent-dark: #000000; 
+            --accent-brand: #3B82F6; 
+            --border-light: #1E293B;
+            --tag-success-bg: rgba(4, 120, 87, 0.2);
+            --tag-success-txt: #34D399;
+            --tag-alert-bg: rgba(185, 28, 28, 0.2);
+            --tag-alert-txt: #F87171;
+            --shadow-float: 0 20px 40px -15px rgba(0, 0, 0, 0.5);
+            --shadow-hover: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             --radius-card: 16px;
             --radius-btn: 12px;
         }
@@ -34,10 +35,10 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
         body { background-color: var(--bg-page); color: var(--text-main); overflow-x: hidden; scroll-behavior: smooth; }
 
-        /* UPGRADED: Ultra-premium Dark Navbar for maximum logo contrast */
+        /* PITCH BLACK NAVBAR FOR LOGO CONTRAST */
         .navbar {
-            background: var(--accent-dark); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
+            background: #000000; 
+            border-bottom: 1px solid #1E293B; 
             padding: 16px 5vw;
             display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 2000;
@@ -45,57 +46,59 @@
         
         .logo-container {
             display: flex; align-items: center; justify-content: center;
+            /* White background explicitly for the logo to pop against the black navbar */
             background: #FFFFFF; padding: 8px 16px; border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2); transition: transform 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
         }
         .logo { max-height: 40px; width: auto; object-fit: contain; }
         
         .market-status {
-            display: flex; align-items: center; gap: 10px; background: rgba(255, 255, 255, 0.05);
-            padding: 8px 16px; border-radius: 100px; border: 1px solid rgba(255, 255, 255, 0.1);
-            font-size: 0.8rem; font-weight: 700; color: #F8FAFC;
+            display: flex; align-items: center; gap: 10px; background: #111827;
+            padding: 8px 16px; border-radius: 100px; border: 1px solid #1E293B;
+            font-size: 0.8rem; font-weight: 700; color: #E2E8F0;
         }
         .status-dot { width: 8px; height: 8px; background: #10B981; border-radius: 50%; box-shadow: 0 0 10px #10B981; animation: pulse 2s infinite; }
         @keyframes pulse { 0% { opacity: 0.5; } 50% { opacity: 1; } 100% { opacity: 0.5; } }
         
-        .hero { position: relative; background: #FFFFFF; padding: 80px 20px 60px; text-align: center; border-bottom: 1px solid var(--border-light); }
-        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -0.04em; margin-bottom: 20px; color: var(--accent-dark); }
-        .hero h1 span { background: linear-gradient(135deg, var(--accent-brand), #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero { position: relative; background: #0B0F19; padding: 80px 20px 60px; text-align: center; border-bottom: 1px solid var(--border-light); }
+        .hero h1 { font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 900; letter-spacing: -0.04em; margin-bottom: 20px; color: #FFFFFF; }
+        .hero h1 span { background: linear-gradient(135deg, #3B82F6, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
         .search-engine {
-            background: #fff; border: 1px solid var(--border-light);
+            background: #111827; border: 1px solid #334155;
             border-radius: 100px; padding: 10px; display: flex; align-items: center; box-shadow: var(--shadow-float);
             max-width: 800px; margin: 30px auto 0; position: relative;
         }
-        .main-search-input { flex-grow: 1; border: none; outline: none; font-size: 1.1rem; font-weight: 600; padding: 12px 20px; }
+        .main-search-input { flex-grow: 1; border: none; outline: none; font-size: 1.1rem; font-weight: 600; padding: 12px 20px; background: transparent; color: #FFFFFF; }
+        .main-search-input::placeholder { color: #64748B; }
 
         .feed { max-width: 1400px; margin: 50px auto; padding: 0 20px; }
         .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 30px; }
 
-        .card { background: var(--surface-card); border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--border-light); transition: all 0.3s; display: block; text-decoration: none; color: inherit; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); }
-        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: var(--accent-brand); }
+        .card { background: var(--surface-card); border-radius: var(--radius-card); overflow: hidden; border: 1px solid var(--border-light); transition: all 0.3s; display: block; text-decoration: none; color: inherit; box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
+        .card:hover { transform: translateY(-5px); box-shadow: var(--shadow-hover); border-color: #3B82F6; }
 
-        .c-media { position: relative; aspect-ratio: 16/10; background: #E2E8F0; overflow: hidden; }
+        .c-media { position: relative; aspect-ratio: 16/10; background: #1E293B; overflow: hidden; }
         .c-img { width: 100%; height: 100%; object-fit: cover; }
         .c-map { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; }
         .card.is-map .c-map { display: block; }
 
         .c-controls { position: absolute; top: 12px; left: 12px; right: 12px; display: flex; justify-content: space-between; z-index: 10; }
-        .c-badge { padding: 6px 12px; border-radius: 100px; font-size: 0.7rem; font-weight: 800; background: #fff; border: 1px solid var(--border-light); box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); }
-        .cb-drop { background: var(--tag-alert-bg); color: var(--tag-alert-txt); border-color: #FECACA;}
+        .c-badge { padding: 6px 12px; border-radius: 100px; font-size: 0.75rem; font-weight: 800; background: var(--tag-success-bg); color: var(--tag-success-txt); border: 1px solid rgba(52, 211, 153, 0.3); backdrop-filter: blur(4px); }
+        .cb-drop { background: var(--tag-alert-bg); color: var(--tag-alert-txt); border-color: rgba(248, 113, 113, 0.3); }
 
-        .btn-map { background: rgba(255,255,255,0.95); border: none; padding: 8px 16px; border-radius: 100px; font-weight: 800; font-size: 0.75rem; cursor: pointer; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1); transition: 0.2s; }
-        .btn-map:hover { background: var(--accent-dark); color: #fff; }
+        .btn-map { background: rgba(15, 23, 42, 0.8); border: 1px solid rgba(255,255,255,0.2); padding: 8px 16px; border-radius: 100px; font-weight: 800; font-size: 0.75rem; color: #FFF; cursor: pointer; backdrop-filter: blur(4px); transition: 0.2s; }
+        .btn-map:hover { background: #3B82F6; border-color: #3B82F6; }
 
         .c-data { padding: 24px; }
-        .c-price { font-size: 1.6rem; font-weight: 900; color: var(--accent-dark); }
-        .c-addr { font-size: 1.15rem; font-weight: 800; margin: 8px 0 4px; color: var(--accent-dark); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .c-price { font-size: 1.6rem; font-weight: 900; color: #FFFFFF; }
+        .c-addr { font-size: 1.15rem; font-weight: 800; margin: 8px 0 4px; color: #E2E8F0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .c-loc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 20px; font-weight: 500; }
 
         .c-specs { display: flex; justify-content: space-between; border-top: 1px solid var(--border-light); padding-top: 16px; }
         .spec-item { display: flex; flex-direction: column; }
         .s-lbl { font-size: 0.65rem; text-transform: uppercase; color: var(--text-muted); font-weight: 800; letter-spacing: 0.5px; }
-        .s-val { font-size: 0.95rem; font-weight: 700; color: var(--accent-dark); }
+        .s-val { font-size: 0.95rem; font-weight: 700; color: #E2E8F0; }
     </style>
 </head>
 <body>
@@ -131,13 +134,19 @@
         
         async init() {
             try {
-                // Cache-buster: Tvingar webbläsaren att ladda NY data, ignorerar gammalt skräp
                 const response = await fetch('market-data.json?v=' + new Date().getTime());
-                this.data = await response.json();
+                let fetchedData = await response.json();
+                
+                // Om din scraper fil är trasig eller tom, stannar inte hela sidan.
+                if(!fetchedData || fetchedData.length === 0) {
+                    console.warn("Varning: market-data.json är tom.");
+                }
+
+                this.data = fetchedData;
                 this.setupEvents();
                 this.renderFeed();
             } catch (e) { 
-                console.error("Kunde inte ladda data", e); 
+                console.error("Kunde inte ladda data, kontrollera att market-data.json existerar.", e); 
             }
         },
 
@@ -159,7 +168,6 @@
             } else {
                 if (!iframe.src) {
                     const q = encodeURIComponent(address + ", Sverige");
-                    // HELT KORREKT OCH OFFICIELL LÄNK FÖR SATELLITKARTOR (Embed API v1)
                     iframe.src = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
                 }
                 card.classList.add('is-map');
@@ -188,18 +196,21 @@
                 (item.s && item.s.toLowerCase().includes(this.currentQuery))
             );
 
+            if (filtered.length === 0) {
+                grid.innerHTML = `<h2 style="color: #fff; text-align: center; width: 100%; grid-column: 1 / -1;">Inga bostäder hittades i din datafil.</h2>`;
+                return;
+            }
+
             grid.innerHTML = filtered.slice(0, 100).map(item => {
                 
-                // Aggressiv städning av skräp-adresser
                 const rawAddr = item.a || 'Okänd Adress';
                 const strippedAddr = rawAddr.replace(/^idag\s+/i, '').trim();
                 const finalAddr = this.formatTitleCase(strippedAddr);
 
-                // Rensar ALPHA_HN och bygger snygg platssträng
                 const rawOrt = item.s || '';
                 const cleanOrt = rawOrt.includes('ALPHA_') ? '' : this.formatTitleCase(rawOrt);
                 const rawKommun = item.k || '';
-                const cleanKommun = (rawKommun && String(rawKommun) !== 'undefined') ? this.formatTitleCase(String(rawKommun)) : '';
+                const cleanKommun = (rawKommun && String(rawKommun) !== 'undefined' && rawKommun !== 'null') ? this.formatTitleCase(String(rawKommun)) : '';
                 
                 let finalLoc = '';
                 if (cleanOrt && cleanKommun) finalLoc = `${cleanOrt} — ${cleanKommun}`;
@@ -212,8 +223,8 @@
                 const roomVal = item.rooms ? `${item.rooms} rok` : '-';
                 const sqmPrice = (item.area && item.area > 0 && item.p) ? `${fmt.format(Math.round(item.p/item.area))} kr` : '-';
 
-                // Extremt ren inbyggd SVG som visas om fasaden saknas
-                const safeFallback = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='400' viewBox='0 0 640 400'%3E%3Crect width='100%25' height='100%25' fill='%23E2E8F0'/%3E%3Cpath d='M280 180h80v80h-80z' fill='%23CBD5E1'/%3E%3Cpath d='M320 140l50 40h-100z' fill='%2394A3B8'/%3E%3Ctext x='50%25' y='75%25' font-family='sans-serif' font-size='16' font-weight='600' fill='%2364748B' text-anchor='middle'%3EFasadbild saknas%3C/text%3E%3C/svg%3E`;
+                // Mörk fallback-bild som smälter in
+                const safeFallback = `data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='640' height='400' viewBox='0 0 640 400'%3E%3Crect width='100%25' height='100%25' fill='%231E293B'/%3E%3Cpath d='M280 180h80v80h-80z' fill='%23334155'/%3E%3Cpath d='M320 140l50 40h-100z' fill='%23475569'/%3E%3Ctext x='50%25' y='75%25' font-family='sans-serif' font-size='16' font-weight='600' fill='%2394A3B8' text-anchor='middle'%3EFasadbild saknas%3C/text%3E%3C/svg%3E`;
 
                 return `
                 <div class="card">
