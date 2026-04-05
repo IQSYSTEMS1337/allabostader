@@ -11,7 +11,7 @@ const CONFIG = {
     minPrice: 100000,
     maxScrollDepth: 18000,
     timeout: 90000,
-    retryLimit: 3,
+    retryLimit: 2,
     saveInterval: 10000
 };
 
@@ -20,13 +20,14 @@ let isDirty = false;
 let orterMap = new Map();
 
 async function bootstrap() {
-    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V37: ABSOLUTE DOMINATION");
+    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V38: CI-STABILIZED PROTOCOL");
     try {
         const raw = await fs.readFile('Aiorter.csv', 'utf8');
         const records = csv.parse(raw.replace(/^\uFEFF/, ''), { columns: true, delimiter: ';' });
         records.sort((a, b) => b.Tätort.length - a.Tätort.length).forEach(r => {
             orterMap.set(r.Tätort.toLowerCase().trim(), r.Kommun?.trim());
         });
+        console.log(`>> [DB] Strategic Nodes Online: ${orterMap.size}`);
     } catch (e) { console.log(">> [WARN] Geolocation DB offline."); }
 
     try {
@@ -64,7 +65,7 @@ async function run() {
     await bootstrap();
 
     const cluster = await Cluster.launch({
-        concurrency: Cluster.CONCURRENCY_CONTEXT,
+        concurrency: Cluster.CONCURRENCY_PAGE, // Ändrat från CONTEXT till PAGE för max stabilitet
         maxConcurrency: CONFIG.maxConcurrency,
         retryLimit: CONFIG.retryLimit,
         puppeteerOptions: {
@@ -74,7 +75,9 @@ async function run() {
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-gpu',
-                '--no-zygote'
+                '--no-zygote',
+                '--single-process', // Krävs ibland i extremt låsta miljöer
+                '--disable-software-rasterizer'
             ]
         }
     });
@@ -147,6 +150,7 @@ async function run() {
                     }
                 });
             }
+            console.log(`>> [SUCCESS] ${target.name}: Sync Complete.`);
         } catch (err) {
             console.error(`>> [FAILED] ${target.name}: ${err.message}`);
         }
@@ -163,6 +167,6 @@ async function run() {
 }
 
 run().catch(err => {
-    console.error(">> [FATAL]:", err.message);
+    console.error(">> [FATAL ERROR]:", err.message);
     process.exit(1);
 });
