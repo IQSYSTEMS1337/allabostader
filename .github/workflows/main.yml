@@ -1,4 +1,4 @@
-name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V28
+name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V30
 
 on:
   schedule:
@@ -12,8 +12,10 @@ concurrency:
 permissions:
   contents: write
 
+# ABSOLUT FIX FÖR GITHUB ACTIONS DEPRECATION VARNINGAR
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 jobs:
   execute-empire:
@@ -64,7 +66,7 @@ jobs:
           if [[ -n "$(git status --porcelain)" ]]; then
             TIMESTAMP=$(TZ=Europe/Stockholm date +'%Y-%m-%d %H:%M')
             git add .
-            git commit -m "Empire Sync: $TIMESTAMP [VOIDWALKER V28]"
+            git commit -m "Empire Sync: $TIMESTAMP [VOIDWALKER V30 - ABSOLUTE FORCE]"
             git pull --rebase origin main
             git push origin main
           else
