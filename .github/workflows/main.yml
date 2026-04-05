@@ -1,4 +1,4 @@
-name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V21
+name: 🌐 Allabostäder Omni-Engine: VOIDWALKER V22
 
 on:
   schedule:
@@ -12,6 +12,10 @@ concurrency:
 permissions:
   contents: write
 
+# HÄR FIXAR VI VARNINGARNA: Vi tvingar alla actions att köra på Node 24
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   execute-empire:
     runs-on: ubuntu-latest
@@ -23,10 +27,10 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 🛠️ Setup Node Engine (Apex 22)
+      - name: 🛠️ Setup Node Engine (Apex 24)
         uses: actions/setup-node@v4
         with:
-          node-version: '22'
+          node-version: '24' # Uppgraderat från 22 för att matcha runnerns framtid
           cache: 'npm'
 
       - name: 🛡️ Install Chrome System Dependencies
@@ -61,7 +65,7 @@ jobs:
           if [[ -n "$(git status --porcelain)" ]]; then
             TIMESTAMP=$(TZ=Europe/Stockholm date +'%Y-%m-%d %H:%M')
             git add .
-            git commit -m "Empire Sync: $TIMESTAMP [DATA + SEO + UI]"
+            git commit -m "Empire Sync: $TIMESTAMP [NODE 24 UPGRADE]"
             git pull --rebase origin main
             git push origin main
           else
