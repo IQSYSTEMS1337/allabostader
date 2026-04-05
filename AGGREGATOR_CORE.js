@@ -4,11 +4,10 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs').promises;
 const csv = require('csv-parse/sync');
 
-// Aktivera Stealth-protokoll för att runda mäklarnas blockeringar
 puppeteer.use(StealthPlugin());
 
 const CONFIG = {
-    maxConcurrency: 1, // GitHub RAM-skydd (kör en i taget för stabilitet)
+    maxConcurrency: 1, 
     minPrice: 100000,
     maxScrollDepth: 18000,
     timeout: 90000,
@@ -20,19 +19,14 @@ let vault = [];
 let isDirty = false;
 let orterMap = new Map();
 
-/**
- * BOOTSTRAP: Ladda strategisk intelligens och marknadsarkiv
- */
 async function bootstrap() {
-    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V34: EMPIRE ENGINE ONLINE");
+    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V37: ABSOLUTE DOMINATION");
     try {
         const raw = await fs.readFile('Aiorter.csv', 'utf8');
         const records = csv.parse(raw.replace(/^\uFEFF/, ''), { columns: true, delimiter: ';' });
-        // Sortera efter längd för att undvika "Malmö" vs "Malmö-Vellinge" konflikter
         records.sort((a, b) => b.Tätort.length - a.Tätort.length).forEach(r => {
             orterMap.set(r.Tätort.toLowerCase().trim(), r.Kommun?.trim());
         });
-        console.log(`>> [DB] Strategic Nodes Online: ${orterMap.size}`);
     } catch (e) { console.log(">> [WARN] Geolocation DB offline."); }
 
     try {
@@ -41,9 +35,6 @@ async function bootstrap() {
     } catch (e) { vault = []; }
 }
 
-/**
- * GEO-MAPPING: Identifiera ort och kommun i realtid
- */
 const mapLocationFast = (text) => {
     const lowText = text.toLowerCase();
     for (let [ort, kommun] of orterMap) {
@@ -52,9 +43,6 @@ const mapLocationFast = (text) => {
     return { s: "", k: "" };
 };
 
-/**
- * AUTO-SCROLL: Simulerar mänsklig rörelse för att trigga lazy-loading
- */
 async function autoScroll(page, max) {
     await page.evaluate(async (max) => {
         await new Promise((resolve) => {
@@ -72,9 +60,6 @@ async function autoScroll(page, max) {
     }, max);
 }
 
-/**
- * MAIN EXECUTION ENGINE
- */
 async function run() {
     await bootstrap();
 
@@ -89,61 +74,41 @@ async function run() {
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-gpu',
-                '--no-zygote',
-                '--disable-extensions'
+                '--no-zygote'
             ]
         }
     });
 
-    // Autosave Ticker
     const saveTicker = setInterval(async () => {
         if (isDirty) {
-            console.log(">> [IO] Syncing Vault to disk...");
             await fs.writeFile('market-data.json', JSON.stringify(vault, null, 2));
             isDirty = false;
         }
     }, CONFIG.saveInterval);
 
-    // INFILTRATION TASK
     await cluster.task(async ({ page, data: target }) => {
         console.log(`>> [SCANNING] ${target.name}`);
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
         
-        // Resource Assassin: Blockera bilder och onödigt skräp för hastighet
         await page.setRequestInterception(true);
         page.on('request', (req) => {
-            if (['image', 'media', 'font', 'stylesheet'].includes(req.resourceType())) {
-                req.abort();
-            } else {
-                req.continue();
-            }
+            if (['image', 'media', 'font', 'stylesheet'].includes(req.resourceType())) req.abort();
+            else req.continue();
         });
 
         try {
             await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: CONFIG.timeout });
-            
-            // Bypass Cookie Banners
-            await page.evaluate(() => {
-                const btn = Array.from(document.querySelectorAll('button, a, span'))
-                    .find(el => /acceptera|godkänn|ok|agree|accept/i.test(el.innerText));
-                if (btn) btn.click();
-            }).catch(() => {});
-
             await autoScroll(page, CONFIG.maxScrollDepth);
 
-            // DATA EXTRACTION
             const extracted = await page.evaluate((minPrice) => {
-                const cards = Array.from(document.querySelectorAll('li, article, [class*="card"], [class*="item"]'));
+                const cards = Array.from(document.querySelectorAll('li, article, [class*="card"]'));
                 return cards.map(el => {
                     const txt = el.innerText || "";
                     const pMatch = txt.replace(/[\s\xa0.]/g, '').match(/(\d{6,11})kr/i);
                     const p = pMatch ? parseInt(pMatch[1]) : 0;
-                    
                     if (p < minPrice) return null;
-
                     const link = el.querySelector('a')?.href;
                     if (!link) return null;
-
                     return {
                         title: txt.split('\n')[0].substring(0, 100).trim(),
                         price: p,
@@ -153,22 +118,15 @@ async function run() {
                 }).filter(i => i !== null);
             }, CONFIG.minPrice);
 
-            // VAULT MERGE & SOLD TRACKING
             const hostname = new URL(target.url).hostname;
             const seenNow = new Set();
 
             extracted.forEach(item => {
                 const loc = mapLocationFast(item.title + " " + item.raw);
                 const entry = {
-                    u: item.url,
-                    a: item.title,
-                    p: item.price,
-                    s: loc.s,
-                    k: loc.k,
-                    t: new Date().toISOString(),
-                    status: "ACTIVE"
+                    u: item.url, a: item.title, p: item.price, s: loc.s, k: loc.k,
+                    t: new Date().toISOString(), status: "ACTIVE"
                 };
-
                 seenNow.add(entry.u);
                 const idx = vault.findIndex(v => v.u === entry.u);
                 if (idx > -1) {
@@ -180,7 +138,6 @@ async function run() {
                 isDirty = true;
             });
 
-            // SOLD DETECTION: Markera försvunna objekt
             if (extracted.length > 5) {
                 vault.forEach(v => {
                     if (v.u.includes(hostname) && !seenNow.has(v.u) && v.status === "ACTIVE") {
@@ -190,31 +147,22 @@ async function run() {
                     }
                 });
             }
-
-            console.log(`>> [SUCCESS] ${target.name}: Found ${extracted.length} objects.`);
-
         } catch (err) {
             console.error(`>> [FAILED] ${target.name}: ${err.message}`);
         }
     });
 
-    // QUEUE TARGETS (Laddar från targets.js i samma mapp)
-    try {
-        const targets = require('./targets');
-        targets.forEach(t => cluster.queue(t));
-    } catch (e) {
-        console.error(">> [FATAL] Targets file missing!");
-        process.exit(1);
-    }
+    const targets = require('./targets');
+    targets.forEach(t => cluster.queue(t));
 
     await cluster.idle();
     await cluster.close();
     clearInterval(saveTicker);
     await fs.writeFile('market-data.json', JSON.stringify(vault, null, 2));
-    console.log(">> [COMPLETE] Empire Synchronized.");
+    console.log(">> [COMPLETE]");
 }
 
 run().catch(err => {
-    console.error(">> [FATAL ERROR]:", err.message);
+    console.error(">> [FATAL]:", err.message);
     process.exit(1);
 });
