@@ -160,8 +160,8 @@
             } else {
                 if (!iframe.src) {
                     const q = encodeURIComponent(address + ", Sverige");
-                    // Officiell Google Maps Embed för Satellitvy
-                    iframe.src = `https://www.google.com/maps/embed/v1/search?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
+                    // Officiell Google Maps Embed API för satellitvy
+                    iframe.src = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
                 }
                 card.classList.add('is-map');
                 btn.innerHTML = '📸 Fasadbild';
@@ -169,9 +169,11 @@
         },
 
         getStreetView(item) {
-            const loc = encodeURIComponent(`${item.a}, ${item.s}`);
-            // Hämtar HD Street View bild via din säkrade API-nyckel
-            return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${loc}&key=${API_KEY}`;
+            // Tvättar adressen från lägenhetsnummer för exaktare träff
+            const cleanAddress = item.a.split(',')[0].trim();
+            const loc = encodeURIComponent(`${cleanAddress}, ${item.s}, Sverige`);
+            // return_error_code=true ser till att fallback-bilden (onerror) aktiveras om fasaden saknas
+            return `https://maps.googleapis.com/maps/api/streetview?size=640x400&location=${loc}&key=${API_KEY}&return_error_code=true`;
         },
 
         renderFeed() {
@@ -183,7 +185,12 @@
                 item.s.toLowerCase().includes(this.currentQuery)
             );
 
-            grid.innerHTML = filtered.slice(0, 100).map(item => `
+            grid.innerHTML = filtered.slice(0, 100).map(item => {
+                // Genererar en snygg drönarkarta över orten som fallback om fasadbild saknas
+                const locForMap = encodeURIComponent(`${item.s}, Sverige`);
+                const fallbackMapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${locForMap}&zoom=14&size=640x400&maptype=roadmap&key=${API_KEY}`;
+
+                return `
                 <div class="card">
                     <a href="${item.u}" target="_blank" style="text-decoration:none; color:inherit;">
                         <div class="c-media">
@@ -193,7 +200,9 @@
                                 </div>
                                 <button class="btn-map" onclick="App.toggleMap(event, this, '${item.a}, ${item.s}')">🗺️ Drönarvy</button>
                             </div>
-                            <img src="${this.getStreetView(item)}" class="c-img" loading="lazy">
+                            
+                            <img src="${this.getStreetView(item)}" class="c-img" loading="lazy" onerror="this.onerror=null; this.src='${fallbackMapUrl}';">
+                            
                             <iframe class="c-map" allowfullscreen></iframe>
                         </div>
                         <div class="c-data">
@@ -208,7 +217,7 @@
                         </div>
                     </a>
                 </div>
-            `).join('');
+            `}).join('');
         }
     };
 
