@@ -4,11 +4,11 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs').promises;
 const csv = require('csv-parse/sync');
 
-// Aktivera Ghost Protocol för att runda spärrar
+// Aktivera Stealth för att glida förbi anti-bot system
 puppeteer.use(StealthPlugin());
 
 const CONFIG = {
-    maxConcurrency: 1, // GitHub RAM-skydd
+    maxConcurrency: 1, // GitHub RAM-limitering kräver 1 för 100% stabilitet
     minPrice: 100000,
     maxScrollDepth: 18000,
     timeout: 90000,
@@ -21,14 +21,14 @@ let isDirty = false;
 let orterMap = new Map();
 
 /**
- * BOOTSTRAP: Laddar strategisk intelligens
+ * BOOTSTRAP: Ladda intelligens och befintlig data
  */
 async function bootstrap() {
-    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V28: EMPIRE ENGINE ONLINE");
+    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V30: ABSOLUTE DOMINATION ONLINE");
     try {
         const raw = await fs.readFile('Aiorter.csv', 'utf8');
         const records = csv.parse(raw.replace(/^\uFEFF/, ''), { columns: true, delimiter: ';' });
-        // Prioritera längre ortsnamn för exakt matchning
+        // Sortera på längd för att matcha exakt (t.ex. "Stockholm" före "Stock")
         records.sort((a, b) => b.Tätort.length - a.Tätort.length).forEach(r => {
             orterMap.set(r.Tätort.toLowerCase().trim(), r.Kommun?.trim());
         });
@@ -42,7 +42,7 @@ async function bootstrap() {
 }
 
 /**
- * GEO-MAPPING: Identifierar koordinater i textmassan
+ * GEO-MAPPING: Identifiera ort och kommun från textmassan
  */
 const mapLocationFast = (text) => {
     const lowText = text.toLowerCase();
@@ -53,7 +53,7 @@ const mapLocationFast = (text) => {
 };
 
 /**
- * HUMAN SCROLL: Simulerar organiskt beteende
+ * AUTO-SCROLL: Simulerar organiskt scrollbeteende
  */
 async function autoScroll(page, max) {
     await page.evaluate(async (max) => {
@@ -73,7 +73,7 @@ async function autoScroll(page, max) {
 }
 
 /**
- * MAIN EXECUTION ENGINE
+ * MAIN ENGINE
  */
 async function run() {
     await bootstrap();
@@ -95,21 +95,20 @@ async function run() {
         }
     });
 
-    // Autosave Ticker
+    // Autosave ticker
     const saveTicker = setInterval(async () => {
         if (isDirty) {
-            console.log(">> [IO] Autosaving Vault...");
+            console.log(">> [IO] Syncing Vault to disk...");
             await fs.writeFile('market-data.json', JSON.stringify(vault, null, 2));
             isDirty = false;
         }
     }, CONFIG.saveInterval);
 
-    // INFILTRATION TASK
     await cluster.task(async ({ page, data: target }) => {
         console.log(`>> [SCANNING] ${target.name}`);
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
         
-        // Resource Assassin: Eliminera tunga resurser för maxhastighet
+        // Resource Assassin: Blockera onödiga filer
         await page.setRequestInterception(true);
         page.on('request', (req) => {
             if (['image', 'media', 'font', 'stylesheet'].includes(req.resourceType())) {
@@ -122,7 +121,7 @@ async function run() {
         try {
             await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: CONFIG.timeout });
             
-            // Cookie Bypass
+            // Bypass cookies
             await page.evaluate(() => {
                 const btn = Array.from(document.querySelectorAll('button, a, span'))
                     .find(el => /acceptera|godkänn|ok|agree|accept/i.test(el.innerText));
@@ -131,12 +130,11 @@ async function run() {
 
             await autoScroll(page, CONFIG.maxScrollDepth);
 
-            // DATA EXTRACTION ENGINE
+            // DATA EXTRACTION
             const extracted = await page.evaluate((minPrice) => {
                 const cards = Array.from(document.querySelectorAll('li, article, [class*="card"], [class*="item"]'));
                 return cards.map(el => {
                     const txt = el.innerText || "";
-                    // Skrubba prissiffror
                     const pMatch = txt.replace(/[\s\xa0.]/g, '').match(/(\d{6,11})kr/i);
                     const p = pMatch ? parseInt(pMatch[1]) : 0;
                     
@@ -154,7 +152,7 @@ async function run() {
                 }).filter(i => i !== null);
             }, CONFIG.minPrice);
 
-            // VAULT MERGE & STATUS TRACKING
+            // VAULT SYNC
             const hostname = new URL(target.url).hostname;
             const seenNow = new Set();
 
@@ -173,17 +171,15 @@ async function run() {
                 seenNow.add(entry.u);
                 const idx = vault.findIndex(v => v.u === entry.u);
                 if (idx > -1) {
-                    // Uppdatera existerande
                     vault[idx] = { ...vault[idx], ...entry, status: "ACTIVE" };
                 } else {
-                    // Ny infiltration
                     entry.firstSeen = entry.t;
                     vault.push(entry);
                 }
                 isDirty = true;
             });
 
-            // SOLD DETECTION: Markera försvunna objekt
+            // SOLD DETECTION
             if (extracted.length > 5) {
                 vault.forEach(v => {
                     if (v.u.includes(hostname) && !seenNow.has(v.u) && v.status === "ACTIVE") {
@@ -201,14 +197,8 @@ async function run() {
         }
     });
 
-    // QUEUE TARGETS
-    try {
-        const targets = require('./targets');
-        targets.forEach(t => cluster.queue(t));
-    } catch (e) {
-        console.error(">> [FATAL] Targets offline!");
-        process.exit(1);
-    }
+    const targets = require('./targets');
+    targets.forEach(t => cluster.queue(t));
 
     await cluster.idle();
     await cluster.close();
