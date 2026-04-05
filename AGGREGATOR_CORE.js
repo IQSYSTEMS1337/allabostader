@@ -12,11 +12,11 @@ const CONFIG = {
     minPrice: 100000,
     maxScrollDepth: 18000,
     timeout: 90000, 
-    retryLimit: 3
+    retryLimit: 4 // Höjd gräns för att tvinga sig igenom
 };
 
 async function runEmpireAggregator() {
-    console.log(">> [SYSTEM] INITIALIZING OMNI-REVENANT V18: ABSOLUTE SAFEGUARD MODE");
+    console.log(">> [SYSTEM] INITIALIZING OMNI-REVENANT V19: GHOST PROTOCOL ACTIVATED");
 
     // 1. DATA INTELLIGENCE SETUP
     let orterDB = [];
@@ -47,7 +47,7 @@ async function runEmpireAggregator() {
         return { s: "", k: "" };
     };
 
-    // 2. THE CLUSTER ENGINE
+    // 2. THE CLUSTER ENGINE - STEALTH MODE
     const cluster = await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_PAGE,
         maxConcurrency: CONFIG.maxConcurrency,
@@ -55,58 +55,102 @@ async function runEmpireAggregator() {
         puppeteerOptions: {
             headless: "new",
             args: [
-                '--no-sandbox', '--disable-setuid-sandbox', '--disable-dev-shm-usage',
-                '--disable-web-security', '--window-size=1920,1080'
+                '--no-sandbox', 
+                '--disable-setuid-sandbox', 
+                '--disable-dev-shm-usage',
+                '--disable-web-security', 
+                '--disable-blink-features=AutomationControlled', // Dödar webdriver-flaggor
+                '--disable-features=IsolateOrigins,site-per-process'
             ]
         }
     });
 
     // 3. THE INFILTRATION TASK
     await cluster.task(async ({ page, data: target }) => {
+        
+        // Ghost Protocol: Roterande fönsterstorlek & Human UA
         const uas = [
             'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
-            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36'
+            'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36',
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36 Edg/120.0.0.0'
         ];
         await page.setUserAgent(uas[Math.floor(Math.random() * uas.length)]);
+        await page.setViewport({ 
+            width: 1920 + Math.floor(Math.random() * 100), 
+            height: 1080 + Math.floor(Math.random() * 100) 
+        });
+
+        // Resource Assassin: Blockera tunga/spårande element för maxhastighet
+        await page.setRequestInterception(true);
+        page.on('request', (req) => {
+            const type = req.resourceType();
+            if (['image', 'stylesheet', 'font', 'media'].includes(type)) {
+                req.abort();
+            } else {
+                req.continue();
+            }
+        });
 
         try {
-            await page.goto(target.url, { waitUntil: 'networkidle2', timeout: CONFIG.timeout });
+            // Använd domcontentloaded för snabbare intrång, fallback på networkidle
+            await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: CONFIG.timeout });
             
-            // Hantera Cookies
-            await page.evaluate(() => {
-                const keywords = ['acceptera', 'godkänn', 'stäng', 'ok', 'agree', 'accept'];
-                const elements = document.querySelectorAll('button, span, a');
-                for (let el of elements) {
-                    if (keywords.some(k => el.innerText.toLowerCase().includes(k))) {
-                        el.click(); break;
-                    }
-                }
-            }).catch(() => {});
+            // Human delay: Ge anti-bot-systemen en sekund att slappna av
+            await new Promise(r => setTimeout(r, 1500 + Math.random() * 1000));
 
+            // Hantera Cookies - Skottsäker mot Execution Context Destruction
+            try {
+                const clicked = await page.evaluate(() => {
+                    const keywords = ['acceptera', 'godkänn', 'stäng', 'ok', 'agree', 'accept', 'tillåt alla'];
+                    const elements = document.querySelectorAll('button, span, a, div[role="button"]');
+                    for (let el of elements) {
+                        if (keywords.some(k => el.innerText.toLowerCase().includes(k))) {
+                            el.click(); return true;
+                        }
+                    }
+                    return false;
+                });
+                // Om vi klickade, vänta ifall sidan laddar om
+                if (clicked) await new Promise(r => setTimeout(r, 2000));
+            } catch (err) { /* Ignorera om ingen cookie-ruta fanns */ }
+
+            // Organiskt scrollande
             await autoScrollAdvanced(page, CONFIG.maxScrollDepth);
 
-            // EXTRACTION
+            // EXTRACTION (Med extra try-catch per element för att överleva mutationer)
             const rawResults = await page.evaluate(({ minPrice }) => {
                 const items = [];
                 const cards = document.querySelectorAll('li, article, [class*="card"], [class*="listing"]');
                 cards.forEach(c => {
-                    const txt = c.innerText || "";
-                    if (txt.includes('kr')) {
-                        const pMatch = txt.replace(/[\s\xa0.]/g, '').match(/(\d{6,11})kr/i);
-                        const price = pMatch ? parseInt(pMatch[1]) : 0;
-                        if (price >= minPrice) {
-                            const link = c.href || c.querySelector('a')?.href;
-                            if (!link) return;
-                            const img = c.querySelector('img');
-                            items.push({
-                                a: txt.split('\n')[0].trim().substring(0, 85),
-                                p: price,
-                                u: link.split('?')[0].split('#')[0],
-                                img: img ? (img.dataset.src || img.src) : "",
-                                rawText: txt.substring(0, 300)
-                            });
+                    try {
+                        const txt = c.innerText || "";
+                        if (txt.includes('kr')) {
+                            const pMatch = txt.replace(/[\s\xa0.]/g, '').match(/(\d{6,11})kr/i);
+                            const price = pMatch ? parseInt(pMatch[1]) : 0;
+                            if (price >= minPrice) {
+                                const link = c.href || c.querySelector('a')?.href;
+                                if (!link) return;
+                                
+                                // Plocka fram area och rum lite smartare för att minska skräp
+                                const rawText = txt.substring(0, 300);
+                                let area = 0, rooms = 0;
+                                const areaMatch = rawText.match(/(\d+)\s*m/i);
+                                if (areaMatch) area = parseInt(areaMatch[1]);
+                                const roomMatch = rawText.match(/(\d+)\s*rum|rok/i);
+                                if (roomMatch) rooms = parseInt(roomMatch[1]);
+
+                                items.push({
+                                    a: txt.split('\n')[0].trim().substring(0, 85),
+                                    p: price,
+                                    area: area,
+                                    rooms: rooms,
+                                    u: link.split('?')[0].split('#')[0],
+                                    img: "", // Bilder blockeras ändå av Resource Assassin, vi använder drönarvyn
+                                    rawText: rawText
+                                });
+                            }
                         }
-                    }
+                    } catch (e) { /* Enstaka kort kraschar inte hela systemet */ }
                 });
                 return items;
             }, { minPrice: CONFIG.minPrice });
@@ -127,7 +171,7 @@ async function runEmpireAggregator() {
                 }
             });
 
-            // --- THE ABSOLUTE SAFEGUARD (Räddar dina 4429 hus) ---
+            // --- THE ABSOLUTE SAFEGUARD ---
             if (rawResults.length > 10) { 
                 vault.forEach(v => {
                     if (v.u.includes(targetHostname) && !currentRunUrls.has(v.u) && v.status !== "SOLD") {
@@ -135,7 +179,7 @@ async function runEmpireAggregator() {
                         v.soldAt = new Date().toISOString();
                     }
                 });
-                console.log(`>> [SUCCESS] ${target.name}: Sync genomförd.`);
+                console.log(`>> [SUCCESS] ${target.name}: Sync genomförd. Hittade ${rawResults.length} objekt.`);
             } else {
                 console.log(`>> [SAFEGUARD] Blockering detekterad (Hittade bara ${rawResults.length} objekt). Behåller befintlig data för ${target.name}.`);
             }
@@ -158,13 +202,15 @@ async function autoScrollAdvanced(page, max) {
         await new Promise((resolve) => {
             let total = 0;
             let timer = setInterval(() => {
-                window.scrollBy(0, 400);
-                total += 400;
+                // Mänskligare scroll: Slumpmässiga steg istället för exakt 400px
+                let step = 300 + Math.floor(Math.random() * 200);
+                window.scrollBy(0, step);
+                total += step;
                 if (total >= document.body.scrollHeight || total > max) {
                     clearInterval(timer);
                     resolve();
                 }
-            }, 150);
+            }, 100 + Math.floor(Math.random() * 100)); // Slumpmässig paus
         });
     }, max);
 }
