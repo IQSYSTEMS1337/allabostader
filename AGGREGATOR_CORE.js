@@ -37,17 +37,18 @@
         .navbar {
             background: #000000; 
             border-bottom: 1px solid #1E293B; 
-            padding: 16px 5vw;
+            padding: 12px 5vw;
             display: flex; justify-content: space-between; align-items: center;
             position: sticky; top: 0; z-index: 2000;
         }
         
         .logo-container {
             display: flex; align-items: center; justify-content: center;
-            background: #FFFFFF; padding: 8px 16px; border-radius: 8px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5); 
+            /* Borttagen vit bakgrund: Loggan svävar nu fritt i mörkret */
+            transition: transform 0.3s ease;
         }
-        .logo { max-height: 40px; width: auto; object-fit: contain; }
+        .logo-container:hover { transform: scale(1.02); }
+        .logo { max-height: 55px; width: auto; object-fit: contain; }
         
         .market-status {
             display: flex; align-items: center; gap: 10px; background: #111827;
@@ -131,7 +132,6 @@
         
         async init() {
             try {
-                // Tvingar bort cachen helt
                 const response = await fetch('market-data.json?v=' + new Date().getTime());
                 let fetchedData = await response.json();
                 
@@ -165,7 +165,6 @@
             } else {
                 if (!iframe.src) {
                     const q = encodeURIComponent(address + ", Sverige");
-                    // RÄTTAD LÄNK FÖR DRÖNARVY - Använder den officiella Embed API v1
                     iframe.src = `https://www.google.com/maps/embed/v1/place?key=${API_KEY}&q=${q}&maptype=satellite&zoom=19`;
                 }
                 card.classList.add('is-map');
@@ -221,7 +220,6 @@
                 const roomVal = item.rooms ? `${item.rooms} rok` : '-';
                 const sqmPrice = (item.area && item.area > 0 && item.p) ? `${fmt.format(Math.round(item.p/item.area))} kr` : '-';
 
-                // SKOTTSÄKER FALLBACK: Ingen mer trasig fil-ikon. Bara en ren, säker URL-bild utan citattecken-krockar.
                 const safeFallback = 'https://via.placeholder.com/640x400/1E293B/94A3B8?text=Fasadbild+saknas';
 
                 return `
