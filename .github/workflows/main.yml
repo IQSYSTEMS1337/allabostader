@@ -12,7 +12,6 @@ concurrency:
 permissions:
   contents: write
 
-# HÄR FIXAR VI VARNINGARNA: Vi tvingar alla actions att köra på Node 24
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
@@ -30,7 +29,7 @@ jobs:
       - name: 🛠️ Setup Node Engine (Apex 24)
         uses: actions/setup-node@v4
         with:
-          node-version: '24' # Uppgraderat från 22 för att matcha runnerns framtid
+          node-version: '24'
           cache: 'npm'
 
       - name: 🛡️ Install Chrome System Dependencies
