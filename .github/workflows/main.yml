@@ -1,4 +1,4 @@
-name: VOIDWALKER-V37-FINAL
+name: VOIDWALKER-V38-ULTIMATE
 
 on:
   schedule:
@@ -14,7 +14,6 @@ permissions:
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 jobs:
   execute-empire:
@@ -34,7 +33,6 @@ jobs:
           cache: 'npm'
 
       - name: 🛡️ Install Chrome System Dependencies
-        # KRITISK FIX: libasound2t64 krävs för Ubuntu 24.04 (Noble)
         run: |
           sudo apt-get update
           sudo apt-get install -y libgbm-dev libnss3 libatk-bridge2.0-0 libgtk-3-0 libasound2t64
@@ -57,7 +55,7 @@ jobs:
           if [[ -n "$(git status --porcelain)" ]]; then
             TIMESTAMP=$(TZ=Europe/Stockholm date +'%Y-%m-%d %H:%M')
             git add .
-            git commit -m "Empire Sync: $TIMESTAMP [VOIDWALKER V37]"
+            git commit -m "Empire Sync: $TIMESTAMP [VOIDWALKER V38]"
             git pull --rebase origin main
             git push origin main
           fi
