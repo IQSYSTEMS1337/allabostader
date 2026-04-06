@@ -1,35 +1,45 @@
 :root {
     --gold: #c2995b;
-    --black: #000000;
-    --card: #0c0c0c;
+    --gold-bright: #e6b16e;
+    --bg: #000000;
+    --card-bg: #0a0a0a;
     --text: #ffffff;
-    --font-heading: 'Playfair Display', serif;
+    --font-fancy: 'Playfair Display', serif;
 }
 
-body { background: var(--black); color: var(--text); font-family: 'Inter', sans-serif; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
 
-header { padding: 40px; border-bottom: 1px solid rgba(194, 153, 91, 0.2); text-align: center; }
-#header-logo { height: 100px; }
+body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-.control-panel { background: #050505; padding: 20px; sticky; top: 0; z-index: 100; border-bottom: 1px solid #111; }
-.control-wrapper { max-width: 1400px; margin: 0 auto; display: flex; gap: 20px; align-items: center; }
+header { padding: 40px; text-align: center; border-bottom: 1px solid rgba(194, 153, 91, 0.1); }
+#main-logo { height: 120px; filter: drop-shadow(0 0 15px rgba(194,153,91,0.2)); }
 
-#geo-search { flex: 1; background: #000; border: 1px solid #333; padding: 15px; border-radius: 8px; color: #fff; font-size: 1.1rem; }
-.btn-premium { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px 25px; border-radius: 8px; cursor: pointer; font-weight: 800; text-transform: uppercase; }
-.btn-premium:hover { background: var(--gold); color: #000; }
+.search-vault { background: #050505; padding: 20px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #111; }
+.search-container { max-width: 1400px; margin: 0 auto; display: flex; gap: 20px; align-items: center; flex-wrap: wrap; }
 
-#vault-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); gap: 40px; padding: 40px; max-width: 1600px; margin: 0 auto; }
+#geo-intel { flex: 1; min-width: 300px; background: #000; border: 1px solid #221a0f; padding: 18px; border-radius: 10px; color: #fff; font-size: 1.1rem; }
+#geo-intel:focus { outline: none; border-color: var(--gold); }
 
-.card { background: var(--card); border-radius: 15px; overflow: hidden; border: 1px solid #1a1a1a; transition: transform 0.3s; cursor: pointer; position: relative; }
-.card:hover { transform: translateY(-10px); border-color: var(--gold); }
+.btn-gold { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 15px 30px; border-radius: 10px; cursor: pointer; font-weight: 800; transition: 0.3s; }
+.btn-gold:hover { background: var(--gold); color: #000; }
+.btn-gold.active { background: var(--gold); color: #000; }
 
-/* Google Maps Image Area */
-.card-image { height: 250px; background-size: cover; background-position: center; position: relative; }
-.card-image::after { content: ""; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to bottom, transparent, #0c0c0c); }
+#property-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 40px; padding: 50px 20px; max-width: 1700px; margin: 0 auto; }
 
-.card-body { padding: 25px; }
-.price { font-family: var(--font-heading); font-size: 2.2rem; color: var(--gold); font-weight: 900; margin-bottom: 10px; }
-.address { font-size: 1.2rem; font-weight: 800; margin-bottom: 5px; color: #fff; }
-.city { font-size: 0.9rem; color: #888; text-transform: uppercase; letter-spacing: 2px; }
+.card { background: var(--card-bg); border-radius: 20px; overflow: hidden; border: 1px solid #151515; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; position: relative; }
+.card:hover { transform: translateY(-12px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
 
-.badge { position: absolute; top: 20px; left: 20px; padding: 5px 15px; border-radius: 20px; font-size: 0.7rem; font-weight: 900; background: rgba(0,0,0,0.8); border: 1px solid var(--gold); color: var(--gold); }
+/* Kraftfull Bildsektion */
+.card-visual { height: 260px; background: #111; position: relative; overflow: hidden; }
+.card-visual img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: 0.5s; }
+.card:hover .card-visual img { opacity: 1; transform: scale(1.05); }
+
+.card-content { padding: 30px; }
+.card-price { font-family: var(--font-fancy); font-size: 2.3rem; color: var(--gold); font-weight: 900; margin-bottom: 10px; }
+.card-address { font-size: 1.3rem; font-weight: 800; margin-bottom: 8px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.card-location { font-size: 0.9rem; color: #888; text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
+
+.status-tag { position: absolute; top: 20px; left: 20px; padding: 8px 16px; border-radius: 30px; background: rgba(0,0,0,0.8); color: var(--gold); font-size: 0.7rem; font-weight: 900; border: 1px solid var(--gold); }
+.drop-tag { position: absolute; top: 20px; right: 20px; padding: 8px 16px; border-radius: 30px; background: var(--gold); color: #000; font-size: 0.7rem; font-weight: 900; }
+
+.card-footer { margin-top: 25px; padding-top: 20px; border-top: 1px solid #1a1a1a; display: flex; justify-content: space-between; font-size: 0.8rem; color: #555; }
