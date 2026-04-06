@@ -1,4 +1,4 @@
-name: VOIDWALKER-V51-APEX-FORCE
+name: VOIDWALKER-V52-MONOLITH-FORCE
 
 on:
   schedule:
@@ -36,7 +36,7 @@ jobs:
       - name: 📦 Install
         run: npm install --no-audit --no-fund --loglevel=error
 
-      - name: 🚀 Run AGGREGATOR_CORE
+      - name: 🚀 Run AGGREGATOR_CORE V52
         run: node AGGREGATOR_CORE.js
         env:
           NODE_ENV: production
@@ -48,18 +48,17 @@ jobs:
           git config --global user.name "Empire-Bot"
           git config --global user.email "bot@allabostader.se"
           git add .
-          git commit -m "Empire Sync V51 [Apex Protocols]" || echo "No changes"
+          git commit -m "Empire Sync V52 [Monolith Protocol]" || echo "No changes"
           git pull --rebase origin main
           git push origin main
 
       - name: 📦 Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.' # Skickar allt (index.html, data, logo)
+          path: '.'
 
   deploy:
     needs: execute-empire
-    # DETTA ÄR FIXEN FÖR DITT 400-FEL:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
