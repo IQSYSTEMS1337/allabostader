@@ -1,4 +1,4 @@
-name: VOIDWALKER-V50-SINGULARITY-FORCE
+name: VOIDWALKER-V51-APEX-FORCE
 
 on:
   schedule:
@@ -6,7 +6,6 @@ on:
   workflow_dispatch:
 
 env:
-  # Vi behåller bara denna för att tvinga Node 24 utan konflikt
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
 
 permissions:
@@ -17,7 +16,6 @@ permissions:
 jobs:
   execute-empire:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
     steps:
       - name: 🛰️ Infiltration
         uses: actions/checkout@v4
@@ -29,13 +27,13 @@ jobs:
         with:
           node-version: '24'
 
-      - name: 🛡️ Install Noble Dependencies
+      - name: 🛡️ Noble Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libgbm-dev libnss3 libatk-bridge2.0-0 libgtk-3-0 libasound2t64
           npx puppeteer browsers install chrome --with-deps
 
-      - name: 📦 Install War-Tools
+      - name: 📦 Install
         run: npm install --no-audit --no-fund --loglevel=error
 
       - name: 🚀 Run AGGREGATOR_CORE
@@ -44,24 +42,29 @@ jobs:
           NODE_ENV: production
           CI: true
 
-      - name: 💾 Synchronize Vault
+      - name: 💾 Sync Vault
         if: always()
         run: |
           git config --global user.name "Empire-Bot"
           git config --global user.email "bot@allabostader.se"
           git add .
-          git commit -m "Empire Sync V50 [Total Domination]" || echo "No changes"
+          git commit -m "Empire Sync V51 [Apex Protocols]" || echo "No changes"
           git pull --rebase origin main
           git push origin main
 
-      - name: 📦 Upload Pages Artifact
+      - name: 📦 Upload Artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: '.' # Här skickar vi hela mappen (inklusive index.html och market-data.json)
+          path: '.' # Skickar allt (index.html, data, logo)
 
   deploy:
     needs: execute-empire
+    # DETTA ÄR FIXEN FÖR DITT 400-FEL:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
-      - name: 🌐 Deploy to Empire Pages
+      - name: 🌐 Deploy to Pages
+        id: deployment
         uses: actions/deploy-pages@v4
