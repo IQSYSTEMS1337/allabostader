@@ -2,148 +2,93 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allabostäder | Sovereign Intel V54</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <title>Allabostäder | Empire Slayer V55</title>
     <style>
-        :root {
-            --gold: #c2995b;
-            --gold-bright: #e6b16e;
-            --black: #000000;
-            --card-bg: #080808;
-            --text: #ffffff;
-            --green: #00ff64;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { 
-            background: var(--black); 
-            color: var(--text); 
-            font-family: 'Inter', sans-serif; 
-            opacity: 0; 
-            transition: opacity 0.8s ease-in;
-        }
-        body.loaded { opacity: 1; }
-
-        header {
-            padding: 80px 20px;
-            text-align: center;
-            background: radial-gradient(circle, rgba(194, 153, 91, 0.12) 0%, rgba(0,0,0,1) 80%);
-            border-bottom: 1px solid rgba(194, 153, 91, 0.2);
-        }
-        .logo-wrapper { height: 260px; display: flex; justify-content: center; align-items: center; }
-        #main-logo { max-height: 100%; filter: drop-shadow(0 0 40px rgba(194, 153, 91, 0.6)); }
-
-        .intel-nav {
-            background: #050505;
-            padding: 25px;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            border-bottom: 1px solid #111;
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .intel-nav input, .intel-nav select {
-            background: #000; border: 2px solid var(--gold); color: #fff;
-            padding: 15px 25px; border-radius: 12px; font-weight: 800; font-size: 1rem; outline: none;
-        }
-
-        #empire-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
-            gap: 50px; padding: 60px; max-width: 2000px; margin: 0 auto;
-        }
-
-        .card {
-            background: var(--card-bg); border-radius: 30px; border: 1px solid #151515;
-            overflow: hidden; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer;
-        }
-        .card:hover { transform: translateY(-20px); border-color: var(--gold); box-shadow: 0 40px 80px rgba(0,0,0,0.9); }
-
-        .map-view { height: 320px; background-size: cover; background-position: center; background-color: #0c0c0c; border-bottom: 3px solid #000; }
-
-        .card-content { padding: 40px; }
-        .price { font-family: 'Playfair Display', serif; font-size: 3.2rem; color: var(--gold); font-weight: 900; }
-        .address { font-size: 1.6rem; font-weight: 800; margin: 15px 0; color: #fff; }
+        :root { --gold: #c2995b; --bg: #000; --card: #0a0a0a; }
+        body { background: #000; color: #fff; font-family: 'Inter', sans-serif; margin: 0; padding: 20px; }
+        header { padding: 40px; text-align: center; border-bottom: 1px solid #222; }
+        #main-logo { height: 180px; filter: drop-shadow(0 0 20px var(--gold)); }
         
-        .metrics-vault { background: #000; padding: 25px; border-radius: 20px; border: 1px solid #111; }
-        .m-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 0.75rem; font-weight: 900; }
-        .bar-bg { flex: 1; height: 8px; background: #151515; border-radius: 4px; overflow: hidden; }
-        .bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--green)); transition: 1.5s; }
+        /* Debug-fönster: Visas bara om det blir fel */
+        #debug-console { 
+            background: #200; border: 2px solid red; padding: 20px; 
+            margin: 20px; border-radius: 10px; display: none; color: #ff0000; font-family: monospace;
+        }
+
+        #empire-grid { 
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(400px, 1fr)); 
+            gap: 30px; margin-top: 40px; 
+        }
+        .card { background: var(--card); border: 1px solid #222; border-radius: 15px; overflow: hidden; padding-bottom: 20px; }
+        .map { height: 250px; background-color: #111; background-size: cover; }
+        .info { padding: 20px; }
+        .price { color: var(--gold); font-size: 2rem; font-weight: 900; }
     </style>
 </head>
 <body>
 
 <header>
-    <div class="logo-wrapper">
-        <img src="logo.jpg" id="main-logo" onerror="this.onerror=null; this.src='logo.png';">
-    </div>
+    <img src="logo.jpg" id="main-logo" onerror="this.src='logo.png'">
 </header>
 
-<div class="intel-nav">
-    <input type="text" id="search" placeholder="Infiltrera intel...">
-    <select id="filter-rooms"><option value="0">ALLA RUM</option><option value="3">3+ RUM</option></select>
-    <select id="filter-price"><option value="999">OBEGRÄNSAT</option><option value="10">UNDER 10M</option></select>
-</div>
-
-<div id="empire-grid"></div>
+<div id="debug-console"></div>
+<div id="empire-grid">Väntar på data från valvet...</div>
 
 <script>
-    const API_KEY = 'AIzaSyA...'; // DIN NYCKEL
+    const API_KEY = 'AIzaSyA...'; // DIN NYCKEL HÄR
 
-    async function initEmpire() {
+    async function slayerInit() {
+        const debug = document.getElementById('debug-console');
+        const grid = document.getElementById('empire-grid');
+
         try {
+            console.log("Inleder infiltration av market-data.json...");
             const res = await fetch('market-data.json?v=' + Date.now());
-            const rawVault = await res.json();
-            const grid = document.getElementById('empire-grid');
+            
+            if (!res.ok) throw new Error("Kunde inte hämta market-data.json. Status: " + res.status);
+            
+            const rawData = await res.json();
+            console.log("Data hämtad:", rawData);
 
-            // --- UNIVERSAL MAPPER (HJÄRNAN) ---
-            // Detta gör att din maffiga design kan läsa ALLA typer av market-data.json
-            const vault = rawVault.map(i => ({
-                u: i.u || i.url,
-                a: (i.a || i.address || 'Analyserar...').replace(/ALPHA_HN|IDAG|NYHET/gi, '').trim(),
-                p: i.p || i.price || 0,
-                m2: i.m2 || i.area || 0,
-                r: i.r || i.rooms || 0,
-                vI: i.vI || i.vIndex || 0,
-                sI: i.sI || i.sIndex || 95,
-                lI: i.lI || i.lIndex || 5
-            }));
+            // Kolla om data faktiskt är en array
+            const dataArray = Array.isArray(rawData) ? rawData : (rawData.objects || Object.values(rawData));
+            
+            if (!dataArray || dataArray.length === 0) {
+                grid.innerHTML = "<h1>VALVET ÄR TOMT. Boten har inte levererat någon data än.</h1>";
+                return;
+            }
 
-            const render = (data) => {
-                grid.innerHTML = "";
-                data.forEach(item => {
-                    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(item.a + ', Sverige')}&zoom=18&size=600x400&maptype=satellite&key=${API_KEY}`;
-                    
-                    grid.innerHTML += `
-                        <div class="card" onclick="window.open('${item.u}')">
-                            <div class="map-view" style="background-image: url('${mapUrl}')"></div>
-                            <div class="card-content">
-                                <div class="price">${item.p.toLocaleString('sv-SE')} kr</div>
-                                <div class="address">${item.a}</div>
-                                <div class="metrics-vault">
-                                    <div class="m-row"><span>V-INDEX</span><div class="bar-bg"><div class="bar-fill" style="width:${item.vI}%"></div></div><span>${item.vI}%</span></div>
-                                    <div class="m-row"><span>S-INDEX</span><div class="bar-bg"><div class="bar-fill" style="width:${item.sI}%"></div></div><span>${item.sI}%</span></div>
-                                </div>
-                            </div>
+            grid.innerHTML = ""; // Rensa "Väntar..."
+            
+            dataArray.forEach(i => {
+                // Robust mapping: hanterar ALLA tidigare versioner av bot-data
+                const addr = (i.a || i.address || "Okänd adress").replace(/IDAG|ALPHA_HN|NYHET/gi, '').trim();
+                const price = i.p || i.price || 0;
+                const link = i.u || i.url || "#";
+                
+                const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(addr + ', Sverige')}&zoom=18&size=600x400&maptype=satellite&key=${API_KEY}`;
+
+                grid.innerHTML += `
+                    <div class="card" onclick="window.open('${link}')">
+                        <div class="map" style="background-image: url('${mapUrl}')"></div>
+                        <div class="info">
+                            <div class="price">${price.toLocaleString('sv-SE')} kr</div>
+                            <div class="address">${addr}</div>
+                            <div style="margin-top:10px; font-size:0.7rem; color:#444;">V-INDEX: ${i.vI || i.vIndex || 0}%</div>
                         </div>
-                    `;
-                });
-            };
-
-            document.querySelectorAll('input, select').forEach(el => el.oninput = () => {
-                const q = document.getElementById('search').value.toLowerCase();
-                render(vault.filter(v => v.a.toLowerCase().includes(q)));
+                    </div>
+                `;
             });
 
-            render(vault.sort((a,b) => b.vI - a.vI));
-            document.body.classList.add('loaded');
-        } catch (e) { console.error(e); }
+        } catch (err) {
+            console.error("SLAYER ERROR:", err);
+            debug.style.display = "block";
+            debug.innerHTML = "<strong>SYSTEMFEL:</strong><br>" + err.message + "<br><br>Kolla konsolen (F12) för detaljer.";
+            grid.innerHTML = "Infiltrationen misslyckades.";
+        }
     }
-    initEmpire();
+
+    slayerInit();
 </script>
 </body>
 </html>
