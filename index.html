@@ -2,17 +2,154 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Allabostäder | Brandlarm V58</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allabostäder | The Golden Sovereign V59</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background: #000; color: #c2995b; font-family: sans-serif; text-align: center; padding: 100px; }
-        h1 { font-size: 50px; letter-spacing: 2px; }
-        .box { border: 3px solid #c2995b; padding: 50px; border-radius: 20px; background: #111; display: inline-block; max-width: 600px; }
+        :root { --gold: #c2995b; --gold-bright: #e6b16e; --black: #000000; --card-bg: #080808; --text: #ffffff; --green: #00ff64; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--black); color: var(--text); font-family: 'Inter', sans-serif; }
+        
+        header { padding: 80px 20px; text-align: center; background: radial-gradient(circle, rgba(194, 153, 91, 0.12) 0%, rgba(0,0,0,1) 80%); border-bottom: 1px solid rgba(194, 153, 91, 0.2); }
+        .logo-wrapper { height: 260px; display: flex; justify-content: center; align-items: center; }
+        #main-logo { max-height: 100%; filter: drop-shadow(0 0 40px rgba(194, 153, 91, 0.6)); }
+
+        #error-banner { display: none; background: #500; color: #fff; padding: 20px; text-align: center; font-weight: 800; border-bottom: 2px solid #f00; font-family: monospace; }
+
+        .intel-nav { background: #050505; padding: 25px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #111; display: flex; justify-content: center; gap: 20px; flex-wrap: wrap; }
+        .intel-nav input, .intel-nav select { background: #000; border: 2px solid var(--gold); color: #fff; padding: 15px 25px; border-radius: 12px; font-weight: 800; font-size: 1rem; outline: none; }
+
+        #empire-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); gap: 50px; padding: 60px; max-width: 2000px; margin: 0 auto; }
+
+        .card { background: var(--card-bg); border-radius: 30px; border: 1px solid #151515; overflow: hidden; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; }
+        .card:hover { transform: translateY(-20px); border-color: var(--gold); box-shadow: 0 40px 80px rgba(0,0,0,0.9); }
+        .map-view { height: 320px; background-size: cover; background-position: center; background-color: #0c0c0c; border-bottom: 3px solid #000; }
+        .card-content { padding: 40px; }
+        .price { font-family: 'Playfair Display', serif; font-size: 3.2rem; color: var(--gold); font-weight: 900; margin-bottom: 5px; }
+        .address { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; color: #fff; }
+        .specs { color: #666; font-size: 0.9rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 25px; }
+        .specs span { color: var(--gold-bright); }
+
+        .metrics-vault { background: #000; padding: 25px; border-radius: 20px; border: 1px solid #111; }
+        .m-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 0.75rem; font-weight: 900; letter-spacing: 1px; }
+        .bar-bg { flex: 1; height: 8px; background: #151515; border-radius: 4px; overflow: hidden; }
+        .bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--green)); }
     </style>
 </head>
 <body>
-    <div class="box">
-        <h1>BRANDLARM V58</h1>
-        <p>Om du kan läsa denna text, så fungerar GitHub perfekt och vi kan lägga tillbaka din maffiga guld-design direkt.</p>
+
+<header>
+    <div class="logo-wrapper">
+        <img src="logo.jpg" id="main-logo" onerror="this.onerror=null; this.src='logo.png';">
     </div>
+</header>
+
+<div id="error-banner"></div>
+
+<div class="intel-nav">
+    <input type="text" id="search" placeholder="Infiltrera adress...">
+    <select id="filter-rooms"><option value="0">ALLA RUM</option><option value="3">3+ RUM</option></select>
+    <select id="filter-price"><option value="999">OBEGRÄNSAT</option><option value="10">UNDER 10M</option></select>
+</div>
+
+<div id="empire-grid"></div>
+
+<script>
+    // KLISTRA IN DIN GOOGLE API NYCKEL HÄR MELLAN FNUTTARNA
+    const API_KEY = 'AIzaSyA...'; 
+
+    async function masterInit() {
+        const grid = document.getElementById('empire-grid');
+        const errorBanner = document.getElementById('error-banner');
+        
+        const fallbackData = [{
+            u: "https://www.hemnet.se", a: "EMPIRE BOLEVARD 1 (TEST-DATA)", 
+            p: 25000000, m2: 250, r: 8, vI: 99, sI: 95, lI: 100
+        }];
+
+        const drawGrid = (data) => {
+            grid.innerHTML = "";
+            let itemsRendered = 0;
+
+            data.forEach(i => {
+                if (!i || typeof i !== 'object') return; 
+
+                try {
+                    // Universal extrahering (läser både din gamla och nya skrap-data)
+                    const rawAddr = i.a || i.address || i.gata || "";
+                    if (rawAddr.length < 2) return; 
+
+                    const cleanA = rawAddr.replace(/ALPHA_HN|IDAG|NYHET|BRO|VED|STO|GBG/gi, '').trim();
+                    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(cleanA + ', Sverige')}&zoom=18&size=600x400&maptype=satellite&key=${API_KEY}`;
+                    const price = i.p || i.price || 0;
+                    const m2 = i.m2 || i.area || 0;
+                    const r = i.r || i.rooms || 0;
+                    const vI = i.vI || i.vIndex || 0;
+                    const sI = i.sI || i.sIndex || 0;
+                    const lI = i.lI || i.lIndex || 0;
+                    const sqmPrice = (price && m2) ? Math.round(price / m2) : 0;
+
+                    grid.innerHTML += `
+                        <div class="card" onclick="window.open('${i.u || i.url || '#'}')">
+                            <div class="map-view" style="background-image: url('${mapUrl}')"></div>
+                            <div class="card-content">
+                                <div class="price">${price.toLocaleString('sv-SE')} kr</div>
+                                <div class="address">${cleanA}</div>
+                                <div class="specs">
+                                    <span>${r}</span> RUM | <span>${m2}</span> M² | <span>${sqmPrice.toLocaleString('sv-SE')}</span> KR/M²
+                                </div>
+                                <div class="metrics-vault">
+                                    <div class="m-row"><span>V-INDEX (FYND)</span><div class="bar-bg"><div class="bar-fill" style="width:${vI}%"></div></div><span>${vI}%</span></div>
+                                    <div class="m-row"><span>S-INDEX (RISK)</span><div class="bar-bg"><div class="bar-fill" style="width:${sI}%"></div></div><span>${sI}%</span></div>
+                                    <div class="m-row"><span>L-INDEX (LYX)</span><div class="bar-bg"><div class="bar-fill" style="width:${lI}%"></div></div><span>${lI}%</span></div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    itemsRendered++;
+                } catch (err) {
+                    console.log("Ignorerar defekt rad i valvet.");
+                }
+            });
+            return itemsRendered;
+        };
+
+        try {
+            const res = await fetch('market-data.json?t=' + Date.now());
+            if (!res.ok) throw new Error("Kunde inte ansluta till valvet. HTTP: " + res.status);
+            
+            let vault = await res.json();
+            
+            // Hantera felaktiga format från boten
+            if (!Array.isArray(vault)) {
+                vault = Object.values(vault);
+            }
+            if (vault.length === 0) throw new Error("Valvet är 100% tomt.");
+
+            const successCount = drawGrid(vault);
+            if (successCount === 0) throw new Error("Ingen giltig data kunde tolkas ur valvet.");
+
+            // Aktivera filter
+            document.querySelectorAll('input, select').forEach(el => el.oninput = () => {
+                const q = document.getElementById('search').value.toLowerCase();
+                const rr = parseInt(document.getElementById('filter-rooms').value);
+                const pp = parseInt(document.getElementById('filter-price').value) * 1000000;
+                
+                drawGrid(vault.filter(v => 
+                    (v.a || "").toLowerCase().includes(q) && 
+                    ((v.r || 0) >= rr || rr === 0) && 
+                    ((v.p || 0) <= pp || pp > 900000000)
+                ));
+            });
+
+        } catch (e) {
+            errorBanner.style.display = "block";
+            errorBanner.innerHTML = "SYSTEMVARNING: " + e.message + "<br>Kör workflowet igen för att hämta ny data.";
+            drawGrid(fallbackData);
+        }
+    }
+
+    masterInit();
+</script>
 </body>
 </html>
