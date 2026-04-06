@@ -2,35 +2,105 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allabostäder | Total Marknad</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Allabostäder | Empire Intel</title>
+    <style>
+        :root { --gold: #c2995b; --bg: #000; --card: #080808; }
+        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
+        
+        /* Din massiva Logo */
+        header { 
+            padding: 80px 20px; 
+            text-align: center; 
+            background: radial-gradient(circle, rgba(194,153,91,0.15) 0%, #000 80%);
+            border-bottom: 1px solid rgba(194,153,91,0.2);
+        }
+        #main-logo { height: 250px; filter: drop-shadow(0 0 30px rgba(194,153,91,0.5)); }
+
+        /* Sök & Filter */
+        .controls { background: #050505; padding: 25px; position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #111; }
+        #search { width: 100%; max-width: 1200px; display: block; margin: 0 auto; background: #000; border: 2px solid var(--gold); padding: 20px; border-radius: 12px; color: #fff; font-size: 1.3rem; }
+
+        /* Grid */
+        #grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); gap: 40px; padding: 50px; }
+        
+        .card { background: var(--card); border-radius: 24px; border: 1px solid #1a1a1a; overflow: hidden; transition: 0.4s; cursor: pointer; }
+        .card:hover { transform: translateY(-15px); border-color: var(--gold); box-shadow: 0 30px 60px rgba(0,0,0,0.9); }
+        
+        .map { height: 300px; background-size: cover; background-position: center; border-bottom: 2px solid #000; }
+        .body { padding: 35px; }
+        
+        .price { font-size: 2.8rem; color: var(--gold); font-weight: 900; font-family: 'Playfair Display', serif; }
+        
+        /* Booli/Hemnet-funktioner */
+        .specs { display: flex; gap: 20px; margin: 15px 0; color: #888; font-weight: 800; font-size: 0.85rem; border-top: 1px solid #1a1a1a; padding-top: 15px; }
+        .specs span { border-left: 2px solid var(--gold); padding-left: 10px; }
+        
+        .address { font-size: 1.5rem; font-weight: 800; margin-bottom: 5px; }
+        .status { font-size: 0.7rem; color: var(--gold); font-weight: 900; text-transform: uppercase; letter-spacing: 2px; }
+    </style>
 </head>
 <body>
 
-<header>
-    <div class="empire-logo-zone">
-        <img src="logo.jpg" alt="Allabostäder" id="main-empire-logo">
-    </div>
-</header>
+<header><img src="logo.jpg" id="main-logo"></header>
 
-<nav class="intel-ops">
-    <div class="nav-wrapper">
-        <div class="search-field">
-            <input type="text" id="geo-intel" placeholder="Sök adress, stad eller kommun för fullständig intel...">
-            <span class="search-glow"></span>
-        </div>
-        <div class="action-buttons">
-            <button id="filter-drops" class="gold-trigger">MARKET DROPS</button>
-            <div id="sync-status">ANSLUTER TILL VAULTEN...</div>
-        </div>
-    </div>
-</nav>
+<div class="controls">
+    <input type="text" id="search" placeholder="Sök adress, rum eller stad för total intel...">
+</div>
 
-<main id="empire-grid">
-    </main>
+<div id="grid"></div>
 
-<script src="app.js"></script>
+<script>
+    // DIN API-NYCKEL HÄR:
+    const API_KEY = 'DIN_GOOGLE_API_NYCKEL';
+
+    async function init() {
+        const res = await fetch('market-data.json');
+        const vault = await res.json();
+        const grid = document.getElementById('grid');
+        const search = document.getElementById('search');
+
+        const render = (data) => {
+            grid.innerHTML = "";
+            data.forEach(item => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                
+                // Beräkna $/m2 precis som Booli
+                const m2Price = (item.p && item.m2) ? Math.round(item.p / item.m2) : null;
+                
+                // Google Maps Satellit (Legal & Pro)
+                const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(item.a)}&zoom=18&size=600x400&maptype=satellite&key=${API_KEY}`;
+
+                card.innerHTML = `
+                    <div class="map" style="background-image: url('${mapUrl}')"></div>
+                    <div class="body">
+                        <div class="status">${item.status}</div>
+                        <div class="price">${item.p.toLocaleString('sv-SE')} kr</div>
+                        <div class="specs">
+                            ${item.r ? `<span>${item.r} RUM</span>` : ''}
+                            ${item.m2 ? `<span>${item.m2} M²</span>` : ''}
+                            ${m2Price ? `<span>${m2Price.toLocaleString('sv-SE')} KR/M²</span>` : ''}
+                        </div>
+                        <div class="address">${item.a}</div>
+                        <div style="margin-top:20px; border-top:1px solid #1a1a1a; padding-top:15px; display:flex; justify-content:space-between;">
+                             <span style="color:#444; font-size:0.7rem;">KÄLLA: ${new URL(item.u).hostname}</span>
+                             <span style="color:var(--gold); font-weight:900;">VISA INTEL →</span>
+                        </div>
+                    </div>
+                `;
+                card.onclick = () => window.open(item.u, '_blank');
+                grid.appendChild(card);
+            });
+        };
+
+        search.oninput = () => {
+            const q = search.value.toLowerCase();
+            render(vault.filter(v => v.a.toLowerCase().includes(q)));
+        };
+
+        render(vault);
+    }
+    init();
+</script>
 </body>
 </html>
