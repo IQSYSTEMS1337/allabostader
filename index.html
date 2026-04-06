@@ -2,82 +2,257 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <title>Allabostäder | Empire Sovereign V49</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allabostäder | Empire Intelligence V52</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --gold: #c2995b; --bg: #000; --card: #080808; --green: #00ff64; }
-        body { background: var(--bg); color: #fff; font-family: 'Inter', sans-serif; margin: 0; }
-        header { padding: 80px 20px; text-align: center; border-bottom: 1px solid rgba(194,153,91,0.2); }
-        #main-logo { height: 260px; filter: drop-shadow(0 0 35px rgba(194,153,91,0.5)); }
-        .filters { background: #050505; padding: 25px; position: sticky; top: 0; z-index: 100; display: flex; gap: 20px; justify-content: center; border-bottom: 1px solid #111; }
-        input, select { background: #000; border: 2px solid var(--gold); color: #fff; padding: 15px; border-radius: 10px; font-weight: 800; font-size: 1rem; }
-        #grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(450px, 1fr)); gap: 50px; padding: 60px; }
-        .card { background: var(--card); border-radius: 25px; border: 1px solid #151515; overflow: hidden; transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; }
-        .card:hover { transform: translateY(-20px); border-color: var(--gold); box-shadow: 0 40px 80px rgba(0,0,0,0.9); }
-        .map { height: 320px; background-size: cover; background-position: center; border-bottom: 3px solid #000; }
-        .body { padding: 40px; }
-        .price { font-size: 3rem; color: var(--gold); font-weight: 900; font-family: 'Playfair Display', serif; }
-        .address { font-size: 1.6rem; font-weight: 800; margin: 15px 0; }
-        .specs { color: #888; font-size: 0.9rem; font-weight: 900; letter-spacing: 2px; border-top: 1px solid #1a1a1a; padding-top: 20px; margin-top: 20px; }
-        .metrics { margin-top: 25px; background: #000; padding: 20px; border-radius: 15px; }
-        .bar-row { display: flex; align-items: center; gap: 15px; margin-bottom: 12px; font-size: 0.7rem; font-weight: 900; }
-        .bar-bg { flex: 1; height: 8px; background: #111; border-radius: 4px; overflow: hidden; }
+        :root {
+            --gold: #c2995b;
+            --gold-bright: #e6b16e;
+            --black: #000000;
+            --card-bg: #080808;
+            --text: #ffffff;
+            --green: #00ff64;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background: var(--black); 
+            color: var(--text); 
+            font-family: 'Inter', sans-serif; 
+            opacity: 0; 
+            transition: opacity 0.8s ease-in;
+        }
+        body.loaded { opacity: 1; }
+
+        /* Header & Logo Dominans */
+        header {
+            padding: 80px 20px;
+            text-align: center;
+            background: radial-gradient(circle, rgba(194, 153, 91, 0.12) 0%, rgba(0,0,0,1) 80%);
+            border-bottom: 1px solid rgba(194, 153, 91, 0.2);
+        }
+        .logo-wrapper { height: 260px; display: flex; justify-content: center; align-items: center; }
+        #main-logo { 
+            max-height: 100%; 
+            filter: drop-shadow(0 0 40px rgba(194, 153, 91, 0.6)); 
+            transition: transform 0.3s;
+        }
+        #main-logo:hover { transform: scale(1.02); }
+
+        /* Navigation & Intelligence Filters */
+        .intel-nav {
+            background: #050505;
+            padding: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 1px solid #111;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .intel-nav input, .intel-nav select {
+            background: #000;
+            border: 2px solid var(--gold);
+            color: #fff;
+            padding: 15px 25px;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 1rem;
+            outline: none;
+        }
+        .intel-nav input:focus { box-shadow: 0 0 15px rgba(194, 153, 91, 0.3); }
+
+        /* The Grid */
+        #empire-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(450px, 1fr));
+            gap: 50px;
+            padding: 60px;
+            max-width: 2000px;
+            margin: 0 auto;
+        }
+
+        /* Sovereign Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 30px;
+            border: 1px solid #151515;
+            overflow: hidden;
+            transition: 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            cursor: pointer;
+            position: relative;
+        }
+        .card:hover {
+            transform: translateY(-20px);
+            border-color: var(--gold);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.9);
+        }
+
+        .map-view {
+            height: 320px;
+            background-size: cover;
+            background-position: center;
+            background-color: #0c0c0c;
+            border-bottom: 3px solid #000;
+            position: relative;
+        }
+        .map-view::after {
+            content: "";
+            position: absolute;
+            bottom: 0; width: 100%; height: 80px;
+            background: linear-gradient(to top, var(--card-bg), transparent);
+        }
+
+        .card-content { padding: 40px; }
+        .price { 
+            font-family: 'Playfair Display', serif; 
+            font-size: 3.2rem; 
+            color: var(--gold); 
+            font-weight: 900; 
+            margin-bottom: 5px;
+        }
+        .address { font-size: 1.6rem; font-weight: 800; margin-bottom: 10px; color: #fff; }
+        .specs { color: #666; font-size: 0.9rem; font-weight: 900; letter-spacing: 2px; margin-bottom: 25px; }
+        .specs span { color: var(--gold-bright); }
+
+        /* Singularity Metrics UI */
+        .metrics-vault {
+            background: #000;
+            padding: 25px;
+            border-radius: 20px;
+            border: 1px solid #111;
+        }
+        .m-row { display: flex; align-items: center; gap: 15px; margin-bottom: 15px; font-size: 0.75rem; font-weight: 900; letter-spacing: 1px; }
+        .m-row:last-child { margin-bottom: 0; }
+        .bar-bg { flex: 1; height: 8px; background: #151515; border-radius: 4px; overflow: hidden; }
         .bar-fill { height: 100%; background: linear-gradient(90deg, var(--gold), var(--green)); transition: 1.5s cubic-bezier(0.16, 1, 0.3, 1); }
+
+        .card-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #1a1a1a;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+            color: #444;
+            font-weight: 800;
+        }
+        .btn-infiltrate { color: var(--gold); text-transform: uppercase; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-<header><img src="logo.jpg" id="main-logo" onerror="this.src='logo.png'"></header>
+<header>
+    <div class="logo-wrapper">
+        <img src="logo.jpg" id="main-logo" onerror="this.onerror=null; this.src='logo.png';">
+    </div>
+</header>
 
-<div class="filters">
-    <input type="text" id="search" placeholder="Infiltrera adress...">
-    <select id="filter-rooms"><option value="0">Alla rum</option><option value="3">3+ Rum</option></select>
-    <select id="filter-price"><option value="999">Alla priser</option><option value="10">Under 10M</option></select>
+<div class="intel-nav">
+    <input type="text" id="search" placeholder="Infiltrera adress, stad eller intel...">
+    <select id="filter-rooms">
+        <option value="0">ALLA RUM</option>
+        <option value="3">3+ RUM</option>
+        <option value="5">5+ RUM</option>
+    </select>
+    <select id="filter-price">
+        <option value="999">OBEGRÄNSAT PRIS</option>
+        <option value="10">UNDER 10M</option>
+        <option value="20">UNDER 20M</option>
+    </select>
 </div>
 
-<div id="grid"></div>
+<div id="empire-grid"></div>
 
 <script>
-    // DIN NYCKEL ÄR NU INJECTAD
-    const API_KEY = 'AIzaSyA...'; // Jag har lagt in din fullständiga nyckel här!
+    // DIN INFILTRATIONS-NYCKEL
+    const API_KEY = 'AIzaSyA...'; // Din Google API-nyckel här
 
-    async function init() {
-        const res = await fetch('market-data.json');
-        const vault = await res.json();
-        const grid = document.getElementById('grid');
+    async function initEmpire() {
+        try {
+            // Anti-cache: Hämta alltid den färskaste datan
+            const res = await fetch('market-data.json?v=' + Date.now());
+            const vault = await res.json();
+            const grid = document.getElementById('empire-grid');
 
-        const render = (data) => {
-            grid.innerHTML = "";
-            data.forEach(i => {
-                const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(i.a + ', Sverige')}&zoom=18&size=600x400&maptype=satellite&key=${API_KEY}`;
-                grid.innerHTML += `
-                    <div class="card" onclick="window.open('${i.u}')">
-                        <div class="map" style="background-image: url('${mapUrl}')"></div>
-                        <div class="body">
-                            <div class="price">${i.p ? i.p.toLocaleString('sv-SE') : '---'} kr</div>
-                            <div class="address">${i.a}</div>
-                            <div class="specs">${i.r || '?'} RUM | ${i.m2 || '?'} M² | ${Math.round(i.p/i.m2 || 0).toLocaleString('sv-SE')} KR/M²</div>
-                            <div class="metrics">
-                                <div class="bar-row"><span>V-INDEX (FYND)</span><div class="bar-bg"><div class="bar-fill" style="width:${i.vI || 0}%"></div></div><span>${i.vI || 0}%</span></div>
-                                <div class="bar-row"><span>S-INDEX (RISK)</span><div class="bar-bg"><div class="bar-fill" style="width:${i.sI || 0}%"></div></div><span>${i.sI || 0}%</span></div>
-                                <div class="bar-row"><span>L-INDEX (LYX)</span><div class="bar-bg"><div class="bar-fill" style="width:${i.lI || 0}%"></div></div><span>${i.lI || 0}%</span></div>
+            const render = (data) => {
+                grid.innerHTML = "";
+                data.forEach(i => {
+                    // Surgical Cleaning för Google Maps
+                    const cleanForMaps = i.a.replace(/IDAG|NYHET|ALPHA_HN|BRO|VED|STO|GBG|MLM|URN|A\d+/gi, '').trim();
+                    const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(cleanForMaps + ', Sverige')}&zoom=18&size=600x400&maptype=satellite&key=${API_KEY}`;
+                    
+                    // Beräkna $/m2
+                    const sqmPrice = (i.p && i.m2) ? Math.round(i.p / i.m2) : 0;
+
+                    grid.innerHTML += `
+                        <div class="card" onclick="window.open('${i.u}')">
+                            <div class="map-view" style="background-image: url('${mapUrl}')"></div>
+                            <div class="card-content">
+                                <div class="price">${i.p ? i.p.toLocaleString('sv-SE') : '---'} kr</div>
+                                <div class="address">${i.a}</div>
+                                <div class="specs">
+                                    <span>${i.r || '?'}</span> RUM | <span>${i.m2 || '?'}</span> M² | <span>${sqmPrice.toLocaleString('sv-SE')}</span> KR/M²
+                                </div>
+                                
+                                <div class="metrics-vault">
+                                    <div class="m-row">
+                                        <span>V-INDEX (FYND)</span>
+                                        <div class="bar-bg"><div class="bar-fill" style="width:${i.vI || 0}%"></div></div>
+                                        <span>${i.vI || 0}%</span>
+                                    </div>
+                                    <div class="m-row">
+                                        <span>S-INDEX (RISK)</span>
+                                        <div class="bar-bg"><div class="bar-fill" style="width:${i.sI || 0}%"></div></div>
+                                        <span>${i.sI || 0}%</span>
+                                    </div>
+                                    <div class="m-row">
+                                        <span>L-INDEX (LYX)</span>
+                                        <div class="bar-bg"><div class="bar-fill" style="width:${i.lI || 0}%"></div></div>
+                                        <span>${i.lI || 0}%</span>
+                                    </div>
+                                </div>
+
+                                <div class="card-footer">
+                                    <span>KÄLLA: ${new URL(i.u).hostname.replace('www.', '')}</span>
+                                    <span class="btn-infiltrate">VISA INTEL →</span>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                `;
-            });
-        };
+                    `;
+                });
+            };
 
-        document.querySelectorAll('input, select').forEach(el => {
-            el.oninput = () => {
+            // Realtidsfilter
+            const filterData = () => {
                 const q = document.getElementById('search').value.toLowerCase();
                 const r = parseInt(document.getElementById('filter-rooms').value);
                 const p = parseInt(document.getElementById('filter-price').value) * 1000000;
-                render(vault.filter(v => v.a.toLowerCase().includes(q) && (r === 0 || v.r >= r) && (p > 900000000 || v.p <= p)));
+                
+                const filtered = vault.filter(v => 
+                    v.a.toLowerCase().includes(q) && 
+                    (r === 0 || v.r >= r) && 
+                    (p > 900000000 || v.p <= p)
+                );
+                render(filtered);
             };
-        });
-        render(vault.sort((a,b) => b.vI - a.vI));
+
+            document.querySelectorAll('input, select').forEach(el => el.oninput = filterData);
+            
+            // Initial sortering: Högst V-Index (Bästa klippen) först
+            render(vault.sort((a,b) => b.vI - a.vI));
+            document.body.classList.add('loaded');
+
+        } catch (e) {
+            console.error("FATAL: Vault unreachable.", e);
+        }
     }
-    init();
+
+    initEmpire();
 </script>
 </body>
 </html>
