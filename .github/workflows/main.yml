@@ -1,4 +1,4 @@
-name: VOIDWALKER-V43-TOTAL-FORCE
+name: VOIDWALKER-V47-SINGULARITY-FORCE
 
 on:
   schedule:
@@ -24,12 +24,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: 🛠️ Apex Engine Node 24
+      - name: 🛠️ Setup Node 24
         uses: actions/setup-node@v4
         with:
           node-version: '24'
 
-      - name: 🛡️ Install Chrome & Noble Deps
+      - name: 🛡️ Install Noble Dependencies
         run: |
           sudo apt-get update
           sudo apt-get install -y libgbm-dev libnss3 libatk-bridge2.0-0 libgtk-3-0 libasound2t64
@@ -38,7 +38,7 @@ jobs:
       - name: 📦 Install War-Tools
         run: npm install --no-audit --no-fund --loglevel=error
 
-      - name: 🚀 Run AGGREGATOR_CORE
+      - name: 🚀 Run AGGREGATOR_CORE V47
         run: node AGGREGATOR_CORE.js
         env:
           NODE_ENV: production
@@ -50,7 +50,7 @@ jobs:
           git config --global user.name "Empire-Bot"
           git config --global user.email "bot@allabostader.se"
           git add .
-          git commit -m "Empire Sync V43 [Total Force]" || echo "No changes detected"
+          git commit -m "Empire Sync V47 [Singularity Protocols]" || echo "No changes"
           git pull --rebase origin main
           git push origin main
 
