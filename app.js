@@ -1,35 +1,50 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // DIN GOOGLE API NYCKEL SKA IN HÄR
-    const GOOGLE_API_KEY = 'DIN_API_KEY_HÄR'; 
-    const grid = document.getElementById('vault-grid');
-    const search = document.getElementById('geo-search');
+    const grid = document.getElementById('property-grid');
+    const search = document.getElementById('geo-intel');
+    const filterBtn = document.getElementById('filter-drops');
     let vault = [];
+    let onlyDrops = false;
 
-    async function load() {
-        const res = await fetch('market-data.json');
-        vault = await res.json();
-        render(vault);
+    async function infiltrateVault() {
+        try {
+            const res = await fetch('market-data.json');
+            vault = await res.json();
+            render(vault);
+        } catch (err) {
+            console.error("Vault offline.");
+            document.getElementById('live-counter').innerText = "VÄNTAR PÅ DATA...";
+        }
     }
 
     function render(data) {
         grid.innerHTML = "";
-        document.getElementById('node-count').innerText = `${data.length} OBJEKT INFILTRERADE`;
+        document.getElementById('live-counter').innerText = `${data.length.toLocaleString('sv-SE')} OBJEKT I VAULTEN`;
 
         data.forEach(item => {
             const card = document.createElement('div');
             card.className = 'card';
             
-            // Generera laglig Google Maps-bild baserat på adress
-            const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(item.a)}&zoom=17&size=600x300&maptype=satellite&key=${GOOGLE_API_KEY}`;
+            const isDrop = item.raw && item.raw.toLowerCase().includes('prissänkt');
             
+            // Satellitbild via Google Maps (Utan API-nyckel som fallback)
+            const mapImage = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(item.a + ' ' + (item.s || ''))}&zoom=17&size=600x300&maptype=satellite&key=YOUR_API_KEY`;
+            // NOTERA: Om du inte har API-nyckel kan vi använda en placeholder-tjänst:
+            const placeholder = `https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=600&q=80`;
+
             card.innerHTML = `
-                <div class="card-image" style="background-image: url('${mapUrl}')"></div>
-                <div class="badge">${item.status}</div>
-                <div class="card-body">
-                    <div class="price">${item.p.toLocaleString('sv-SE')} kr</div>
-                    <div class="address">${item.a}</div>
-                    <div class="city">${item.s || 'Sverige'} | ${item.k || ''}</div>
-                    <div style="margin-top: 15px; font-size: 0.8rem; color: #444;">KÄLLA: ${new URL(item.u).hostname}</div>
+                <div class="card-visual">
+                    <img src="${placeholder}" alt="Property Visual">
+                    <div class="status-tag">${item.status}</div>
+                    ${isDrop ? '<div class="drop-tag">MARKET DROP</div>' : ''}
+                </div>
+                <div class="card-content">
+                    <div class="card-price">${item.p.toLocaleString('sv-SE')} kr</div>
+                    <div class="card-address">${item.a}</div>
+                    <div class="card-location">${item.s ? item.s.toUpperCase() : 'Sverige'} ${item.k ? `| ${item.k.toUpperCase()}` : ''}</div>
+                    <div class="card-footer">
+                        <span>${new URL(item.u).hostname.replace('www.', '')}</span>
+                        <span style="color:var(--gold)">VISA INTEL →</span>
+                    </div>
                 </div>
             `;
             
@@ -40,9 +55,19 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     search.oninput = () => {
         const q = search.value.toLowerCase();
-        const filtered = vault.filter(v => v.a.toLowerCase().includes(q) || (v.s && v.s.toLowerCase().includes(q)));
+        const filtered = vault.filter(v => 
+            v.a.toLowerCase().includes(q) || 
+            (v.s && v.s.toLowerCase().includes(q))
+        );
         render(filtered);
     };
 
-    load();
+    filterBtn.onclick = () => {
+        onlyDrops = !onlyDrops;
+        filterBtn.classList.toggle('active');
+        const filtered = onlyDrops ? vault.filter(v => v.raw && v.raw.toLowerCase().includes('prissänkt')) : vault;
+        render(filtered);
+    };
+
+    infiltrateVault();
 });
