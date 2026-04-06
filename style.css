@@ -1,38 +1,172 @@
 :root {
     --gold: #c2995b;
     --gold-bright: #e6b16e;
-    --bg: #000000;
-    --card-bg: #0a0a0a;
+    --black: #000000;
+    --card: #080808;
     --text: #ffffff;
-    --font-fancy: 'Playfair Display', serif;
+    --font-serif: 'Playfair Display', serif;
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
+body { background: var(--black); color: var(--text); font-family: 'Inter', sans-serif; overflow-x: hidden; }
 
-header { padding: 50px 20px; text-align: center; border-bottom: 1px solid rgba(194, 153, 91, 0.1); }
-#main-logo { height: 160px; filter: drop-shadow(0 0 20px rgba(194, 153, 91, 0.3)); transition: 0.3s; }
+/* Header & Den Massiva Logotypen */
+header {
+    padding: 60px 20px;
+    background: radial-gradient(circle, rgba(194, 153, 91, 0.05) 0%, rgba(0,0,0,1) 70%);
+    text-align: center;
+    border-bottom: 1px solid rgba(194, 153, 91, 0.15);
+}
 
-.intel-panel { background: #050505; padding: 25px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #111; }
-.search-container { max-width: 1400px; margin: 0 auto; display: flex; flex-direction: column; gap: 15px; }
+#main-empire-logo {
+    height: 220px; /* Massiv storlek för auktoritet */
+    width: auto;
+    filter: drop-shadow(0 0 25px rgba(194, 153, 91, 0.4));
+}
 
-#geo-intel { width: 100%; background: #000; border: 1px solid rgba(194, 153, 91, 0.4); padding: 20px; border-radius: 12px; color: #fff; font-size: 1.2rem; }
-#geo-intel:focus { outline: none; border-color: var(--gold); box-shadow: 0 0 20px rgba(194, 153, 91, 0.2); }
+/* Navigationspanelen */
+.intel-ops {
+    background: #050505;
+    padding: 25px;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    border-bottom: 1px solid #111;
+}
 
-.action-row { display: flex; justify-content: space-between; align-items: center; }
-.btn-premium { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 12px 30px; border-radius: 10px; cursor: pointer; font-weight: 800; text-transform: uppercase; }
-.btn-premium:hover, .btn-premium.active { background: var(--gold); color: #000; }
+.nav-wrapper {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
 
-#vault-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 40px; padding: 50px; max-width: 1800px; margin: 0 auto; }
+.search-field { flex: 1; position: relative; min-width: 300px; }
+#geo-intel {
+    width: 100%;
+    background: #000;
+    border: 1px solid #221a0f;
+    padding: 18px 25px;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 1.1rem;
+    border-bottom: 2px solid var(--gold);
+}
 
-.card { background: var(--card-bg); border-radius: 24px; overflow: hidden; border: 1px solid #1a1a1a; transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1); cursor: pointer; }
-.card:hover { transform: translateY(-15px); border-color: var(--gold); box-shadow: 0 30px 60px rgba(0,0,0,0.8); }
+.gold-trigger {
+    background: transparent;
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    padding: 15px 35px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transition: 0.3s;
+}
 
-.card-visual { height: 280px; background-size: cover; background-position: center; position: relative; border-bottom: 2px solid var(--bg); }
-.card-body { padding: 30px; }
+.gold-trigger:hover, .gold-trigger.active {
+    background: var(--gold);
+    color: #000;
+}
 
-.price { font-family: var(--font-fancy); font-size: 2.6rem; color: var(--gold); font-weight: 900; margin-bottom: 5px; }
-.address { font-size: 1.3rem; font-weight: 800; color: #fff; margin-bottom: 5px; }
-.location { font-size: 0.9rem; color: #666; text-transform: uppercase; letter-spacing: 3px; font-weight: 700; }
+#sync-status { font-size: 0.8rem; color: var(--gold); text-transform: uppercase; letter-spacing: 2px; font-weight: 600; }
 
-.status-tag { position: absolute; top: 20px; left: 20px; padding: 6px 16px; border-radius: 30px; background: rgba(0,0,0,0.8); color: var(--gold); font-size: 0.75rem; font-weight: 900; border: 1px solid var(--gold); }
+/* Empire Grid */
+#empire-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(420px, 1fr));
+    gap: 40px;
+    padding: 60px 40px;
+    max-width: 1800px;
+    margin: 0 auto;
+}
+
+.prop-card {
+    background: var(--card);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #151515;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+}
+
+.prop-card:hover {
+    transform: translateY(-15px);
+    border-color: var(--gold);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.9);
+}
+
+.prop-image {
+    height: 280px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+
+.prop-image::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100px;
+    background: linear-gradient(to top, var(--card), transparent);
+}
+
+.prop-body { padding: 30px; }
+
+.prop-price {
+    font-family: var(--font-serif);
+    font-size: 2.6rem;
+    color: var(--gold);
+    font-weight: 900;
+    margin-bottom: 5px;
+}
+
+.prop-address {
+    font-size: 1.4rem;
+    font-weight: 800;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.prop-city {
+    font-size: 0.9rem;
+    color: #777;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.status-badge {
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    padding: 6px 15px;
+    border-radius: 4px;
+    background: rgba(0,0,0,0.8);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-size: 0.7rem;
+    font-weight: 900;
+}
+
+.card-footer {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid #1a1a1a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.btn-infiltrate {
+    color: var(--gold);
+    text-decoration: none;
+    font-weight: 800;
+    font-size: 0.9rem;
+    border-bottom: 1px solid var(--gold);
+}
