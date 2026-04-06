@@ -2,91 +2,47 @@
 <html lang="sv">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>AllaBostäder | Imperiet</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --black: #000000;
-            --dark: #0A0A0A;
-            --card: #111111;
-            --accent: #3B82F6;
-            --gold: #FFD700;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; -webkit-font-smoothing: antialiased; }
-        body { background: var(--black); color: #fff; overflow-x: hidden; }
-
-        /* NAVBAR - TOTAL BLACKOUT */
-        .nav {
-            background: var(--black);
-            padding: 15px 5vw;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #1a1a1a;
-            position: sticky; top: 0; z-index: 2000;
-        }
-        .logo-box { height: 65px; display: flex; align-items: center; }
-        .logo-box img { height: 100%; width: auto; filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.2)); }
-        .status-badge { font-size: 0.65rem; font-weight: 900; color: #00FF00; letter-spacing: 2px; text-transform: uppercase; border: 1px solid #00FF00; padding: 4px 10px; border-radius: 4px; }
-
-        /* HERO - AGGRESSIVE DESIGN */
-        .hero { padding: 80px 20px; text-align: center; border-bottom: 1px solid #111; }
-        .hero h1 { font-size: clamp(2.5rem, 8vw, 4.5rem); font-weight: 900; letter-spacing: -3px; line-height: 0.9; margin-bottom: 30px; }
-        .hero h1 span { color: var(--accent); }
-
-        .search-wrap {
-            max-width: 800px; margin: 0 auto; background: #111;
-            padding: 18px 35px; border-radius: 100px; border: 1px solid #222;
-            display: flex; align-items: center; transition: 0.3s;
-        }
-        .search-wrap:focus-within { border-color: var(--accent); box-shadow: 0 0 30px rgba(59, 130, 246, 0.2); }
-        .search-wrap input { background: transparent; border: none; outline: none; color: #fff; width: 100%; font-size: 1.2rem; font-weight: 700; }
-
-        /* GRID - THE FEED */
-        .container { max-width: 1500px; margin: 60px auto; padding: 0 25px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 35px; }
-
-        .card { 
-            background: var(--card); border-radius: 24px; overflow: hidden; 
-            border: 1px solid #1a1a1a; transition: 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            text-decoration: none; color: inherit; position: relative;
-        }
-        .card:hover { transform: translateY(-12px); border-color: var(--accent); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7); }
-
-        .media { position: relative; aspect-ratio: 16/10; background: #080808; overflow: hidden; }
-        .media img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; }
-        .card:hover .media img { scale: 1.05; }
-        .media iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: none; display: none; z-index: 5; }
-        .card.is-map .media iframe { display: block; }
-
-        .btn-drone {
-            position: absolute; bottom: 20px; right: 20px;
-            background: rgba(0,0,0,0.9); border: 1px solid #333;
-            color: #fff; padding: 10px 20px; border-radius: 100px;
-            font-size: 0.75rem; font-weight: 900; cursor: pointer; z-index: 100;
-        }
-
-        .info { padding: 28px; }
-        .price { font-size: 1.8rem; font-weight: 900; color: #fff; margin-bottom: 8px; letter-spacing: -1px; }
-        .addr { font-size: 1.2rem; font-weight: 800; color: #eee; margin-bottom: 4px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .loc { font-size: 0.9rem; color: #666; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 25px; }
-
-        .specs { display: flex; justify-content: space-between; border-top: 1px solid #1a1a1a; padding-top: 20px; }
-        .spec { display: flex; flex-direction: column; gap: 4px; }
-        .s-lbl { font-size: 0.65rem; color: #555; font-weight: 900; text-transform: uppercase; }
-        .s-val { font-size: 1rem; font-weight: 800; color: #fff; }
-    </style>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Allabostäder | Total Marknad, Noll Filter</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<nav class="nav">
-    <div class="logo-box">
-        <img src="logo.jpg" alt="AllaBostäder" onerror="this.src='logo.png'">
+<header>
+    <div class="logo-container">
+        <img src="logo.jpg" alt="Allabostäder" id="header-logo">
     </div>
-    <div class="status-badge">● Live Market Access</div>
-</nav>
+</header>
 
-<div class="hero">
-    <h1>Hela Marknaden.<br><span>Noll Filter.</span></h1>
-    <div class="search-wrap">
+<section class="control-panel">
+    <div class="control-wrapper">
+        <div class="search-box">
+            <input type="text" id="geo-search" placeholder="Infiltrera ort, kommun eller adress...">
+            <span class="search-icon">🔍</span>
+        </div>
+        
+        <div class="filter-actions">
+            <button id="toggle-price-drop" class="btn-premium">
+                <span class="btn-text">Market Drops</span>
+                <span class="status-dot"></span>
+            </button>
+        </div>
+
+        <div class="stats-display">
+            <span id="node-count">Ansluter till nätverket...</span>
+            <span id="sync-time"></span>
+        </div>
+    </div>
+</section>
+
+<main id="vault-grid">
+    </main>
+
+<div id="loader" class="hidden">
+    <div class="spinner"></div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
