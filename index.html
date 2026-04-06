@@ -5,43 +5,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Allabostäder | Total Marknad, Noll Filter</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;800&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
-    <div class="logo-container">
-        <img src="logo.jpg" alt="Allabostäder" id="header-logo">
-    </div>
+    <img src="logo.jpg" alt="Allabostäder" id="header-logo">
 </header>
 
 <section class="control-panel">
     <div class="control-wrapper">
         <div class="search-box">
-            <input type="text" id="geo-search" placeholder="Infiltrera ort, kommun eller adress...">
-            <span class="search-icon">🔍</span>
+            <input type="text" id="geo-search" placeholder="Ange stad, gata eller kommun för fullständig intel...">
         </div>
-        
         <div class="filter-actions">
-            <button id="toggle-price-drop" class="btn-premium">
-                <span class="btn-text">Market Drops</span>
-                <span class="status-dot"></span>
-            </button>
+            <button id="toggle-price-drop" class="btn-premium">MARKET DROPS</button>
+            <button id="view-mode" class="btn-premium">KARTVY</button>
         </div>
-
-        <div class="stats-display">
-            <span id="node-count">Ansluter till nätverket...</span>
-            <span id="sync-time"></span>
+        <div class="stats-bar">
+            <span id="node-count">ANSLUTER...</span>
         </div>
     </div>
 </section>
 
-<main id="vault-grid">
-    </main>
-
-<div id="loader" class="hidden">
-    <div class="spinner"></div>
-</div>
+<main id="vault-grid"></main>
 
 <script src="app.js"></script>
 </body>
