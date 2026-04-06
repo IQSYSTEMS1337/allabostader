@@ -4,31 +4,37 @@ const StealthPlugin = require('puppeteer-extra-plugin-stealth');
 const fs = require('fs').promises;
 const csv = require('csv-parse/sync');
 
+// Aktivera Stealth-protokoll för att runda mäklarnas blockeringar
 puppeteer.use(StealthPlugin());
 
 const CONFIG = {
-    maxConcurrency: 1, 
+    maxConcurrency: 1, // GitHub RAM-skydd (kör en i taget för stabilitet)
     minPrice: 100000,
     maxScrollDepth: 18000,
-    timeout: 90000,
+    timeout: 120000, // Ökad timeout för tunga sidor
     retryLimit: 2,
-    saveInterval: 10000
+    saveInterval: 15000,
+    maxRequestsPerWorker: 20 // Återstartar arbetaren för att tömma RAM
 };
 
 let vault = [];
 let isDirty = false;
 let orterMap = new Map();
 
+/**
+ * BOOTSTRAP: Ladda strategisk intelligens och marknadsarkiv
+ */
 async function bootstrap() {
-    console.log(">> [SYSTEM] VOIDWALKER V39: TOTAL DOMINATION STARTING...");
+    console.log(">> [SYSTEM] INITIALIZING VOIDWALKER V40: TOTAL DOMINATION & STABILITY");
     try {
         const raw = await fs.readFile('Aiorter.csv', 'utf8');
         const records = csv.parse(raw.replace(/^\uFEFF/, ''), { columns: true, delimiter: ';' });
+        // Sortera efter längd för att undvika "Malmö" vs "Malmö-Vellinge" konflikter
         records.sort((a, b) => b.Tätort.length - a.Tätort.length).forEach(r => {
             orterMap.set(r.Tätort.toLowerCase().trim(), r.Kommun?.trim());
         });
         console.log(`>> [DB] Strategic Nodes Online: ${orterMap.size}`);
-    } catch (e) { console.log(">> [WARN] Geolocation DB offline."); }
+    } catch (e) { console.log(">> [WARN] Geolocation DB offline. Falling back to simple location."); }
 
     try {
         const data = await fs.readFile('market-data.json', 'utf8');
@@ -36,7 +42,10 @@ async function bootstrap() {
     } catch (e) { vault = []; }
 }
 
-const mapLocation = (text) => {
+/**
+ * GEO-MAPPING: Identifiera ort och kommun i realtid
+ */
+const mapLocationFast = (text) => {
     const lowText = text.toLowerCase();
     for (let [ort, kommun] of orterMap) {
         if (lowText.includes(ort)) return { s: ort, k: kommun };
@@ -44,14 +53,17 @@ const mapLocation = (text) => {
     return { s: "", k: "" };
 };
 
+/**
+ * MAIN EXECUTION ENGINE
+ */
 async function run() {
     await bootstrap();
 
-    console.log(">> [LAUNCH] Booting Chrome Matrix...");
     const cluster = await Cluster.launch({
         concurrency: Cluster.CONCURRENCY_PAGE, 
         maxConcurrency: CONFIG.maxConcurrency,
         retryLimit: CONFIG.retryLimit,
+        maxRequestsPerWorker: CONFIG.maxRequestsPerWorker, // RAM-management
         puppeteerOptions: {
             headless: true,
             dumpio: true, // Nu ser vi exakt vad Chrome gör i loggen!
@@ -60,57 +72,77 @@ async function run() {
                 '--disable-setuid-sandbox',
                 '--disable-dev-shm-usage',
                 '--disable-gpu',
-                '--no-zygote'
-                // --single-process är BORTTAGEN, den orsakade felet på Ubuntu 24.04
+                '--no-zygote',
+                '--disable-extensions',
+                '--disable-software-rasterizer',
+                '--single-process' // Krävs ibland i extremt låsta CI-miljöer
             ]
         }
     });
 
+    // Autosave Ticker
     const saveTicker = setInterval(async () => {
         if (isDirty) {
+            console.log(">> [IO] Syncing Vault to disk...");
             await fs.writeFile('market-data.json', JSON.stringify(vault, null, 2));
             isDirty = false;
         }
     }, CONFIG.saveInterval);
 
+    // INFILTRATION TASK
     await cluster.task(async ({ page, data: target }) => {
         console.log(`>> [INFILTRATING] ${target.name}`);
         await page.setUserAgent('Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36');
         
+        // Resource Assassin: Blockera bilder och onödigt skräp för hastighet
         await page.setRequestInterception(true);
         page.on('request', (req) => {
-            if (['image', 'media', 'font', 'stylesheet'].includes(req.resourceType())) req.abort();
-            else req.continue();
+            if (['image', 'media', 'font', 'stylesheet'].includes(req.resourceType())) {
+                req.abort();
+            } else {
+                req.continue();
+            }
         });
 
         try {
             await page.goto(target.url, { waitUntil: 'domcontentloaded', timeout: CONFIG.timeout });
             
+            // Bypass Cookie Banners
+            await page.evaluate(() => {
+                const btn = Array.from(document.querySelectorAll('button, a, span'))
+                    .find(el => /acceptera|godkänn|ok|agree|accept/i.test(el.innerText));
+                if (btn) btn.click();
+            }).catch(() => {});
+
             // Auto-scroll logic...
             await page.evaluate(async (max) => {
                 await new Promise((resolve) => {
                     let totalHeight = 0;
                     const timer = setInterval(() => {
-                        const distance = 500;
+                        const distance = 400 + Math.floor(Math.random() * 200);
                         window.scrollBy(0, distance);
                         totalHeight += distance;
                         if (totalHeight >= document.body.scrollHeight || totalHeight >= max) {
                             clearInterval(timer);
                             resolve();
                         }
-                    }, 100);
+                    }, 150);
                 });
             }, CONFIG.maxScrollDepth);
 
+            // DATA EXTRACTION
             const extracted = await page.evaluate((minPrice) => {
-                const items = Array.from(document.querySelectorAll('li, article, [class*="card"]'));
-                return items.map(el => {
+                const cards = Array.from(document.querySelectorAll('li, article, [class*="card"], [class*="item"]'));
+                return cards.map(el => {
                     const txt = el.innerText || "";
                     const pMatch = txt.replace(/[\s\xa0.]/g, '').match(/(\d{6,11})kr/i);
                     const p = pMatch ? parseInt(pMatch[1]) : 0;
+                    
                     if (p < minPrice) return null;
+
                     const link = el.querySelector('a')?.href;
                     if (!link) return null;
+
                     return {
                         title: txt.split('\n')[0].substring(0, 100).trim(),
                         price: p,
@@ -120,15 +152,22 @@ async function run() {
                 }).filter(i => i !== null);
             }, CONFIG.minPrice);
 
+            // VAULT MERGE & SOLD TRACKING
             const hostname = new URL(target.url).hostname;
             const seenNow = new Set();
 
             extracted.forEach(item => {
-                const loc = mapLocation(item.title + " " + item.raw);
+                const loc = mapLocationFast(item.title + " " + item.raw);
                 const entry = {
-                    u: item.url, a: item.title, p: item.price, s: loc.s, k: loc.k,
-                    t: new Date().toISOString(), status: "ACTIVE"
+                    u: item.url,
+                    a: item.title,
+                    p: item.price,
+                    s: loc.s,
+                    k: loc.k,
+                    t: new Date().toISOString(),
+                    status: "ACTIVE"
                 };
+
                 seenNow.add(entry.u);
                 const idx = vault.findIndex(v => v.u === entry.u);
                 if (idx > -1) {
@@ -140,6 +179,7 @@ async function run() {
                 isDirty = true;
             });
 
+            // SOLD DETECTION: Markera försvunna objekt
             if (extracted.length > 5) {
                 vault.forEach(v => {
                     if (v.u.includes(hostname) && !seenNow.has(v.u) && v.status === "ACTIVE") {
@@ -149,24 +189,31 @@ async function run() {
                     }
                 });
             }
-            console.log(`>> [SUCCESS] ${target.name}: Sync Complete.`);
+
+            console.log(`>> [SUCCESS] ${target.name}: Found ${extracted.length} objects.`);
+
         } catch (err) {
             console.error(`>> [FAILED] ${target.name}: ${err.message}`);
         }
     });
 
-    const targets = require('./targets');
-    console.log(`>> [QUEUE] Loaded ${targets.length} targets.`);
-    targets.forEach(t => cluster.queue(t));
+    // QUEUE TARGETS (Laddar från targets.js i samma mapp)
+    try {
+        const targets = require('./targets');
+        targets.forEach(t => cluster.queue(t));
+    } catch (e) {
+        console.error(">> [FATAL] Targets file missing!");
+        process.exit(1);
+    }
 
     await cluster.idle();
     await cluster.close();
     clearInterval(saveTicker);
     await fs.writeFile('market-data.json', JSON.stringify(vault, null, 2));
-    console.log(">> [COMPLETE] Allabostäder Sync Success.");
+    console.log(">> [COMPLETE] Empire Synchronized.");
 }
 
 run().catch(err => {
-    console.error(">> [FATAL]:", err.message);
+    console.error(">> [FATAL GLOBAL ERROR]:", err.message);
     process.exit(1);
 });
