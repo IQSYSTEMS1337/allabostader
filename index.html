@@ -3,32 +3,29 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allabostäder | Total Marknad, Noll Filter</title>
+    <title>Allabostäder | Total Marknad</title>
     <link rel="stylesheet" href="style.css">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
-    <img src="logo.jpg" alt="Allabostäder" id="header-logo">
+    <div class="logo-wrapper">
+        <img src="logo.jpg" alt="Allabostäder" id="main-logo">
+    </div>
 </header>
 
-<section class="control-panel">
-    <div class="control-wrapper">
-        <div class="search-box">
-            <input type="text" id="geo-search" placeholder="Ange stad, gata eller kommun för fullständig intel...">
-        </div>
-        <div class="filter-actions">
-            <button id="toggle-price-drop" class="btn-premium">MARKET DROPS</button>
-            <button id="view-mode" class="btn-premium">KARTVY</button>
-        </div>
-        <div class="stats-bar">
-            <span id="node-count">ANSLUTER...</span>
+<div class="search-vault">
+    <div class="search-container">
+        <input type="text" id="geo-intel" placeholder="Sök gata, stad eller kommun för omedelbar intel...">
+        <div class="search-actions">
+            <button id="filter-drops" class="btn-gold">Market Drops 📉</button>
+            <span id="live-counter">Synkroniserar...</span>
         </div>
     </div>
-</section>
+</div>
 
-<main id="vault-grid"></main>
+<main id="property-grid"></main>
 
 <script src="app.js"></script>
 </body>
