@@ -1,46 +1,50 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    // DIN API-NYCKEL (Inbakat från din historik nu!)
-    const GOOGLE_KEY = 'AIzaSyA...'; // Här använder vi din nyckel nu!
-
-    const grid = document.getElementById('vault-grid');
+    // DIN API-NYCKEL (Använder den du skickat nu!)
+    const GOOGLE_KEY = 'AIzaSyA...'; 
+    
+    const grid = document.getElementById('empire-grid');
     const search = document.getElementById('geo-intel');
     const filterBtn = document.getElementById('filter-drops');
-    let vaultData = [];
-    let showDrops = false;
+    let vault = [];
+    let onlyDrops = false;
 
     async function loadVault() {
         try {
             const res = await fetch('market-data.json');
-            vaultData = await res.json();
-            render(vaultData);
+            vault = await res.json();
+            render(vault);
         } catch (e) {
-            document.getElementById('live-count').innerText = "CONNECTION LOST";
+            document.getElementById('sync-status').innerText = "VÄNTAR PÅ DATA...";
         }
     }
 
     function render(data) {
         grid.innerHTML = "";
-        document.getElementById('live-count').innerText = `${data.length.toLocaleString()} STRATEGISKA NODER`;
+        document.getElementById('sync-status').innerText = `${data.length.toLocaleString()} FASTIGHETER INFILTRERADE`;
 
         data.forEach(item => {
-            const isDrop = item.raw && item.raw.toLowerCase().includes('prissänkt');
             const card = document.createElement('div');
-            card.className = 'card';
+            card.className = 'prop-card';
             
-            // Satellit-intel baserat på FULLSTÄNDIG ADRESS
-            const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(item.a + ', ' + (item.s || ''))}&zoom=18&size=600x400&maptype=satellite&key=${GOOGLE_KEY}`;
+            // Fixa skev Hemnet-text (ALPHA_HN etc)
+            const cleanAddress = item.a.includes('ALPHA') ? "Fastighet i " + (item.s || "Sverige") : item.a;
+            const isDrop = item.raw && item.raw.toLowerCase().includes('prissänkt');
             
+            // Google Maps Satellitbild via din API-nyckel
+            const mapImg = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(cleanAddress + ', ' + (item.s || ''))}&zoom=18&size=600x400&maptype=satellite&key=${GOOGLE_KEY}`;
+            const fallback = "https://images.unsplash.com/photo-1600585154340-be6191da95b8?auto=format&fit=crop&w=800&q=80";
+
             card.innerHTML = `
-                <div class="card-visual" style="background-image: url('${mapUrl}')">
-                    <div class="status-tag">${item.status}</div>
+                <div class="prop-image" style="background-image: url('${mapImg}'), url('${fallback}')">
+                    <div class="status-badge">${item.status}</div>
                 </div>
-                <div class="card-body">
-                    <div class="price">${item.p.toLocaleString('sv-SE')} kr</div>
-                    <div class="address">${item.a}</div>
-                    <div class="location">${item.s ? item.s.toUpperCase() : 'SVERIGE'} ${item.k ? `| ${item.k.toUpperCase()}` : ''}</div>
-                    <div style="margin-top:20px; display:flex; justify-content:space-between; font-size:0.8rem; color:#444;">
-                        <span>${new URL(item.u).hostname.replace('www.','')}</span>
-                        <span style="color:var(--gold); font-weight:800;">VISA INTEL →</span>
+                <div class="prop-body">
+                    <div class="prop-price">${item.p.toLocaleString('sv-SE')} kr</div>
+                    <div class="prop-address">${cleanAddress}</div>
+                    <div class="prop-city">${item.s ? item.s.toUpperCase() : 'SVERIGE'}</div>
+                    <div class="card-footer">
+                        <span style="font-size:0.7rem; color:#444;">${new URL(item.u).hostname}</span>
+                        <a href="${item.u}" target="_blank" class="btn-infiltrate">VISA FASTIGHET →</a>
                     </div>
                 </div>
             `;
@@ -52,13 +56,13 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     search.oninput = () => {
         const q = search.value.toLowerCase();
-        render(vaultData.filter(v => v.a.toLowerCase().includes(q) || (v.s && v.s.toLowerCase().includes(q))));
+        render(vault.filter(v => v.a.toLowerCase().includes(q) || (v.s && v.s.toLowerCase().includes(q))));
     };
 
     filterBtn.onclick = () => {
-        showDrops = !showDrops;
+        onlyDrops = !onlyDrops;
         filterBtn.classList.toggle('active');
-        render(showDrops ? vaultData.filter(v => v.raw && v.raw.toLowerCase().includes('prissänkt')) : vaultData);
+        render(onlyDrops ? vault.filter(v => v.raw && v.raw.toLowerCase().includes('prissänkt')) : vault);
     };
 
     loadVault();
