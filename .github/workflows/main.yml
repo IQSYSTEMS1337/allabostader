@@ -1,4 +1,4 @@
-name: VOIDWALKER-V47-SINGULARITY-FORCE
+name: VOIDWALKER-V50-SINGULARITY-FORCE
 
 on:
   schedule:
@@ -6,8 +6,8 @@ on:
   workflow_dispatch:
 
 env:
+  # Vi behåller bara denna för att tvinga Node 24 utan konflikt
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
-  ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
 
 permissions:
   contents: write
@@ -38,7 +38,7 @@ jobs:
       - name: 📦 Install War-Tools
         run: npm install --no-audit --no-fund --loglevel=error
 
-      - name: 🚀 Run AGGREGATOR_CORE V47
+      - name: 🚀 Run AGGREGATOR_CORE
         run: node AGGREGATOR_CORE.js
         env:
           NODE_ENV: production
@@ -50,15 +50,18 @@ jobs:
           git config --global user.name "Empire-Bot"
           git config --global user.email "bot@allabostader.se"
           git add .
-          git commit -m "Empire Sync V47 [Singularity Protocols]" || echo "No changes"
+          git commit -m "Empire Sync V50 [Total Domination]" || echo "No changes"
           git pull --rebase origin main
           git push origin main
+
+      - name: 📦 Upload Pages Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.' # Här skickar vi hela mappen (inklusive index.html och market-data.json)
 
   deploy:
     needs: execute-empire
     runs-on: ubuntu-latest
     steps:
-      - name: 🛰️ Checkout
-        uses: actions/checkout@v4
       - name: 🌐 Deploy to Empire Pages
         uses: actions/deploy-pages@v4
