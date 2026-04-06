@@ -19,7 +19,7 @@ const municipalities = [
 const generateTargets = () => {
     const t = [];
 
-    // Regional Sharding
+    // Regional Infiltration (Läns-sharding)
     counties.forEach(c => {
         t.push({ name: `Fastighetsbyrån (${c})`, url: `https://www.fastighetsbyran.com/sv/sverige/till-salu/${c}` });
         t.push({ name: `Svensk Fast (${c})`, url: `https://www.svenskfast.se/bostad/${c}/` });
@@ -28,12 +28,12 @@ const generateTargets = () => {
         t.push({ name: `SkandiaMäklarna (${c})`, url: `https://www.skandiamaklarna.se/till-salu/bostader/${c}` });
     });
 
-    // DeepScan Hemnet
+    // DeepScan Hemnet (Kommun-sharding)
     municipalities.forEach(m => {
         t.push({ name: `DeepScan ${m.toUpperCase()}`, url: `https://www.hemnet.se/bostader?location_ids[]=${m}` });
     });
 
-    // Boutique & Nisch (Rensad från dubbletter)
+    // Boutique & Nischbyråer (Nationell sökning räcker)
     const boutique = [
         { name: "Erik Olsson", url: "https://www.erikolsson.se/bostader-till-salu/" },
         { name: "Notar", url: "https://www.notar.se/kopa-bostad/bostader-till-salu" },
