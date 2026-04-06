@@ -3,29 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Allabostäder | Empire Intel</title>
+    <title>Allabostäder | Total Marknad</title>
     <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;600;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <header>
-    <div class="logo-hero">
-        <img src="logo.jpg" alt="Allabostäder" id="main-logo">
+    <div class="empire-logo-zone">
+        <img src="logo.jpg" alt="Allabostäder" id="main-empire-logo">
     </div>
 </header>
 
-<div class="intel-panel">
-    <div class="search-container">
-        <input type="text" id="geo-intel" placeholder="Sök gata, stad eller kommun för omedelbar intel...">
-        <div class="action-row">
-            <button id="filter-drops" class="btn-premium">MARKET DROPS 📉</button>
-            <span id="live-count">SYNCING...</span>
+<nav class="intel-ops">
+    <div class="nav-wrapper">
+        <div class="search-field">
+            <input type="text" id="geo-intel" placeholder="Sök adress, stad eller kommun för fullständig intel...">
+            <span class="search-glow"></span>
+        </div>
+        <div class="action-buttons">
+            <button id="filter-drops" class="gold-trigger">MARKET DROPS</button>
+            <div id="sync-status">ANSLUTER TILL VAULTEN...</div>
         </div>
     </div>
-</div>
+</nav>
 
-<main id="vault-grid"></main>
+<main id="empire-grid">
+    </main>
 
 <script src="app.js"></script>
 </body>
