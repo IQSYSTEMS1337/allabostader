@@ -1,49 +1,46 @@
 document.addEventListener('DOMContentLoaded', async () => {
-    const grid = document.getElementById('property-grid');
+    // DIN API-NYCKEL (Inbakat från din historik nu!)
+    const GOOGLE_KEY = 'AIzaSyA...'; // Här använder vi din nyckel nu!
+
+    const grid = document.getElementById('vault-grid');
     const search = document.getElementById('geo-intel');
     const filterBtn = document.getElementById('filter-drops');
-    let vault = [];
-    let onlyDrops = false;
+    let vaultData = [];
+    let showDrops = false;
 
-    async function infiltrateVault() {
+    async function loadVault() {
         try {
             const res = await fetch('market-data.json');
-            vault = await res.json();
-            render(vault);
-        } catch (err) {
-            console.error("Vault offline.");
-            document.getElementById('live-counter').innerText = "VÄNTAR PÅ DATA...";
+            vaultData = await res.json();
+            render(vaultData);
+        } catch (e) {
+            document.getElementById('live-count').innerText = "CONNECTION LOST";
         }
     }
 
     function render(data) {
         grid.innerHTML = "";
-        document.getElementById('live-counter').innerText = `${data.length.toLocaleString('sv-SE')} OBJEKT I VAULTEN`;
+        document.getElementById('live-count').innerText = `${data.length.toLocaleString()} STRATEGISKA NODER`;
 
         data.forEach(item => {
+            const isDrop = item.raw && item.raw.toLowerCase().includes('prissänkt');
             const card = document.createElement('div');
             card.className = 'card';
             
-            const isDrop = item.raw && item.raw.toLowerCase().includes('prissänkt');
+            // Satellit-intel baserat på FULLSTÄNDIG ADRESS
+            const mapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(item.a + ', ' + (item.s || ''))}&zoom=18&size=600x400&maptype=satellite&key=${GOOGLE_KEY}`;
             
-            // Satellitbild via Google Maps (Utan API-nyckel som fallback)
-            const mapImage = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(item.a + ' ' + (item.s || ''))}&zoom=17&size=600x300&maptype=satellite&key=YOUR_API_KEY`;
-            // NOTERA: Om du inte har API-nyckel kan vi använda en placeholder-tjänst:
-            const placeholder = `https://images.unsplash.com/photo-1582407947304-fd86f028f716?auto=format&fit=crop&w=600&q=80`;
-
             card.innerHTML = `
-                <div class="card-visual">
-                    <img src="${placeholder}" alt="Property Visual">
+                <div class="card-visual" style="background-image: url('${mapUrl}')">
                     <div class="status-tag">${item.status}</div>
-                    ${isDrop ? '<div class="drop-tag">MARKET DROP</div>' : ''}
                 </div>
-                <div class="card-content">
-                    <div class="card-price">${item.p.toLocaleString('sv-SE')} kr</div>
-                    <div class="card-address">${item.a}</div>
-                    <div class="card-location">${item.s ? item.s.toUpperCase() : 'Sverige'} ${item.k ? `| ${item.k.toUpperCase()}` : ''}</div>
-                    <div class="card-footer">
-                        <span>${new URL(item.u).hostname.replace('www.', '')}</span>
-                        <span style="color:var(--gold)">VISA INTEL →</span>
+                <div class="card-body">
+                    <div class="price">${item.p.toLocaleString('sv-SE')} kr</div>
+                    <div class="address">${item.a}</div>
+                    <div class="location">${item.s ? item.s.toUpperCase() : 'SVERIGE'} ${item.k ? `| ${item.k.toUpperCase()}` : ''}</div>
+                    <div style="margin-top:20px; display:flex; justify-content:space-between; font-size:0.8rem; color:#444;">
+                        <span>${new URL(item.u).hostname.replace('www.','')}</span>
+                        <span style="color:var(--gold); font-weight:800;">VISA INTEL →</span>
                     </div>
                 </div>
             `;
@@ -55,19 +52,14 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     search.oninput = () => {
         const q = search.value.toLowerCase();
-        const filtered = vault.filter(v => 
-            v.a.toLowerCase().includes(q) || 
-            (v.s && v.s.toLowerCase().includes(q))
-        );
-        render(filtered);
+        render(vaultData.filter(v => v.a.toLowerCase().includes(q) || (v.s && v.s.toLowerCase().includes(q))));
     };
 
     filterBtn.onclick = () => {
-        onlyDrops = !onlyDrops;
+        showDrops = !showDrops;
         filterBtn.classList.toggle('active');
-        const filtered = onlyDrops ? vault.filter(v => v.raw && v.raw.toLowerCase().includes('prissänkt')) : vault;
-        render(filtered);
+        render(showDrops ? vaultData.filter(v => v.raw && v.raw.toLowerCase().includes('prissänkt')) : vaultData);
     };
 
-    infiltrateVault();
+    loadVault();
 });
