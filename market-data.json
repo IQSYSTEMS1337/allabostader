@@ -83744,8 +83744,8 @@
     "status": "ACTIVE"
   },
   {
-    "a": "1 495 000 KR",
-    "p": 1495000,
+    "a": "2 195 000 KR",
+    "p": 2195000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -83768,6 +83768,96 @@
     "p": 1995000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/rottne/kungsvagen-4/",
+    "a": "ROTTNE, VÄXJÖ",
+    "p": 2495000,
+    "m2": 0,
+    "r": 8,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/edsgatan/skogsbrynsvagen-10-a/",
+    "a": "EDSGATAN, KARLSTAD",
+    "p": 2695000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/bryggudden/stapelgatan-1b/",
+    "a": "BRYGGUDDEN, KARLSTAD",
+    "p": 3795000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/moro-backe/molnstigen-21/",
+    "a": "MORÖ BACKE, SKELLEFTEÅ",
+    "p": 3600000,
+    "m2": 0,
+    "r": 8,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/burea/sodra-agatan-18/",
+    "a": "BUREÅ, SKELLEFTEÅ",
+    "p": 182450000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bergnaset/trolltjarnsvagen-8/",
+    "a": "BERGNÄSET, LULEÅ",
+    "p": 5295000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bergon/bergon-21/",
+    "a": "BERGÖN, LULEÅ",
+    "p": 2395000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/skeppsbrogatan-10/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 2295000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/radstugatan-15b/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 3495000,
+    "m2": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
