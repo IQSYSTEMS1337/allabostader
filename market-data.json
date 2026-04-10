@@ -61723,7 +61723,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/tingvallastaden/herrgardsgatan-4c/",
     "a": "TINGVALLASTADEN, KARLSTAD",
-    "p": 1695000,
+    "p": 1650000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -83744,8 +83744,8 @@
     "status": "ACTIVE"
   },
   {
-    "a": "2 195 000 KR",
-    "p": 2195000,
+    "a": "2 395 000 KR",
+    "p": 2395000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -83858,6 +83858,116 @@
     "p": 3495000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hovshaga/segerstadsvagen-70c3/",
+    "a": "HOVSHAGA, VÄXJÖ",
+    "p": 1650000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/teleborg/bollklubbsvagen-4e/",
+    "a": "TELEBORG, VÄXJÖ",
+    "p": 2250000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/vikaholm/rundquists-vag-2/",
+    "a": "VIKAHOLM, VÄXJÖ",
+    "p": 1250000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hovshaga/byalagsvagen-27/",
+    "a": "HOVSHAGA, VÄXJÖ",
+    "p": 1550000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/funkabo/riddaregatan-7b/",
+    "a": "FUNKABO, KALMAR",
+    "p": 1095000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/johannesborg/fryxellsgatan-12/",
+    "a": "JOHANNESBORG, KALMAR",
+    "p": 5495000,
+    "m2": 0,
+    "r": 8,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum-varvet/vastra-varvsgatan-15-b/",
+    "a": "CENTRUM / VARVET, LULEÅ",
+    "p": 1495000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bredviken/ragangsvagen-9/",
+    "a": "BREDVIKEN, LULEÅ",
+    "p": 2095000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bergviken/sjogatan-8a/",
+    "a": "BERGVIKEN, LULEÅ",
+    "p": 1895000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bredviken/ragangsvagen-10/",
+    "a": "BREDVIKEN, LULEÅ",
+    "p": 3795000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/klintbacken/klintvagen-215b/",
+    "a": "KLINTBACKEN, LULEÅ",
+    "p": 1695000,
+    "m2": 0,
+    "r": 2,
     "vI": 50,
     "sI": 95,
     "lI": 5
