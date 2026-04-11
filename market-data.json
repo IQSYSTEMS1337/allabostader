@@ -83744,8 +83744,8 @@
     "status": "ACTIVE"
   },
   {
-    "a": "2 395 000 KR",
-    "p": 2395000,
+    "a": "1 975 000 KR",
+    "p": 1975000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -83968,6 +83968,36 @@
     "p": 1695000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/bladgatan-59/",
+    "a": "SKELLEFTEÅ",
+    "p": 1800000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/nyckelgatan-66/",
+    "a": "SKELLEFTEÅ",
+    "p": 550000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/stationsgatan-11/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 3500000,
+    "m2": 0,
+    "r": 5,
     "vI": 50,
     "sI": 95,
     "lI": 5
