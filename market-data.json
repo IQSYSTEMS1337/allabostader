@@ -83744,8 +83744,8 @@
     "status": "ACTIVE"
   },
   {
-    "a": "1 795 000 KR",
-    "p": 1795000,
+    "a": "1 995 000 KR",
+    "p": 1995000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -84028,6 +84028,56 @@
     "p": 1150000,
     "m2": 0,
     "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/norrtullsgatan-6/",
+    "a": "CENTRUM, VÄXJÖ",
+    "p": 2495000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hovshaga/paradvagen-45/",
+    "a": "HOVSHAGA, VÄXJÖ",
+    "p": 2300000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/krafslosa/runnehallsvagen-12/",
+    "a": "KRAFSLÖSA, KALMAR",
+    "p": 4795000,
+    "m2": 0,
+    "r": 7,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/rud/fadderortsgatan-22/",
+    "a": "RUD, KARLSTAD",
+    "p": 495000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum---charlottendal/hermelinsgatan-28a/",
+    "a": "CENTRUM - CHARLOTTENDAL, LULEÅ",
+    "p": 1995000,
+    "m2": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
