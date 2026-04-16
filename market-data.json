@@ -83744,8 +83744,8 @@
     "status": "ACTIVE"
   },
   {
-    "a": "1 995 000 KR",
-    "p": 1995000,
+    "a": "3 645 000 KR",
+    "p": 3645000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -84078,6 +84078,106 @@
     "p": 1995000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/funkabo/banergatan-8a2/",
+    "a": "FUNKABO, KALMAR",
+    "p": 975000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/skalby/klockhusgatan-3a/",
+    "a": "SKÄLBY , KALMAR",
+    "p": 1450000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/botorp/botorp-812/",
+    "a": "BOTORP, KARLSTAD",
+    "p": 695000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/bogatan-25/",
+    "a": "SKELLEFTEÅ",
+    "p": 395000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/hammargatan-24b/",
+    "a": "SKELLEFTEÅ",
+    "p": 395000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/hallbacken/skogsmyrgatan-27-h/",
+    "a": "HÄLLBACKEN, LULEÅ",
+    "p": 1645000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/mjolkudden/radiomasten-123/",
+    "a": "MJÖLKUDDEN, LULEÅ",
+    "p": 3395000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/sodra-sunderbyn/agronomvagen-7/",
+    "a": "SÖDRA SUNDERBYN, LULEÅ",
+    "p": 3895000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/lovskarsvagen-732/",
+    "a": "LULEÅ",
+    "p": 1995000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/knoppelasen/fridhemsgatan-49/",
+    "a": "KNÖPPELÅSEN, LULEÅ",
+    "p": 4095000,
+    "m2": 0,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
