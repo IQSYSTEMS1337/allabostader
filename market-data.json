@@ -83744,8 +83744,8 @@
     "status": "ACTIVE"
   },
   {
-    "a": "3 645 000 KR",
-    "p": 3645000,
+    "a": "3 195 000 KR",
+    "p": 3195000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -84087,7 +84087,7 @@
     "a": "FUNKABO, KALMAR",
     "p": 975000,
     "m2": 0,
-    "r": 0,
+    "r": 2,
     "vI": 50,
     "sI": 95,
     "lI": 5
@@ -84178,6 +84178,56 @@
     "p": 4095000,
     "m2": 0,
     "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hov/blabarsvagen-49/",
+    "a": "HOV, VÄXJÖ",
+    "p": 3500000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/frogatan-322/",
+    "a": "SKELLEFTEÅ",
+    "p": 995000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/sodra-hamngatan-17a/",
+    "a": "SKELLEFTEÅ",
+    "p": 175000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/bjorngatan-16/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 1295000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/stationsgatan-42e/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 1645000,
+    "m2": 0,
+    "r": 1,
     "vI": 50,
     "sI": 95,
     "lI": 5
