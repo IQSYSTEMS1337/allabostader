@@ -61223,7 +61223,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hov/gavottvagen-12/",
     "a": "HOV, VÄXJÖ",
-    "p": 3750000,
+    "p": 3695000,
     "m2": 0,
     "r": 3,
     "vI": 50,
@@ -83744,8 +83744,8 @@
     "status": "ACTIVE"
   },
   {
-    "a": "3 195 000 KR",
-    "p": 3195000,
+    "a": "3 495 000 KR",
+    "p": 3495000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -84228,6 +84228,86 @@
     "p": 1645000,
     "m2": 0,
     "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/kalvsvik-junibacken-1/",
+    "a": "VÄXJÖ",
+    "p": 2400000,
+    "m2": 0,
+    "r": 7,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/funkabo/vasallgatan-5b/",
+    "a": "FUNKABO, KALMAR",
+    "p": 675000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/morbylanga/farjestaden/salamandergatan-17h/",
+    "a": "FÄRJESTADEN, MÖRBYLÅNGA",
+    "p": 1595000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/haga/ostra-stationsgatan-89/",
+    "a": "HAGA, KARLSTAD",
+    "p": 3560000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/norrbole/lakarvagen-7b/",
+    "a": "NORRBÖLE, SKELLEFTEÅ",
+    "p": 1795000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/kyrkbyn-gammelstad/storakersvagen-1/",
+    "a": "KYRKBYN - GAMMELSTAD, LULEÅ",
+    "p": 2995000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/ostermalm/backgatan-34/",
+    "a": "ÖSTERMALM, LULEÅ",
+    "p": 2245000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/kallkallan/lingonstigen-46/",
+    "a": "KALLKÄLLAN, LULEÅ",
+    "p": 2150000,
+    "m2": 0,
+    "r": 4,
     "vI": 50,
     "sI": 95,
     "lI": 5
