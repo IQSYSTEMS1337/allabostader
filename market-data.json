@@ -83744,8 +83744,8 @@
     "status": "ACTIVE"
   },
   {
-    "a": "3 495 000 KR",
-    "p": 3495000,
+    "a": "2 295 000 KR",
+    "p": 2295000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -84338,6 +84338,56 @@
     "p": 895000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/karlssons-ang/ostindievagen-83/",
+    "a": "KARLSSONS ÄNG, KALMAR",
+    "p": 1495000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/lindo/lagmansgatan-6b2/",
+    "a": "LINDÖ, KALMAR",
+    "p": 1695000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/hammaro/anneberg/tranvagen-31/",
+    "a": "ANNEBERG, HAMMARÖ",
+    "p": 3295000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/ulriksgatan-12/",
+    "a": "SKELLEFTEÅ",
+    "p": 2695000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum-varvet/vastra-varvsgatan-24-a/",
+    "a": "CENTRUM / VARVET, LULEÅ",
+    "p": 2195000,
+    "m2": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
