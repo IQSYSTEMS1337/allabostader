@@ -61463,7 +61463,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/malmen/ryttaregatan-7c/",
     "a": "MALMEN, KALMAR",
-    "p": 2200000,
+    "p": 2195000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -84386,6 +84386,76 @@
     "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum-varvet/vastra-varvsgatan-24-a/",
     "a": "CENTRUM / VARVET, LULEÅ",
     "p": 2195000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hovshaga/smultronvagen-4/",
+    "a": "HOVSHAGA, VÄXJÖ",
+    "p": 2750000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hogstorp/domherrevagen-31/",
+    "a": "HÖGRP, VÄXJÖ",
+    "p": 2300000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/norrgard/erik-dahlbergs-vag-29/",
+    "a": "NORRGÅRD, KALMAR",
+    "p": 1050000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/berga/roda-gatan-16d/",
+    "a": "BERGA, KALMAR",
+    "p": 595000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/lindo/lagmansgatan-6a/",
+    "a": "LINDÖ, KALMAR",
+    "p": 1195000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/haga/ostra-stationsgatan-109/",
+    "a": "HAGA, KARLSTAD",
+    "p": 2895000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/tallvagen-46/",
+    "a": "SKELLEFTEÅ",
+    "p": 695000,
     "m2": 0,
     "r": 3,
     "vI": 50,
