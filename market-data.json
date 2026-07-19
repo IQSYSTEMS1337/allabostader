@@ -51466,18 +51466,14 @@
     "analyzedAt": "2026-04-05T22:19:31.495Z"
   },
   {
-    "a": "Betald placering",
-    "p": 895000,
     "u": "https://www.hemnet.se/nybyggnadsprojekt/norrfallsviken-21577482",
-    "s": "DeepScan GOTEBORG",
-    "d": "Betald placering Möjlighet till tomt i hjärtat av Höga Kusten! Anders Edmark Norrfällsviken fr. 895 000 kr Mäklartipset",
-    "t": "2026-03-23T20:06:16.591Z",
-    "vIndex": 50,
-    "sIndex": 95,
-    "lIndex": 5,
-    "shadowPrice": "NaN",
-    "tags": [],
-    "analyzedAt": "2026-04-05T22:19:31.495Z"
+    "a": "16 lediga bostäder",
+    "p": 895000,
+    "m2": 23,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
   },
   {
     "a": "Betald placering",
@@ -95343,11 +95339,11 @@
   },
   {
     "u": "https://www.hemnet.se/bostad/lagenhet-4rum-are-sadeln-are-kommun-hogasstigen-17c-21692812",
-    "a": "Högåsstigen 17C",
+    "a": "Betald placering",
     "p": 5295000,
-    "m2": 75,
+    "m2": 0,
     "r": 4,
-    "vI": 80,
+    "vI": 50,
     "sI": 95,
     "lI": 5
   },
@@ -108904,7 +108900,7 @@
   {
     "u": "https://www.hemnet.se/bostad/fritidsboende-3rum-torso-solvesborgs-kommun-orrevagen-6007-21719347",
     "a": "Betald placering",
-    "p": 2450000,
+    "p": 2250000,
     "m2": 0,
     "r": 3,
     "vI": 50,
@@ -112143,9 +112139,9 @@
   },
   {
     "u": "https://www.hemnet.se/bostad/villa-5rum-gamla-viken-hoganas-kommun-banckagatan-2-21567623",
-    "a": "Betald placering",
-    "p": 12500000,
-    "m2": 0,
+    "a": "Banckagatan 2",
+    "p": 11900000,
+    "m2": 103,
     "r": 5,
     "vI": 50,
     "sI": 95,
@@ -132605,6 +132601,686 @@
     "u": "https://www.hemnet.se/bostad/radhus-4rum-centrum-rattviks-kommun-skolgatan-11d-21753316",
     "a": "Betald placering",
     "p": 1785000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/alvsbacka/varvsgatan-52/",
+    "a": "ÄLVSBACKA, SKELLEFTEÅ",
+    "p": 2450000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-6rum-tingsryds-kommun-idekullavagen-17-21627866",
+    "a": "Betald placering",
+    "p": 171485000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-1rum-visby-innerstad-gotlands-kommun-hamburgergrand-1-21720986",
+    "a": "Betald placering",
+    "p": 1950000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/radhus-5rum-tradgardsstaden-skovde-kommun-odlingsgatan-66-21659989",
+    "a": "Tis 28 jul kl 17:00",
+    "p": 2350000,
+    "m2": 106,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-4rum-sjoangen-mariestads-kommun-sjoangen-41-21609534",
+    "a": "Sjöängen 41",
+    "p": 5300000,
+    "m2": 840,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/radhus-4rum-tradgardsstaden-skovde-kommun-vilkmansgatan-10-21693104",
+    "a": "Budgivning pågår",
+    "p": 2595000,
+    "m2": 107,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/radhus-4rum-ryd-skovde-kommun-flugvagen-17f-21738312",
+    "a": "Imorgon kl 16:40",
+    "p": 2150000,
+    "m2": 22,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-4rum-simris-simrishamns-kommun-byadammsvagen-2-21509855",
+    "a": "Byadammsvägen 2",
+    "p": 4395000,
+    "m2": 115,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-2rum-saltangen-nacka-kommun-ugglevagen-21689702",
+    "a": "Ugglevägen",
+    "p": 3495000,
+    "m2": 59,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-9rum-centrum-horby-kommun-torggatan-4-21735659",
+    "a": "Ons 29 jul kl 16:00",
+    "p": 2995000,
+    "m2": 200,
+    "r": 9,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-1rum-horby-kommun-frostagatan-2c-21745701",
+    "a": "Tis 21 jul",
+    "p": 320000,
+    "m2": 34,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-7rum-skulltorp-partille-kommun-edgangsvagen-11-21757016",
+    "a": "Tor 30 jul kl 17:00",
+    "p": 6990000,
+    "m2": 19,
+    "r": 7,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/roslags-nasby-nasby-dunge-6960256",
+    "a": "Försäljning pågår!",
+    "p": 2295000,
+    "m2": 137,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/kungsbacka-granit-21746796",
+    "a": "Kontakta mig vid intresse!",
+    "p": 2299000,
+    "m2": 96,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/barkarby,-jarfalla-kommun-karaktaren,-veddestaden-21708239",
+    "a": "Kontakta mig vid intresse!",
+    "p": 1395000,
+    "m2": 73,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/hagaliden-motorn-pa-hagaliden-21707708",
+    "a": "Kontakta mig vid intresse!",
+    "p": 1895000,
+    "m2": 98,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/rosendal-bonica-21599718",
+    "a": "Kontakta mig vid intresse!",
+    "p": 1950000,
+    "m2": 116,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/marieviks-udde-mary-21326550",
+    "a": "Kontakta mig vid intresse!",
+    "p": 3790000,
+    "m2": 127,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/karehogen-kv-havsbrisen-21314204",
+    "a": "Kontakta mig vid intresse!",
+    "p": 2200000,
+    "m2": 435,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/forslov-kv-angslyckan-20157355",
+    "a": "Myresjöhus",
+    "p": 494999,
+    "m2": 384,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/hovas-fotografen-17337596",
+    "a": "Kontakta mig vid intresse!",
+    "p": 2300000,
+    "m2": 55,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/nybyggd-villa-goran,-strangnas-21449284",
+    "a": "1 ledig bostad",
+    "p": 4600000,
+    "m2": 129,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/flatas-brf-lindallen-18608896",
+    "a": "21 lediga bostäder",
+    "p": 1850000,
+    "m2": 78,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-5rum-osby-osby-kommun-lantmansgatan-7-21744927",
+    "a": "Mån 3 aug kl 16:00",
+    "p": 1295000,
+    "m2": 85,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-2rum-oxelbergen-norrkopings-kommun-storsvangen-33-21702298",
+    "a": "Imorgon kl 12:00",
+    "p": 1550000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/ahusvangen-brf-ahustoppen-21690153",
+    "a": "7 lediga bostäder",
+    "p": 2195000,
+    "m2": 85,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/brf-vellinge-foretagscentrum-21626098",
+    "a": "1 ledig bostad",
+    "p": 2795000,
+    "m2": 171,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/brohuspark-21611094",
+    "a": "5 lediga bostäder",
+    "p": 8195000,
+    "m2": 165,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/larkglantan-21446821",
+    "a": "1 ledig bostad",
+    "p": 5724545,
+    "m2": 156,
+    "r": 6,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/fligfjallbacka-byggklara-tomter-i-nyexploaterat-villaomrade-pa-flig-i-fjallbacka-21410089",
+    "a": "17 lediga bostäder",
+    "p": 1900000,
+    "m2": 143,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/nybyggnadsprojekt/hoja-hills-21334156",
+    "a": "15 lediga bostäder",
+    "p": 1400000,
+    "m2": 227,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/fritidsboende-2rum-grymon-norrkopings-kommun-grymon-137-21757127",
+    "a": "Tor 23 jul kl 10:00",
+    "p": 825000,
+    "m2": 15,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-1rum-soder-norrkopings-kommun-albrektsvagen-96-18786015",
+    "a": "Imorgon kl 16:00",
+    "p": 850000,
+    "m2": 32,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-4rum-centralt-norrkopings-kommun-rodgagatan-3-21745459",
+    "a": "Ons 22 jul kl 16:00",
+    "p": 3595000,
+    "m2": 107,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-2rum-oxelbergen-norrkopings-kommun-odalgatan-23a-21745467",
+    "a": "Tis 21 jul kl 16:00",
+    "p": 1595000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-5rum-falludden-ornskoldsviks-kommun-falludden-106-21544266",
+    "a": "Fälludden 106",
+    "p": 5490000,
+    "m2": 171,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/fritidsboende-1rum-dalby-vikbolandet-norrkopings-kommun-skarpenberga-8-21745460",
+    "a": "Ons 22 jul kl 10:00",
+    "p": 1100000,
+    "m2": 44,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/radhus-5rum-botkyrka-kommun-radjursvagen-305-21740428",
+    "a": "Sön 26 jul kl 11:00",
+    "p": 4195000,
+    "m2": 148,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-4rum-eskilsminne-helsingborgs-kommun-karvegatan-4-21649882",
+    "a": "Kärvegatan 4",
+    "p": 6795000,
+    "m2": 112,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-3rum-narlunda-helsingborgs-kommun-narlundavagen-6-21608324",
+    "a": "Närlundavägen 6",
+    "p": 1695000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-138m2-helsingborgs-kommun-sodra-hunnetorpsvagen-146-21744416",
+    "a": "Södra Hunnetorpsvägen 146",
+    "p": 4795000,
+    "m2": 138,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-4rum-sundsvall-granlo-sundsvalls-kommun-vikingavagen-63b-21670478",
+    "a": "Sön 9 aug kl 15:00",
+    "p": 1250000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-2rum-centralt-nybro-kommun-lilla-tradgardsgatan-3-21492141",
+    "a": "Kontakta mig vid intresse!",
+    "p": 275000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-5rum-svineviken-orust-kommun-svineviken-341-21559637",
+    "a": "Kontakta mig vid intresse!",
+    "p": 4945000,
+    "m2": 35,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-2rum-hagalund-borlange-kommun-tangringsgatan-26d-21553701",
+    "a": "Kontakta mig vid intresse!",
+    "p": 990000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-4rum-trosa-trosa-kommun-persogatan-12u-21638574",
+    "a": "Kontakta mig vid intresse!",
+    "p": 4975000,
+    "m2": 119,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-3rum-straningstorp-karlskoga-kommun-halmvagen-6a-21717541",
+    "a": "Betald placering",
+    "p": 1895000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-3rum-valtorp-falkopings-kommun-valtorp-solbacken-21755038",
+    "a": "Betald placering",
+    "p": 795000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-2rum-majorna-goteborgs-kommun-grona-gatan-67-21573054",
+    "a": "Betald placering",
+    "p": 2295000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/fritidsboende-6rum-kaggebo-valdemarsviks-kommun-vinbarsvagen-30-21746724",
+    "a": "Betald placering",
+    "p": 2495000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/tomt-jarvso-ljusdals-kommun-serpentinvagen-16-21751144",
+    "a": "Betald placering",
+    "p": 2950000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-5rum-stoten-malung-salens-kommun-granfjallsplatan-13-21652924",
+    "a": "Betald placering",
+    "p": 10650000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-6rum-kroksta-ornskoldsviks-kommun-gardesvagen-8-21735948",
+    "a": "Betald placering",
+    "p": 1750000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-3rum-hogaholm-malmo-kommun-serenadgatan-8-21658477",
+    "a": "Betald placering",
+    "p": 1095000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-6rum-norra-gotland-gotlands-kommun-slite,-bredviksvagen-15-21724280",
+    "a": "Betald placering",
+    "p": 2800000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-1rum-hoja-malmo-kommun-vastra-skravlingevagen-86-21740373",
+    "a": "Betald placering",
+    "p": 975000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-6rum-vamhus-mora-kommun-askvagen-6-21739168",
+    "a": "Betald placering",
+    "p": 2295000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/fritidsboende-3rum-stora-sandered-vasterviks-kommun-stora-sandered-kalvkullen-1-21749315",
+    "a": "Betald placering",
+    "p": 2850000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-3rum-uddevalla-kommun-tant-bruns-vag-115-21728244",
+    "a": "Betald placering",
+    "p": 1151150000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-2rum-harnon-johan-nybergs-vag-harnosands-kommun-johan-nybergs-vag-14-21538754",
+    "a": "Betald placering",
+    "p": 330000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-4rum-valje-bromolla-kommun-bergsvagen-34-21712698",
+    "a": "Betald placering",
+    "p": 2950000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-4rum-sodra-anggarden-goteborgs-kommun-hulda-skoldbergs-gata-21530126",
+    "a": "Betald placering",
+    "p": 4695000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-4rum-hornso-hogsby-kommun-almhult-lybeck-204-21746678",
+    "a": "Betald placering",
+    "p": 795000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-6rum-offerdal-krokoms-kommun-ladvagen-7-21721501",
+    "a": "Betald placering",
+    "p": 4295000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/radhus-4rum-arboga-arboga-kommun-paradisgrand-5a-21754892",
+    "a": "Betald placering",
+    "p": 1845000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/lagenhet-3rum-sodra-stranden-motala-kommun-fotogengatan-6,-1-van-21714241",
+    "a": "Betald placering",
+    "p": 2895000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-5rum-savast-bodens-kommun-gamla-savastvagen-11-21412125",
+    "a": "Betald placering",
+    "p": 1895000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.hemnet.se/bostad/villa-4rum-alsberg-nassjo-kommun-alsbergsvagen-24-21622235",
+    "a": "Betald placering",
+    "p": 1890000,
     "m2": 0,
     "r": 4,
     "vI": 50,
