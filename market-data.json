@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "2 145 000 KR",
-    "p": 2145000,
+    "a": "2 695 000 KR",
+    "p": 2695000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -142875,7 +142875,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/vaxnas/hagalundsvagen-38a/",
     "a": "VÅXNÄS, KARLSTAD",
-    "p": 895000,
+    "p": 850000,
     "m2": 0,
     "r": 3,
     "vI": 50,
@@ -176616,6 +176616,136 @@
     "u": "https://www.hemnet.se/bostad/radhus-5rum-hovsta-orebro-kommun-lundhagsvagen-47-21735851",
     "a": "Betald placering",
     "p": 1995000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/vaster/anteliigatan-5b/",
+    "a": "VÄSTER, VÄXJÖ",
+    "p": 2650000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/vaster/dackevagen-27/",
+    "a": "VÄSTER, VÄXJÖ",
+    "p": 4850000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/gamla-norr/par-lagerkvists-vag-2a/",
+    "a": "GAMLA NORR, VÄXJÖ",
+    "p": 2100000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/aryd/risinge-gamla-skola-1/",
+    "a": "ÅRYD, VÄXJÖ",
+    "p": 5000000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/braas/ulvaskogsvagen-18/",
+    "a": "BRAÅS, VÄXJÖ",
+    "p": 2200000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/norrtullsgatan-10/",
+    "a": "CENTRUM, VÄXJÖ",
+    "p": 2150000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/arenastaden/storgatan-82d2/",
+    "a": "ARENASTADEN, VÄXJÖ",
+    "p": 1550000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/lessebo/dalagatan-3/",
+    "a": "LESSEBO",
+    "p": 1595000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/funkabo/banergatan-6a/",
+    "a": "FUNKABO, KALMAR",
+    "p": 1200000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/djurangen/lybecksvagen-15b/",
+    "a": "DJURÄNGEN, KALMAR",
+    "p": 795000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/sodra-omradet/falkenbergsvagen-23a/",
+    "a": "SÖDRA OMRÅDET, KALMAR",
+    "p": 795000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/skurholmen/teknikergatan-74/",
+    "a": "SKURHOLMEN, LULEÅ",
+    "p": 1195000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/gammelstad/linvagen-18/",
+    "a": "GAMMELSTAD, LULEÅ",
+    "p": 3895000,
     "m2": 0,
     "r": 5,
     "vI": 50,
