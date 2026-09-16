@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "2 695 000 KR",
-    "p": 2695000,
+    "a": "1 495 000 KR",
+    "p": 1495000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -176748,6 +176748,46 @@
     "p": 3895000,
     "m2": 0,
     "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/ljusstaden/alice-babs-gata-46e/",
+    "a": "LJUSSTADEN, KALMAR",
+    "p": 1795000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/arjang/han-udden-7/",
+    "a": "ÅRJÄNG",
+    "p": 7950000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/lovanger/vastra-hokmark-28/",
+    "a": "LÖVÅNGER, SKELLEFTEÅ",
+    "p": 750000,
+    "m2": 0,
+    "r": 8,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/norrbole/asgatan-31b/",
+    "a": "NORRBÖLE, SKELLEFTEÅ",
+    "p": 1495000,
+    "m2": 0,
+    "r": 2,
     "vI": 50,
     "sI": 95,
     "lI": 5
