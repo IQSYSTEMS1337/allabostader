@@ -176791,5 +176791,55 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/kvarnholmen/sodra-langgatan-79d/",
+    "a": "KVARNHOLMEN, KALMAR",
+    "p": 1750000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/malmen/linnegatan-14a/",
+    "a": "MALMEN, KALMAR",
+    "p": 3995000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/forshaga/grossbolstorp/lindasgatan-3/",
+    "a": "GROSSBOLRP, FORSHAGA",
+    "p": 2495000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/norsjo/langmyrliden-norsjo/",
+    "a": "NORSJÖ",
+    "p": 450000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bergnaset/vastra-skolgatan-9b/",
+    "a": "BERGNÄSET, LULEÅ",
+    "p": 1695000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
