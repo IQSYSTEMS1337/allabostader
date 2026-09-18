@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 495 000 KR",
-    "p": 1495000,
+    "a": "1 195 000 KR",
+    "p": 1195000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -176637,7 +176637,7 @@
     "a": "VÄSTER, VÄXJÖ",
     "p": 4850000,
     "m2": 0,
-    "r": 0,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
@@ -176838,6 +176838,46 @@
     "p": 1695000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/ojaby/helgehusvagen-14/",
+    "a": "ÖJABY, VÄXJÖ",
+    "p": 5000000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/ojaby/harlovsvagen-2q/",
+    "a": "ÖJABY, VÄXJÖ",
+    "p": 2500000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/hagaborg/tolvmansgatan-35/",
+    "a": "HAGABORG, KARLSTAD",
+    "p": 1995000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bensbyn/benzeliusvagen-9a/",
+    "a": "BENSBYN, LULEÅ",
+    "p": 4595000,
+    "m2": 0,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
