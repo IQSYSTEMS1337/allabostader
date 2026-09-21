@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 195 000 KR",
-    "p": 1195000,
+    "a": "1 495 000 KR",
+    "p": 1495000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -176988,6 +176988,66 @@
     "p": 950000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/lessebo/hovmantorp/dalagatan-3/",
+    "a": "HOVMANTORP, LESSEBO",
+    "p": 1595000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/ljusstaden/visionsvagen-25/",
+    "a": "LJUSSTADEN, KALMAR",
+    "p": 2195000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/norrstrand/marbackagatan-6/",
+    "a": "NORRSTRAND, KARLSTAD",
+    "p": 795000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/sjomansgatan-17a/",
+    "a": "SKELLEFTEÅ",
+    "p": 695000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/drabantgatan-10/",
+    "a": "LULEÅ",
+    "p": 5095000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bjorkskatan/snovagen-129/",
+    "a": "BJÖRKSKATAN, LULEÅ",
+    "p": 1945000,
+    "m2": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
