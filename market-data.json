@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 495 000 KR",
-    "p": 1495000,
+    "a": "3 595 000 KR",
+    "p": 3595000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -176775,7 +176775,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/lovanger/vastra-hokmark-28/",
     "a": "LÖVÅNGER, SKELLEFTEÅ",
-    "p": 750000,
+    "p": 595000,
     "m2": 0,
     "r": 8,
     "vI": 50,
@@ -177048,6 +177048,66 @@
     "p": 1945000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/djurangen/skraddaretorpsvagen-25b/",
+    "a": "DJURÄNGEN, KALMAR",
+    "p": 1450000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/sodra-omradet/stathallaregatan-32b/",
+    "a": "SÖDRA OMRÅDET, KALMAR",
+    "p": 850000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/ersmark/jornsvagen-44/",
+    "a": "ERSMARK, SKELLEFTEÅ",
+    "p": 1095000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/ornaset/krongardsringen-6/",
+    "a": "ÖRNÄSET, LULEÅ",
+    "p": 995000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/ostermalm/seminariegatan-12a3/",
+    "a": "ÖSTERMALM, LULEÅ",
+    "p": 3295000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/person/metkroksvagen-230/",
+    "a": "PERSÖN, LULEÅ",
+    "p": 3295000,
+    "m2": 0,
+    "r": 0,
     "vI": 50,
     "sI": 95,
     "lI": 5
