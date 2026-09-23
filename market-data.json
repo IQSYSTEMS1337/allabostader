@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "3 595 000 KR",
-    "p": 3595000,
+    "a": "2 995 000 KR",
+    "p": 2995000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177108,6 +177108,66 @@
     "p": 3295000,
     "m2": 0,
     "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/norr/par-lagerkvists-vag-44/",
+    "a": "NORR, VÄXJÖ",
+    "p": 1250000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/bredvik/hagmarksvagen-9/",
+    "a": "BREDVIK, VÄXJÖ",
+    "p": 6795000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/varvsholmenango/utrustningskajen-5/",
+    "a": "VARVSHOLMEN/ÄNGÖ, KALMAR",
+    "p": 4095000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/vimpeltorpet/hemvagen-14q/",
+    "a": "VIMPELTORPET, KALMAR",
+    "p": 1795000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/kronan/kompanivagen-212/",
+    "a": "KRONAN, LULEÅ",
+    "p": 3695000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/skurholmen/burstromsvagen-16/",
+    "a": "SKURHOLMEN, LULEÅ",
+    "p": 1095000,
+    "m2": 0,
+    "r": 2,
     "vI": 50,
     "sI": 95,
     "lI": 5
