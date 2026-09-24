@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "2 995 000 KR",
-    "p": 2995000,
+    "a": "3 195 000 KR",
+    "p": 3195000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177166,6 +177166,96 @@
     "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/skurholmen/burstromsvagen-16/",
     "a": "SKURHOLMEN, LULEÅ",
     "p": 1095000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/teleborg/ankarevagen-5/",
+    "a": "TELEBORG, VÄXJÖ",
+    "p": 4250000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/kungsgatan-40/",
+    "a": "CENTRUM, VÄXJÖ",
+    "p": 2995000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/ostra-lugnet/plutos-grand-24/",
+    "a": "ÖSTRA LUGNET, VÄXJÖ",
+    "p": 2795000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/sodra-omradet/stathallaregatan-30a/",
+    "a": "SÖDRA OMRÅDET, KALMAR",
+    "p": 850000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/ango/bjelkegatan-11/",
+    "a": "ÄNGÖ, KALMAR",
+    "p": 3250000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/kage/jornsvagen-1a/",
+    "a": "KÅGE, SKELLEFTEÅ",
+    "p": 2800000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/moro-backe/midsommarstigen-23/",
+    "a": "MORÖ BACKE, SKELLEFTEÅ",
+    "p": 3300000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bjorkskatan/hostvagen-206/",
+    "a": "BJÖRKSKATAN, LULEÅ",
+    "p": 2795000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bergviken/kallgatan-7/",
+    "a": "BERGVIKEN, LULEÅ",
+    "p": 1545000,
     "m2": 0,
     "r": 2,
     "vI": 50,
