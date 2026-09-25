@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "3 195 000 KR",
-    "p": 3195000,
+    "a": "495 000 KR",
+    "p": 495000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177258,6 +177258,56 @@
     "p": 1545000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/hammaro/nolgard/nolgardsvagen-18m/",
+    "a": "NOLGÅRD, HAMMARÖ",
+    "p": 2095000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/herrhagen/herrhagsgatan-16a/",
+    "a": "HERRHAGEN, KARLSTAD",
+    "p": 1195000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/kristinehamn/centrum/backgatan-32/",
+    "a": "CENTRUM, KRISTINEHAMN",
+    "p": 3495000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/varvsgatan-57c2/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 1195000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/kronan/kompanivagen-233/",
+    "a": "KRONAN, LULEÅ",
+    "p": 5695000,
+    "m2": 0,
+    "r": 4,
     "vI": 50,
     "sI": 95,
     "lI": 5
