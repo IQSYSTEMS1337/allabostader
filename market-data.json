@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "495 000 KR",
-    "p": 495000,
+    "a": "4 795 000 KR",
+    "p": 4795000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177308,6 +177308,46 @@
     "p": 5695000,
     "m2": 0,
     "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/seminarievagen-20/",
+    "a": "CENTRUM, VÄXJÖ",
+    "p": 5995000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/vaster/folkungagatan-4b/",
+    "a": "VÄSTER, VÄXJÖ",
+    "p": 2395000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/kronan/dragongatan-4-a/",
+    "a": "KRONAN, LULEÅ",
+    "p": 2595000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/hermelinsgatan-25/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 3695000,
+    "m2": 0,
+    "r": 0,
     "vI": 50,
     "sI": 95,
     "lI": 5
