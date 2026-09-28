@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "4 795 000 KR",
-    "p": 4795000,
+    "a": "495 000 KR",
+    "p": 495000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177368,6 +177368,16 @@
     "p": 1595000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/hallbacken/skogsmyrgatan-17h/",
+    "a": "HÄLLBACKEN, LULEÅ",
+    "p": 1995000,
+    "m2": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
