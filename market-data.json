@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "3 995 000 KR",
-    "p": 3995000,
+    "a": "1 295 000 KR",
+    "p": 1295000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177458,6 +177458,86 @@
     "p": 3495000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/bredvik/karvevagen-3a/",
+    "a": "BREDVIK, VÄXJÖ",
+    "p": 1250000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/djurangen/lybecksvagen-3b/",
+    "a": "DJURÄNGEN, KALMAR",
+    "p": 895000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/lindsdal/skalkarevagen-34b/",
+    "a": "LINDSDAL, KALMAR",
+    "p": 1595000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/centrum/hamngatan-26a2/",
+    "a": "CENTRUM, KARLSTAD",
+    "p": 3095000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bergnaset/ostra-solgatan-40/",
+    "a": "BERGNÄSET, LULEÅ",
+    "p": 4195000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/alvik/hampmyrvagen-16/",
+    "a": "ALVIK, LULEÅ",
+    "p": 3595000,
+    "m2": 0,
+    "r": 7,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/ostermalm/backgatan-9c/",
+    "a": "ÖSTERMALM, LULEÅ",
+    "p": 1495000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bjorkskatan/blidvagen-60/",
+    "a": "BJÖRKSKATAN, LULEÅ",
+    "p": 2395000,
+    "m2": 0,
+    "r": 4,
     "vI": 50,
     "sI": 95,
     "lI": 5
