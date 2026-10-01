@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 295 000 KR",
-    "p": 1295000,
+    "a": "3 495 000 KR",
+    "p": 3495000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177536,6 +177536,26 @@
     "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bjorkskatan/blidvagen-60/",
     "a": "BJÖRKSKATAN, LULEÅ",
     "p": 2395000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/byske-centralt-inkl-stensjon/sodra-ytterstfors-43/",
+    "a": "BYSKE CENTRALT INKL STENSJÖN, SKELLEFTEÅ",
+    "p": 750000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bjorkskatan/hostvagen-240/",
+    "a": "BJÖRKSKATAN, LULEÅ",
+    "p": 2795000,
     "m2": 0,
     "r": 4,
     "vI": 50,
