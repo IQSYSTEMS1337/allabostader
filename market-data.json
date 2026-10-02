@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "3 495 000 KR",
-    "p": 3495000,
+    "a": "1 295 000 KR",
+    "p": 1295000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177558,6 +177558,56 @@
     "p": 2795000,
     "m2": 0,
     "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/drag/babordsvagen-3/",
+    "a": "DRAG, KALMAR",
+    "p": 5990000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/borgholm/sandvik/sandviks-bruksgata-21/",
+    "a": "SANDVIK, BORGHOLM",
+    "p": 16000000,
+    "m2": 0,
+    "r": 7,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/bryggudden/bergendorffsgatan-8a/",
+    "a": "BRYGGUDDEN, KARLSTAD",
+    "p": 3195000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/televagen-22o/",
+    "a": "SKELLEFTEÅ",
+    "p": 1995000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/kallkallan/lingonstigen-72/",
+    "a": "KALLKÄLLAN, LULEÅ",
+    "p": 1565000,
+    "m2": 0,
+    "r": 2,
     "vI": 50,
     "sI": 95,
     "lI": 5
