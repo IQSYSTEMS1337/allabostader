@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 295 000 KR",
-    "p": 1295000,
+    "a": "3 595 000 KR",
+    "p": 3595000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177608,6 +177608,26 @@
     "p": 1565000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/varvsholmenango/jeanssongatan-115/",
+    "a": "VARVSHOLMEN/ÄNGÖ, KALMAR",
+    "p": 2175000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/vimpeltorpet/hemvagen-20g/",
+    "a": "VIMPELTORPET, KALMAR",
+    "p": 1550000,
+    "m2": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
