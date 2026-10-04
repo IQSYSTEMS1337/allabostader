@@ -177631,5 +177631,25 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/soder/sodra-jarnvagsgatan-4s4/",
+    "a": "SÖDER, VÄXJÖ",
+    "p": 1750000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/kil/stubberud/mellanvagen-7/",
+    "a": "STUBBERUD, KIL",
+    "p": 3495000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
