@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "3 595 000 KR",
-    "p": 3595000,
+    "a": "495 000 KR",
+    "p": 495000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177648,6 +177648,26 @@
     "p": 3495000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/bremerlyckan/vegagatan-4a2/",
+    "a": "BREMERLYCKAN, KALMAR",
+    "p": 1750000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/avan/seletvagen-91/",
+    "a": "AVAN, LULEÅ",
+    "p": 3495000,
+    "m2": 0,
+    "r": 5,
     "vI": 50,
     "sI": 95,
     "lI": 5
