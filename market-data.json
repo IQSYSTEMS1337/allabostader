@@ -115465,7 +115465,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/klara/bryggaregatan-4/",
     "a": "KLARA, KARLSTAD",
-    "p": 4700000,
+    "p": 4395000,
     "m2": 0,
     "r": 3,
     "vI": 50,
@@ -168815,7 +168815,7 @@
   {
     "u": "https://sofu.se/projekt",
     "a": "SÖDRA KROPPKÄRR, KARLSTAD",
-    "p": 4595000,
+    "p": 3895000,
     "m2": 0,
     "r": 5,
     "vI": 50,
@@ -176685,7 +176685,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/arenastaden/storgatan-82d2/",
     "a": "ARENASTADEN, VÄXJÖ",
-    "p": 1550000,
+    "p": 1450000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -177706,6 +177706,36 @@
     "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/ostermalm/backgatan-13/",
     "a": "ÖSTERMALM, LULEÅ",
     "p": 1895000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/ango/ango-sjobod-nr-16/",
+    "a": "ÄNGÖ, KALMAR",
+    "p": 995000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/nyckelgatan-78/",
+    "a": "SKELLEFTEÅ",
+    "p": 850000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bredviken/bjornmossevagen-15/",
+    "a": "BREDVIKEN, LULEÅ",
+    "p": 2595000,
     "m2": 0,
     "r": 3,
     "vI": 50,
