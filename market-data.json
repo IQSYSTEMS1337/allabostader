@@ -168815,7 +168815,7 @@
   {
     "u": "https://sofu.se/projekt",
     "a": "SÖDRA KROPPKÄRR, KARLSTAD",
-    "p": 3895000,
+    "p": 3595000,
     "m2": 0,
     "r": 5,
     "vI": 50,
@@ -177738,6 +177738,86 @@
     "p": 2595000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/raoul-wallenbergs-gata-16a2/",
+    "a": "CENTRUM, VÄXJÖ",
+    "p": 1500000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/ljusstaden/vanskapens-vag-25c/",
+    "a": "LJUSSTADEN, KALMAR",
+    "p": 1495000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/malmen/sodra-vagen-10/",
+    "a": "MALMEN, KALMAR",
+    "p": 2200000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/sunne/vastra-amtervik/brunnsvagen-21a/",
+    "a": "VÄSTRA ÄMTERVIK, SUNNE",
+    "p": 7195000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/boviksbadet-/boviksbadet-408/",
+    "a": "BOVIKSBADET , SKELLEFTEÅ",
+    "p": 3850000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/boliden/idrottsvagen-92/",
+    "a": "BOLIDEN, SKELLEFTEÅ",
+    "p": 500000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bjorkskatan/snovagen-44/",
+    "a": "BJÖRKSKATAN, LULEÅ",
+    "p": 1495000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/jamton/tjaruholmsvagen-1/",
+    "a": "JÄMTÖN, LULEÅ",
+    "p": 995000,
+    "m2": 0,
+    "r": 4,
     "vI": 50,
     "sI": 95,
     "lI": 5
