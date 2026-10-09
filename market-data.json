@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "3 495 000 KR",
-    "p": 3495000,
+    "a": "1 195 000 KR",
+    "p": 1195000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -168815,7 +168815,7 @@
   {
     "u": "https://sofu.se/projekt",
     "a": "SÖDRA KROPPKÄRR, KARLSTAD",
-    "p": 3595000,
+    "p": 3795000,
     "m2": 0,
     "r": 5,
     "vI": 50,
@@ -177818,6 +177818,16 @@
     "p": 995000,
     "m2": 0,
     "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/ratorp/norra-fjarstadsgatan-7/",
+    "a": "RÅTORP, KARLSTAD",
+    "p": 3795000,
+    "m2": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
