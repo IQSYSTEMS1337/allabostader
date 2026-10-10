@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 195 000 KR",
-    "p": 1195000,
+    "a": "3 295 000 KR",
+    "p": 3295000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177828,6 +177828,46 @@
     "p": 3795000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/djurangen/lybecksvagen-13c2/",
+    "a": "DJURÄNGEN, KALMAR",
+    "p": 1575000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/mellangatan-20e/",
+    "a": "SKELLEFTEÅ",
+    "p": 1495000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/granlund-123/",
+    "a": "SKELLEFTEÅ",
+    "p": 2195000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/person/metkroksvagen-254/",
+    "a": "PERSÖN, LULEÅ",
+    "p": 4995000,
+    "m2": 0,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
