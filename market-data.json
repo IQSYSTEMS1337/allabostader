@@ -168815,9 +168815,9 @@
   {
     "u": "https://sofu.se/projekt",
     "a": "SÖDRA KROPPKÄRR, KARLSTAD",
-    "p": 3795000,
+    "p": 5075000,
     "m2": 0,
-    "r": 5,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
@@ -177898,6 +177898,66 @@
     "p": 2490000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/teleborg/skiftesvagen-71/",
+    "a": "TELEBORG, VÄXJÖ",
+    "p": 995000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/teleborg/allmogevagen-172a/",
+    "a": "TELEBORG, VÄXJÖ",
+    "p": 1395000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/funkabo/vasallgatan-3d/",
+    "a": "FUNKABO, KALMAR",
+    "p": 895000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/linnestaden/perstorpsvagen-145/",
+    "a": "LINNÉSTADEN, KALMAR",
+    "p": 2100000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/norra-yttervik-104/",
+    "a": "SKELLEFTEÅ",
+    "p": 3295000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/ursviken/saltmatargrand-15/",
+    "a": "URSVIKEN, SKELLEFTEÅ",
+    "p": 1750000,
+    "m2": 0,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
