@@ -178051,5 +178051,45 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/herrhagen/varmlandsgatan-9/",
+    "a": "HERRHAGEN, KARLSTAD",
+    "p": 1595000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/vaxnas/stenhagsgatan-10a/",
+    "a": "VÅXNÄS, KARLSTAD",
+    "p": 1095000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/stenkilsgatan-46c/",
+    "a": "SKELLEFTEÅ",
+    "p": 1350000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/magasinsgatan-23b/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 1745000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
