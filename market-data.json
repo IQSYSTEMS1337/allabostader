@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "2 795 000 KR",
-    "p": 2795000,
+    "a": "995 000 KR",
+    "p": 995000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -178146,6 +178146,66 @@
     "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/kallkallan/lingonstigen-21/",
     "a": "KALLKÄLLAN, LULEÅ",
     "p": 1895000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hogstorp/abovagen-40/",
+    "a": "HÖGRP, VÄXJÖ",
+    "p": 2595000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/soder/varendsgatan-37/",
+    "a": "SÖDER, VÄXJÖ",
+    "p": 15000000,
+    "m2": 0,
+    "r": 8,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/tegelviken/tegelviksvagen-7b2/",
+    "a": "TEGELVIKEN, KALMAR",
+    "p": 975000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/djurangen/djurangsvagen-39c/",
+    "a": "DJURÄNGEN, KALMAR",
+    "p": 995000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/kvarnholmen/sodra-langgatan-20a/",
+    "a": "KVARNHOLMEN, KALMAR",
+    "p": 3490000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/stationsgatan-53a/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 2495000,
     "m2": 0,
     "r": 3,
     "vI": 50,
