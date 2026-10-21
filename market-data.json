@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "995 000 KR",
-    "p": 995000,
+    "a": "5 695 000 KR",
+    "p": 5695000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177115,7 +177115,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/norr/par-lagerkvists-vag-44/",
     "a": "NORR, VÄXJÖ",
-    "p": 1250000,
+    "p": 1150000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -178208,6 +178208,66 @@
     "p": 2495000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/hammaro/skoghall/mormovagen-10-b/",
+    "a": "SKOGHALL, HAMMARÖ",
+    "p": 495000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/lindfors/gundes-vag-8/",
+    "a": "LINDFORS, KARLSTAD",
+    "p": 1200000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/vanskapsgatan-65/",
+    "a": "SKELLEFTEÅ",
+    "p": 575000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/borjelslandet/kajsavagen-14/",
+    "a": "BÖRJELSLANDET, LULEÅ",
+    "p": 2495000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/sodra-kungsgatan-36/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 2995000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/notviken/yxgrand-6/",
+    "a": "NOTVIKEN, LULEÅ",
+    "p": 3995000,
+    "m2": 0,
+    "r": 4,
     "vI": 50,
     "sI": 95,
     "lI": 5
