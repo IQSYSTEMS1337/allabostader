@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 195 000 KR",
-    "p": 1195000,
+    "a": "5 695 000 KR",
+    "p": 5695000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -176865,7 +176865,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/hagaborg/tolvmansgatan-35/",
     "a": "HAGABORG, KARLSTAD",
-    "p": 1995000,
+    "p": 1795000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -178288,6 +178288,46 @@
     "p": 3495000,
     "m2": 0,
     "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/norrtullsgatan-62/",
+    "a": "CENTRUM, VÄXJÖ",
+    "p": 1595000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/norregardsvagen-5a/",
+    "a": "VÄXJÖ",
+    "p": 1395000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/tegelviken/silkeborgsgatan-44/",
+    "a": "TEGELVIKEN, KALMAR",
+    "p": 1175000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/mjolkudden/mjolkuddsvagen-175/",
+    "a": "MJÖLKUDDEN, LULEÅ",
+    "p": 1445000,
+    "m2": 0,
+    "r": 1,
     "vI": 50,
     "sI": 95,
     "lI": 5
