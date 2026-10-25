@@ -178371,5 +178371,25 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/frejagatan-5b2/",
+    "a": "VÄXJÖ",
+    "p": 1295000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/norrtullsgatan-102/",
+    "a": "CENTRUM, VÄXJÖ",
+    "p": 2095000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
