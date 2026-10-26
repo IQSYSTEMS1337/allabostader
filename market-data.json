@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "5 695 000 KR",
-    "p": 5695000,
+    "a": "2 795 000 KR",
+    "p": 2795000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -178388,6 +178388,46 @@
     "p": 2095000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/soder/frejagatan-5b22/",
+    "a": "SÖDER, VÄXJÖ",
+    "p": 1295000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hov/norregardsvagen-5a2/",
+    "a": "HOV, VÄXJÖ",
+    "p": 1395000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/berga/runvagen-11b/",
+    "a": "BERGA, KALMAR",
+    "p": 775000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/alvsbacka/lonngatan-10/",
+    "a": "ÄLVSBACKA, SKELLEFTEÅ",
+    "p": 4500000,
+    "m2": 0,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
