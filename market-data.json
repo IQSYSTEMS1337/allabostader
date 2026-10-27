@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "2 795 000 KR",
-    "p": 2795000,
+    "a": "5 695 000 KR",
+    "p": 5695000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177175,7 +177175,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/teleborg/ankarevagen-5/",
     "a": "TELEBORG, VÄXJÖ",
-    "p": 4250000,
+    "p": 3995000,
     "m2": 0,
     "r": 5,
     "vI": 50,
@@ -177185,7 +177185,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/kungsgatan-40/",
     "a": "CENTRUM, VÄXJÖ",
-    "p": 2995000,
+    "p": 2895000,
     "m2": 0,
     "r": 3,
     "vI": 50,
@@ -178428,6 +178428,86 @@
     "p": 4500000,
     "m2": 0,
     "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/gamla-norr/gustavsbergsvagen-24/",
+    "a": "GAMLA NORR, VÄXJÖ",
+    "p": 2095000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/sandsbro/fyllerydsvagen-53a/",
+    "a": "SANDS, VÄXJÖ",
+    "p": 2195000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/skalby/skraddaretorpsvagen-15a2/",
+    "a": "SKÄLBY , KALMAR",
+    "p": 1750000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/sodra-omradet/gethes-vag-6/",
+    "a": "SÖDRA OMRÅDET, KALMAR",
+    "p": 750000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/berga/olvonstigen-6/",
+    "a": "BERGA, KALMAR",
+    "p": 3175000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/drag/boda-125/",
+    "a": "DRAG, KALMAR",
+    "p": 1251495000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/sandviksgatan-31c/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 2550000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/svartostaden/sandgatan-24/",
+    "a": "SVARTÖSTADEN, LULEÅ",
+    "p": 1095000,
+    "m2": 0,
+    "r": 2,
     "vI": 50,
     "sI": 95,
     "lI": 5
