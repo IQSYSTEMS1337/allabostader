@@ -178511,5 +178511,45 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/ostra-lugnet/johan-peters-vag-54/",
+    "a": "ÖSTRA LUGNET, VÄXJÖ",
+    "p": 2795000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/alvesta/grimslov/fereboavagen-35/",
+    "a": "GRIMSLÖV, ALVESTA",
+    "p": 2500000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/malmen/smalandsgatan-12b/",
+    "a": "MALMEN, KALMAR",
+    "p": 3250000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/mjolkudden/mjolkuddsvagen-253/",
+    "a": "MJÖLKUDDEN, LULEÅ",
+    "p": 2295000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
