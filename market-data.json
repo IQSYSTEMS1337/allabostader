@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "5 695 000 KR",
-    "p": 5695000,
+    "a": "1 195 000 KR",
+    "p": 1195000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -178546,6 +178546,46 @@
     "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/mjolkudden/mjolkuddsvagen-253/",
     "a": "MJÖLKUDDEN, LULEÅ",
     "p": 2295000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/alvesta/alvesta/bladvagen-8/",
+    "a": "ALVESTA, ALVESTA",
+    "p": 3995000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hovshaga/morgonvagen-10/",
+    "a": "HOVSHAGA, VÄXJÖ",
+    "p": 4595000,
+    "m2": 0,
+    "r": 7,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/norrgard/stagneliusgatan-18c/",
+    "a": "NORRGÅRD, KALMAR",
+    "p": 1795000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/antnas/knalltorpsvagen-21/",
+    "a": "ANTNÄS, LULEÅ",
+    "p": 3195000,
     "m2": 0,
     "r": 3,
     "vI": 50,
