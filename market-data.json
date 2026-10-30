@@ -177275,7 +177275,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/herrhagen/herrhagsgatan-16a/",
     "a": "HERRHAGEN, KARLSTAD",
-    "p": 1195000,
+    "p": 1095000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -178588,6 +178588,16 @@
     "p": 3195000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/vallen/sjovallavagen-12/",
+    "a": "VALLEN, VÄXJÖ",
+    "p": 2395000,
+    "m2": 0,
+    "r": 4,
     "vI": 50,
     "sI": 95,
     "lI": 5
