@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 195 000 KR",
-    "p": 1195000,
+    "a": "995 000 KR",
+    "p": 995000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -178596,6 +178596,16 @@
     "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/vallen/sjovallavagen-12/",
     "a": "VALLEN, VÄXJÖ",
     "p": 2395000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/alvesta/moheda/vastergatan-16/",
+    "a": "MOHEDA, ALVESTA",
+    "p": 1500000,
     "m2": 0,
     "r": 4,
     "vI": 50,
