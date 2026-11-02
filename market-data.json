@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "995 000 KR",
-    "p": 995000,
+    "a": "1 995 000 KR",
+    "p": 1995000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -178618,6 +178618,26 @@
     "p": 2290000,
     "m2": 0,
     "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/teleborg/slupvagen-17/",
+    "a": "TELEBORG, VÄXJÖ",
+    "p": 3500000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/gamla-norr/gamla-norrvagen-13c3/",
+    "a": "GAMLA NORR, VÄXJÖ",
+    "p": 1050000,
+    "m2": 0,
+    "r": 1,
     "vI": 50,
     "sI": 95,
     "lI": 5
