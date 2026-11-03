@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 995 000 KR",
-    "p": 1995000,
+    "a": "1 195 000 KR",
+    "p": 1195000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -178638,6 +178638,46 @@
     "p": 1050000,
     "m2": 0,
     "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/vassmolosahagby/lansmansvagen-9/",
+    "a": "VASSMOLÖSA/HAGBY, KALMAR",
+    "p": 3150000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/stodene/tomatvagen-6/",
+    "a": "DENE, KARLSTAD",
+    "p": 3795000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/kvarnmyrvagen-7/",
+    "a": "SKELLEFTEÅ",
+    "p": 74200000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/sodra-sunderbyn/syrenvagen-3/",
+    "a": "SÖDRA SUNDERBYN, LULEÅ",
+    "p": 5495000,
+    "m2": 0,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
