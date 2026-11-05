@@ -178721,5 +178721,65 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/lackeby/slattervagen-17/",
+    "a": "LÄCKEBY, KALMAR",
+    "p": 750000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/tegelviken/jungs-vag-20/",
+    "a": "TEGELVIKEN, KALMAR",
+    "p": 3100000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/hagglundsgatan-8a/",
+    "a": "SKELLEFTEÅ",
+    "p": 650000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/bjassviken/bjassviken-63/",
+    "a": "BJÄSSVIKEN, SKELLEFTEÅ",
+    "p": 3300000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/skogsvallen/videgatan-2/",
+    "a": "SKOGSVALLEN, LULEÅ",
+    "p": 4495000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/porson/adjunktvagen-17/",
+    "a": "PORSÖN, LULEÅ",
+    "p": 3395000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
