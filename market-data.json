@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 995 000 KR",
-    "p": 1995000,
+    "a": "2 795 000 KR",
+    "p": 2795000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -171185,7 +171185,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/centrum/enestromsgatan-1b2/",
     "a": "CENTRUM, KARLSTAD",
-    "p": 1595000,
+    "p": 1495000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -178778,6 +178778,46 @@
     "p": 3395000,
     "m2": 0,
     "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/sodra-omradet/gethes-vag-4/",
+    "a": "SÖDRA OMRÅDET, KALMAR",
+    "p": 925000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/morbylanga/farjestaden/norra-hamnplan-4d/",
+    "a": "FÄRJESTADEN, MÖRBYLÅNGA",
+    "p": 4795000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/orkestervagen-24/",
+    "a": "SKELLEFTEÅ",
+    "p": 625000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/ostermalm/backgatan-132/",
+    "a": "ÖSTERMALM, LULEÅ",
+    "p": 1695000,
+    "m2": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
