@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "2 795 000 KR",
-    "p": 2795000,
+    "a": "4 795 000 KR",
+    "p": 4795000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -177725,7 +177725,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/nyckelgatan-78/",
     "a": "SKELLEFTEÅ",
-    "p": 850000,
+    "p": 775000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -178818,6 +178818,46 @@
     "p": 1695000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/norr/gamla-norrvagen-11a2/",
+    "a": "NORR, VÄXJÖ",
+    "p": 1050000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/sodra-omradet/stathallaregatan-32c/",
+    "a": "SÖDRA OMRÅDET, KALMAR",
+    "p": 850000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/karlgardsvagen-2/",
+    "a": "SKELLEFTEÅ",
+    "p": 1050000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/forsbrogatan-9/",
+    "a": "SKELLEFTEÅ",
+    "p": 4250000,
+    "m2": 0,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
