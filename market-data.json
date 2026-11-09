@@ -178861,5 +178861,55 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/gamla-norr/apelvagen-5d/",
+    "a": "GAMLA NORR, VÄXJÖ",
+    "p": 2250000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/malmen/nygatan-142/",
+    "a": "MALMEN, KALMAR",
+    "p": 2695000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/skalby/jacob-smalannings-gata-12b2/",
+    "a": "SKÄLBY , KALMAR",
+    "p": 2250000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/stationsgatan-21/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 3395000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/mjolkudden/gamla-vagen-48/",
+    "a": "MJÖLKUDDEN, LULEÅ",
+    "p": 3295000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
