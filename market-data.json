@@ -178961,5 +178961,65 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/oster/sandviksvagen-29/",
+    "a": "ÖSTER, VÄXJÖ",
+    "p": 5200000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/portvakten/emil-lindells-vag-16/",
+    "a": "PORTVAKTEN, VÄXJÖ",
+    "p": 2050000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/vimpeltorpet/hemvagen-16k/",
+    "a": "VIMPELTORPET, KALMAR",
+    "p": 1375000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/bellevue/artillerigatan-8b/",
+    "a": "BELLEVUE, KARLSTAD",
+    "p": 610000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/hyttlidgatan-58a/",
+    "a": "SKELLEFTEÅ",
+    "p": 1495000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/ostermalm/backgatan-10-a/",
+    "a": "ÖSTERMALM, LULEÅ",
+    "p": 1595000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
