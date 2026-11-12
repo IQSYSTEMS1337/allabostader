@@ -168815,9 +168815,9 @@
   {
     "u": "https://sofu.se/projekt",
     "a": "SÖDRA KROPPKÄRR, KARLSTAD",
-    "p": 3795000,
+    "p": 5075000,
     "m2": 0,
-    "r": 5,
+    "r": 6,
     "vI": 50,
     "sI": 95,
     "lI": 5
@@ -179018,6 +179018,206 @@
     "p": 1595000,
     "m2": 0,
     "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hovshaga/hovsdalsvagen-17/",
+    "a": "HOVSHAGA, VÄXJÖ",
+    "p": 2695000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hovshaga/murvagen-3/",
+    "a": "HOVSHAGA, VÄXJÖ",
+    "p": 3695000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/vintervagen-5c/",
+    "a": "CENTRUM, VÄXJÖ",
+    "p": 1550000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/skalby/skraddaretorpsvagen-1a/",
+    "a": "SKÄLBY , KALMAR",
+    "p": 1650000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/smedby/mor-saras-vag-27/",
+    "a": "SMEDBY, KALMAR",
+    "p": 1100000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/holmgatan-26/",
+    "a": "SKELLEFTEÅ",
+    "p": 795000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/gultzaudden/fagerlinsvagen-172/",
+    "a": "GÜLTZAUUDDEN, LULEÅ",
+    "p": 8995000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Davidshallstorg-Malmo-kommun-6017469",
+    "a": "Underhand",
+    "p": 3195000,
+    "m2": 44,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-2rum-Lillbacksvagen-11-Borgafjall-Dorotea-kommun-6018891",
+    "a": "Lillbäcksvägen 11",
+    "p": 650000,
+    "m2": 14,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-LinneAnnedal-Goteborg-kommun-6007975",
+    "a": "Underhand",
+    "p": 5000000,
+    "m2": 73,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-LinneAnnedal-Goteborg-kommun-5985434",
+    "a": "Underhand",
+    "p": 4500000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-7rum-Oviken-Berg-kommun-6018291",
+    "a": "Underhand",
+    "p": 2500000,
+    "m2": 105,
+    "r": 7,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Partille-centrum-Partille-kommun-6018339",
+    "a": "Underhand",
+    "p": 3495000,
+    "m2": 74,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Radisvagen-80B-Hasselby-Stockholm-kommun-6018795",
+    "a": "Rädisvägen 80B",
+    "p": 1695000,
+    "m2": 53,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Jaktstigen-79-Nobbelov-Lund-kommun-6004071",
+    "a": "Jaktstigen 79",
+    "p": 2195000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Radhus-6rum-Hallestadsvagen-80-Dalby-Lund-kommun-6018113",
+    "a": "Hällestadsvägen 80",
+    "p": 4100000,
+    "m2": 12,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Bogsprotsgatan-26-Inre-hamn-Karlstad-kommun-6015401",
+    "a": "Bogsprötsgatan 26",
+    "p": 3600000,
+    "m2": 100,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Erikslust-Malmo-kommun-5991021",
+    "a": "Underhand",
+    "p": 1295000,
+    "m2": 27,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-5rum-Gyllebo-Simrishamn-kommun-6005859",
+    "a": "Underhand",
+    "p": 4950000,
+    "m2": 36,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Froson-Hornsberg-Ostersund-kommun-6017703",
+    "a": "Underhand",
+    "p": 2350000,
+    "m2": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
