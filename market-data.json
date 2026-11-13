@@ -168815,9 +168815,9 @@
   {
     "u": "https://sofu.se/projekt",
     "a": "SÖDRA KROPPKÄRR, KARLSTAD",
-    "p": 5075000,
+    "p": 3795000,
     "m2": 0,
-    "r": 6,
+    "r": 5,
     "vI": 50,
     "sI": 95,
     "lI": 5
@@ -178727,7 +178727,7 @@
     "a": "LÄCKEBY, KALMAR",
     "p": 750000,
     "m2": 0,
-    "r": 0,
+    "r": 3,
     "vI": 50,
     "sI": 95,
     "lI": 5
@@ -179218,6 +179218,216 @@
     "p": 2350000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/norr/poppelvagen-4/",
+    "a": "NORR, VÄXJÖ",
+    "p": 3495000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/akervagen-13a/",
+    "a": "VÄXJÖ",
+    "p": 1595000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/norr/par-lagerkvists-vag-82/",
+    "a": "NORR, VÄXJÖ",
+    "p": 1595000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/djurangen/lybecksvagen-11b/",
+    "a": "DJURÄNGEN, KALMAR",
+    "p": 975000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/fredriksskans/fredriksskanstorget-64/",
+    "a": "FREDRIKSSKANS, KALMAR",
+    "p": 2295000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/vastra-skurholmen/gransgatan-12f/",
+    "a": "VÄSTRA SKURHOLMEN, LULEÅ",
+    "p": 1595000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/hertson/paronstigen-24/",
+    "a": "HERTSÖN, LULEÅ",
+    "p": 2895000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/stationsgatan-64-b/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 2795000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Oppeby-Nykoping-kommun-6018072",
+    "a": "Underhand",
+    "p": 895000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Skanegatan-14-Astorp-Astorp-kommun-6015611",
+    "a": "Skånegatan 14",
+    "p": 2595000,
+    "m2": 170,
+    "r": 6,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-7rum-Villagatan-9-Tierp-Tierp-kommun-6013770",
+    "a": "Villagatan 9",
+    "p": 2350000,
+    "m2": 30,
+    "r": 7,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Salggatan-33-Ekhagen-Jonkoping-kommun-6016237",
+    "a": "Sälggatan 33",
+    "p": 1695000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-City-Malmo-kommun-6017389",
+    "a": "Underhand",
+    "p": 3495000,
+    "m2": 109,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Torsgatan-78-Vasastan-Stockholm-kommun-6018521",
+    "a": "Torsgatan 78",
+    "p": 4995000,
+    "m2": 47,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Hammelvagen-4-Solleftea-Solleftea-kommun-6006440",
+    "a": "Hammelvägen 4",
+    "p": 1850000,
+    "m2": 100,
+    "r": 6,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Utgardsvagen-2-Handen-Haninge-kommun-6017744",
+    "a": "Utgårdsvägen 2",
+    "p": 1850000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Vellinge-Vellinge-kommun-6007310",
+    "a": "Underhand",
+    "p": 3095000,
+    "m2": 73,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Blakulla-Laholm-kommun-6018951",
+    "a": "Underhand",
+    "p": 2695000,
+    "m2": 100,
+    "r": 6,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Annedal-Vasastaden-Goteborg-kommun-6018220",
+    "a": "Underhand",
+    "p": 3590000,
+    "m2": 56,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1.5rum-Bjorklundavagen-8-Hovas-Goteborg-kommun-6017824",
+    "a": "Björklundavägen 8",
+    "p": 2285000,
+    "m2": 35,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2.5rum-Norrbackagatan-24-Vasastan-Stockholm-kommun-6008629",
+    "a": "Norrbackagatan 24",
+    "p": 8495000,
+    "m2": 78,
+    "r": 5,
     "vI": 50,
     "sI": 95,
     "lI": 5
