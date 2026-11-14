@@ -168815,7 +168815,7 @@
   {
     "u": "https://sofu.se/projekt",
     "a": "SÖDRA KROPPKÄRR, KARLSTAD",
-    "p": 3795000,
+    "p": 3595000,
     "m2": 0,
     "r": 5,
     "vI": 50,
@@ -179429,6 +179429,176 @@
     "m2": 78,
     "r": 5,
     "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/torsgatan-19e/",
+    "a": "SKELLEFTEÅ",
+    "p": 1250000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/mo-i-ranagatan-170/",
+    "a": "SKELLEFTEÅ",
+    "p": 1300000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Tungevagen-73-Ytterby-Kungalv-kommun-6012796",
+    "a": "Tungevägen 73",
+    "p": 1895000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Sagenvagen-16-Vendelso-Haninge-kommun-6018061",
+    "a": "Sågenvägen 16",
+    "p": 2295000,
+    "m2": 84,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Annedal-Goteborg-kommun-6017037",
+    "a": "Underhand",
+    "p": 3390000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Kommersiellt-Kompassgatan-5N-Sjobo-Boras-kommun-6019034",
+    "a": "Kompassgatan 5N",
+    "p": 1395000,
+    "m2": 72,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Halsingegatan-13A-Vasastan-Stockholm-kommun-6018355",
+    "a": "Hälsingegatan 13A",
+    "p": 4750000,
+    "m2": 39,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Albatrossvagen-26-Vendelsomalm-Haninge-kommun-6018659",
+    "a": "Albatrossvägen 26",
+    "p": 1295000,
+    "m2": 46,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-7rum-Malenas-vag-6-Hjarup-Staffanstorp-kommun-6018817",
+    "a": "Malenas väg 6",
+    "p": 6395000,
+    "m2": 20,
+    "r": 7,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Lugnet-Malmo-kommun-6016238",
+    "a": "Underhand",
+    "p": 3495000,
+    "m2": 90,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Fritidshus-3rum-Typografstigen-32-Arsta-Havsbad-Haninge-kommun-6018062",
+    "a": "Typografstigen 32",
+    "p": 3295000,
+    "m2": 53,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Oskarsvagen-82-Mosstorp-Lidingo-kommun-6018984",
+    "a": "Oskarsvägen 82",
+    "p": 2150000,
+    "m2": 32,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Sikvagen-12-Centrala-Tyreso-Tyreso-kommun-6017955",
+    "a": "Sikvägen 12",
+    "p": 2395000,
+    "m2": 80,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Radhus-5rum-Johanneslust-Malmo-kommun-6018942",
+    "a": "Underhand",
+    "p": 4250000,
+    "m2": 108,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Lindeborgsgatan-69-Malmo-Malmo-kommun-6018767",
+    "a": "Lindeborgsgatan 69",
+    "p": 1395000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Trastvagen-14-Bjarred-Lomma-kommun-6018833",
+    "a": "Trastvägen 14",
+    "p": 7950000,
+    "m2": 36,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Mollevangen-Malmo-kommun-6018910",
+    "a": "Underhand",
+    "p": 3195000,
+    "m2": 61,
+    "r": 2,
+    "vI": 80,
     "sI": 95,
     "lI": 5
   }
