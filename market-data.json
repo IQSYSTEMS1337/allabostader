@@ -179601,5 +179601,65 @@
     "vI": 80,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Surbrunnsgatan-55-Vasastan-Stockholm-kommun-6018053",
+    "a": "Surbrunnsgatan 55",
+    "p": 2950000,
+    "m2": 30,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Paternostervagen-26-Hammarbyhojden-Stockholm-kommun-6018716",
+    "a": "Paternostervägen 26",
+    "p": 3195000,
+    "m2": 59,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Odensala-Ostersund-kommun-6018694",
+    "a": "Underhand",
+    "p": 3600000,
+    "m2": 142,
+    "r": 6,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Birger-Sjobergs-vag-3-1-tr-Kungsholmen-Stockholm-kommun-6016803",
+    "a": "Birger Sjöbergs väg 3, 1 tr",
+    "p": 4150000,
+    "m2": 43,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3.5rum-Kungsholmsgatan-11-1-tr-(van-2)-Kungsholmen-Stockholm-kommun-6018372",
+    "a": "Kungsholmsgatan 11, 1 tr (vån 2)",
+    "p": 9175000,
+    "m2": 94,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Garnsviksvagen-58-Norro-Stava-Osteraker-kommun-6018318",
+    "a": "Garnsviksvägen 58",
+    "p": 9495000,
+    "m2": 43,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
