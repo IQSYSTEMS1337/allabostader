@@ -179661,5 +179661,95 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hov/allevagen-5/",
+    "a": "HOV, VÄXJÖ",
+    "p": 4995000,
+    "m2": 0,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/soder/bergundavagen-14/",
+    "a": "SÖDER, VÄXJÖ",
+    "p": 4995000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/tegelviken/silkeborgsgatan-45/",
+    "a": "TEGELVIKEN, KALMAR",
+    "p": 1075000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Radhus-5rum-Vintrie-Malmo-kommun-5979671",
+    "a": "Underhand",
+    "p": 5495000,
+    "m2": 129,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Brannavagen-110-Brannan-Harnosand-kommun-6018085",
+    "a": "Brännavägen 110",
+    "p": 295000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Lotvagen-4A-Norrala-Soderhamn-kommun-6012582",
+    "a": "Lötvägen 4A",
+    "p": 495000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Radhus-5rum-Hulta-Boras-kommun-6019425",
+    "a": "Underhand",
+    "p": 1825000,
+    "m2": 114,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Ribersborg-Malmo-kommun-6019410",
+    "a": "Underhand",
+    "p": 4395000,
+    "m2": 101,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Kulladalsgatan-12B-Kulladal-Malmo-kommun-6019329",
+    "a": "Kulladalsgatan 12B",
+    "p": 1945000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
   }
 ]
