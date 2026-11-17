@@ -168815,7 +168815,7 @@
   {
     "u": "https://sofu.se/projekt",
     "a": "SÖDRA KROPPKÄRR, KARLSTAD",
-    "p": 3595000,
+    "p": 3795000,
     "m2": 0,
     "r": 5,
     "vI": 50,
@@ -177415,7 +177415,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/herrhagen/herrhagsgatan-17/",
     "a": "HERRHAGEN, KARLSTAD",
-    "p": 1295000,
+    "p": 1095000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -178215,7 +178215,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/hammaro/skoghall/mormovagen-10-b/",
     "a": "SKOGHALL, HAMMARÖ",
-    "p": 495000,
+    "p": 400000,
     "m2": 0,
     "r": 2,
     "vI": 50,
@@ -179748,6 +179748,106 @@
     "p": 1945000,
     "m2": 0,
     "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Tomt-Stenyxevagen-Siretorp-Solvesborg-kommun-6019544",
+    "a": "Stenyxevägen",
+    "p": 599600,
+    "m2": 885,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Davidshall-Malmo-kommun-6012663",
+    "a": "Underhand",
+    "p": 3695000,
+    "m2": 56,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Gustaf-Lovens-gata-12-Inre-hamn-Karlstad-kommun-6018603",
+    "a": "Gustaf Lovéns gata 12",
+    "p": 2695000,
+    "m2": 85,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-7rum-Nackstigen-6-Asljunga-Orkelljunga-kommun-6017100",
+    "a": "Näckstigen 6",
+    "p": 2595000,
+    "m2": 104,
+    "r": 7,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Fritidshus-2rum-Nackstigen-4-Asljunga-Orkelljunga-kommun-6017101",
+    "a": "Näckstigen 4",
+    "p": 1195000,
+    "m2": 73,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Olsbacka-Gavle-kommun-6010360",
+    "a": "Underhand",
+    "p": 2650000,
+    "m2": 85,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Hyacintgatan-5-Fosiedal-Malmo-kommun-6019436",
+    "a": "Hyacintgatan 5",
+    "p": 995000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Dalaplan-Malmo-kommun-5980883",
+    "a": "Underhand",
+    "p": 2095000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1.5rum-Foreningsgatan-3A-Annedal-Vasastaden-Goteborg-kommun-5986494",
+    "a": "Föreningsgatan 3A",
+    "p": 3290000,
+    "m2": 50,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Teknologgatan-7B-Vasastan-Stockholm-kommun-6017868",
+    "a": "Teknologgatan 7B",
+    "p": 8995000,
+    "m2": 66,
+    "r": 2,
     "vI": 50,
     "sI": 95,
     "lI": 5
