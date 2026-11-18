@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "3 595 000 KR",
-    "p": 3595000,
+    "a": "4 795 000 KR",
+    "p": 4795000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -178985,7 +178985,7 @@
   {
     "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/vimpeltorpet/hemvagen-16k/",
     "a": "VIMPELTORPET, KALMAR",
-    "p": 1375000,
+    "p": 1295000,
     "m2": 0,
     "r": 3,
     "vI": 50,
@@ -179849,6 +179849,116 @@
     "m2": 66,
     "r": 2,
     "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/lessebo/hovmantorp/tranvagen-3/",
+    "a": "HOVMANTORP, LESSEBO",
+    "p": 2250000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/valle-broar/anna-koskulls-gata-3q/",
+    "a": "VÄLLE AR, VÄXJÖ",
+    "p": 1200000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Kommersiellt-Kejsargatan-8-and-12-Bollstabruk-Kramfors-kommun-6016948",
+    "a": "Kejsargatan 8 & 12",
+    "p": 1300000,
+    "m2": 517,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Edvinshem-Ystad-kommun-5988394",
+    "a": "Underhand",
+    "p": 1395000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Eriksberg-Goteborg-kommun-6014523",
+    "a": "Underhand",
+    "p": 3700000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-5rum-Torupsvagen-31-Tyringe-Hassleholm-kommun-6013310",
+    "a": "Torupsvägen 31",
+    "p": 990000,
+    "m2": 68,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Vaster-Nykoping-kommun-6019012",
+    "a": "Underhand",
+    "p": 2295000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Oppeby-Nykoping-kommun-6018037",
+    "a": "Underhand",
+    "p": 1095000,
+    "m2": 55,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Roslagsgatan-40-Vasastan-Stockholm-kommun-6018216",
+    "a": "Roslagsgatan 40",
+    "p": 4495000,
+    "m2": 38,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Margit-Halls-Gata-33-Kviberg-Goteborg-kommun-6003959",
+    "a": "Margit Halls Gata 33",
+    "p": 3690000,
+    "m2": 83,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Sodra-sandby-Lund-kommun-6017352",
+    "a": "Underhand",
+    "p": 4995000,
+    "m2": 145,
+    "r": 6,
+    "vI": 80,
     "sI": 95,
     "lI": 5
   }
