@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "4 795 000 KR",
-    "p": 4795000,
+    "a": "3 595 000 KR",
+    "p": 3595000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -179958,6 +179958,156 @@
     "p": 4995000,
     "m2": 145,
     "r": 6,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/oster/linodlarvagen-13/",
+    "a": "ÖSTER, VÄXJÖ",
+    "p": 3500000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/valle-broar/anna-koskulls-gata-3k/",
+    "a": "VÄLLE AR, VÄXJÖ",
+    "p": 1995000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/hov/hambovagen-5/",
+    "a": "HOV, VÄXJÖ",
+    "p": 2495000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/linnestaden/perstorpsvagen-122/",
+    "a": "LINNÉSTADEN, KALMAR",
+    "p": 1495000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/berga/sagovagen-7/",
+    "a": "BERGA, KALMAR",
+    "p": 995000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/moro-backe/transistorgrand-8/",
+    "a": "MORÖ BACKE, SKELLEFTEÅ",
+    "p": 3200000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Paradisgrand-4-Umedalen-Umea-kommun-6019531",
+    "a": "Paradisgränd 4",
+    "p": 1350000,
+    "m2": 70,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Lilla-Marconigatan-27-Frolunda-Goteborg-kommun-6009460",
+    "a": "Lilla Marconigatan 27",
+    "p": 3195000,
+    "m2": 84,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Kompassgatan-7-Gamla-Masthugget-Goteborg-kommun-6017471",
+    "a": "Kompassgatan 7",
+    "p": 3490000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Gard-Perstorp-Perstorp-kommun-6013625",
+    "a": "Underhand",
+    "p": 4895000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Attkantsgatan-5-Haga-Karlstad-kommun-6019516",
+    "a": "Åttkantsgatan 5",
+    "p": 2300000,
+    "m2": 72,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Triangeln-Malmo-kommun-6016220",
+    "a": "Underhand",
+    "p": 2150000,
+    "m2": 33,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Fritidshus-3rum-Valjeslatten-8825-Valje-Solvesborg-kommun-6019688",
+    "a": "Valjeslätten 8825",
+    "p": 1650000,
+    "m2": 64,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Torsgatan-58-Vasastan-Stockholm-kommun-5978881",
+    "a": "Torsgatan 58",
+    "p": 3495000,
+    "m2": 31,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Stensovagen-1-4-tr-Alta-Stenso-Nacka-kommun-6018832",
+    "a": "Stensövägen 1, 4 tr",
+    "p": 1850000,
+    "m2": 59,
+    "r": 2,
     "vI": 80,
     "sI": 95,
     "lI": 5
