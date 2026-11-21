@@ -180291,5 +180291,165 @@
     "vI": 80,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/bramstorp/bramstorp-solhall-1/",
+    "a": "BRAMRP, VÄXJÖ",
+    "p": 2895000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kalmar-lan/kalmar/linnestaden/perstorpsvagen-162/",
+    "a": "LINNÉSTADEN, KALMAR",
+    "p": 2495000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Tulegatan-22-4-tr-Vasastan-Stockholm-kommun-6018990",
+    "a": "Tulegatan 22, 4 tr",
+    "p": 8475000,
+    "m2": 66,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-5rum-Takkullevagen-78-Bollebygd-Bollebygd-kommun-6018690",
+    "a": "Takkullevägen 78",
+    "p": 6400000,
+    "m2": 132,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Centralt-Soder-Orebro-kommun-6019632",
+    "a": "Underhand",
+    "p": 3995000,
+    "m2": 99,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Idrottsgatan-4-Jutahusen-Lund-kommun-6018557",
+    "a": "Idrottsgatan 4",
+    "p": 3595000,
+    "m2": 74,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Serresjo-Trelleborg-kommun-6018270",
+    "a": "Underhand",
+    "p": 5995000,
+    "m2": 136,
+    "r": 6,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Stadstradgardsgatan-44-Vastergard-Sodertalje-kommun-6017660",
+    "a": "Stadsträdgårdsgatan 44",
+    "p": 1750000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Rosenhojdsvagen-19-Rosenlund-Sodertalje-kommun-6019313",
+    "a": "Rosenhöjdsvägen 19",
+    "p": 2250000,
+    "m2": 97,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Lovisinsgatan-7-Sodertalje-Centrum-Sodertalje-kommun-6017184",
+    "a": "Lovisinsgatan 7",
+    "p": 2650000,
+    "m2": 89,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Annedal-Goteborg-kommun-6018219",
+    "a": "Underhand",
+    "p": 6800000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Ovre-Vasastaden-Goteborg-kommun-6017036",
+    "a": "Underhand",
+    "p": 3500000,
+    "m2": 39,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Lorensberg-Goteborg-kommun-6015552",
+    "a": "Underhand",
+    "p": 3290000,
+    "m2": 48,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Annedal-Goteborg-kommun-6015064",
+    "a": "Underhand",
+    "p": 2290000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Trossvagen-25B-Resaro-Vaxholm-kommun-5979400",
+    "a": "Trossvägen 25B",
+    "p": 2150000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-5rum-Furudalen-4-Rodbo-Goteborg-kommun-6015993",
+    "a": "Furudalen 4",
+    "p": 6495000,
+    "m2": 130,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
   }
 ]
