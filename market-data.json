@@ -180451,5 +180451,45 @@
     "vI": 80,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-5rum-Billdal-Goteborg-kommun-6019498",
+    "a": "Underhand",
+    "p": 6995000,
+    "m2": 139,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Jordliden-82-Jordliden-Kungalv-kommun-6019873",
+    "a": "Jordliden 82",
+    "p": 3300000,
+    "m2": 86,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Myntgatan-10A-Centrala-Hisingen-Goteborg-kommun-6006714",
+    "a": "Myntgatan 10A",
+    "p": 1395000,
+    "m2": 46,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Ralambsvagen-29-1-tr-Kungsholmen-Stockholm-kommun-6017517",
+    "a": "Rålambsvägen 29, 1 tr",
+    "p": 6650000,
+    "m2": 81,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
   }
 ]
