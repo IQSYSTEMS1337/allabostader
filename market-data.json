@@ -168815,7 +168815,7 @@
   {
     "u": "https://sofu.se/projekt",
     "a": "SÖDRA KROPPKÄRR, KARLSTAD",
-    "p": 3595000,
+    "p": 4595000,
     "m2": 0,
     "r": 5,
     "vI": 50,
@@ -180488,6 +180488,166 @@
     "p": 6650000,
     "m2": 81,
     "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/boliden/rotgatan-2/",
+    "a": "BOLIDEN, SKELLEFTEÅ",
+    "p": 650000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/torsgatan-17f2/",
+    "a": "SKELLEFTEÅ",
+    "p": 1250000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/svartostaden/sjofartsgatan-71/",
+    "a": "SVARTÖSTADEN, LULEÅ",
+    "p": 2495000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Ahusgatan-5-Vastra-Sorgenfri-Malmo-kommun-6019971",
+    "a": "Åhusgatan 5",
+    "p": 1695000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Vitemollegatan-7A-Nobeltorget-Malmo-kommun-6019970",
+    "a": "Vitemöllegatan 7A",
+    "p": 1695000,
+    "m2": 52,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Torekovsgatan-9B-Ostra-Sorgenfri-Malmo-kommun-6019969",
+    "a": "Torekovsgatan 9B",
+    "p": 1095000,
+    "m2": 32,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Ribevagen-1D-Pildammarna-Malmo-kommun-6019967",
+    "a": "Ribevägen 1D",
+    "p": 1795000,
+    "m2": 54,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Skillinge-Simrishamn-kommun-6018051",
+    "a": "Underhand",
+    "p": 8450000,
+    "m2": 27,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Mollevangsgatan-30A-Triangeln-Malmo-kommun-6019966",
+    "a": "Möllevångsgatan 30A",
+    "p": 995000,
+    "m2": 28,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Sallerupsvagen-28C-Ellstorp-Malmo-kommun-6006721",
+    "a": "Sallerupsvägen 28C",
+    "p": 1095000,
+    "m2": 44,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Mollevangsgatan-30A-Triangeln-Malmo-kommun-6019964",
+    "a": "Möllevångsgatan 30A",
+    "p": 1045000,
+    "m2": 28,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Sallerupsvagen-26B-Ellstorp-Malmo-kommun-5970506",
+    "a": "Sallerupsvägen 26B",
+    "p": 1495000,
+    "m2": 60,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Ellstorpsgatan-3E-Ellstorp-Malmo-kommun-6019730",
+    "a": "Ellrpsgatan 3E",
+    "p": 1395000,
+    "m2": 55,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Dansorgatan-14-Lindeborg-Malmo-kommun-6019962",
+    "a": "Dansörgatan 14",
+    "p": 1195000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Amiralsgatan-85D-NobeltorgetOstra-Sorgenfri-Malmo-kommun-6019959",
+    "a": "Amiralsgatan 85D",
+    "p": 1895000,
+    "m2": 68,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Amiralsgatan-83G-Nobeltorget-Malmo-kommun-6019941",
+    "a": "Amiralsgatan 83G",
+    "p": 1095000,
+    "m2": 52,
+    "r": 2,
     "vI": 80,
     "sI": 95,
     "lI": 5
