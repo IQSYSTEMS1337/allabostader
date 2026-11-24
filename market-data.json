@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "10 000 000 KR",
-    "p": 10000000,
+    "a": "1 495 000 KR",
+    "p": 1495000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -180648,6 +180648,156 @@
     "p": 1095000,
     "m2": 52,
     "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/vaster/pilgatan-8a/",
+    "a": "VÄSTER, VÄXJÖ",
+    "p": 1695000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/gamla-norr/sofiebergsvagen-31/",
+    "a": "GAMLA NORR, VÄXJÖ",
+    "p": 2150000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/mobacken/grindvagen-17/",
+    "a": "MOBACKEN, SKELLEFTEÅ",
+    "p": 3950000,
+    "m2": 0,
+    "r": 7,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/kronan/dragongatan-8-a/",
+    "a": "KRONAN, LULEÅ",
+    "p": 2595000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/bergviken/sjogatan-8b/",
+    "a": "BERGVIKEN, LULEÅ",
+    "p": 1745000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Kommersiellt-Nassjogatan-14-Nyatorp-Halmstad-kommun-6015472",
+    "a": "Nässjögatan 14",
+    "p": 6450000,
+    "m2": 134,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Kommersiellt-Nassjogatan-12A-Nyatorp-Halmstad-kommun-6015473",
+    "a": "Nässjögatan 12A",
+    "p": 5000000,
+    "m2": 50,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-5rum-Skogsvagen-55-Hagastrom-Gavle-kommun-6018931",
+    "a": "Skogsvägen 55",
+    "p": 2490000,
+    "m2": 82,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Nordostpassagen-15-Linne-Goteborg-kommun-6019475",
+    "a": "Nordostpassagen 15",
+    "p": 3745000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Sodra-Hunnetorpsvagen-86B-Adolfsberg-Helsingborg-kommun-6019666",
+    "a": "Södra Hunnetorpsvägen 86B",
+    "p": 1100000,
+    "m2": 65,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Bettorp-Orebro-kommun-6017992",
+    "a": "Underhand",
+    "p": 1695000,
+    "m2": 72,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Ormesta-Orebro-kommun-6019664",
+    "a": "Underhand",
+    "p": 1895000,
+    "m2": 74,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Kalvogatan-24-Rydeback-Helsingborg-kommun-6018800",
+    "a": "Kalvögatan 24",
+    "p": 10495000,
+    "m2": 45,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Vastergard-Sodertalje-kommun-6019325",
+    "a": "Underhand",
+    "p": 1595000,
+    "m2": 46,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Hyllie-Malmo-kommun-6005854",
+    "a": "Underhand",
+    "p": 3295000,
+    "m2": 88,
+    "r": 4,
     "vI": 80,
     "sI": 95,
     "lI": 5
