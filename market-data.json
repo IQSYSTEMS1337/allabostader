@@ -180801,5 +180801,125 @@
     "vI": 80,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/lakarvagen-5i/",
+    "a": "SKELLEFTEÅ",
+    "p": 975000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-5rum-Inom-Vallgraven-Goteborg-kommun-6016853",
+    "a": "Underhand",
+    "p": 9995000,
+    "m2": 162,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Rorsjostaden-Malmo-kommun-6019035",
+    "a": "Underhand",
+    "p": 1775000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-7rum-Hastmahult-113-Hastmahult-Torsas-kommun-6007193",
+    "a": "Hästmahult 113",
+    "p": 649000,
+    "m2": 150,
+    "r": 7,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Kommersiellt-Oskarsgatan-1-Emmaboda-Emmaboda-kommun-5942452",
+    "a": "Oskarsgatan 1",
+    "p": 3495000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Radhus-4rum-Norrsatra-Sandviken-kommun-6020000",
+    "a": "Underhand",
+    "p": 1895000,
+    "m2": 55,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Fritidshus-4rum-Lonhult-Tomelilla-kommun-5994448",
+    "a": "Underhand",
+    "p": 3995000,
+    "m2": 85,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-5rum-Bryngelstorp-Nykoping-kommun-6020070",
+    "a": "Underhand",
+    "p": 2875000,
+    "m2": 118,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Sodra-Lindhult-Orebro-kommun-6019787",
+    "a": "Underhand",
+    "p": 1395000,
+    "m2": 61,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-7rum-Hindbyvagen-25-Hindas-Harryda-kommun-6018691",
+    "a": "Hindbyvägen 25",
+    "p": 5700000,
+    "m2": 170,
+    "r": 7,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Radhus-4rum-Vallhov-Sandviken-kommun-6019817",
+    "a": "Underhand",
+    "p": 1595000,
+    "m2": 55,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-Soderhamn-Soderhamn-kommun-6020023",
+    "a": "Underhand",
+    "p": 2495000,
+    "m2": 30,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
   }
 ]
