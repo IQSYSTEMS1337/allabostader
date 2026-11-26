@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "1 495 000 KR",
-    "p": 1495000,
+    "a": "3 595 000 KR",
+    "p": 3595000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -180918,6 +180918,176 @@
     "p": 2495000,
     "m2": 30,
     "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/oster/ostregardsgatan-26c/",
+    "a": "ÖSTER, VÄXJÖ",
+    "p": 1350000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/oster/lillestadsvagen-64e/",
+    "a": "ÖSTER, VÄXJÖ",
+    "p": 1495000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/centrum/radstugatan-6b/",
+    "a": "CENTRUM, LULEÅ",
+    "p": 2195000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/ornaset/metargrand-18/",
+    "a": "ÖRNÄSET, LULEÅ",
+    "p": 3195000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Jeanssongatan-17-Varvsholmen-Kalmar-kommun-6018978",
+    "a": "Jeanssongatan 17",
+    "p": 7750000,
+    "m2": 120,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Brunnefjall-Kungalv-kommun-5977232",
+    "a": "Underhand",
+    "p": 695000,
+    "m2": 41,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-5rum-Hammarstrand-Ragunda-kommun-6019318",
+    "a": "Underhand",
+    "p": 550000,
+    "m2": 102,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Skaragatan-25-Rosengarden-Helsingborg-kommun-6019939",
+    "a": "Skaragatan 25",
+    "p": 995000,
+    "m2": 45,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Ljusstaden-Kalmar-kommun-6017455",
+    "a": "Underhand",
+    "p": 1995000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-6rum-Skillinge-Simrishamn-kommun-6019451",
+    "a": "Underhand",
+    "p": 6450000,
+    "m2": 10,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-Brosarp-Tomelilla-kommun-6019986",
+    "a": "Underhand",
+    "p": 1850000,
+    "m2": 132,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Nyproduktion-5rum-Billdal-Goteborg-kommun-6019942",
+    "a": "Underhand",
+    "p": 10995000,
+    "m2": 652,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Kommersiellt-Centrumvagen-18-Helgum-Solleftea-kommun-6017354",
+    "a": "Centrumvägen 18",
+    "p": 195000,
+    "m2": 150,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Stampen-Goteborg-kommun-6017205",
+    "a": "Underhand",
+    "p": 3350000,
+    "m2": 64,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Radhus-5rum-Limhamns-Sjostad-Malmo-kommun-6018290",
+    "a": "Underhand",
+    "p": 6750000,
+    "m2": 107,
+    "r": 5,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Malmo-Malmo-kommun-6018969",
+    "a": "Underhand",
+    "p": 3150000,
+    "m2": 86,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Limhamn-On-Malmo-kommun-6020034",
+    "a": "Underhand",
+    "p": 2145000,
+    "m2": 44,
+    "r": 2,
     "vI": 80,
     "sI": 95,
     "lI": 5
