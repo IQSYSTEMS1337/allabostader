@@ -77734,8 +77734,8 @@
     "lI": 5
   },
   {
-    "a": "3 595 000 KR",
-    "p": 3595000,
+    "a": "4 795 000 KR",
+    "p": 4795000,
     "m2": 0,
     "r": 0,
     "vI": 50,
@@ -181089,6 +181089,206 @@
     "m2": 44,
     "r": 2,
     "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/ostra-lugnet/maria-nilsdotters-vag-53/",
+    "a": "ÖSTRA LUGNET, VÄXJÖ",
+    "p": 2750000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/norr/lillestadsvagen-64e/",
+    "a": "NORR, VÄXJÖ",
+    "p": 1495000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/varmlands-lan/karlstad/grava-rud/grava-rud-533/",
+    "a": "GRAVA-RUD, KARLSTAD",
+    "p": 533950000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/vasterbottens-lan/skelleftea/allvadersgrand-39/",
+    "a": "SKELLEFTEÅ",
+    "p": 1795000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/norrbottens-lan/lulea/gammelstad/allevagen-10e/",
+    "a": "GAMMELSTAD, LULEÅ",
+    "p": 2795000,
+    "m2": 0,
+    "r": 5,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Vulcanusgatan-9-Vasastan-Stockholm-kommun-6019987",
+    "a": "Vulcanusgatan 9",
+    "p": 2750000,
+    "m2": 26,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Gard-Furustadsvagen-488-Villands-Vanga-Kristianstad-kommun-6018276",
+    "a": "Furustadsvägen 488",
+    "p": 10700000,
+    "m2": 0,
+    "r": 0,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Lillekarr-norra-98-Hisings-Karra-Goteborg-kommun-6020237",
+    "a": "Lillekärr norra 98",
+    "p": 1450000,
+    "m2": 76,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Tyringegatan-43-Husensjo-Helsingborg-kommun-6003874",
+    "a": "Tyringegatan 43",
+    "p": 1045000,
+    "m2": 59,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Vastra-Sjostaden-Ystad-kommun-6019009",
+    "a": "Underhand",
+    "p": 2295000,
+    "m2": 91,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Bellevue-Ystad-kommun-6018719",
+    "a": "Underhand",
+    "p": 1095000,
+    "m2": 57,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Radhus-6rum-Sisjon-Goteborg-kommun-6018272",
+    "a": "Underhand",
+    "p": 5250000,
+    "m2": 60,
+    "r": 6,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Ellstorp-Malmo-kommun-6017504",
+    "a": "Underhand",
+    "p": 1095000,
+    "m2": 39,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Norra-Faladen-Lund-kommun-6020084",
+    "a": "Underhand",
+    "p": 2395000,
+    "m2": 71,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Olles-gata-25-Ytterby-Kungalv-kommun-6019497",
+    "a": "Olles gata 25",
+    "p": 2650000,
+    "m2": 67,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-3rum-Skegrie-Trelleborg-kommun-6020155",
+    "a": "Underhand",
+    "p": 4195000,
+    "m2": 80,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Kristinebergsvagen-5-KungsholmenThorildsplan-Stockholm-kommun-6019547",
+    "a": "Kristinebergsvägen 5",
+    "p": 2995000,
+    "m2": 34,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Villa-8rum-Hasselstigen-4-Bueras-Kungsbacka-kommun-6014215",
+    "a": "Hasselstigen 4",
+    "p": 5800000,
+    "m2": 179,
+    "r": 8,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Garda-Goteborg-kommun-6020056",
+    "a": "Underhand",
+    "p": 1995000,
+    "m2": 28,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-3rum-Ellstorp-Malmo-kommun-6020150",
+    "a": "Underhand",
+    "p": 2295000,
+    "m2": 0,
+    "r": 3,
+    "vI": 50,
     "sI": 95,
     "lI": 5
   }
