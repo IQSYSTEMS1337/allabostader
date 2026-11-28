@@ -181291,5 +181291,135 @@
     "vI": 50,
     "sI": 95,
     "lI": 5
+  },
+  {
+    "u": "https://www.bjurfors.se/sv/tillsalu/kronobergs-lan/vaxjo/centrum/raoul-wallenbergs-gata-16a22/",
+    "a": "CENTRUM, VÄXJÖ",
+    "p": 1495000,
+    "m2": 0,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Folkungagatan-67-3-tr-Sodermalm-Stockholm-kommun-6019820",
+    "a": "Folkungagatan 67, 3 tr",
+    "p": 3950000,
+    "m2": 36,
+    "r": 2,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Nedre-Torekallgatan-13-Sodertalje-Centrum-Sodertalje-kommun-6018879",
+    "a": "Nedre Torekällgatan 13",
+    "p": 1695000,
+    "m2": 38,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Kommersiellt-Flockergatan-4-Centrala-Trelleborg-Trelleborg-kommun-6017243",
+    "a": "Flockergatan 4",
+    "p": 3695000,
+    "m2": 872,
+    "r": 0,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Mangatan-4B-Ostlyckan-Alingsas-kommun-6018883",
+    "a": "Mångatan 4B",
+    "p": 1575000,
+    "m2": 55,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Gamla-Vaster-Malmo-kommun-6020121",
+    "a": "Underhand",
+    "p": 3995000,
+    "m2": 61,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Prippska-Tomten-Goteborg-kommun-6018718",
+    "a": "Underhand",
+    "p": 5585000,
+    "m2": 0,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Riksdalervagen-16-Hagerstensasen-Stockholm-kommun-6019848",
+    "a": "Riksdalervägen 16",
+    "p": 1795000,
+    "m2": 34,
+    "r": 1,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Karlavagnsgatan-1-van-1617-Lindholmen-Goteborg-kommun-6018728",
+    "a": "Karlavagnsgatan 1, vån 16/17",
+    "p": 6600000,
+    "m2": 104,
+    "r": 4,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Radhus-3rum-Vikhem-Staffanstorp-kommun-6018840",
+    "a": "Underhand",
+    "p": 3895000,
+    "m2": 100,
+    "r": 3,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-1rum-Kristinebergsvagen-18-1-tr-KungsholmenThorildsplan-Stockholm-kommun-6015663",
+    "a": "Kristinebergsvägen 18, 1 tr",
+    "p": 3995000,
+    "m2": 0,
+    "r": 1,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-4rum-Hagagatan-17D-Vasastan-Stockholm-kommun-6019749",
+    "a": "Hagagatan 17D",
+    "p": 11400000,
+    "m2": 103,
+    "r": 4,
+    "vI": 50,
+    "sI": 95,
+    "lI": 5
+  },
+  {
+    "u": "https://www.erikolsson.se/homes/Lagenhet-2rum-Liberagatan-32-van-88-Karlastaden-Goteborg-kommun-6019334",
+    "a": "Liberagatan 32, vån 8/8",
+    "p": 2795000,
+    "m2": 54,
+    "r": 2,
+    "vI": 80,
+    "sI": 95,
+    "lI": 5
   }
 ]
